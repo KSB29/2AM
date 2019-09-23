@@ -19,7 +19,7 @@
 					section단위로 묶고 nav 템플릿에 elements.html를 참고해주세요.
 				-->
 				<section>
-					<div class="row"></div>
+					<div class="row">DFSDGSDGASGAG</div>
 				</section>
 				<section>
 					<div class="row"></div>
