@@ -15,15 +15,11 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<!-- css -->	
-	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
 	<link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
-
 	<link rel="stylesheet" href="${contextPath }/resources/css/fontawesome-all.min.css" type="text/css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/nice-select.css">
-
 	<link rel="stylesheet" href="${contextPath }/resources/css/style.css" type="text/css">
 </head>
 <body class="is-preload">
@@ -61,20 +57,6 @@
 	</header>
 	
 	<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-	<script>
-		//scroll to top
-		$(window).scroll(function(){
-			if ($(this).scrollTop() > 100) {
-				$('.scrollup').fadeIn();
-				} else {
-				$('.scrollup').fadeOut();
-			}
-		});
-		$('.scrollup').click(function(){
-			$("html, body").animate({ scrollTop: 0 }, 1000);
-				return false;
-		});
-	</script>
 
 	<!-- Menu -->
 	<nav id="menu">
@@ -134,7 +116,9 @@
 			</c:when>
 			<c:when test="${!empty sessionScope.loginUser}">
 				<c:url var="pwdCheckForm" value="pwdCheckForm.sp"/>
-				<c:url var="hostApplyForm" value="hostApplyForm.sp" />
+				<c:url var="hostApplyForm" value="hostApplyForm.sp">
+					<c:param name="memberId" value="${loginUser.memberId}"/>
+				</c:url>
 				<c:url var="hostInfoForm" value="hostInfoForm.sp"/>
 				<c:url var="adminHome" value="adminHome.sp"/>
 				<div class="row" id="section2row">
@@ -176,33 +160,16 @@
 	</nav>
 
 	<!-- Scripts -->
-	<script>
-	/* 알림창 오픈클로즈 */
-	function myFunction() {
-		  var x = document.getElementById("bellList");
-		  if (x.style.display === "none") {
-		    x.style.display = "block";
-		  } else {
-		    x.style.display = "none";
-		  }
-		}
-	</script>
 	<script src="${contextPath }/resources/js/browser.min.js"></script>
 	<script src="${contextPath }/resources/js/breakpoints.min.js"></script>
 	<script src="${contextPath }/resources/js/util.js"></script>
 	<script src="${contextPath }/resources/js/main.js"></script>
+	<!-- splaceScript -->
+	<script src="${contextPath}/resources/js/splace.js"></script>
 	<!-- selectBox -->
 	<script src="${contextPath }/resources/js/jquery.nice-select.min.js"></script>
 	<script src="${contextPath }/resources/js/jquery.magnific-popup.js"></script>
 	<script src="${contextPath }/resources/js/gijgo.min.js"></script>
-	<script>
-		$(function(){
-			// selectBox 
-			if (document.getElementById('default-select')) {
-				$('select').niceSelect();
-			}
-		});
-	</script>
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
