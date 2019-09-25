@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,25 +12,18 @@
 		main.js, browser.min.js, breakpoints.min.js, util.js파일은 수정 금지
 	-->
 	<div id="wrapper">
-		<jsp:include page="WEB-INF/views/common/top.jsp"/>
+		<jsp:include page="../../../WEB-INF/views/common/top.jsp"/>
 		<div id="main">
 			<div class="inner">
 				<!-- 여기에만 씁시다.(다른 부분은 고정!)
 					section단위로 묶고 nav 템플릿에 elements.html를 참고해주세요.
 				-->
 				<section>
-					<c:url var="bookForm" value="bookForm.sp" />
-					<div class="row"><a href="${bookForm}">book</a></div>
-				</section>
-				<section>
-					<div class="row"></div>
-				</section>
-				<section>
-					<div class="row"></div>
+					<div class="row">DFSDGSDGASGAG</div>
 				</section>
 			</div>
 		</div>
-		<jsp:include page="WEB-INF/views/common/bottom.jsp"/>
+		<jsp:include page="../../../WEB-INF/views/common/bottom.jsp"/>
 	</div>
 </body>
 </html>
