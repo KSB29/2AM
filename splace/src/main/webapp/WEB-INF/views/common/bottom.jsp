@@ -5,7 +5,7 @@
 <footer id="footer">
 	<div class="inner">
 		<section>
-			<a href="${contextPath }" class="logo">
+			<a href="${contextPath }">
 				<img src="${contextPath }/resources/img/logo.png" alt="logo" />
 			</a>
 		</section>
