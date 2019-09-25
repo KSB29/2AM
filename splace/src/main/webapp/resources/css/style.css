@@ -2516,7 +2516,7 @@ input, select, textarea {
 		button:active,
 		.button:active {
 			/* background-color: rgba(242, 132, 158, 0.1); */
-			background-color: rgba(76, 116, 185, 0.1);
+			 background-color: rgba(76, 116, 185, 0.1); 
 		}
 
 		input[type="submit"].small,
@@ -2558,7 +2558,7 @@ input, select, textarea {
 			input[type="button"].primary:active,
 			button.primary:active,
 			.button.primary:active {
-				background-color: #ee5f81;
+				background-color: #4C74B9;
 			}
 
 		input[type="submit"].disabled, input[type="submit"]:disabled,
@@ -3536,5 +3536,128 @@ a.scrollup i:hover {
 #bell:active{outline: none; box-shadow: none; border: none;}
 #bell:focus{outline: none; box-shadow: none; border: none;}
 #bell>i{font-size: 1.2em}
+/* 알림 내부 */
+.notification-container {
+  cursor: default;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  right: 1.5em;
+  width: 290px;
+  font-weight: 300;
+  background: white;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  box-shadow: 0.5rem 0.5rem 2rem 0 rgba(0, 0, 0, 0.2);
+  animation-name: dropPanel;
+  animation-iteration-count: 1;
+  animation-timing-function: all;
+  animation-duration: .75s;
+  opacity: 0.95; 
+  margin-top:35% !important;
+  padding:0 !important;
+  height: 22em;
+  overflow-y: scroll;
+}
+.notification-container:before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 0;
+  width: 0;
+  height: 0;
+  transform: translate(-1rem, -100%);
+  border-left: .75rem solid transparent;
+  border-right: .75rem solid transparent;
+  border-bottom: .75rem solid white;
+}
+.notification-container h3 {
+  text-transform: uppercase;
+  font-size: 75%;
+  font-weight: 700;
+  color: #84929f;
+  padding: 1.5rem 2rem;
+  margin-bottom: 0;
+}
+.notification-container i {
+  color: #b5c4d2;
+  font-size: 140%;
+  @vertical-align (50%);
+  position: absolute;
+}
+.notification-container i.right {
+  right: 1rem;
+}
+.notification-container i.right:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+.notification-container em {
+  margin-right: 0.75rem;
+  font-weight: 700;
+  font-size: 115%;
+  color: #b5c4d2;
+  vertical-align: bottom;
+  display: inline-block;
+}
 
+@keyframes dropPanel {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px) scaleY(0.5);
+  }
+}
+.notification {
+  box-sizing: border-box;
+    margin-bottom:0!important;	
+}
+
+input.checkbox[type='checkbox'] + label {
+  display: block;
+}
+input.checkbox[type='checkbox']:not(:checked) + label {
+  transition: height .25s;
+  height: 0;
+  padding: 0;
+  font-size: 0;
+  border: none;
+}
+input.checkbox[type='checkbox']:not(:checked) {
+  display: none;
+}
+input.checkbox[type='checkbox']:checked + label {
+  height: 6rem;
+  padding: 1.125rem 1.75rem 0.75rem 2rem;
+  font-size: 75%;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.notification-icon {
+  position: relative;
+  margin-right: 1em;
+  border-radius: 5px;
+  background: #ecf0f1;
+}
+.notification-icon i {
+  margin: .5rem;
+}
+.notification-icon:nth-of-type(1) i {
+  background: -webkit-linear-gradient(300deg, #acccea, #6495ed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.notification-icon:nth-of-type(2) i {
+  background: -webkit-linear-gradient(300deg, #fff9ab, #00b8ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+input[type="checkbox"] + label:before, input[type="radio"] + label:before{
+background: none !important;
+border: none !important;
+content: none !important;
+}
+#bellList{
+display: none;
+}
 /* section, .row{border: 1px solid #585858} */

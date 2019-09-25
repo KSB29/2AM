@@ -18,6 +18,7 @@
 	<!-- css -->	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="${contextPath }/resources/css/style.css" type="text/css">
 </head>
 <body class="is-preload">
@@ -75,13 +76,35 @@
 		<c:if test="${!empty sessionScope.loginUser}">
 		<c:url var="logout" value="logout.sp"/>
 		<section>
-			<div class="row" id="alram">
+		<div class="row" id="alram">
 				<div class="col-9">
 					<a href="${logout}">로그아웃</a>
 				</div>
+				<!-- 알림 벨  -->
 				<div class="col-3 align-right">
-					<button id="bell"><i class="fa fa-bell"></i></button>
+					<button id="bell" onclick="myFunction()"><i class="fa fa-bell"></i></button>
 				</div>
+				<!-- 알림 리스트 -->
+                    <div class=" row notification-container" id="bellList">
+                      <h3>알림
+                      </h3>
+                  
+                      <input class="checkbox" type="checkbox" id="size_1" value="small" checked />
+                      <label class="notification" for="size_1"><em>1</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+                  
+                      <input class="checkbox" type="checkbox" id="size_2" value="small" checked />
+                      <label class="notification" for="size_2"><em>2</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+                      
+                      <input class="checkbox" type="checkbox" id="size_3" value="small" checked />
+                      <label class="notification" for="size_3"><em>3</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+                  
+                      <input class="checkbox" type="checkbox" id="size_4" value="small" checked />
+                      <label class="notification" for="size_4"><em>4</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+                   
+                      <input class="checkbox" type="checkbox" id="size_5" value="small" checked />
+                      <label class="notification" for="size_5"><em>5</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+                    </div>
+				
 			</div>
 			<div class="row" id="section1row">
 				<div class="col-12">
@@ -148,6 +171,17 @@
 	</nav>
 
 	<!-- Scripts -->
+	<script>
+	/* 알림창 오픈클로즈 */
+	function myFunction() {
+		  var x = document.getElementById("bellList");
+		  if (x.style.display === "none") {
+		    x.style.display = "block";
+		  } else {
+		    x.style.display = "none";
+		  }
+		}
+	</script>
 	<script src="${contextPath }/resources/js/browser.min.js"></script>
 	<script src="${contextPath }/resources/js/breakpoints.min.js"></script>
 	<script src="${contextPath }/resources/js/util.js"></script>
