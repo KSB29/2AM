@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+/* div{
+	border: 1px solid black !important;
+}  */
+
+p{
+	margin: 0 !important;
+}
+
+h1,h3,h2{
+	margin: 0 !important;
+	line-height: 3 !important;
+}
+
+/* 이미지 슬라이드 높이 */
+.height26{
+	height: 30em;
+}
+
+.detailTitle{
+	float: left;
+}
+.detailTitle>p{
+	font-size: 70px;
+	font-weight: 900;
+}
+
+/* 공간 소개 관련 */
+.detailLeft{
+	width: 65%;
+	height:100%;
+	float: left;
+	margin-top: 2em;
+}
+
+.fa-heart{
+	font-size: 1.5em !important;
+	float: right;
+}
+
+.fa-heart:hover {
+   color: red;
+   cursor: pointer;
+}
+
+.detailSimple>p{
+	font-size: 45px;
+	font-weight: 200;
+}
+
+/* 공간 예약관련  */
+.detailRight{
+	width: 35%;
+	float: left;
+	margin-top: 2em; 
+}
+
+.reservation{
+	border-bottom: 3px solid #4C74B9;
+}
+
+.reservation>p{
+	font-size: 25px;
+}
+
+.spaceIntro{
+	margin-top: 2em;
+	letter-spacing:0.2em;
+}
+.fontStyle>p{
+	width: 3%;
+	border-bottom: 3px solid #4C74B9;
+}
+ 
