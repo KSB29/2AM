@@ -1,10 +1,13 @@
 @charset "UTF-8";
+
 @font-face { 
 	font-family: 'GoyangIlsan'; 
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff') format('woff'); 
 	font-weight: normal; 
 	font-style: normal; 
 }
+@import url(fontawesome-all.min.css);
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700,900");
 
 *{
 	font-family: 'GoyangIlsan';
@@ -2236,6 +2239,7 @@ input, select, textarea {
 		opacity: 0;
 		width: 1em;
 		z-index: -1;
+		font-family: 'Font Awesome 5 Free';
 	}
 
 		input[type="checkbox"] + label,
@@ -2261,7 +2265,7 @@ input, select, textarea {
 				text-rendering: auto;
 				line-height: 1;
 				text-transform: none !important;
-				font-family: "GoyangIlsan", 'Font Awesome 5 Free';
+				font-family: 'Font Awesome 5 Free';
 				font-weight: 900;
 			}
 
@@ -3570,6 +3574,7 @@ a.scrollup i:hover {
 #bell:focus{outline: none; box-shadow: none; border: none;}
 #bell>i{font-size: 1.2em}
 
+
 /* section, .row{border: 1px solid #585858} */
 
 /* ScrollBar */
@@ -3635,3 +3640,11 @@ a.scrollup i:hover {
 .default-select .nice-select::after {
 	right: 20px;
 }
+
+input[type="checkbox"],
+input[type="radiobox"]{
+	font-family: 'Font Awesome 5 Free';
+}
+
+/* section, .row{border: 1px solid #585858} */
+

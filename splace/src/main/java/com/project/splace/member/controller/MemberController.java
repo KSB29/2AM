@@ -46,4 +46,9 @@ public class MemberController {
 		status.setComplete();
 		return "redirect:/";
 	}
+	
+	@RequestMapping("joinForm.sp")
+	public String MemberJoinForm() {
+		return "member/joinForm";
+	}
 }
