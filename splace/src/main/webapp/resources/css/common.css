@@ -1,9 +1,25 @@
-.center{
+/* .center{
 	text-align: center;
 }
 .join_form{
     padding: 4em 4em 4em 4em;
+} */
+
+
+
+.center{
+	text-align: center;
+}
+.common_wrapper{
+    padding: 2em 4em 2em 2em;
+    min-height: 55rem;
 }
 
+ .wrapper_left{
+   padding: 0 2em 0 0 !important;
+}
+ .wrapper_right{
+    padding-right: 2em !important;
 
+}
 
