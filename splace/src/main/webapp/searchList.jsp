@@ -216,7 +216,7 @@ width:100%;}
 							</li>
 								<li>
 								<input type="checkbox" id="option2">
-								<label for="option2">sss
+								<label for="option2">
 									<i class="material-icons">local_parking</i>
 									주차가능
 								</label>
