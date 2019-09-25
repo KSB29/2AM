@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hostMapper">
+	<resultMap type="Host" id="hostResultSet">
+		<id property="hostId" column="HOST_ID"/>
+		<result property="hostPhone" column="HOST_PHONE"/>
+		<result property="hostEmail" column="HOST_EMAIL"/>
+		<result property="hostName" column="HOST_NAME"/>
+		<result property="storeName" column="STORE_NAME"/>
+		<result property="hostNo" column="HOST_NO"/>
+		<result property="hostBank" column="HOST_BANK"/>
+		<result property="hostAccount" column="HOST_ACCOUNT"/>
+		<result property="hostBname" column="HOST_BNAME"/>
+		<result property="hostEnroll" column="HOST_ENROLL"/>
+		<result property="hostUpdate" column="HOST_UPDATE"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="statusId" column="STATUS_ID"/>
+	</resultMap>
+	
+	<!-- 호스트 정보 조회 -->
+	<select id="selectOne" resultMap="hostResultSet" parameterType="string">
+		SELECT *
+		FROM   HOST
+		WHERE  MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- 호스트 신규 등록 -->
+	<insert id="insertHost" parameterType="Host">
+		INSERT INTO HOST
+		VALUES (SEQ_H.NEXTVAL,
+				#{hostPhone},
+				#{hostEmail},
+				#{hostName},
+				#{storeName},
+				#{hostNo},
+				#{hostBank},
+				#{hostAccount},
+				#{hostBname},
+				SYSDATE,
+				SYSDATE,
+				#{memberId},
+				0)
+	</insert>
+	
+	<!-- 호스트 정보 수정 -->
+	<update id="updateHost" parameterType="Host">
+		UPDATE HOST
+		SET    HOST_PHONE = #{hostPhone},
+			   HOST_EMAIL = #{hostEmail},
+			   <!-- 승인 이전에만 수정 가능 -->
+			   <if test="statusId != 2">
+			   HOST_NAME = #{hostName},
+			   STORE_NAME = #{storeName},
+			   HOST_NO = #{hostNo},
+			   </if>
+			   HOST_BANK = #{hostBank},
+			   HOST_ACCOUNT = #{hostAccount},
+			   HOST_BNAME = #{hostBname},
+			   HOST_UPDATE = SYSDATE
+		WHERE  HOST_ID = #{hostId}
+		AND    MEMBER_ID = #{memberId}
+	</update>
+	
+	<!-- 호스트 승인 요청 -->
+	<update id="applyHost" parameterType="_int">
+		UPDATE HOST
+		SET    STATUS_ID = 1, <!-- 대기 -->
+			   HOST_UPDATE = SYSDATE
+		WHERE  HOST_ID = #{hostId}
+	</update>
+	
+</mapper>
