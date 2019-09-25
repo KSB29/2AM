@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+/* #main>.inner article{border: 1px solid black;} */
+#main>.inner div, #main>.inner ul{
+    /* border: 1px solid grey; */
+}
+/* #main>.inner div.row{border: 1px solid coral} */
+
+/* 제목 */
+section h1,section h2,section h3,section h4,section h5{
+    margin: 0; 
+    letter-spacing: 1px;
+}
+#titleBox1{margin-bottom: 2.5em; border-width: 5px;}
+.titleBox{border-bottom: 3px solid #4C74B9; overflow: hidden;}
+.titleBox h2{float: left;}
+.titleBox div{text-align: right}
+#title{padding: 0; font-size: 2em;}
+
+/* 왼쪽---------------------- */
+#leftCol,#leftCol>.titleBox{padding:0;}
+#leftCol article{margin-bottom: 5%;}
+#leftCol table tr{background-color: transparent}
+#leftCol article table tr td{font-size: 80%;}
+#article2>table{margin: 0}
+#article2>span, #article3>form>span{
+    font-size: 70%;
+    font-weight: bold;
+    letter-spacing: -0.8px;
+    color: #4C74B9;
+}
+#article3>form>table{margin: 0}
+article form table tr{border: 0;}
+article form table tr td .col-3{display: inline-block; padding: 0;}
+.warning{color: red; font-size: 80%;}
+
+
+/* 오른쪽-------------------- */
+#rightCol>.titleBox{padding: 0;}
+#rightCol table tr{background-color: transparent}
+#rightCol article table tr td{font-size: 80%;}
+#rightCol article table tr:first-child{border: 0;}
+#rightCol article table tr:first-child td:nth-child(3){text-align: center; vertical-align: middle;border-bottom: 2px solid #4C74B9;}
+#rightCol article table tr:nth-child(3){border-bottom: 2px solid #4C74B9;}
+#rightCol article table tr:nth-child(4){border: 0;}
+#rightCol article table tr:nth-child(4) td{font-size: 100%; font-weight: bold; color: #4C74B9}
+#rightCol article table tr:nth-child(4) td:last-child{text-align: center}
+#rightCol article table tr:last-child{border: 0;}
+#rightCol article table tr:last-child td{padding: 0; font-size: 100%;}

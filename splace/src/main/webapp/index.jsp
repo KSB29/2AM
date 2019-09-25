@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,6 +67,7 @@ margin-bottom: 1em !important;
 				<!-- 여기에만 씁시다.(다른 부분은 고정!)
 					section단위로 묶고 nav 템플릿에 elements.html를 참고해주세요.
 				-->
+
 				<!--슬라이드   -->
 			<section>
 					<div class="row">
@@ -90,6 +93,11 @@ margin-bottom: 1em !important;
 							</a>
 						</div>
 					</div>
+
+				<section>
+					<c:url var="bookForm" value="bookForm.sp" />
+					<div class="row"><a href="${bookForm}">book</a></div>
+
 				</section>
 				<!-- 추천 공간 -->
 				<section>
