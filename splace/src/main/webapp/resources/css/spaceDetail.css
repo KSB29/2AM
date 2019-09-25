@@ -2,16 +2,22 @@
 
 /* div{
 	border: 1px solid black !important;
-}  */
+} */
 
 p{
 	margin: 0 !important;
 }
 
-h1,h3,h2{
+h1,h3,h2,h4{
 	margin: 0 !important;
 	line-height: 3 !important;
+	font-weight :700 !important;
+	
 }
+ol{
+	padding-left : 2.25em !important;
+}
+
 
 /* 이미지 슬라이드 높이 */
 .height26{
@@ -34,6 +40,10 @@ h1,h3,h2{
 	margin-top: 2em;
 }
 
+.detailSimple{
+	margin-bottom: 2em;
+}
+
 .fa-heart{
 	font-size: 1.5em !important;
 	float: right;
@@ -49,6 +59,113 @@ h1,h3,h2{
 	font-weight: 200;
 }
 
+.spaceIntro{
+	margin: 0 0 2em 0 ;
+	letter-spacing:0.2em;
+}
+.fontStyle>p{
+	width: 5%;
+	border-bottom: 3px solid #4C74B9;
+}
+.spaceTime,.QnAIntro{
+	border-bottom: 1px solid #4C74B9;
+}
+
+.QnA{
+	width: 70%;
+	float: left;
+}
+
+.QnABtn{
+	float: right;
+	font-size: 100%;
+	box-shadow:none;
+	outline : none;
+	
+}
+.QnABtn:hover,.QnABtn:focus{
+	outline: none; 
+	box-shadow: none; 
+	border: none; 
+	background: transparent;
+}
+
+/* ------------모달--------------------------------------------------------- */
+.modal-window {
+position: fixed;
+background-color: rgba(0, 0, 0,0.8);
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+z-index: 999;
+visibility: hidden;
+opacity: 0;
+pointer-events: none;
+transition: all 0.3s;
+}
+.modal-window:target {
+visibility: visible;
+opacity: 1;
+pointer-events: auto;
+}
+.modal-window > div {
+width: 400px;
+position: absolute;
+top: 50%;
+left: 50%;
+-webkit-transform: translate(-50%, -50%);
+transform: translate(-50%, -50%);
+padding: 2em;
+background: #ffffff;
+}
+
+.modal-close {
+color: #aaa;
+line-height: 50px;
+font-size: 80%;
+position: absolute;
+right: 0;
+text-align: center;
+top: 0;
+width: 70px;
+text-decoration: none;
+}
+
+.modal-close:hover {
+color: black;
+}
+
+/* Demo Styles */
+
+.modal-window div:not(:last-of-type) {
+margin-bottom: 15px;
+}
+
+.btn {
+background-color: #fff;
+padding: 1em 1.5em;
+border-radius: 3px;
+text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* 공간 예약관련  */
 .detailRight{
 	width: 35%;
@@ -60,16 +177,3 @@ h1,h3,h2{
 	border-bottom: 3px solid #4C74B9;
 }
 
-.reservation>p{
-	font-size: 25px;
-}
-
-.spaceIntro{
-	margin-top: 2em;
-	letter-spacing:0.2em;
-}
-.fontStyle>p{
-	width: 3%;
-	border-bottom: 3px solid #4C74B9;
-}
- 
