@@ -18,8 +18,8 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
-		<jsp:include page="../common/top.jsp"/>
-	
+<%-- 		<jsp:include page="../common/top.jsp"/>
+ --%>	
 		<!-- Wrapper -->
 			<div id="wrapper">
 				<!-- Main -->

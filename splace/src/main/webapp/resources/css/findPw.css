@@ -1,0 +1,32 @@
+
+/* 비밀번호 찾기 form 조 */
+
+.find_form_1, .find_form_2{
+    margin: 15rem 0 0 0;
+}
+.find_form_2{
+    color: #f6f6f6;
+}
+    .find_box_1{
+        width: 70%;
+        float: left;
+    }
+
+    .find_box_2{
+        width: 30%;
+        display: inline-block;
+        box-sizing: border-box;
+    }
+
+.input_box{
+    margin : 2em 0 0 0 ;
+}
+
+/* 배경 이미지 */
+.find_bg{
+    background-image: url(../img/back07.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: scroll;
+    background-position: left center;
+}

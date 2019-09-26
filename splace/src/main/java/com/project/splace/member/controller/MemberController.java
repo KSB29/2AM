@@ -20,10 +20,31 @@ public class MemberController {
 	@Autowired
 	private MemberService mService;
 	
+	/* Form */ 
 	@RequestMapping("loginForm.sp")
 	public String MemberLoginForm() {
 		return "member/loginForm";
 	}
+	@RequestMapping("joinForm.sp")
+	public String MemberJoinForm() {
+		return "member/joinForm";
+	}
+	@RequestMapping("findPwForm.sp")
+	public String findPwForm() {
+		return "member/findPwForm";
+	}
+	
+	@RequestMapping("profile.sp")
+	public String selectProfile() {
+		return "member/profileView";
+	}
+	@RequestMapping("changePwForm.sp")
+	public String changePwForm() {
+		return "member/changePwForm";
+	}
+	
+	
+	
 	
 	// 프로젝트용 로그인 
 	@RequestMapping(value="login.sp", method=RequestMethod.POST)
@@ -46,9 +67,5 @@ public class MemberController {
 		status.setComplete();
 		return "redirect:/";
 	}
-	
-	@RequestMapping("joinForm.sp")
-	public String MemberJoinForm() {
-		return "member/joinForm";
-	}
+
 }
