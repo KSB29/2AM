@@ -1,10 +1,12 @@
 package com.project.splace.host.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.splace.host.model.dao.HostDao;
 import com.project.splace.host.model.vo.Host;
 
+@Service("hService")
 public class HostServiceImpl implements HostService {
 	
 	@Autowired

@@ -8,9 +8,11 @@
 
 	<typeAliases>
 		<typeAlias type="com.project.splace.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.project.splace.host.model.vo.Host" alias="Host"/>
 	</typeAliases>
 	
   	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
+		<mapper resource="mappers/host-mapper.xml"/>
   	</mappers>
 </configuration>
