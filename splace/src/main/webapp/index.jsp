@@ -94,11 +94,6 @@ margin-bottom: 1em !important;
 						</div>
 					</div>
 
-				<section>
-					<c:url var="bookForm" value="bookForm.sp" />
-					<div class="row"><a href="${bookForm}">book</a></div>
-
-				</section>
 				<!-- 추천 공간 -->
 				<section>
 					<div class="row">
@@ -114,7 +109,8 @@ margin-bottom: 1em !important;
 							<span class="image"> <img src="resources/img/studio.jpg"
 								alt="" />
 							</span> 
-							<a href="#"></a> 
+							<c:url var="bookForm" value="bookForm.sp" />
+							<a href="${bookForm}"></a> 
 							<span>
 								<div class="locationName">
 									<h3>Kh정보교육원</h3>

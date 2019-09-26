@@ -15,35 +15,42 @@ section h1,section h2,section h3,section h4,section h5{
 .titleBox{border-bottom: 3px solid #4C74B9; overflow: hidden;}
 .titleBox h2{float: left;}
 .titleBox div{text-align: right}
+.titleBox div span label{margin: 0;font-size: 80%; padding-right: 0;}
 #title{padding: 0; font-size: 2em;}
+article form table tr{border: 0;}
+article form table tr td .col-3{display: inline-block; padding: 0;}
 
 /* 왼쪽---------------------- */
 #leftCol,#leftCol>.titleBox{padding:0;}
 #leftCol article{margin-bottom: 5%;}
 #leftCol table tr{background-color: transparent}
 #leftCol article table tr td{font-size: 80%;}
-#article2>table{margin: 0}
-#article2>span, #article3>form>span{
+#article2>table,#article6 table,#article3>form>table{margin: 0}
+#article2>span, #article3>form>span, #article6>span{
     font-size: 70%;
     font-weight: bold;
     letter-spacing: -0.8px;
     color: #4C74B9;
 }
-#article3>form>table{margin: 0}
-article form table tr{border: 0;}
-article form table tr td .col-3{display: inline-block; padding: 0;}
-.warning{color: red; font-size: 80%;}
-
+#bookRequest{resize: none; font-size: 1em}
+.warning{color: rgb(204, 0, 0) !important; font-size: 80%;}
+#article6 table tr td label span{font-size: 100%;}
+/* #article6 table tr td label{width: 90%;} */
+.buttonToggle{float: right;}
+#article6 table tr td{padding-bottom: 0;}
+.checkTerm{resize: none; font-size: 0.8em;}
 
 /* 오른쪽-------------------- */
 #rightCol>.titleBox{padding: 0;}
 #rightCol table tr{background-color: transparent}
 #rightCol article table tr td{font-size: 80%;}
-#rightCol article table tr:first-child{border: 0;}
 #rightCol article table tr:first-child td:nth-child(3){text-align: center; vertical-align: middle;border-bottom: 2px solid #4C74B9;}
 #rightCol article table tr:nth-child(3){border-bottom: 2px solid #4C74B9;}
+#rightCol article table tr:first-child,
+#rightCol article table tr:last-child,
 #rightCol article table tr:nth-child(4){border: 0;}
 #rightCol article table tr:nth-child(4) td{font-size: 100%; font-weight: bold; color: #4C74B9}
 #rightCol article table tr:nth-child(4) td:last-child{text-align: center}
-#rightCol article table tr:last-child{border: 0;}
 #rightCol article table tr:last-child td{padding: 0; font-size: 100%;}
+#rightCol article table tr:last-child td button{width: 50%; float: left;}
+#rightCol.col-12{padding: 0 !important;}
