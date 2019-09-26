@@ -63,7 +63,7 @@
 		<c:if test="${!empty sessionScope.loginUser}">
 		<c:url var="logout" value="logout.sp"/>
 		<section>
-		<div class="row" id="alram">
+			<div class="row" id="alram">
 				<div class="col-9">
 					<a href="${logout}">로그아웃</a>
 				</div>
