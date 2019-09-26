@@ -93,50 +93,55 @@
 								</div>
 							</div>
 							<article id="article3">
-								<form action="#" method="POST">
-									<table class="table-wrapper">
-										<tr>
-											<td>예약자*</td>
-											<td><input type="text" name="booker" id="booker"></td>
-										</tr>
-										<tr>
-											<td>연락처*</td>
-											<td>
-												<div class="col-3">
-													<div class="default-select" id="default-select">
-														<select name="bookerPhone1" id="bookerPhone1">
-															<option value="010">010</option>
-															<option value="011">011</option>
-															<option value="016">016</option>
-															<option value="017">017</option>
-															<option value="018">018</option>
-															<option value="019">019</option>
-														</select>
-													</div>
+								<table class="table-wrapper">
+									<tr>
+										<td>예약자*</td>
+										<td>
+											<input type="text" id="bookerI" placeholder="2글자이상 5글자 이내 한글로 작성해주세요!">
+											<span class="noticeSpan"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>연락처*</td>
+										<td>
+											<div class="col-3">
+												<div class="default-select" id="default-select">
+													<select name="bookerPhone1" id="bookerPhone1">
+														<option value="010">010</option>
+														<option value="011">011</option>
+														<option value="016">016</option>
+														<option value="017">017</option>
+														<option value="018">018</option>
+														<option value="019">019</option>
+													</select>
 												</div>
-												&nbsp;&nbsp;-&nbsp;&nbsp;
-												<div class="col-3">
-												<input type="text" name="bookerPhone2" id="bookerPhone2" size="4" maxlength="4" required>
-												</div>
-												&nbsp;&nbsp;-&nbsp;&nbsp;
-												<div class="col-3">
-												<input type="text" name="bookerPhone3" id="bookerPhone3" size="4" maxlength="4" required>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>이메일*</td>
-											<td><input type="email" name="bookerEmail" id="bookerEmail" required></td>
-										</tr>
-										<tr>
-											<td>요청사항</td>
-											<td>
-												<textarea name="bookRequest" id="bookRequest" placeholder="요청사항을 적어주세요! (100자 이내)" maxlength="100" rows="3"></textarea>
-											</td>
-										</tr>
-									</table>
-									<span>예약자 정보로 이메일이 발송됩니다. 정확한 정보인지 확인해주세요.</span>
-								</form>
+											</div>
+											&nbsp;&nbsp;-&nbsp;&nbsp;
+											<div class="col-3">
+												<input type="text" id="bookerPhone2" size="4" maxlength="4" required>
+											</div>
+											&nbsp;&nbsp;-&nbsp;&nbsp;
+											<div class="col-3">
+												<input type="text" id="bookerPhone3" size="4" maxlength="4" required>
+											</div><br>
+											<span class="noticeSpan2"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>이메일*</td>
+										<td>
+											<input type="email" id="bookerEmailI">
+											<span class="noticeSpan3"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>요청사항</td>
+										<td>
+											<textarea id="bookRequestI" placeholder="요청사항을 적어주세요! (100자 이내)" maxlength="100" rows="3"></textarea>
+										</td>
+									</tr>
+								</table>
+								<span>예약자 정보로 이메일이 발송됩니다. 정확한 정보인지 확인해주세요.</span>
 							</article>
 
 							<div class="col-12 titleBox">
@@ -224,15 +229,15 @@
 											<button class="button primary small buttonToggle" type="button" data-toggle="collapse" data-target="#check1Content" aria-expanded="false" aria-controls="check1Content">.</button>
 											<div class="collapse" id="check1Content">
 												<div class="card card-body">
-												<textarea class="checkTerm" rows="5" readonly>
-1. 개인정보를 제공받는 자: 해당 공간의 호스트
-2. 제공하는 개인정보 항목
-- 필수항목: 네이버 아이디, 이름, 연락처, 결제정보(결제방식 및 결제금액)
-- 선택항목: 이메일 주소
-3. 개인정보의 제공목적: 공간예약 및 이용 서비스 제공, 환불처리
-4. 개인정보의 제공기간: 서비스 제공기간(단, 관계법령의 규정에 의하여 보존할 필요가 있는 경우 및 사전 동의를 득한 경우에는 해당 기간 동안 보관합니다.)
-5. 개인정보의 제공을 거부할 권리: 개인정보 주체는 개인정보의 제공을 거부할 권리가 있으나, 공간 예약을 위해 반드시 필요한 개인정보의 제공으로서 이를 거부할 시 공간 예약이 어려울 수 있습니다.
-												</textarea>
+													<textarea class="checkTerm" rows="5" readonly>
+	1. 개인정보를 제공받는 자: 해당 공간의 호스트
+	2. 제공하는 개인정보 항목
+	- 필수항목: 네이버 아이디, 이름, 연락처, 결제정보(결제방식 및 결제금액)
+	- 선택항목: 이메일 주소
+	3. 개인정보의 제공목적: 공간예약 및 이용 서비스 제공, 환불처리
+	4. 개인정보의 제공기간: 서비스 제공기간(단, 관계법령의 규정에 의하여 보존할 필요가 있는 경우 및 사전 동의를 득한 경우에는 해당 기간 동안 보관합니다.)
+	5. 개인정보의 제공을 거부할 권리: 개인정보 주체는 개인정보의 제공을 거부할 권리가 있으나, 공간 예약을 위해 반드시 필요한 개인정보의 제공으로서 이를 거부할 시 공간 예약이 어려울 수 있습니다.
+													</textarea>
 												</div>
 											</div>
 										</td>
@@ -268,11 +273,14 @@
 
 						<!-- 오른쪽 -->
 						<div class="col-4" id="rightCol">
-							<div class="col-12 titleBox">
-								<h2>결제 예정금액</h2>
-							</div>
-							<article>
-								<form action="#" method="POST">
+							<div id="rightColFloat" class="rightColFloat">
+								<div class="col-12 titleBox">
+									<h2>결제 예정금액</h2>
+									<div>
+										<span>&#8361;12,900</span>
+									</div>
+								</div>
+								<article>
 									<table class="table-wrapper">
 										<tr>
 											<td>예약날짜</td>
@@ -288,46 +296,68 @@
 											<td>3명</td>
 										</tr>
 										<tr>
-											<td colspan="2">&#8361;</td>
-											<td>12,900</td>
-										</tr>
-										<tr>
 											<td colspan="3">
 												<button type="button" class="button fit" onclick="history.back();">취소</button>
-												<button type="button" class="button primary fit" data-toggle="modal" data-target="#bookConfirm">예약신청</button>
+												<button type="button" class="button primary fit" id="regExpCheck" data-toggle="modal" data-target="#bookConfirm" onclick="bookerCheck();">예약신청</button>
 											</td>
 										</tr>
 									</table>
-								</form>
-							</article>
-							<!-- Modal -->
-							<div class="modal fade" id="bookConfirm" tabindex="-1" role="dialog" aria-labelledby="bookConfirmTitle" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="bookConfirmTitle">예약신청</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
+								</article>
+							</div>
+						</div>
+						<!-- Modal -->
+						<div class="modal fade" id="bookConfirm" tabindex="-1" role="dialog" aria-labelledby="bookConfirmTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="bookConfirmTitle">예약신청</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									
+
+									<form action="" method="post">
 										<div class="modal-body">
 											<h2>예약 내용을 확인해주세요.</h2>
 											<table class="table-wrapper">
 												<tr>
 													<td>예약공간</td>
-													<td>더빅스터디, 3층 3번룸</td>
+													<td><input type="text" name="spaceId" id="spaceId" value="더빅스터디, 3층 3번룸" readonly></td>
 												</tr>
 												<tr>
 													<td>예약날짜</td>
-													<td>2019.10.04 (금)</td>
+													<td><input type="text" name="bookDate" id="bookDate" value="2019.10.04 (금)" readonly></td>
 												</tr>
 												<tr>
 													<td>예약시간</td>
-													<td>18시 ~ 21시, 3시간</td>
+													<td>
+														<input type="text" name="bookStartTime" id="bookStartTime" value="18" readonly> ~ 
+														<input type="text" name="bookEndTime" id="bookEndTime" value="21" readonly>, 
+														, <span></span>
+													</td>
 												</tr>
 												<tr>
 													<td>예약인원</td>
-													<td>3명</td>
+													<td><input type="text" name="bookPer" id="bookPer" value="3" readonly>명</td>
+												</tr>
+												<tr>
+													<td>예약자</td>
+													<td><input type="text" name="booker" id="booker" readonly></td>
+												</tr>
+												<tr>
+													<td>연락처</td>
+													<td><input type="text" name="bookerPhone" id="bookerPhone" readonly></td>
+												</tr>
+												<tr>
+													<td>이메일</td>
+													<td><input type="text" name="bookerEmail" id="bookerEmail" readonly></td>
+												</tr>
+												<tr>
+													<td>요청사항</td>
+													<td>
+														<textarea name="bookRequest" id="bookRequest" readonly></textarea>
+													</td>
 												</tr>
 												<tr>
 													<td>결제예정금액</td>
@@ -337,9 +367,9 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="button small primary" data-dismiss="modal">취소</button>
-											<button type="button" class="button small">예약신청</button>
+											<button type="submit" class="button small">예약신청</button>
 										</div>
-									</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -349,5 +379,7 @@
 		</div>
 		<jsp:include page="../../../WEB-INF/views/common/bottom.jsp"/>
 	</div>
+	
+	<script src="${contextPath}/resources/js/book.js"></script>
 </body>
 </html>

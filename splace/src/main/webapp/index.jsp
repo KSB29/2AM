@@ -69,7 +69,7 @@ margin-bottom: 1em !important;
 				-->
 
 				<!--슬라이드   -->
-			<section>
+				<section>
 					<div class="row">
 						<div id="carouselExampleInterval" class="carousel slide"data-ride="carousel">
 							<div class="carousel-inner w-100 h-100">
@@ -93,6 +93,7 @@ margin-bottom: 1em !important;
 							</a>
 						</div>
 					</div>
+				</section>
 
 				<!-- 추천 공간 -->
 				<section>

@@ -17,16 +17,16 @@ section h1,section h2,section h3,section h4,section h5{
 .titleBox div{text-align: right}
 .titleBox div span label{margin: 0;font-size: 80%; padding-right: 0;}
 #title{padding: 0; font-size: 2em;}
-article form table tr{border: 0;}
-article form table tr td .col-3{display: inline-block; padding: 0;}
+/* article form table tr{border: 0;} */
+article table tr td .col-3{display: inline-block; padding: 0;}
 
 /* 왼쪽---------------------- */
 #leftCol,#leftCol>.titleBox{padding:0;}
 #leftCol article{margin-bottom: 5%;}
 #leftCol table tr{background-color: transparent}
 #leftCol article table tr td{font-size: 80%;}
-#article2>table,#article6 table,#article3>form>table{margin: 0}
-#article2>span, #article3>form>span, #article6>span{
+#article2>table,#article6 table,#article3>table{margin: 0}
+#article2>span, #article3>span, #article6>span{
     font-size: 70%;
     font-weight: bold;
     letter-spacing: -0.8px;
@@ -46,15 +46,12 @@ article form table tr td .col-3{display: inline-block; padding: 0;}
 #rightCol article table tr td{font-size: 80%;}
 #rightCol article table tr:first-child td:nth-child(3){text-align: center; vertical-align: middle;border-bottom: 2px solid #4C74B9;}
 #rightCol article table tr:nth-child(3){border-bottom: 2px solid #4C74B9;}
-#rightCol article table tr:first-child,
-#rightCol article table tr:last-child,
-#rightCol article table tr:nth-child(4){border: 0;}
-#rightCol article table tr:nth-child(4) td{font-size: 100%; font-weight: bold; color: #4C74B9}
-#rightCol article table tr:nth-child(4) td:last-child{text-align: center}
-#rightCol article table tr:last-child td{padding: 0; font-size: 100%;}
-#rightCol article table tr:last-child td button{width: 50%; float: left;}
+#rightCol article table tr:last-child{border: 0;}
+/* #rightCol article table tr:nth-child(4) td{font-size: 100%; font-weight: bold; color: #4C74B9}
+#rightCol article table tr:nth-child(4) td:last-child{text-align: center} */
+#rightCol article table tr:last-child td{font-size: 100%;}
+#rightCol article table tr:last-child td button{width: 48%; margin: 0 1%; float: left;}
 #rightCol.col-12{padding: 0 !important;}
-
 /* MODAL */
 .close{
     padding: 0;
@@ -63,3 +60,17 @@ article form table tr td .col-3{display: inline-block; padding: 0;}
     box-shadow: none;
 }.close:hover{box-shadow: none;background: transparent;}
 .modal-footer button{padding: 0; padding: 0 1.6em !important;}
+.modal-footer{border: 0 !important}
+.modal-body>h2{text-align: center; padding: 5% 0; border-bottom: 3px solid #4C74B9}
+.modal-backdrop {z-index: 10000 !important;}
+.modal{z-index: 10005 !important;}
+.modal-body table tr td{font-size: 80%}
+.modal-body table tr td:last-child{text-align: right}
+.modal-body table{margin:0}
+.modal-body textarea{resize: none;}
+.rightColFloat{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 90%;
+}
