@@ -62,7 +62,7 @@
 }
 
 .tiles>.row>article{
-/* border:1px solid black;   */
+
 height:23em;
 padding: 0 0.7em 0 2em !important;
 }
@@ -101,9 +101,11 @@ border: none;
 outline: none;
 background-color: none!important;
 } 
+
 button:focus: {
 background-color: none!important;
 }
+
 .searchButton{
 margin-left: 9.8%;
 width: 15%;
@@ -115,49 +117,62 @@ outline-style: none;
 width: 25% !important;
 margin-left: 3%;
 padding: 0 0 0 10%;
+font-size: 0.8em;
 
 }
-
+#optionRow{
+border-bottom:3px solid #4c74b9;
+border-radius: 4px;
+}
+#optionRow>*{
+margin: 1% 0 1% 0
+}
 
 #optionRow>button:active{
   background-color: rgba(255, 255, 255, 0.1); 
 }
 
 .material-icons{
-font-size:36px;
+font-size:26px !important;
+padding:4px 7px 0 2px;
+}
+#option1>text{
+padding:0 0 0 2px;
+}
+.fas,.fab{
+padding:4px 7px 0 2px;
 }
 
 
 #optionField{
 border:1px solid #585858;
-float:left;
+/* float:left; */
 border-radius: 5px;
-margin:3% 5% 2% 5%;
+/* margin:3% 5% 2% 5%; */
 width:100%;
-margin-right:0;
+/* margin-right:0; */
 display: none; 
 
 }
 #optionField>ul{
 list-style: none;
 padding:0 !important;
-margin:3% 5% 2% 5%;
+margin:3% -5% 2% 11%;
 overflow: hidden;
-border:1px solid black 
+
 
 }
 
 #optionField>ul>li{
-width: 25%;
-display:inline-block; 
+width: 33%;
 box-sizing: border-box;
 position:relative;
 float:left;
 padding-right:0.5em;
 }
+
 #optionField>ul>li>label{
 margin:1em 0 1em 0 ;
-border:1px solid black; 
 width:100%;
 padding:0;
 text-align:left;
@@ -170,10 +185,26 @@ text-align:left;
     width: 1px;
     height: 1px;
     z-index: -1;
+
 }
 input[type="checkbox"]:checked+ label{
     color:#4c74b9; 
+
 }
+input[type="checkbox"] + label:before, input[type="radio"] + label:before{
+background: none !important;
+border: none !important;
+content: none !important;
+}
+
+input.checkbox[type='checkbox'] + label {
+  display: block;
+}
+
+input.checkbox[type='checkbox']:not(:checked) {
+  display: none;
+}
+
 
 
 </style>
