@@ -273,7 +273,7 @@
 							</div>
 							<article>
 								<form action="#" method="POST">
-								<table class="table-wrapper">
+									<table class="table-wrapper">
 										<tr>
 											<td>예약날짜</td>
 											<td>2019.10.04 (금)</td>
@@ -294,32 +294,54 @@
 										<tr>
 											<td colspan="3">
 												<button type="button" class="button fit" onclick="history.back();">취소</button>
-												<button type="button" class="button primary fit" data-toggle="modal" data-target="#exampleModalCenter">예약신청</button>
+												<button type="button" class="button primary fit" data-toggle="modal" data-target="#bookConfirm">예약신청</button>
 											</td>
-											<!-- Modal -->
-											<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-												<div class="modal-dialog modal-dialog-centered" role="document">
-												<div class="modal-content">
-													<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-													</div>
-													<div class="modal-body">
-													...
-													</div>
-													<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Save changes</button>
-													</div>
-												</div>
-												</div>
-											</div>
 										</tr>
 									</table>
 								</form>
 							</article>
+							<!-- Modal -->
+							<div class="modal fade" id="bookConfirm" tabindex="-1" role="dialog" aria-labelledby="bookConfirmTitle" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="bookConfirmTitle">예약신청</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<h2>예약 내용을 확인해주세요.</h2>
+											<table class="table-wrapper">
+												<tr>
+													<td>예약공간</td>
+													<td>더빅스터디, 3층 3번룸</td>
+												</tr>
+												<tr>
+													<td>예약날짜</td>
+													<td>2019.10.04 (금)</td>
+												</tr>
+												<tr>
+													<td>예약시간</td>
+													<td>18시 ~ 21시, 3시간</td>
+												</tr>
+												<tr>
+													<td>예약인원</td>
+													<td>3명</td>
+												</tr>
+												<tr>
+													<td>결제예정금액</td>
+													<td>&#8361;12,900</td>
+												</tr>
+											</table>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="button small primary" data-dismiss="modal">취소</button>
+											<button type="button" class="button small">예약신청</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</section>
