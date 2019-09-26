@@ -268,3 +268,12 @@ width:20%;
     padding-left: 3em;
 text-align:left;
 } 
+
+
+#all>input{
+border:1px solid black;
+
+}
+#all>label{
+float:right !important;
+}
