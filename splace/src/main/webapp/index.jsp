@@ -8,10 +8,8 @@
 <meta charset="UTF-8">
 <style>
 .slide{
-    width: auto;
+    width: 100%;
     height: 24.7em;
-    padding-left: 0px !important;
-
 }
 .row>section{
 	position:relative !important;

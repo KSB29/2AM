@@ -4,213 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style>
-.slide {
-   width: auto;
-   height: 24.7em;
-   padding-left: 0px !important;
-}
-
-.row>section {
-   position: relative !important;
-   width: 100%;
-   display: block;
-   padding: 0;
-   margin-top: 0;
-   margin-left: 0;
-}
-
-.row>h2 {
-   margin-top: 3em;
-   margin-bottom: 0;
-}
-
-.tiles>.row>article {
-   /* border:1px solid black;   */
-   height: 23em;
-}
-
-.location>span>img, .reviewHeart>span>img {
-   width: 1em;
-   height: 1em;
-}
-
-.price, .reviewHeart {
-   width: 3em;
-   display: inline;
-}
-
-.price {
-   margin-right: 4em
-}
-
-.locationName>h3 {
-   margin-top: 1em;
-   margin-bottom: 1em !important;
-}
-
-.row>p {
-   font-size: 1.6em;
-   font-weight: 200;
-   padding-left: 1em;
-}
-
-.row>select {
-   width: 14em;
-   text-align: center !important;
-
-}
-
-.tiles>.row>article{
-
-height:23em;
-padding: 0 0.7em 0 2em !important;
-}
-
-.searchOption{
-width:23%;
-margin-right:4.9%;
-box-shadow: none;
-border: none;
-outline: none;
-margin-left:4.9%;
-}
-
- .searchOption:hover{
-color: none;
-box-shadow: none;
-border: none;
-outline: none;
-background-color: none!important;
-}
-
-.searchOption:click{
-background-color: none;
-}
-.searchOption:active{
-color: none;
-box-shadow: none;
-border: none;
-outline: none;
-background-color: none!important;
-}
-
-#searchOption:focus{
-box-shadow: none;
-border: none;
-outline: none;
-background-color: none!important;
-} 
-
-button:focus: {
-background-color: none!important;
-}
-
-.searchButton{
-margin-left: 9.8%;
-width: 15%;
-outline-style: none;
-
-}
-
-#default-select{
-width: 25% !important;
-margin-left: 3%;
-padding: 0 0 0 10%;
-font-size: 0.8em;
-
-}
-#optionRow{
-border-bottom:3px solid #4c74b9;
-border-radius: 4px;
-}
-#optionRow>*{
-margin: 1% 0 1% 0
-}
-
-#optionRow>button:active{
-  background-color: rgba(255, 255, 255, 0.1); 
-}
-
-.material-icons{
-font-size:26px !important;
-padding:4px 7px 0 2px;
-}
-#option1>text{
-padding:0 0 0 2px;
-}
-.fas,.fab{
-padding:4px 7px 0 2px;
-}
-
-
-#optionField{
-border:1px solid #585858;
-/* float:left; */
-border-radius: 5px;
-/* margin:3% 5% 2% 5%; */
-width:100%;
-/* margin-right:0; */
-display: none; 
-
-}
-#optionField>ul{
-list-style: none;
-padding:0 !important;
-margin:3% -5% 2% 11%;
-overflow: hidden;
-
-
-}
-
-#optionField>ul>li{
-width: 33%;
-box-sizing: border-box;
-position:relative;
-float:left;
-padding-right:0.5em;
-}
-
-#optionField>ul>li>label{
-margin:1em 0 1em 0 ;
-width:100%;
-padding:0;
-text-align:left;
-} 
-
-#optionField>ul>li>input.checkbox{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 1px;
-    height: 1px;
-    z-index: -1;
-
-}
-input[type="checkbox"]:checked+ label{
-    color:#4c74b9; 
-
-}
-input[type="checkbox"] + label:before, input[type="radio"] + label:before{
-background: none !important;
-border: none !important;
-content: none !important;
-}
-
-input.checkbox[type='checkbox'] + label {
-  display: block;
-}
-
-input.checkbox[type='checkbox']:not(:checked) {
-  display: none;
-}
-
-
-
-</style>
-
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<link rel="stylesheet" href="${contextPath}/resources/css/searchList.css" type="text/css">
 <title>SPLACE</title>
 </head>
 <body>
@@ -229,7 +25,7 @@ input.checkbox[type='checkbox']:not(:checked) {
             <section>
                <div class="row">
                   <p>[ 검색결과 ]입니다</p>
-               </div>
+               </div> 
             </section>
             
             <section>
@@ -240,148 +36,219 @@ input.checkbox[type='checkbox']:not(:checked) {
             <!-- 상세 검색 리스트 구역 -->
             <section class="optionSection">
                <div class="row" id="optionRow">
-                  <div class="default-select" id="default-select">
-                     <select>
-                        	  <option value="">지역</option>
-                              <option value="#">종로구</option>
-                              <option value="#">중구</option>
-                              <option value="#">용산구</option>
-                              <option value="#">성동구</option>
-                              <option value="#">광진구</option>
-                              <option value="#">동대문구</option>
-                              <option value="#">중랑구</option>
-                              <option value="#">성북구</option>
-                              <option value="#">강북구</option>
-                              <option value="#">도봉구</option>
-                              <option value="#">노원구</option>
-                              <option value="#">은평구</option>
-                              <option value="#">서대문구</option>
-                              <option value="#">마포구</option>
-                              <option value="#">양천구</option>
-                              <option value="#">강서구</option>
-                              <option value="#">구로구</option>
-                              <option value="#">금천구</option>
-                              <option value="#">영등포구</option>
-                              <option value="#">동작구</option>
-                              <option value="#">관악구</option>
-                              <option value="#">서초구</option>
-                              <option value="#">강남구</option>
-                              <option value="#">송파구</option>
-                              <option value="#">강동구</option>
-                     </select>
-                  </div>
-                  <div class="default-select" id="default-select">
-                     <select>
-                        <option value="">유형</option>
-                              <option value="#">카페</option>
-                              <option value="#">파티룸</option>
-                              <option value="#">회의실</option>
-                              <option value="#">스터디룸</option>
-                              <option value="#">스튜디오</option>
-                     </select>
-                  </div>
-               <button class="searchOption" id="searchOption" onclick="myFunction();">옵션</button>
-               <button id="searchButton" class="button primary">search</button>
+                 <button class="searchOption buttonToggle" id="searchOption" onclick="locationOpen();">지역</button>
+                 <button class="searchOption buttonToggle" id="searchOption" onclick="typeOpen();">유형</button>
+                 <button class="searchOption buttonToggle" id="searchOption" onclick="optionOpen();">옵션</button>
+                 <button id="searchOption" class="button primary ">search</button>
                </div>
             </section>
-         
-            <!-- 옵션 창 구역  -->
-            <section>
-               <div class="row" id="optionField" style="border:1px solid black">
+            
+            <!-- 지역 창 구역 -->
+				<section>
+					<div class="row" id="locationField"
+						style="border: 1px solid black;  display: none;">
+						<ul>
+							<li><input type="checkbox" id="location1" value="1"> <label
+								for="location1"> 강남구 </label></li>
+							<li><input type="checkbox" id="location2" value="2"> <label
+								for="location2"> 강동구 </label></li>
+							<li><input type="checkbox" id="location3" value="3"> <label
+								for="location3"> 강북구 </label></li>
+							<li><input type="checkbox" id="location4" value="4"> <label
+								for="location4"> 강서구 </label></li>
+							<li><input type="checkbox" id="location5" value="5"> <label
+								for="location5"> 구로구 </label></li>
+							<li><input type="checkbox" id="location6" value="6"> <label
+								for="location6"> 금천구 </label></li>
+							<li><input type="checkbox" id="location7" value="7"> <label
+								for="location7"> 광진구 </label></li>
+							<li><input type="checkbox" id="location8" value="8"> <label
+								for="location8"> 관악구 </label></li>
+							<li><input type="checkbox" id="location9" value="9"> <label
+								for="location9"> 노원구 </label></li>
+							<li><input type="checkbox" id="location10" value="10"> <label
+								for="location10"> 도봉구 </label></li>
+							<li><input type="checkbox" id="location11" value="11"> <label
+								for="location11"> 동대문구 </label></li>
+							<li><input type="checkbox" id="location12" value="12"> <label
+								for="location12"> 동작구 </label></li>
+							<li><input type="checkbox" id="location13" value="13"> <label
+								for="location13"> 마포구 </label></li>
+							<li><input type="checkbox" id="location14" value="14"> <label
+								for="location14"> 서대문구 </label></li>
+							<li><input type="checkbox" id="location15" value="15"> <label
+								for="location15"> 서초구 </label></li>
+							<li><input type="checkbox" id="location16" value="16"> <label
+								for="location16"> 성북구 </label></li>
+							<li><input type="checkbox" id="location17" value="17"> <label
+								for="location17"> 송파구 </label></li>
+							<li><input type="checkbox" id="location18" value="18"> <label
+								for="location18"> 양천구 </label></li>
+							<li><input type="checkbox" id="location19" value="19"> <label
+								for="location19"> 영등포구 </label></li>
+							<li><input type="checkbox" id="location20" value="20"> <label
+								for="location20"> 용산구 </label></li>
+							<li><input type="checkbox" id="location21" value="21"> <label
+								for="location21"> 은평구 </label></li>
+							<li><input type="checkbox" id="location22" value="22"> <label
+								for="location22"> 종로구 </label></li>
+							<li><input type="checkbox" id="location23" value="23"> <label
+								for="location23"> 중구 </label></li>
+							<li><input type="checkbox" id="location24" value="24"> <label
+								for="location24"> 중랑구 </label></li>
+							<li><input type="checkbox" id="location25" value="25"> <label
+								for="location25"> 송파구 </label></li>
+						</ul>
+					</div>
+				</section>
+				
+				<!-- 유형 창 구역 -->
+				 <section>
+               <div class="row" id="typeField" style="border:1px solid black; display: none;">
                   <ul>
                      <li>
-                        <input type="checkbox" id="option1">
+                        <input type="checkbox" id="type1" value="cafe">
+                        <label for="type1">
+                   		    <i class="fas fa-coffee"></i>
+              		         카페
+                        </label>
+                     </li>
+                        <li>
+                        <input type="checkbox" id="type2" value="partyRoom">
+                        <label for="type2">
+                         <i class="material-icons">
+							cake
+						</i>
+                  		         파티룸
+                        </label>
+                     </li>
+                        <li>
+                        <input type="checkbox" id="type3" value="meetingRoom">
+                        <label for="type3">
+                           <i class="material-icons">
+							business
+							</i>
+               	  	                  회의실
+                        </label>
+                     </li>
+                        <li>
+                        <input type="checkbox" id="type4" value="studyRoom">
+                        <label for="type4">
+                          <i class="material-icons">
+							menu_book
+							</i>
+                	   	        스터디룸
+                        </label>
+                     </li>
+                        <li>
+                        <input type="checkbox" id="type5" value="studio">
+                        <label for="type5">
+                        <i class="fas fa-camera"></i>
+                          	스튜디오
+                        </label>
+                     </li>
+               </ul>
+            </div>
+            </section>
+            
+
+				<!-- 옵션 창 구역  -->
+            <section>
+               <div class="row" id="optionField" style="border:1px solid black; display: none;">
+                  <ul>
+                     <li>
+                        <input type="checkbox" id="option1" value="food">
                         <label for="option1">
                            <i class="material-icons">fastfood</i>
-                           음식물반입가능
+              		             음식물반입가능
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option2">
+                        <input type="checkbox" id="option2" value="parking">
                         <label for="option2">
                            <i class="material-icons">local_parking</i>
-                           주차가능
+                  		         주차가능
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option3">
+                        <input type="checkbox" id="option3" value="mic">
                         <label for="option3">
                            <i class="material-icons">mic</i>
-                           음향/마이크
+               	  	          음향/마이크
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option4">
+                        <input type="checkbox" id="option4" value="wifi">
                         <label for="option4">
                            <i class="material-icons">wifi</i>
-                           인터넷/와이파이
+                	   	        인터넷/와이파이
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option5">
+                        <input type="checkbox" id="option5" value="pet">
                         <label for="option5">
                         <i class="material-icons">pets</i>
-                           반려동물동반가능
+                          	 반려동물동반가능
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option6">
+                        <input type="checkbox" id="option6" value="nonsmoke">
                         <label for="option6">
                            <i class="material-icons">smoke_free</i>
-                           금연
+                        	   금연
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option7">
+                        <input type="checkbox" id="option7" value="tv">
                         <label for="option7">
                            <i class="material-icons">live_tv</i>
-                           TV/프로젝터
+                     	      TV/프로젝터
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option8">
+                        <input type="checkbox" id="option8" value="drink">
                         <label for="option8">
                            <i class="material-icons">local_bar</i>
-                           주류반입가능
+                   		        주류반입가능
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option9">
+                        <input type="checkbox" id="option9" value="copy">
                         <label for="option9">
                            <i class="material-icons">local_printshop</i>
-                           복사/인쇄기
+                      	        복사/인쇄기
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option10">
+                        <input type="checkbox" id="option10" value="toilet">
                         <label for="option10">
                            <i class='fas fa-restroom'></i>
-                           화장실
+                                                             화장실
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option11">
+                        <input type="checkbox" id="option11" value="board">
                         <label for="option11">
                            <i class='fas fa-chalkboard'></i>
-                           화이트보드
+                                                                 화이트보드
                         </label>
                      </li>
                    <li>
-                        <input type="checkbox" id="option12">
+                        <input type="checkbox" id="option12" value="heater">
                         <label for="option12">
                            <i class='fab fa-hotjar'></i>
-                              난방기
+                          	    난방기
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option13">
+                        <input type="checkbox" id="option13" value="air">
                         <label for="option13">
                            <i class='fas fa-wind'></i>
-                              에어컨
+                           	   에어컨
                         </label>
                      </li>
                         <li>
-                        <input type="checkbox" id="option14">
+                        <input type="checkbox" id="option14" value="cctv">
                         <label for="option14">
                            <i class='fas fa-video'></i>
                            CCTV
@@ -404,7 +271,7 @@ input.checkbox[type='checkbox']:not(:checked) {
                         </div>
                         <div class="location">
                            <span> <img src="resources/img/location.svg"> 서울시
-                              중구
+                      	        중구
                            </span>
                         </div>
                         <div class="tags">
@@ -429,7 +296,7 @@ input.checkbox[type='checkbox']:not(:checked) {
                            </div>
                            <div class="location">
                               <span> <img src="resources/img/location.svg"> 서울시
-                                 중구
+                           	      중구
                               </span>
                            </div>
                            <div class="tags">
@@ -454,7 +321,7 @@ input.checkbox[type='checkbox']:not(:checked) {
                         </div>
                         <div class="location">
                            <span> <img src="resources/img/location.svg"> 서울시
-                              중구
+                      	        중구
                            </span>
                         </div>
                         <div class="tags">
@@ -479,7 +346,7 @@ input.checkbox[type='checkbox']:not(:checked) {
                         </div>
                         <div class="location">
                            <span> <img src="resources/img/location.svg"> 서울시
-                              중구
+                          	    중구
                            </span>
                         </div>
                         <div class="tags">
@@ -528,7 +395,7 @@ input.checkbox[type='checkbox']:not(:checked) {
                         </div>
                         <div class="location">
                            <span> <img src="resources/img/location.svg"> 서울시
-                              중구
+                     	         중구
                            </span>
                         </div>
                         <div class="tags">
@@ -555,14 +422,46 @@ input.checkbox[type='checkbox']:not(:checked) {
       <!-- Scripts -->
    <script>
    /* 옵션창 오픈클로즈 */
-   function myFunction() {
+  
+   function optionOpen() {
         var x = document.getElementById("optionField");
+        var y = document.getElementById("locationField");
+        var z = document.getElementById("typeField");
         if (x.style.display === "none") {
           x.style.display = "block";
         } else {
           x.style.display = "none";
         }
+        y.style.display = "none";
+        z.style.display = "none";
+        
       }
+    /* 지역창 오픈 클로즈 */
+    function locationOpen() {
+    	var x = document.getElementById("optionField");
+        var y = document.getElementById("locationField");
+        var z = document.getElementById("typeField");
+       if (y.style.display === "none") {
+         y.style.display = "block";
+       } else {
+         y.style.display = "none";
+       }
+       x.style.display = "none";
+       z.style.display = "none";
+     } 
+   /* 유형창 오픈클로즈 */
+   function typeOpen() {
+	   var x = document.getElementById("optionField");
+       var y = document.getElementById("locationField");
+       var z = document.getElementById("typeField");
+       if (z.style.display === "none") {
+         z.style.display = "block";
+       } else {
+         z.style.display = "none";
+       }
+       x.style.display = "none";
+       y.style.display = "none";
+     }  
    </script>
 </body>
 </html>
