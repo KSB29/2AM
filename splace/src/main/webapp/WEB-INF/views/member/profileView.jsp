@@ -22,7 +22,7 @@
 			<c:url var="deleteMember" value="deleteMember.sp"/>
 		
 				<!-- Menu -->
-			<jsp:include page="../common/top.jsp"/>
+			 <jsp:include page="../common/top.jsp"/> 
 
 				<!-- Main -->
 				<div id="main">

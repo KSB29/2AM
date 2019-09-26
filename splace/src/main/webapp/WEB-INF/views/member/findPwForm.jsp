@@ -14,12 +14,11 @@
 		<link rel="stylesheet" href="${contextPath }/resources/css/style.css" type="text/css">
 		<link rel="stylesheet" href="${contextPath }/resources/css/findPw.css" type="text/css">
 		<link rel="stylesheet" href="${contextPath }/resources/css/common.css" type="text/css">
-		
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
 	</head>
 	<body class="is-preload">
 	
-		<jsp:include page="../common/top.jsp"/>
+	<%-- 	<jsp:include page="../common/top.jsp"/> --%>
 		<!-- Wrapper -->
 			<div id="wrapper">
 			
