@@ -20,9 +20,9 @@
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
-		
+	
 			<div id="wrapper">
-			<jsp:include page="../common/top.jsp"/>
+		 	<jsp:include page="../common/top.jsp"/> 
 			
 				<!-- Main -->
 					<div id="main">
@@ -46,7 +46,8 @@
 															<label for="rememberId">ID 기억하기</label>
 														</div>  
 														<div class="col-6 pw_find">
-															<a>비밀번호 찾기</a>
+															<c:url var="findPwForm" value="findPwForm.sp"/> 
+															<a href="${findPwForm}">비밀번호 찾기</a>
 														</div>
 													</div>
 													<div class="login_btn">

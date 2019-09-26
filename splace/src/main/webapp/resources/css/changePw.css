@@ -1,0 +1,25 @@
+
+.changeForm_wrapper{
+    margin: 10rem 0 0 0;
+}
+.changeForm_1, .changeForm_2{
+    margin: 2rem 0 0 0;
+}
+
+.changeForm_1>div{
+    margin: 0.5em 0 0 0 ;
+}
+
+
+
+
+/* 배경 이미지 */
+
+.change_bg{
+    
+    background-image: url(../img/back08.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: scroll;
+    background-position: left center;
+}
