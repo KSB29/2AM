@@ -157,7 +157,7 @@
 	            <section>
 	               <div class="row" id="optionField" style="border:1px solid black; display: none;">
 						<input type="checkbox" id="all">
-						<label for="all">전체 동의</label>
+						<label for="all">전체 선택</label>
 					
 	                  <ul>
 	                     <li>
