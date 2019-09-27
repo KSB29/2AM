@@ -31,19 +31,19 @@ $(function(){
     }
 
     // buttonToggle
-     $(".buttonToggle").click(function(){
-        //  console.log($("this").hasClass("primary"));
-         $(this).toggleClass("buttonToggleOpen");
-         if($(this).hasClass("buttonToggleOpen") == true){
+    $(".buttonToggle").click(function(){
+    //  console.log($("this").hasClass("primary"));
+        $(this).toggleClass("buttonToggleOpen");
+        if($(this).hasClass("buttonToggleOpen") == true){
             $(this).parent().css("padding-bottom", "0.75em");
-         } else{
+        } else{
             $(this).parent().css("padding-bottom", "0");
-         }
-        //  if($(this).hasClass("primary") == true){
-        //     $(this).toggleClass("buttonToggle1");
-        // } else{
-        //     $(this).toggleClass("buttonToggle2");
-        // }
-     });
+        }
+    //  if($(this).hasClass("primary") == true){
+    //     $(this).toggleClass("buttonToggle1");
+    // } else{
+    //     $(this).toggleClass("buttonToggle2");
+    // }
+    });
 });
 

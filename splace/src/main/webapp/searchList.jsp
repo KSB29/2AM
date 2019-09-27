@@ -37,9 +37,9 @@
             <form>
 	            <section class="optionSection">
 	               <div class="row" id="optionRow">
-	                 <button class="searchOption buttonToggle" id="searchOption" onclick="locationOpen();">지역</button>
-	                 <button class="searchOption buttonToggle" id="searchOption" onclick="typeOpen();">유형</button>
-	                 <button class="searchOption buttonToggle" id="searchOption" onclick="optionOpen();">옵션</button>
+	                 <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="locationOpen();">지역</button>
+	                 <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="typeOpen();">유형</button>
+	                 <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="optionOpen();">옵션</button>
 	                 <button id="searchOption" class="button primary ">search</button>
 	               </div>
 	            </section>
@@ -423,10 +423,10 @@
    <jsp:include page="WEB-INF/views/common/bottom.jsp" />
    </div>
    
-      <!-- Scripts -->
+   <!-- Scripts -->
+   
    <script>
    /* 옵션창 오픈클로즈 */
-  
    function optionOpen() {
         var x = document.getElementById("optionField");
         var y = document.getElementById("locationField");
