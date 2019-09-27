@@ -56,7 +56,7 @@ SPLACE
 FAQ
 
 <br><br>
-<a href="https://semantic-ui.com">https://semantic-ui.com</a>
-<a href="https://codepen.io">https://codepen.io</a>
-<a href="https://codepen.io">https://codepen.io</a>
-https://ovenapp.io
+https://semantic-ui.com<br>
+https://codepen.io<br>
+https://ovenapp.io<br>
+https://getbootstrap.com
