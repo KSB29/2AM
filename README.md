@@ -54,3 +54,7 @@ SPLACE
 <h3>기타</h3>
 공지사항
 FAQ
+
+
+
+<a href="https://semantic-ui.com">https://semantic-ui.com</a>
