@@ -43,24 +43,22 @@
 							<article>
 								<table class="table-wrapper">
 									<tr>
-										<td rowspan="2"></td>
-										<td><h2>더빅스터디, 3층 3번룸</h2></td>
+										<td rowspan="5"></td>
+										<td colspan="3"><h2>더빅스터디, 3층 3번룸</h2></td>
 									</tr>
 									<tr>
-										<td>
-											3-6인 스터디룸으로 회의 및 스터디로 쾌적한 공간입니다.
-										</td>
+										<td colspan="3">3-6인 스터디룸으로 회의 및 스터디로 쾌적한 공간입니다.</td>
 									</tr>
 									<tr>
 										<td><li>공간유형</li></td>
-										<td>회의실, 스터디룸</td>
+										<td colspan="2">회의실, 스터디룸</td>
 									</tr>
 									<tr>
 										<td><li>예약인원</li></td>
-										<td>최소 3명 ~ 최대 6명</td>
+										<td colspan="2">최소 3명 ~ 최대 6명</td>
 									</tr>
 									<tr>
-										<td colspan="2">
+										<td colspan="3">
 											<span>금연</span>
 											<span>화이트보드</span>
 											<span>인터넷/WIFI</span>
@@ -315,9 +313,8 @@
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
-									
-
-									<form action="" method="post">
+									<c:url var="bookList" value="bookList.sp" />
+									<form action="${bookList}" method="post">
 										<div class="modal-body">
 											<h2>예약 내용을 확인해주세요.</h2>
 											<table class="table-wrapper">
@@ -332,9 +329,9 @@
 												<tr>
 													<td>예약시간</td>
 													<td>
-														<input type="text" name="bookStartTime" id="bookStartTime" value="18" readonly> ~ 
-														<input type="text" name="bookEndTime" id="bookEndTime" value="21" readonly>, 
-														, <span></span>
+														<input type="text" name="last-child" id="bookStartTime" value="18" readonly> ~ 
+														<input type="text" name="bookEndTime" id="bookEndTime" value="21" readonly> 
+														, <span>(${21-18}시간)</span>
 													</td>
 												</tr>
 												<tr>
@@ -361,7 +358,7 @@
 												</tr>
 												<tr>
 													<td>결제예정금액</td>
-													<td>&#8361;12,900</td>
+													<td>&#8361;<input type="text" name="totalPrice" id="totalPrice" readonly></td>
 												</tr>
 											</table>
 										</div>

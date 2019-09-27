@@ -64,7 +64,18 @@ article table tr td .col-3{display: inline-block; padding: 0;}
 .modal-body>h2{text-align: center; padding: 5% 0; border-bottom: 3px solid #4C74B9}
 .modal-backdrop {z-index: 10000 !important;}
 .modal{z-index: 10005 !important;}
-.modal-body table tr td{font-size: 80%}
+.modal-body table tr td{font-size: 80%; width: 50%; vertical-align: middle}
+.modal-body table tr td:last-child *{
+    height: 2em;
+    font-size: 95%;
+    display: inline-block;
+    width: fit-content;
+    text-align: right;
+    box-shadow: none; 
+    border: 0;
+}#bookStartTime,#bookEndTime,#bookPer{width: 15%;}
+.modal-body table tr td:last-child *:active,
+.modal-body table tr td:last-child *:focus{box-shadow: none; border: 0}
 .modal-body table tr td:last-child{text-align: right}
 .modal-body table{margin:0}
 .modal-body textarea{resize: none;}
