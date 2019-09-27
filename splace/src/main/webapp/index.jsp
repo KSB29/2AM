@@ -87,7 +87,7 @@ margin-bottom: 1em !important;
 							</a> 
 							<a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next"> 
 							<span class="carousel-control-next-icon" aria-hidden="true"></span> 
-							<span class="sr-only">Next</span>
+							<span class="sr-only">Next</span> 
 							</a>
 						</div>
 					</div>
