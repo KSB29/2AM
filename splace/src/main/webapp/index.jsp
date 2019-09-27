@@ -102,13 +102,20 @@ margin-bottom: 1em !important;
 				</section>
 				
 				<!-- 목록 -->
+				<c:url var="bookForm" value="bookForm.sp" />
+				<c:url var="bookList" value="bookList.sp" />
+				<c:url var="bookDetail" value="bookDetail.sp" />
+				<c:url var="bookCancel" value="bookCancel.sp" />
+				<c:url var="paymentForm" value="paymentForm.sp" />
+				<c:url var="paymentList" value="paymentList.sp" />
+				<c:url var="paymentDetail" value="paymentDetail.sp" />
+				<c:url var="paymentCancel" value="paymentCancel.sp" />
 				<section class="tiles">
 					<div class="row">
 						<article>
 							<span class="image"> <img src="resources/img/studio.jpg"
 								alt="" />
 							</span> 
-							<c:url var="bookForm" value="bookForm.sp" />
 							<a href="${bookForm}"></a> 
 							<span>
 								<div class="locationName">
@@ -143,7 +150,7 @@ margin-bottom: 1em !important;
 							<span class="image"> <img src="resources/img/studio.jpg"
 								alt="" />
 							</span> 
-							<a href="${contextPath }/views/space/searchList.jsp"></a> 
+							<a href="${bookList}"></a> 
 							<span>
 									<div class="locationName">
 										<h3>Kh정보교육원</h3>
@@ -169,7 +176,7 @@ margin-bottom: 1em !important;
 						<article>
 							<span class="image"> <img src="resources/img/studio.jpg"
 								alt="" />
-							</span> <a href="#"></a> <span>
+							</span> <a href="${bookDetail}"></a> <span>
 								<div class="locationName">
 									<h3>Kh정보교육원</h3>
 								</div>
