@@ -55,6 +55,5 @@ SPLACE
 공지사항
 FAQ
 
-
-
+<br><br>
 <a href="https://semantic-ui.com">https://semantic-ui.com</a>
