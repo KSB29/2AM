@@ -156,15 +156,15 @@
 						        <div class="modal-dialog modal-dialog-centered" role="document">
 						            <div class="modal-content">
 						                <div class="modal-header">
-						                    <h5 class="modal-title" id="exampleModalCenterTitle">Q&A 작성하기</h5>
-						                </div>
-						                <!-- 글자수 세기 -->
-						                <div class="textCount">
-						                   <p id="counter"></p>
+						                    <h5 class="modal-title" id="exampleModalCenterTitle">Q&A 작성</h5>
 						                </div>
 						                <form action="">
 						                    <div class="modal-body">
-						                        <textarea id="content" maxlength="300"></textarea>
+						                        <textarea class="content" maxlength="300"></textarea>
+						                        <!-- 글자수 세기 -->
+								                <div class="textCount">
+								                   <p class="counter"></p>
+								                </div>
 						                    </div>
 						                    
 						                    <div class="modal-footer">
@@ -206,62 +206,56 @@
 							</div>
 							<!-- 글쓰기 버튼 -->
 							<div class="writeBtn">
-								<button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"  data-backdrop="static"></button>
-								<!-- <button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter" data-backdrop="static"></button> -->
+								<button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter2" data-backdrop="static"></button>
 							</div>
 							<!-- Modal -->
-           
-					        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					            <div class="modal-dialog" role="document">
-					                <div class="modal-content">
-					                    <div class="modal-header">
-					                        <h5 class="modal-title" id="exampleModalLabel">이용 후기 작성</h5>
-					                    </div>
-					                    <div class="modal-body">
-					                        <form>
-					                            <div class="starForm">
-					                                <label for="recipient-name" class="starLabel">별점</label>
-					                                <div class="cont" >
-					                                    <div class="stars">
-					                                        <form action="#">
-					                                            <input class="star star-5" id="star-5-2" type="radio" name="star" />
-					                                            <label class="star star-5" for="star-5-2" ></label>
-					                                            <input class="star star-4" id="star-4-2" type="radio" name="star" />
-					                                            <label class="star star-4" for="star-4-2" ></label>
-					                                            <input class="star star-3" id="star-3-2" type="radio" name="star" />
-					                                            <label class="star star-3" for="star-3-2" ></label>
-					                                            <input class="star star-2" id="star-2-2" type="radio" name="star"/>
-					                                            <label class="star star-2" for="star-2-2" ></label>
-					                                            <input class="star star-1" id="star-1-2" type="radio" name="star" />
-					                                            <label class="star star-1" for="star-1-2" ></label>
-					                                        </form>
-					                                    </div>
-					                                </div>
-					                            </div>
-					                            <div class="form-group">
-					                                <textarea class="form-control" id="message-text"></textarea>
-					                                <input multiple="multiple"  type="file" name="filename[]" />
-					                            </div>
-					                        </form>
-					                    </div>
-					                    <div class="modal-footer">
-					                        <button type="reset" class="button primary cancel" data-dismiss="modal">취소</button>
-					                        <button type="button" class="button">등록</button>
-					                    </div>
-					                </div>
-					            </div>
-					        </div>
-					
+           					<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						        <div class="modal-dialog modal-dialog-centered" role="document">
+						            <div class="modal-content">
+						                <div class="modal-header">
+						                    <h5 class="modal-title" id="exampleModalCenterTitle">이용 후기 작성</h5>
+						                </div>
+						                
+						                <form action="">
+						                    <div class="modal-body">
+						                    	<div class = "starArea">
+						                    		<h5 class="starGrade">별점</h5>
+						                    		<div class="starChange">
+						                    			<p id="star_grade">
+											                <a href="#"><i class="fas fa-star"></i></a>
+											                <a href="#"><i class="fas fa-star"></i></a>
+											                <a href="#"><i class="fas fa-star"></i></a>
+											                <a href="#"><i class="fas fa-star"></i></a>
+											                <a href="#"><i class="fas fa-star"></i></a>
+											            </p>
+						                    		</div>
+						                    	</div>
+						                    	
+						                        <textarea class="content" maxlength="300"></textarea>
+							                        <!-- 글자수 세기 -->
+									                <div class="textCount">
+									                   <p class="counter"></p>
+									                </div>
+						                        <input multiple="multiple" class ="fileMult" type="file" name="filename[]" />
+						                    </div>
+						                    
+						                    <div class="modal-footer">
+						                        <button type="reset" class="button primary cancel" data-dismiss="modal">취소</button>
+						                        <button type="button" class="button">등록</button>
+						                    </div>
+						                </form>
+						            </div>
+						        </div>
+							</div>
 							<!--  review list 출력 -->
 							<div class="reviewList">
-								<!-- <div class="reviewUpdate">
+								<div class="reviewBtn">
+									<button>[수정]</button>
 									<button>[삭제]</button>
-								</div> -->
-								<div class="reviewDelete">
 								</div>
 								<div class="review">
-									<h5>별점</h5>
 									<h5>이름</h5>
+									<h5>별점</h5>
 									<h4>리뷰 내용</h4>
 									<h6>작성날짜</h6>
 								</div>
@@ -272,7 +266,13 @@
 							</div>
 						</div><!-- review끝 -->
 						
-						
+						<!-- 호스트의 다른 공간 -->
+						<div class="spaceIntro">
+							<div class="write fontStyle">
+								<h2>호스트의 다른 공간</h2>
+								<p></p>
+							</div>
+						</div>
 						
 					</div><!-- detailLeft 끝-->
 					
