@@ -1,0 +1,270 @@
+@charset "UTF-8";
+
+.slide {
+   width: auto;
+   height: 24.7em;
+   padding-left: 0px !important;
+}
+
+.row>section {
+   position: relative !important;
+   width: 100%;
+   display: block;
+   padding: 0;
+   margin-top: 0;
+   margin-left: 0;
+}
+
+.row>h2 {
+   margin-top: 3em;
+   margin-bottom: 0;
+}
+
+.tiles>.row>article {
+   /* border:1px solid black;   */
+   height: 23em;
+}
+
+.location>span>img, .reviewHeart>span>img {
+   width: 1em;
+   height: 1em;
+}
+
+.price, .reviewHeart {
+   width: 3em;
+   display: inline;
+}
+
+.price {
+   margin-right: 4em
+}
+
+.locationName>h3 {
+   margin-top: 1em;
+   margin-bottom: 1em !important;
+}
+
+.row>p {
+   font-size: 1.6em;
+   font-weight: 200;
+   padding-left: 1em;
+}
+
+.row>select {
+   width: 14em;
+   text-align: center !important;
+
+}
+
+.tiles>.row>article{
+
+height:23em;
+padding: 0 0.7em 0 2em !important;
+}
+
+.searchOption{
+width:25%;
+margin-right:4.9%;
+box-shadow: none;
+border: none;
+outline: none;
+margin-left:4.9%;
+}
+
+ .searchOption:hover{
+color: none;
+box-shadow: none;
+border: none;
+outline: none;
+background-color: none!important;
+}
+
+.searchOption:click{
+background-color: none;
+}
+.searchOption:active{
+color: none;
+box-shadow: none;
+border: none;
+outline: none;
+background-color: none!important;
+}
+
+#searchOption:focus{
+box-shadow: none;
+border: none;
+outline: none;
+background-color: none!important;
+} 
+
+button:focus: {
+background-color: none!important;
+}
+
+.primary{
+margin-left: 14.8% !important;
+outline-style: none;
+
+}
+
+#default-select{
+width: 25% !important;
+margin-left: 4%;
+padding: 0 0 0 10%;
+
+
+}
+
+.default-select .current{
+font-size: 0.8em !important;
+font-weight:800 !important;
+letter-spacing: 0;
+}
+#optionRow{
+border-bottom:3px solid #4c74b9;
+border-radius: 4px;
+}
+#optionRow>*{
+margin: 1% 0 1% 0
+}
+
+#optionRow>button:active{
+  background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.material-icons{
+font-size:26px !important;
+padding:4px 7px 0 2px;
+}
+#option1>text{
+padding:0 0 0 2px;
+}
+.fas,.fab{
+padding:4px 7px 0 2px;
+}
+
+
+#optionField{
+border:1px solid #585858;
+/* float:left; */
+border-radius: 5px;
+/* margin:3% 5% 2% 5%; */
+width:100%;
+/* margin-right:0; */
+display: none; 
+margin:3% 0 0 0;
+
+}
+#optionField>ul{
+list-style: none;
+padding:0 !important;
+margin:3% -5% 2% 11%;
+overflow: hidden;
+
+}
+
+#optionField>ul>li{
+width: 33%;
+box-sizing: border-box;
+position:relative;
+float:left;
+padding-right:0.5em;
+}
+
+#optionField>ul>li>label{
+margin:1em 0 1em 0 ;
+width:100%;
+padding:0;
+text-align:left;
+} 
+
+#optionField>ul>li>input.checkbox{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    z-index: -1;
+
+}
+input[type="checkbox"]:checked+ label{
+    color:#4c74b9; 
+
+}
+input[type="checkbox"] + label:before, input[type="radio"] + label:before{
+background: none !important;
+border: none !important;
+content: none !important;
+}
+
+input.checkbox[type='checkbox'] + label {
+  display: block;
+}
+
+input.checkbox[type='checkbox']:not(:checked) {
+  display: none;
+}
+
+
+/* 지역 옵션 창 */
+#locationField{
+border:1px solid #585858;
+border-radius: 5px;
+width:100%;
+margin:3% 0 0 0;
+
+}
+#locationField>ul{
+list-style: none;
+padding:0 !important;
+margin: 3% -5% 3% 0%;
+overflow: hidden;
+width:100%;
+}
+
+#locationField>ul>li{
+box-sizing: border-box;
+position:relative;
+float:left;
+padding-right:0.5em;
+width:20%;
+}
+
+#locationField>ul>li>label{
+margin:1em 3em 1em 3em ;
+width:100%;
+padding:0;
+text-align:left;
+} 
+
+
+/* 유형 옵션 창 */
+#typeField{
+border:1px solid #585858;
+border-radius: 5px;
+width:100%;
+margin:3% 0 0 0;
+
+}
+#typeField>ul{
+list-style: none;
+padding:0 !important;
+margin: 1% -5% 0% 0%;
+overflow: hidden;
+width:100%;
+}
+
+#typeField>ul>li{
+box-sizing: border-box;
+position:relative;
+float:left;
+padding-right:0.5em;
+width:20%;
+}
+
+#typeField>ul>li>label{
+    margin: 1em 0 1em 0em;
+    width: 100%;
+    padding-left: 3em;
+text-align:left;
+} 
