@@ -1,18 +1,27 @@
 @charset "UTF-8";
-
-/* div{
+@import url(https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
+/* *{
 	border: 1px solid black !important;
-} */
-
+}
+ */
 p{
 	margin: 0 !important;
 }
 
-h1,h3,h2,h4{
+h1,h3,h4,h5,h6{
+	margin: 0 !important;
+	line-height: 2.5 !important;
+	font-weight :500 !important;
+	letter-spacing:0.2em !important;
+}
+h2{
 	margin: 0 !important;
 	line-height: 3 !important;
 	font-weight :700 !important;
-	
+	letter-spacing:0.2em !important;
+}
+h5{
+	font-size: 1em !important;
 }
 ol{
 	padding-left : 2.25em !important;
@@ -28,13 +37,13 @@ ol{
 	float: left;
 }
 .detailTitle>p{
-	font-size: 70px;
+	font-size: 65px;
 	font-weight: 900;
 }
 
 /* 공간 소개 관련 */
 .detailLeft{
-	width: 65%;
+	width: 70%;
 	height:100%;
 	float: left;
 	margin-top: 2em;
@@ -60,107 +69,182 @@ ol{
 }
 
 .spaceIntro{
-	margin: 0 0 2em 0 ;
+	margin: 0 0 2em 0;
 	letter-spacing:0.2em;
+	overflow: hidden;
+	width: 100%;
+}
+.spaceTime,.spaceClose,.spaceClose{
+	float: left;
+	padding-left: 0 !important;
 }
 .fontStyle>p{
-	width: 5%;
+	width: 40px;
 	border-bottom: 3px solid #4C74B9;
 }
-.spaceTime,.QnAIntro{
-	border-bottom: 1px solid #4C74B9;
+.mapImg{
+	width:100%;
+	height: min-content;
+	
 }
 
-.QnA{
+.write{
 	width: 70%;
+	height:100%;
 	float: left;
 }
-
-.QnABtn{
+.writeBtn{
+	width: 30%;
+	height:100%;
+	float: left;
+}
+.fa-edit{
 	float: right;
 	font-size: 100%;
 	box-shadow:none;
 	outline : none;
 	
 }
-.QnABtn:hover,.QnABtn:focus{
+.fa-edit:hover,.fa-edit:focus{
 	outline: none; 
 	box-shadow: none; 
 	border: none; 
 	background: transparent;
 }
 
-/* ------------모달--------------------------------------------------------- */
-.modal-window {
-position: fixed;
-background-color: rgba(0, 0, 0,0.8);
-top: 0;
-right: 0;
-bottom: 0;
-left: 0;
-z-index: 999;
-visibility: hidden;
-opacity: 0;
-pointer-events: none;
-transition: all 0.3s;
-}
-.modal-window:target {
-visibility: visible;
-opacity: 1;
-pointer-events: auto;
-}
-.modal-window > div {
-width: 400px;
-position: absolute;
-top: 50%;
-left: 50%;
--webkit-transform: translate(-50%, -50%);
-transform: translate(-50%, -50%);
-padding: 2em;
-background: #ffffff;
-}
+/* --모달-- */
 
-.modal-close {
-color: #aaa;
-line-height: 50px;
-font-size: 80%;
-position: absolute;
-right: 0;
-text-align: center;
-top: 0;
-width: 70px;
-text-decoration: none;
+.btn-primary{
+    background-color: #4C74B9 !important;
 }
-
-.modal-close:hover {
-color: black;
+.btn-secondary{
+    background-color: #474747 !important;
 }
-
-/* Demo Styles */
-
-.modal-window div:not(:last-of-type) {
-margin-bottom: 15px;
+.modal-body>textarea{
+    width: 100%;
+    height: 100px;
+    resize: none;
 }
-
-.btn {
-background-color: #fff;
-padding: 1em 1.5em;
-border-radius: 3px;
-text-decoration: none;
+.textCount{
+    text-align: right;
 }
 
 
+/* Q&A list */
+.QnAList{
+	float:left;
+	width: 100%;
+	padding-left: 2em;
+	
+}
+.AName{
+	color:#4C74B9; 
+}
+.QDelete>button,.QDelete>button:hover,.reviewBtn>button,.reviewBtn>button:hover{
+	font-size: 13px;
+	outline: none; 
+	box-shadow: none; 
+	border: none; 
+}
+.paging>p{
+	font-size: 15px; 
+	text-align: center;
+}
+.paging{
+	float:left;
+	width:100%;
+	height:5%;
+	border-top: 1px solid #ebebeb;
+	
+}
+.review{
+	overflow: hidden;
+}
+.QDelete{
+	height: 20%;
+	width: 100%;
+	float: left;
+}
+.QDelete>button,.reviewBtn>button{
+	float: right;
+}
 
 
+/* 이용후기  */
+.fileMult{
+	margin-top: 5%;
+	font-size: 15px;
+}
+.starArea{
+	width: 100%;
+	height: 20%;
+	
+}
+.starGrade{
+	width: 30%;
+	height: 100%;
+	float: left;
+}
+.starChange{
+	width: 70%;
+	height: 100%;
+	float: left;
+}
+
+#star_grade a{
+    text-decoration: none;
+    color: gray;
+    font-size: 25px;
+    border-style: none;
+}
+#star_grade a.on{
+    color:#FE7;
+    text-shadow: 0 0 15px #952;
+}
+
+/* 각도 틀어주는 이벤트 */
+#star_grade>a>i:hover{
+	transform: rotate(-15deg) scale(1.3);
+	color: #FE7;
+}
+
+.reviewBtn{
+	width: 100%;
+	height: 20%;
+	float: left;
+}
+.review{
+	padding-left: 2em;
+}
 
 
+/* 호스트의 다른 공간 */
+.tiles>.row>article{
+/* border:1px solid black;   */
+height:23em;
+}
 
-
-
-
-
-
-
+.location>span>img,.reviewHeart>span>img{
+width:1em;
+height:1em;
+}
+.price, .reviewHeart{
+width:3em;
+display:inline;
+}
+.price{
+margin-right:4em
+}
+.locationName>h3{
+margin-top:1em;
+margin-bottom: 1em !important;
+}
+.tiles{
+	margin-top: 0 !important;	
+}
+.section.row{
+	margin-left: inherit;
+}
 
 
 
@@ -168,12 +252,22 @@ text-decoration: none;
 
 /* 공간 예약관련  */
 .detailRight{
-	width: 35%;
+	width: 30%;
 	float: left;
 	margin-top: 2em; 
 }
 
 .reservation{
+	/* border-top: 3px solid #4C74B9; */
+	text-align: right;
+}
+.leftfontStyle>p{
+	float:right;
+	width: 40px;
 	border-bottom: 3px solid #4C74B9;
 }
+
+
+
+
 
