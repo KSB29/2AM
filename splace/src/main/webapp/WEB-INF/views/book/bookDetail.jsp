@@ -27,7 +27,7 @@
 				-->
 				<section>
 					<div class="row titleBox" id="titleBox1">
-						<h1 id="title">공간 예약</h1>
+						<h1 id="title">공간 예약내역</h1>
 					</div>
 					
 					<div class="row">
@@ -35,237 +35,163 @@
 						<div class="col-8" id="leftCol">
 
 							<div class="col-12 titleBox">
-								<h2>예약 공간</h2>
+								<h2>예약 내용</h2>
 								<div>
-									<span>&#8361;12,900</span><span>/시간(인)</span>
+									<span>예약번호 : 877624</span>
 								</div>
 							</div>
 							<article>
 								<table class="table-wrapper">
 									<tr>
-										<td rowspan="5"></td>
-										<td colspan="3"><h2>더빅스터디, 3층 3번룸</h2></td>
+										<td>신청일</td>
+										<td>2019.09.11 (수)</td>
 									</tr>
 									<tr>
-										<td colspan="3">3-6인 스터디룸으로 회의 및 스터디로 쾌적한 공간입니다.</td>
+										<td>예약공간</td>
+										<td><a href="#">더빅스터디, 3층 3번룸</a></td>
 									</tr>
 									<tr>
-										<td><li>공간유형</li></td>
-										<td colspan="2">회의실, 스터디룸</td>
+										<td>예약날짜</td>
+										<td>2019.09.27 (금)</td>
 									</tr>
 									<tr>
-										<td><li>예약인원</li></td>
-										<td colspan="2">최소 3명 ~ 최대 6명</td>
+										<td>예약시간</td>
+										<td>18시 ~ 21시, ${21-18}</td>
 									</tr>
 									<tr>
-										<td colspan="3">
-											<span>금연</span>
-											<span>화이트보드</span>
-											<span>인터넷/WIFI</span>
-										</td>
+										<td>예약인원</td>
+										<td>${3}명</td>
+									</tr>
+									<tr>
+										<td>요청사항</td>
+										<td>없음</td>
 									</tr>
 								</table>
 							</article>
 							
 							<div class="col-12 titleBox">
-								<h2>예약 정보</h2>
+								<h2>예약자 정보</h2>
 							</div>
 							<article id="article2">
 								<table class="table-wrapper">
 									<tr>
-										<td>예약날짜</td>
-										<td>2019.10.04 (금) 18시 ~ 21시</td>
-									</tr>
-									<tr>
-										<td>예약인원</td>
-										<td>3명</td>
-									</tr>
-								</table>
-								<span>호스트 승인 후 결제가 가능합니다.</span>
-							</article>
-
-							<div class="col-12 titleBox">
-								<h2>예약자 정보</h2>
-								<div>
-									<span class="warning">*필수입력</span>
-								</div>
-							</div>
-							<article id="article3">
-								<table class="table-wrapper">
-									<tr>
-										<td>예약자*</td>
-										<td>
-											<input type="text" id="bookerI" placeholder="2글자이상 5글자 이내 한글로 작성해주세요!">
-											<span class="noticeSpan"></span>
-										</td>
-									</tr>
-									<tr>
-										<td>연락처*</td>
-										<td>
-											<div class="col-3">
-												<div class="default-select" id="default-select">
-													<select name="bookerPhone1" id="bookerPhone1">
-														<option value="010">010</option>
-														<option value="011">011</option>
-														<option value="016">016</option>
-														<option value="017">017</option>
-														<option value="018">018</option>
-														<option value="019">019</option>
-													</select>
-												</div>
-											</div>
-											&nbsp;&nbsp;-&nbsp;&nbsp;
-											<div class="col-3">
-												<input type="text" id="bookerPhone2" size="4" maxlength="4" required>
-											</div>
-											&nbsp;&nbsp;-&nbsp;&nbsp;
-											<div class="col-3">
-												<input type="text" id="bookerPhone3" size="4" maxlength="4" required>
-											</div><br>
-											<span class="noticeSpan2"></span>
-										</td>
-									</tr>
-									<tr>
-										<td>이메일*</td>
-										<td>
-											<input type="email" id="bookerEmailI">
-											<span class="noticeSpan3"></span>
-										</td>
-									</tr>
-									<tr>
-										<td>요청사항</td>
-										<td>
-											<textarea id="bookRequestI" placeholder="요청사항을 적어주세요! (100자 이내)" maxlength="100" rows="3"></textarea>
-										</td>
-									</tr>
-								</table>
-								<span>예약자 정보로 이메일이 발송됩니다. 정확한 정보인지 확인해주세요.</span>
-							</article>
-
-							<div class="col-12 titleBox">
-								<h2>호스트 정보</h2>
-							</div>
-							<article id="article4">
-								<table class="table-wrapper">
-									<tr>
-										<td>공간상호</td>
-										<td>더빅스터디</td>
-									</tr>
-									<tr>
-										<td>대표자명</td>
-										<td>정주헌</td>
-									</tr>
-									<tr>
-										<td>소재지</td>
-										<td>서울특별시 종로구 관철동 7-16 번지 2,3층 더빅스터디</td>
-									</tr>
-									<tr>
-										<td>사업자번호</td>
-										<td>0000000000</td>
+										<td>예약명</td>
+										<td>나나나</td>
 									</tr>
 									<tr>
 										<td>연락처</td>
-										<td>000-0000-0000 / og@namver.com</td>
+										<td>000000000</td>
+									</tr>
+									<tr>
+										<td>이메일</td>
+										<td>dd@naver.com</td>
 									</tr>
 								</table>
 							</article>
 
 							<div class="col-12 titleBox">
-								<h2>예약시 주의사항</h2>
+								<h2>환불규정 안내</h2>
 							</div>
 							<article id="article5">
 								<table class="table-wrapper">
 									<tr>
-										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
+										<td colspan="2">
+											<span class="warning">이용당일(첫 날) 이후에 환불 관련 사항은 호스트에게 직접 문의하셔야 합니다.</span>
+											<br><span>결제 후 2시간 이내에는 100% 환불이 가능합니다.(단, 이용시간 전까지만 가능)</span>
 										</td>
 									</tr>
 									<tr>
-										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
-										</td>
+										<td>이용 7일 전</td>
+										<td>총 금액의 100% 환불</td>
 									</tr>
 									<tr>
-										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
-										</td>
+										<td>이용 6일 전</td>
+										<td>총 금액의 100% 환불</td>
 									</tr>
 									<tr>
-										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
-										</td>
+										<td>이용 5일 전</td>
+										<td>총 금액의 100% 환불</td>
 									</tr>
 									<tr>
-										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
-										</td>
+										<td>이용 4일 전</td>
+										<td>총 금액의 100% 환불</td>
+									</tr>
+									<tr>
+										<td>이용 3일 전</td>
+										<td>총 금액의 100% 환불</td>
+									</tr>
+									<tr>
+										<td>이용 2일 전</td>
+										<td>총 금액의 100% 환불</td>
+									</tr>
+									<tr>
+										<td>이용 전날</td>
+										<td>총 금액의 100% 환불</td>
+									</tr>
+									<tr>
+										<td>이용 당일</td>
+										<td>총 금액의 100% 환불</td>
 									</tr>
 								</table>
 							</article>
 
 							<div class="col-12 titleBox">
-								<h2>서비스 동의</h2>
-								<div>
-									<span>
-										<input type="checkbox" id="all">
-										<label for="all">전체 동의</label>
-									</span>
-								</div>
+								<h2>더빅스터디</h2>
 							</div>
 							<article id="article6">
-								<table class="table-wrapper">
-									<tr>
-										<td>
-											<input type="checkbox" id="check1">
-											<label for="check1">위 공간의 예약조건 확인 및 결제진행 동의 <span class="warning">(필수)</span></label>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<input type="checkbox" id="check2">
-											<label for="check2">개인정보 제3자 제공 동의 <span class="warning">(필수)</span></label>
-											<button class="button primary small buttonToggle" type="button" data-toggle="collapse" data-target="#check1Content" aria-expanded="false" aria-controls="check1Content">.</button>
-											<div class="collapse" id="check1Content">
-												<div class="card card-body">
-													<textarea class="checkTerm" rows="5" readonly>
-	1. 개인정보를 제공받는 자: 해당 공간의 호스트
-	2. 제공하는 개인정보 항목
-	- 필수항목: 네이버 아이디, 이름, 연락처, 결제정보(결제방식 및 결제금액)
-	- 선택항목: 이메일 주소
-	3. 개인정보의 제공목적: 공간예약 및 이용 서비스 제공, 환불처리
-	4. 개인정보의 제공기간: 서비스 제공기간(단, 관계법령의 규정에 의하여 보존할 필요가 있는 경우 및 사전 동의를 득한 경우에는 해당 기간 동안 보관합니다.)
-	5. 개인정보의 제공을 거부할 권리: 개인정보 주체는 개인정보의 제공을 거부할 권리가 있으나, 공간 예약을 위해 반드시 필요한 개인정보의 제공으로서 이를 거부할 시 공간 예약이 어려울 수 있습니다.
-													</textarea>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<input type="checkbox" id="check3">
-											<label for="check3">개인정보 수집 및 이용 동의 <span class="warning">(필수)</span></label>
-											<button class="button primary small buttonToggle" type="button" data-toggle="collapse" data-target="#check2Content" aria-expanded="false" aria-controls="check2Content">.</button>
-											<div class="collapse" id="check2Content">
-												<div class="card card-body">
-													<textarea class="checkTerm" rows="5" readonly>
-1. 수집하는 개인정보의 항목
-- 예약정보(성명, 이메일주소, 휴대전화번호), 결제정보(신용카드 번호 및 은행계좌정보 일부 등)
+								<div id="spaceInfo">
+									<div>
+										<p>주소: 서울 중구 남대문로 120</p>
+										<p>번호: 010-0000-3333</p>
+									</div>
+									<button id="directions" class="button fit">길찾기</button>
+								</div>
+								<div id="map" style="width:100%;height:400px;border:1px solid #585858"></div>
+								<!-- 지도 연동 -->
+								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=703f39fd6324ec678abee0446f28eee5&libraries=services"></script>
+								<script>
+									var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+										mapOption = {
+											center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+											level: 3 // 지도의 확대 레벨
+										};  
+									
+									// 지도를 생성합니다    
+									var map = new kakao.maps.Map(mapContainer, mapOption); 
+									
+									// 주소-좌표 변환 객체를 생성합니다
+									var geocoder = new kakao.maps.services.Geocoder();
+									
+									// 주소로 좌표를 검색합니다
+									geocoder.addressSearch('서울 중구 남대문로 120', function(result, status) {
+									
+										// 정상적으로 검색이 완료됐으면 
+											if (status === kakao.maps.services.Status.OK) {
+									
+											var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+									
+											// 결과값으로 받은 위치를 마커로 표시합니다
+											var marker = new kakao.maps.Marker({
+												map: map,
+												position: coords
+											});
+											
+											// 길찾기 버튼 클릭시 페이지 이동
+											$("#directions").click(function(){
+												location.href="https://map.kakao.com/link/to/우리회사,"+coords.getLat()+","+coords.getLng();
+											});
 
-2. 개인정보의 이용목적
-- 공간 예약 및 이용
-
-3. 개인정보의 보관기간
-- 예약 완료 후 관련 법령에 따라 5년간 개인정보를 보관합니다.
-
-4. 개인정보의 수집 및 이용을 거부할 권리
-- 개인정보 주체는 개인정보의 수집 및 이용을 거부할 권리가 있으나, 공간 예약을 위한 최소한의 개인정보 수집으로서 이를 거부할 시 공간 예약이 어려울 수 있습니다.
-													</textarea>
-												</div>
-											</div>
-										</td>
-									</tr>
-								</table>
-								<span class="warning">서비스 이용약관 동의는 필수입니다.</span>
+											// 인포윈도우로 장소에 대한 설명을 표시합니다
+											var infowindow = new kakao.maps.InfoWindow({
+												content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+											});
+											infowindow.open(map, marker);
+									
+											// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+											map.setCenter(coords);
+										} 
+									}); 
+								</script>
 							</article>
 						</div>
 
@@ -295,8 +221,8 @@
 										</tr>
 										<tr>
 											<td colspan="3">
-												<button type="button" class="button fit" onclick="history.back();">취소</button>
-												<button type="button" class="button primary fit" id="regExpCheck" data-toggle="modal" data-target="#bookConfirm" onclick="bookerCheck();">예약신청</button>
+												<button type="button" class="button fit" onclick="history.back();">예약취소</button>
+												<button type="button" class="button primary fit" id="regExpCheck" data-toggle="modal" data-target="#bookConfirm" onclick="">결제하기</button>
 											</td>
 										</tr>
 									</table>
@@ -376,7 +302,73 @@
 		</div>
 		<jsp:include page="../../../WEB-INF/views/common/bottom.jsp"/>
 	</div>
-	
+	<!-- 결제 연동 -->
+	<script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.5.min.js" type="application/javascript"></script>
+	<script>
+		$("#payment").click(function(){
+			//실제 복사하여 사용시에는 모든 주석을 지운 후 사용하세요
+			BootPay.request({
+				price: '1000', //실제 결제되는 가격
+				application_id: "5d7209d802f57e003591d597",
+				name: '블링블링 마스카라', //결제창에서 보여질 이름
+				pg: 'inicis',
+				method: 'card', //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
+				show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
+				items: [
+					{
+						item_name: '나는 아이템', //상품명
+						qty: 1, //수량
+						unique: '123', //해당 상품을 구분짓는 primary key
+						price: 1000, //상품 단가
+						cat1: 'TOP', // 대표 상품의 카테고리 상, 50글자 이내
+						cat2: '티셔츠', // 대표 상품의 카테고리 중, 50글자 이내
+						cat3: '라운드 티', // 대표상품의 카테고리 하, 50글자 이내
+					}
+				],
+				user_info: {
+					username: '사용자 이름',
+					email: '',
+					addr: '사용자 주소',
+					phone: '010-1234-4567'
+				},
+				order_id: '고유order_id_1234', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
+				params: {callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
+				account_expire_at: '2018-05-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
+				extra: {
+					start_at: '2019-05-10', // 정기 결제 시작일 - 시작일을 지정하지 않으면 그 날 당일로부터 결제가 가능한 Billing key 지급
+					end_at: '2022-05-10', // 정기결제 만료일 -  기간 없음 - 무제한
+					vbank_result: 1, // 가상계좌 사용시 사용, 가상계좌 결과창을 볼지(1), 말지(0), 미설정시 봄(1)
+					quota: '0,2,3' // 결제금액이 5만원 이상시 할부개월 허용범위를 설정할 수 있음, [0(일시불), 2개월, 3개월] 허용, 미설정시 12개월까지 허용
+				}
+			}).error(function (data) {
+				//결제 진행시 에러가 발생하면 수행됩니다.
+				console.log(data);
+			}).cancel(function (data) {
+				//결제가 취소되면 수행됩니다.
+				console.log(data);
+			}).ready(function (data) {
+				// 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
+				console.log(data);
+			}).confirm(function (data) {
+				//결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
+				//주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
+				console.log(data);
+				var enable = true; // 재고 수량 관리 로직 혹은 다른 처리
+				if (enable) {
+					BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
+				} else {
+					BootPay.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+				}
+			}).close(function (data) {
+				// 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
+				console.log(data);
+			}).done(function (data) {
+				//결제가 정상적으로 완료되면 수행됩니다
+				//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
+				console.log(data);
+			});
+		});
+	</script>
 	<script src="${contextPath}/resources/js/book.js"></script>
 </body>
 </html>

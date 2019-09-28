@@ -85,3 +85,14 @@ article table tr td .col-3{display: inline-block; padding: 0;}
     right: 0;
     width: 90%;
 }
+
+/* bookDetail.jsp==================================== */
+#spaceInfo{
+    padding: 1em;
+    overflow: hidden;
+}
+#spaceInfo *{
+    margin: 0;
+    padding: 0;
+}
+#spaceInfo>div, #directions{float: left; width: 50%;}
