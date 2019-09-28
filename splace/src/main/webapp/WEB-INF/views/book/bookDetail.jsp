@@ -28,6 +28,7 @@
 				<section>
 					<div class="row titleBox" id="titleBox1">
 						<h1 id="title">공간 예약내역</h1>
+						<span id="status"></span>
 					</div>
 					
 					<div class="row">
@@ -42,6 +43,10 @@
 							</div>
 							<article>
 								<table class="table-wrapper">
+									<tr class="waitingTime">
+										<td>승인대기기한</td>
+										<td>2019.09.09 12:00까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
+									</tr>
 									<tr>
 										<td>신청일</td>
 										<td>2019.09.11 (수)</td>
@@ -220,15 +225,96 @@
 											<td>3명</td>
 										</tr>
 										<tr>
-											<td colspan="3">
-												<button type="button" class="button fit" onclick="history.back();">예약취소</button>
-												<button type="button" class="button primary fit" id="regExpCheck" data-toggle="modal" data-target="#bookConfirm" onclick="">결제하기</button>
+											<td colspan="3" class="btnContainer">
 											</td>
 										</tr>
 									</table>
 								</article>
 							</div>
 						</div>
+						<script>
+							// 예약대기 - 100
+							// 예약승인 - 101
+							// 예약취소,결제취소 - 102
+							// 예약완료,결제완료 - 103
+							// 이용완료(결제) - 104
+							var $status = $("#status"); // 상태
+							var bookStutus = 103; // book.status자리(100,101,102,103)
+							var paymentStutus = 103; // payment.status자리(100,101,102,103)
+							var $waitingTime = $(".waitingTime"); // 대기시간
+							var titleBox = $("#rightColFloat .titleBox"); // 제목
+							var table = $("#rightColFloat .table-wrapper"); // 내용
+							var btnContainer = $("#rightColFloat .btnContainer"); // 버튼틀
+
+							var result = "";
+							// 예약대기
+							if(bookStutus == 100){ 
+								$status.html("(승인대기)");
+								$waitingTime.html("");
+								
+								result = "<td>승인대기기한</td>";
+									   + "<td></td>";
+								$waitingTime.append(result);
+
+							} 
+							// 예약승인 
+							else if(bookStutus == 101){ 
+								$status.html("(결제대기)");
+								$waitingTime.html("");
+								
+								result = "<td>승인대기기한</td>";
+									   + "<td></td>";
+								$waitingTime.append(result);
+								
+							} 
+							// 예약취소 
+							else if(bookStutus == 102){ 
+								$status.html("(취소완료)");
+								$waitingTime.html("");
+								titleBox.html("");
+								titleBox.html(
+									 "<h2>예약취소</h2>"
+								);
+								
+							} 
+							// 예약취소 && 결제취소
+							else if(bookStutus == 102 && paymentStutus == 102){ 
+								$status.html("(취소완료)");
+								$waitingTime.html("");
+								titleBox.html("");
+								titleBox.html(
+									 "<h2>결제취소</h2>"
+									+"<div>"
+									+"<span>&#8361;12,900</span>"
+									+"</div>"
+								);
+								
+							} 
+							// 예약완료 && 결제완료
+							else if(bookStutus == 103 && paymentStutus == 103){ 
+								$status.html("(예약완료)");
+								$waitingTime.html("");
+								titleBox.html("");
+								titleBox.html(
+									 "<h2>결제금액</h2>"
+									+"<div>"
+									+"<span>&#8361;12,900</span>"
+									+"</div>"
+								);
+							} 
+							// 예약완료 && 이용완료
+							else if(bookStutus == 103 && paymentStutus == 104){ 
+								$status.html("(이용완료)");
+								$waitingTime.html("");
+								titleBox.html("");
+								titleBox.html(
+									 "<h2>결제금액</h2>"
+									+"<div>"
+									+"<span>&#8361;12,900</span>"
+									+"</div>"
+								);
+							}
+						</script>
 						<!-- Modal -->
 						<div class="modal fade" id="bookConfirm" tabindex="-1" role="dialog" aria-labelledby="bookConfirmTitle" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered" role="document">
@@ -290,7 +376,7 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="button small primary" data-dismiss="modal">취소</button>
-											<button type="submit" class="button small">예약신청</button>
+											<button id="payment" type="submit" class="button small">예약신청</button>
 										</div>
 									</form>
 								</div>
