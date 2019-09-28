@@ -13,6 +13,7 @@ $(function() {
     });
 });
 
+//별
 $(document).ready(function(){
     $('#star_grade a').click(function(){
         $(this).parent().children("a").removeClass("on");  /* 별점의 on 클래스 전부 제거 */ 
@@ -20,3 +21,5 @@ $(document).ready(function(){
         return false;
     });
 });
+
+

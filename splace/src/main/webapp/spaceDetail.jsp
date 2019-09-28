@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="${contextPath }/resources/css/spaceDetail.css" type="text/css">
 	<script src="${contextPath }/resources/js/spaceDetail.js"></script>
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css'>   
+
 </head>
 <body>
 	<!-- 이 형식을 꼭 지켜주세요! -->
@@ -87,18 +88,18 @@
 						</div>
 						
 						<div class="spaceIntro">
-							<div class="spaceTime fontStyle"> 
+							<div class="col-4 spaceTime fontStyle"> 
 								<h2>영업 시간</h2>
 								<p></p>
 								<h4>[ 10시 ~ 22시 ]</h4>
 								
 							</div>
-							<div class="spaceClose fontStyle">
+							<div class="col-4 spaceClose fontStyle">
 								<h2>휴무일</h2>
 								<p></p>
 								<h4>[ 공휴일, 매주 일요일 ]</h4>
 							</div>
-							<div class="spaceClose fontStyle">
+							<div class="col-4 spaceClose fontStyle">
 								<h2>수용인원</h2>
 								<p></p>
 								<h4>[ 최소 2명, 최대 6명 ]</h4>
@@ -266,29 +267,202 @@
 							</div>
 						</div><!-- review끝 -->
 						
-						<!-- 호스트의 다른 공간 -->
-						<div class="spaceIntro">
-							<div class="write fontStyle">
-								<h2>호스트의 다른 공간</h2>
-								<p></p>
-							</div>
-						</div>
-						
 					</div><!-- detailLeft 끝-->
 					
-					
-					
-					
-					
-					
+
 					<!-- 오른쪽 부분 : 공간 예약관련  -->
 					<div class="detailRight">
-						<div class="reservation">
+						<div class="reservation leftfontStyle">
 							<h2>예약하기</h2>
+							<p></p>
 						</div>
+						
+						
 					</div><!-- detailRight끝 -->
-					
+
 				</section>
+				
+				
+				<section class="section">
+					<div class="row">
+					
+					<!-- 호스트의 다른 공간 -->
+					<div class="spaceIntro">
+						<div class="write fontStyle">
+							<h2>호스트의 다른 공간</h2>
+							<p></p>
+						</div>
+					</div>
+					
+				<section class="tiles">
+					<div class="row">
+						<article>
+							<span class="image"> <img src="resources/img/studio.jpg"
+								alt="" />
+							</span> 
+							<a href="#"></a> 
+							<span>
+								<div class="locationName">
+									<h3>Kh정보교육원</h3>
+								</div>
+								<div class="location">
+									<span> 
+									<img src="resources/img/location.svg"> 
+									서울시 중구
+									</span>
+								</div>
+								<div class="tags">
+									<span>#파티룸 #회의실 #중구</span>
+								</div>
+								<div class="price">
+									<strong>10,000</strong> 
+									<span>원/시간</span>
+								</div>
+								<div class="reviewHeart">
+									<span> 
+									<img src="resources/img/comment.svg"> 
+									<span>10</span>&nbsp;&nbsp;&nbsp;
+									</span> 
+									<span> 
+									<img src="resources/img/heart.svg"> 
+									<span>10</span>
+									</span>
+								</div>
+							</span>
+						</article>
+						<article>
+							<span class="image"> <img src="resources/img/studio.jpg"
+								alt="" />
+							</span> 
+							<a href="${contextPath }/views/space/searchList.jsp"></a> 
+							<span>
+									<div class="locationName">
+										<h3>Kh정보교육원</h3>
+									</div>
+									<div class="location">
+										<span> <img src="resources/img/location.svg"> 서울시
+											중구
+										</span>
+									</div>
+									<div class="tags">
+										<span>#파티룸 #회의실 #중구</span>
+									</div>
+									<div class="price">
+										<strong>10,000</strong> <span>원/시간</span>
+									</div>
+									<div class="reviewHeart">
+										<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
+										</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
+										</span>
+									</div>
+							</span>
+						</article>
+						<article>
+							<span class="image"> <img src="resources/img/studio.jpg"
+								alt="" />
+							</span> <a href="#"></a> <span>
+								<div class="locationName">
+									<h3>Kh정보교육원</h3>
+								</div>
+								<div class="location">
+									<span> <img src="resources/img/location.svg"> 서울시
+										중구
+									</span>
+								</div>
+								<div class="tags">
+									<span>#파티룸 #회의실 #중구</span>
+								</div>
+								<div class="price">
+									<strong>10,000</strong> <span>원/시간</span>
+								</div>
+								<div class="reviewHeart">
+									<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
+									</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
+									</span>
+								</div>
+							</span>
+						</article>
+						<article>
+							<span class="image"> <img src="resources/img/studio.jpg"
+								alt="" />
+							</span> <a href="#"></a> <span>
+								<div class="locationName">
+									<h3>Kh정보교육원</h3>
+								</div>
+								<div class="location">
+									<span> <img src="resources/img/location.svg"> 서울시
+										중구
+									</span>
+								</div>
+								<div class="tags">
+									<span>#파티룸 #회의실 #중구</span>
+								</div>
+								<div class="price">
+									<strong>10,000</strong> <span>원/시간</span>
+								</div>
+								<div class="reviewHeart">
+									<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
+									</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
+									</span>
+								</div>
+							</span>
+						</article>
+						<article>
+							<span class="image"> <img src="resources/img/studio.jpg"
+								alt="" />
+							</span> <a href="#"></a> <span>
+								<div class="locationName">
+									<h3>Kh정보교육원</h3>
+								</div>
+								<div class="location">
+									<span> <img src="resources/img/location.svg"> 서울시
+										중구
+									</span>
+								</div>
+								<div class="tags">
+									<span>#파티룸 #회의실 #중구</span>
+								</div>
+								<div class="price">
+									<strong>10,000</strong> <span>원/시간</span>
+								</div>
+								<div class="reviewHeart">
+									<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
+									</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
+									</span>
+								</div>
+							</span>
+						</article>
+						<article>
+							<span class="image"> <img src="resources/img/studio.jpg"
+								alt="" />
+							</span> <a href="#"></a> <span>
+								<div class="locationName">
+									<h3>Kh정보교육원</h3>
+								</div>
+								<div class="location">
+									<span> <img src="resources/img/location.svg"> 서울시
+										중구
+									</span>
+								</div>
+								<div class="tags">
+									<span>#파티룸 #회의실 #중구</span>
+								</div>
+								<div class="price">
+									<strong>10,000</strong> <span>원/시간</span>
+								</div>
+								<div class="reviewHeart">
+									<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
+									</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
+									</span>
+								</div>
+							</span>
+						</article>
+					</div>
+				</section>
+					</div>
+				</section>
+				
+				
 			</div><!-- inner 끝 -->
 		</div><!-- main끝 -->
 		<jsp:include page="WEB-INF/views/common/bottom.jsp"/>

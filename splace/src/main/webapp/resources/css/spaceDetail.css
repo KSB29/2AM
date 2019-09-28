@@ -1,9 +1,9 @@
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
-*{
+/* *{
 	border: 1px solid black !important;
 }
-
+ */
 p{
 	margin: 0 !important;
 }
@@ -72,13 +72,19 @@ ol{
 	margin: 0 0 2em 0;
 	letter-spacing:0.2em;
 	overflow: hidden;
+	width: 100%;
+}
+.spaceTime,.spaceClose,.spaceClose{
+	float: left;
+	padding-left: 0 !important;
 }
 .fontStyle>p{
-	width: 5%;
+	width: 40px;
 	border-bottom: 3px solid #4C74B9;
 }
 .mapImg{
-	padding-left: 20%;
+	width:100%;
+	height: min-content;
 	
 }
 
@@ -107,10 +113,7 @@ ol{
 }
 
 /* --모달-- */
-/*     textarea{
-        width: 100%;
-        height: 100%;
-    } */
+
 .btn-primary{
     background-color: #4C74B9 !important;
 }
@@ -166,6 +169,7 @@ ol{
 	float: right;
 }
 
+
 /* 이용후기  */
 .fileMult{
 	margin-top: 5%;
@@ -214,12 +218,33 @@ ol{
 }
 
 
+/* 호스트의 다른 공간 */
+.tiles>.row>article{
+/* border:1px solid black;   */
+height:23em;
+}
 
-
-
-
-
-
+.location>span>img,.reviewHeart>span>img{
+width:1em;
+height:1em;
+}
+.price, .reviewHeart{
+width:3em;
+display:inline;
+}
+.price{
+margin-right:4em
+}
+.locationName>h3{
+margin-top:1em;
+margin-bottom: 1em !important;
+}
+.tiles{
+	margin-top: 0 !important;	
+}
+.section.row{
+	margin-left: inherit;
+}
 
 
 
@@ -233,7 +258,16 @@ ol{
 }
 
 .reservation{
-	border-top: 3px solid #4C74B9;
+	/* border-top: 3px solid #4C74B9; */
 	text-align: right;
 }
+.leftfontStyle>p{
+	float:right;
+	width: 40px;
+	border-bottom: 3px solid #4C74B9;
+}
+
+
+
+
 
