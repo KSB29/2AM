@@ -12,6 +12,10 @@
 		<link rel="stylesheet" href="${contextPath }/resources/css/profile.css" type="text/css">
 		<link rel="stylesheet" href="${contextPath }/resources/css/common.css" type="text/css">
 	</head>
+	
+	<jsp:include page="../common/top.jsp"/>
+	<jsp:include page="memberMenu.jsp"/>
+	
 	<body class="is-preload">
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -79,8 +83,7 @@
 			
 
 
-			<!-- Footer -->
-			<jsp:include page="../common/bottom.jsp"/>
+
 
 
 
@@ -92,4 +95,7 @@
 			<script src="assets/js/main.js"></script>
 
 	</body>
+		<!-- Footer -->
+		<jsp:include page="../common/bottom.jsp"/>
+	
 </html>

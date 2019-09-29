@@ -114,7 +114,7 @@
 				</div>
 			</c:when>
 			<c:when test="${!empty sessionScope.loginUser}">
-				<c:url var="pwdCheckForm" value="pwdCheckForm.sp"/>
+				<c:url var="profileView" value="profileView.sp"/>
 				<c:url var="hostApplyForm" value="hostApplyForm.sp">
 					<c:param name="memberId" value="${loginUser.memberId}"/>
 				</c:url>
@@ -129,7 +129,7 @@
 						</c:when>
 						<c:otherwise>
 							<div class="col-6">
-								<button class="button primary small" onclick="location.href='${pwdCheckForm}'">회원</button>
+								<button class="button primary small" onclick="location.href='${profileView}'">회원</button>
 							</div>
 							<div class="col-6">
 								<c:choose>
