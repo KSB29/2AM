@@ -42,7 +42,7 @@
 								</div>
 							</div>
 							<article>
-								<table class="table-wrapper">
+								<table class="table-wrapper bookDetailTable">
 									<tr class="waitingTime">
 										<td>승인대기기한</td>
 										<td>2019.09.09 12:00까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
@@ -202,7 +202,7 @@
 
 						<!-- 오른쪽 -->
 						<div class="col-4" id="rightCol">
-							<div id="rightColFloat" class="rightColFloat">
+							<div id="rightColFloat" class="rightColFloat bookDetailRightCol">
 								<div class="col-12 titleBox">
 									<h2>결제 예정금액</h2>
 									<div>
@@ -232,19 +232,98 @@
 								</article>
 							</div>
 						</div>
+						<!-- Modal -->
+						<article id="modalContainer">
+							<div class="modal fade" id="bookCancel" tabindex="-1" role="dialog" aria-labelledby="bookCancelTitle" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="bookCancelTitle">예약취소</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<form action="${bookCancel}" method="post" id="modalForm">
+											<div class="modal-body">
+												<h2>예약을 취소하시겠습니까?</h2>
+												<table class="table-wrapper">
+													<tr>
+														<td>예약공간</td>
+														<td><input type="text" name="spaceId" id="spaceId" value="더빅스터디, 3층 3번룸" readonly></td>
+													</tr>
+													<tr>
+														<td>예약날짜</td>
+														<td><input type="text" name="bookDate" id="bookDate" value="2019.10.04 (금)" readonly></td>
+													</tr>
+													<tr>
+														<td>예약시간</td>
+														<td>
+															<input type="text" name="last-child" id="bookStartTime" value="18" readonly> ~ 
+															<input type="text" name="bookEndTime" id="bookEndTime" value="21" readonly> 
+															, <span>(${21-18}시간)</span>
+														</td>
+													</tr>
+													<tr>
+														<td>예약인원</td>
+														<td><input type="text" name="bookPer" id="bookPer" value="3" readonly>명</td>
+													</tr>
+													<tr>
+														<td>예약자</td>
+														<td><input type="text" name="booker" id="booker" readonly></td>
+													</tr>
+													<tr>
+														<td>연락처</td>
+														<td><input type="text" name="bookerPhone" id="bookerPhone" readonly></td>
+													</tr>
+													<tr>
+														<td>이메일</td>
+														<td><input type="text" name="bookerEmail" id="bookerEmail" readonly></td>
+													</tr>
+													<tr>
+														<td>요청사항</td>
+														<td>
+															<textarea name="bookRequest" id="bookRequest" readonly></textarea>
+														</td>
+													</tr>
+													<tr>
+														<td>결제예정금액</td>
+														<td>&#8361;<input type="text" name="totalPrice" id="totalPrice" readonly></td>
+													</tr>
+												</table>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="button small primary" data-dismiss="modal">취소</button>
+												<button type="submit" class="button small">예약신청</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</article>
+						<c:url var="bookCancel" value="bookCancel.sp" />
+						<c:url var="payment" value="payment.sp" />
+						<c:url var="paymentCancel" value="paymentCancel.sp" />
+						<c:url var="reviewForm" value="reviewForm.sp" />
 						<script>
 							// 예약대기 - 100
 							// 예약승인 - 101
 							// 예약취소,결제취소 - 102
 							// 예약완료,결제완료 - 103
 							// 이용완료(결제) - 104
-							var $status = $("#status"); // 상태
 							var bookStutus = 103; // book.status자리(100,101,102,103)
 							var paymentStutus = 103; // payment.status자리(100,101,102,103)
+							var $status = $("#status"); // 페이지제목(상태)
 							var $waitingTime = $(".waitingTime"); // 대기시간
-							var titleBox = $("#rightColFloat .titleBox"); // 제목
-							var table = $("#rightColFloat .table-wrapper"); // 내용
-							var btnContainer = $("#rightColFloat .btnContainer"); // 버튼틀
+							var titleBox = $(".bookDetailRightCol .titleBox"); // 제목
+							var table = $(".bookDetailRightCol .table-wrapper"); // 내용
+							var btnContainer = $(".bookDetailRightCol .btnContainer"); // 버튼틀
+							// modal
+							var modal = $("#modalContainer .modal");
+							var modalTitle = $("#modalContainer .modal-title");
+							var modalForm = $("#modalContainer #modalForm");
+							var modalBodyTitle = $(".modal-body h2");
+							var modalBody = $("#modalContainer .modal-body table");
+							var modalBtn = $("#modalContainer .modal-footer button:last-child");
 
 							var result = "";
 							// 예약대기
@@ -252,16 +331,21 @@
 								$status.html("(승인대기)");
 								$waitingTime.html("");
 								
-								result = "<td>승인대기기한</td>";
-									   + "<td></td>";
+								result = "<td>승인대기기한</td>"
+									   + "<td>ddddddddddddddd</td>";
 								$waitingTime.append(result);
-
+								btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#bookCancel'>예약취소</button>");
+								modal.attr("id", "bookCancel").attr("aria-labelledby", "bookCancelTitle");
+								modalTitle.attr("id", "bookCancelTitle");
+								modalForm.attr("action", "${bookCancel}");
+								modalBodyTitle.text("예약을 취소하시겠습니까?");
+								modalBody.html("");
+								modalBtn.html("예약취소");
 							} 
 							// 예약승인 
 							else if(bookStutus == 101){ 
 								$status.html("(결제대기)");
 								$waitingTime.html("");
-								
 								result = "<td>승인대기기한</td>";
 									   + "<td></td>";
 								$waitingTime.append(result);
@@ -277,19 +361,6 @@
 								);
 								
 							} 
-							// 예약취소 && 결제취소
-							else if(bookStutus == 102 && paymentStutus == 102){ 
-								$status.html("(취소완료)");
-								$waitingTime.html("");
-								titleBox.html("");
-								titleBox.html(
-									 "<h2>결제취소</h2>"
-									+"<div>"
-									+"<span>&#8361;12,900</span>"
-									+"</div>"
-								);
-								
-							} 
 							// 예약완료 && 결제완료
 							else if(bookStutus == 103 && paymentStutus == 103){ 
 								$status.html("(예약완료)");
@@ -297,6 +368,29 @@
 								titleBox.html("");
 								titleBox.html(
 									 "<h2>결제금액</h2>"
+									+"<div>"
+									+"<span>&#8361;12,900</span>"
+									+"</div>"
+								);
+								// 예약일 뺀 전날까지
+								btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#paymentCancel'>예약취소</button>");
+								modal.attr("id", "paymentCancel").attr("aria-labelledby", "paymentCancelTitle");
+								modalTitle.attr("id", "paymentCancelTitle");
+								modalForm.attr("action", "${bookCancel}");
+								modalBodyTitle.text("예약을 취소하시겠습니까?");
+								modalBody.html("");
+								modalBody.html(
+									
+								);
+								modalBtn.html("예약취소");
+							} 
+							// 예약취소 && 결제취소
+							else if(bookStutus == 102 && paymentStutus == 102){ 
+								$status.html("(취소완료)");
+								$waitingTime.html("");
+								titleBox.html("");
+								titleBox.html(
+									 "<h2>결제취소</h2>"
 									+"<div>"
 									+"<span>&#8361;12,900</span>"
 									+"</div>"
@@ -315,73 +409,6 @@
 								);
 							}
 						</script>
-						<!-- Modal -->
-						<div class="modal fade" id="bookConfirm" tabindex="-1" role="dialog" aria-labelledby="bookConfirmTitle" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="bookConfirmTitle">예약신청</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<c:url var="bookList" value="bookList.sp" />
-									<form action="${bookList}" method="post">
-										<div class="modal-body">
-											<h2>예약 내용을 확인해주세요.</h2>
-											<table class="table-wrapper">
-												<tr>
-													<td>예약공간</td>
-													<td><input type="text" name="spaceId" id="spaceId" value="더빅스터디, 3층 3번룸" readonly></td>
-												</tr>
-												<tr>
-													<td>예약날짜</td>
-													<td><input type="text" name="bookDate" id="bookDate" value="2019.10.04 (금)" readonly></td>
-												</tr>
-												<tr>
-													<td>예약시간</td>
-													<td>
-														<input type="text" name="last-child" id="bookStartTime" value="18" readonly> ~ 
-														<input type="text" name="bookEndTime" id="bookEndTime" value="21" readonly> 
-														, <span>(${21-18}시간)</span>
-													</td>
-												</tr>
-												<tr>
-													<td>예약인원</td>
-													<td><input type="text" name="bookPer" id="bookPer" value="3" readonly>명</td>
-												</tr>
-												<tr>
-													<td>예약자</td>
-													<td><input type="text" name="booker" id="booker" readonly></td>
-												</tr>
-												<tr>
-													<td>연락처</td>
-													<td><input type="text" name="bookerPhone" id="bookerPhone" readonly></td>
-												</tr>
-												<tr>
-													<td>이메일</td>
-													<td><input type="text" name="bookerEmail" id="bookerEmail" readonly></td>
-												</tr>
-												<tr>
-													<td>요청사항</td>
-													<td>
-														<textarea name="bookRequest" id="bookRequest" readonly></textarea>
-													</td>
-												</tr>
-												<tr>
-													<td>결제예정금액</td>
-													<td>&#8361;<input type="text" name="totalPrice" id="totalPrice" readonly></td>
-												</tr>
-											</table>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="button small primary" data-dismiss="modal">취소</button>
-											<button id="payment" type="submit" class="button small">예약신청</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
 					</div>
 				</section>
 			</div>

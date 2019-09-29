@@ -41,7 +41,7 @@ article table tr td .col-3{display: inline-block; padding: 0;}
 .checkTerm{resize: none; font-size: 0.8em;}
 
 /* 오른쪽-------------------- */
-#rightCol>.titleBox{padding: 0;}
+#rightCol .titleBox{padding: 0;}
 #rightCol table tr{background-color: transparent}
 #rightCol article table tr td{font-size: 80%;}
 #rightCol article table tr:first-child td:nth-child(3){text-align: center; vertical-align: middle;border-bottom: 2px solid #4C74B9;}
@@ -50,7 +50,7 @@ article table tr td .col-3{display: inline-block; padding: 0;}
 /* #rightCol article table tr:nth-child(4) td{font-size: 100%; font-weight: bold; color: #4C74B9}
 #rightCol article table tr:nth-child(4) td:last-child{text-align: center} */
 #rightCol article table tr:last-child td{font-size: 100%;}
-#rightCol article table tr:last-child td button{width: 48%; margin: 0 1%; float: left;}
+#rightCol article table tr:last-child td button{width: 49%;}
 #rightCol.col-12{padding: 0 !important;}
 /* MODAL */
 .close{
@@ -96,3 +96,6 @@ article table tr td .col-3{display: inline-block; padding: 0;}
     padding: 0;
 }
 #spaceInfo>div, #directions{float: left; width: 50%;}
+.bookDetailTable td:first-child{width: 20%}
+.btnContainer .fit-100{width: 100% !important;}
+#status {margin-top: auto; padding: 0}
