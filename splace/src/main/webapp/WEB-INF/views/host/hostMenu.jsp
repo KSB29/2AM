@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${contextPath}/resources/css/host.css" type="text/css">
 <title>SPLACE</title>
 </head>
 <body>
