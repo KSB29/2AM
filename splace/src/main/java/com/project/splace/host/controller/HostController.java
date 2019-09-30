@@ -1,5 +1,7 @@
 package com.project.splace.host.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,7 @@ public class HostController {
 	private HostService hService;
 	
 	@RequestMapping("hostApplyForm.sp")
-	public String hostApplyForm(String memberId, Model model) {
+	public String hostApplyForm(String memberId, Model model, HttpServletRequest request) {
 		Host hostInfo = hService.selectOne(memberId);
 		if (hostInfo != null) model.addAttribute("host", hostInfo);
 		return "host/hostApplyForm";
@@ -58,5 +60,10 @@ public class HostController {
 			model.addAttribute("msg", "호스트 신청 오류 발생");
 			return "host/hostApplyForm";
 		}
+	}
+	
+	@RequestMapping("hostAccount.sp")
+	public String hostAccount() {
+		return "host/hostAccount";
 	}
 }

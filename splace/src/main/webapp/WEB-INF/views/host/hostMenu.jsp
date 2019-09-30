@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SPLACE</title>
 </head>
 <body>
 	<section>
@@ -17,19 +17,19 @@
 				<h2><a href="${ hostApplyForm }">마이페이지</a></h2>
 			</div>
 			<div class="col-2 align-center">
-				<h2><a href="spaceInfoList.sp">공간관리</a></h2>
+				<h2><a href="spaceList.sp">공간관리</a></h2>
 			</div>
 			<div class="col-2 align-center">
-				<h2><a href="spaceBookList.sp">예약관리</a></h2>
+				<h2><a href="spaceBook.sp">예약관리</a></h2>
 			</div>
 			<div class="col-2 align-center">
-				<h2><a href="spaceQnaList.sp">Q&A관리</a></h2>
+				<h2><a href="spaceQna.sp">Q&A관리</a></h2>
 			</div>
 			<div class="col-2 align-center">
-				<h2><a href="spaceReviewList.sp">후기관리</a></h2>
+				<h2><a href="spaceReview.sp">후기관리</a></h2>
 			</div>
 			<div class="col-2 align-center">
-				<h2><a href="hostAccountList.sp">정산내역</a></h2>
+				<h2><a href="hostAccount.sp">정산내역</a></h2>
 			</div>
 		</div>
 		<hr>
