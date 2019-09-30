@@ -12,11 +12,10 @@
 		<link rel="stylesheet" href="${contextPath }/resources/css/style.css" type="text/css">
 		<link rel="stylesheet" href="${contextPath }/resources/css/changePw.css" type="text/css">
 		<link rel="stylesheet" href="${contextPath }/resources/css/common.css" type="text/css">
-		
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
 		
 	</head>
-	<body class="is-preload">
+	<body class="is-preload" >
 		<!-- Wrapper -->
 			<div id="wrapper">
 

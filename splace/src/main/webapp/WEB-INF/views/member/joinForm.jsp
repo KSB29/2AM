@@ -18,8 +18,8 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
-<%-- 		<jsp:include page="../common/top.jsp"/>
- --%>	
+ 		<jsp:include page="../common/top.jsp"/>
+ 
 		<!-- Wrapper -->
 			<div id="wrapper">
 				<!-- Main -->
@@ -88,9 +88,10 @@
 					</div>
 
 			<!-- Footer -->
-			<jsp:include page="../common/bottom.jsp"/>
 			</div>
+			
 
+			<jsp:include page="../common/bottom.jsp"/>
 			<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
