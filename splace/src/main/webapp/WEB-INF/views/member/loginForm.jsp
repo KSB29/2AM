@@ -8,8 +8,12 @@
 	<!-- template -->
 	<noscript><link rel="stylesheet" href="${contextPath }/resources/css/noscript.css"></noscript>
 	<!-- js -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+	<!-- 네이버 아이디로 로그인  -->
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<!-- css -->	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -20,7 +24,9 @@
 	<link rel="stylesheet" href="${contextPath }/resources/css/login.css" type="text/css">
 	<link rel="stylesheet" href="${contextPath }/resources/css/common.css" type="text/css">
 	
-	
+
+    
+    
 	</head>
 	<jsp:include page="../common/top.jsp"/>
 	
@@ -60,14 +66,15 @@
 														<a>비밀번호 찾기</a>
 													</div>
 												</article>
-
-					
+												<c:url var="njoinForm" value="njoinForm.sp"/>
+												
+												
 												<article class="login_type_wrapper col-12 row">
 													<div class="login_btn col-12">
 														<input type="submit" value="login" class="button fit"/>
 													</div>
 													<div class="login_type col-12">
-														<a class="button fit primary" href="${url}"> 네이버 로그인</a>
+														<a class="button fit primary" href="${njoinForm}"> 네이버 로그인</a>
 													</div>														
 													<div class="login_type col-12">
 														<a class="button fit primary" href=""> 카카오 로그인 </a>	
@@ -108,9 +115,18 @@
 								</div>
 							</div>
 						</div>		
-	
-	
-					<!-- Footer -->
+	   
+	      <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+<!-- 		  <script type="text/javascript">
+		  	var naver_id_login = new naver_id_login("6M93f_6j07ur8krVEjU9", "http://localhost:8080/splace/njoinForm.sp");
+		  	var state = naver_id_login.getUniqState();
+		  	naver_id_login.setButton("white", 2,40);
+		  	naver_id_login.setDomain("http://localhost:8080/splace/loginForm.sp");
+		  	naver_id_login.setState(state);
+		  	naver_id_login.setPopup();
+		  	naver_id_login.init_naver_id_login();
+		  </script> -->
+			
 	
 	
 	

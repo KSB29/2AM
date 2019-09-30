@@ -3,11 +3,11 @@
     margin: 10rem 0 0 0;
 }
 .changeForm_1, .changeForm_2{
-    margin: 2rem 0 0 0;
+    margin: 2rem 0 0 0  !important;
 }
 
 .changeForm_1>div{
-    margin: 0.5em 0 0 0 ;
+    margin: 0.5em 0 0 0 !important;
 }
 
 

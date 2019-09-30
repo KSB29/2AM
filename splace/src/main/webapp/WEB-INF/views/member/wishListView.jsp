@@ -25,7 +25,6 @@
 	</head>
 	<!-- Header -->
 	<jsp:include page="../common/top.jsp"/>
-	<jsp:include page="memberMenu.jsp"/>
 	
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -34,6 +33,7 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
+						<jsp:include page="memberMenu.jsp"/>
 							<header>
 								<h1>위시 리스트</h1>
 							</header>

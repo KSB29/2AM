@@ -72,26 +72,25 @@
 					<button id="bell" onclick="myFunction()"><i class="fa fa-bell"></i></button>
 				</div>
 				<!-- 알림 리스트 -->
-                    <div class=" row notification-container" id="bellList">
-                      <h3>알림
-                      </h3>
-                  
-                      <input class="checkbox" type="checkbox" id="size_1" value="small" checked />
-                      <label class="notification" for="size_1"><em>1</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
-                  
-                      <input class="checkbox" type="checkbox" id="size_2" value="small" checked />
-                      <label class="notification" for="size_2"><em>2</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
-                      
-                      <input class="checkbox" type="checkbox" id="size_3" value="small" checked />
-                      <label class="notification" for="size_3"><em>3</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
-                  
-                      <input class="checkbox" type="checkbox" id="size_4" value="small" checked />
-                      <label class="notification" for="size_4"><em>4</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
-                   
-                      <input class="checkbox" type="checkbox" id="size_5" value="small" checked />
-                      <label class="notification" for="size_5"><em>5</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
-                    </div>
-				
+                <div class=" row notification-container" id="bellList" style="display: none">
+                  <h3>알림</h3>
+				  <div id="notificationDiv">
+						<input class="checkbox" type="checkbox" id="size_1" value="small" checked />
+						<label class="notification" for="size_1"><em>1</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+					
+						<input class="checkbox" type="checkbox" id="size_2" value="small" checked />
+						<label class="notification" for="size_2"><em>2</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+						
+						<input class="checkbox" type="checkbox" id="size_3" value="small" checked />
+						<label class="notification" for="size_3"><em>3</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+					
+						<input class="checkbox" type="checkbox" id="size_4" value="small" checked />
+						<label class="notification" for="size_4"><em>4</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+					 
+						<input class="checkbox" type="checkbox" id="size_5" value="small" checked />
+						<label class="notification" for="size_5"><em>5</em>호스트가 예약을 승인했습니다.<br>12시간 이내 결제를 완료해주세요.<i class="material-icons dp48 right">clear</i></label>
+				  </div>
+                </div>
 			</div>
 			<div class="row" id="section1row">
 				<div class="col-12">
@@ -115,7 +114,7 @@
 				</div>
 			</c:when>
 			<c:when test="${!empty sessionScope.loginUser}">
-				<c:url var="pwdCheckForm" value="pwdCheckForm.sp"/>
+				<c:url var="profileView" value="profileView.sp"/>
 				<c:url var="hostApplyForm" value="hostApplyForm.sp">
 					<c:param name="memberId" value="${loginUser.memberId}"/>
 				</c:url>
@@ -130,7 +129,7 @@
 						</c:when>
 						<c:otherwise>
 							<div class="col-6">
-								<button class="button primary small" onclick="location.href='${pwdCheckForm}'">회원</button>
+								<button class="button primary small" onclick="location.href='${profileView}'">회원</button>
 							</div>
 							<div class="col-6">
 								<c:choose>
