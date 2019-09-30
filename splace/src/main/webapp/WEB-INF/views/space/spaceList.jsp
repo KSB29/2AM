@@ -5,32 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style>
-.bgBlur {
-  background: inherit;
-  z-index:-100;
-  /* filter: brightness(50%); */
-}
-.bgImage {
-	background-size:cover;
-	margin-bottom: 10px !important;
-}
-.btnList {
-	margin-bottom: 0 !important;
-}
-.bgBlur {
-	background: rgba(0,0,0,.6);
-	display: table;
-	width: 100%;
-	border-radius: 1%;
-	
-}
-.bgBlur span {
-	color: #fff;
-	display: table;
-	text-align: center;
-}
-</style>
+<link rel="stylesheet" href="${contextPath}/resources/css/space.css" type="text/css">
 <title>공간 리스트</title>
 </head>
 <body>
@@ -41,7 +16,7 @@
 			<!-- Host Menu -->
 				<jsp:include page="/WEB-INF/views/host/hostMenu.jsp"/>
 			<!-- Content -->
-				<section>
+				<section id="spaceArea">
 					<h1 class="align-center">공간 리스트</h1>
 					<div class="row gtr-uniform">
 						<c:forEach var="i" begin="1" end="3">
@@ -49,14 +24,22 @@
 								<div class="image fit bgImage" style="background-image:url('${contextPath }/resources/spaceImg/space${i}.PNG');">
 									<span class="bgBlur"><br><br><br><br><br><br><br><span>비공개 중입니다.</span></span>
 								</div>
-								<span>공간명${i}</span>
-								<div class="image fit btnList">
+								<h2 class="marginClear">공간명${i}</h2>
+								<div class="marginClear">
+									<span>등록일 : 2019.09.20</span>
+									<span>&nbsp;&nbsp;&nbsp;</span>
+									<label class="switch">
+							            <input type="checkbox" class="operStatus">
+							            <span class="slider round"></span>
+							        </label>
+						        </div>
+								<div class="image fit marginClear">
 									<a class="button primary small" href="spaceUpdateForm.sp">수정</a>
 									<a class="button primary small" href="spacePrice.sp">가격 등록</a>
 									<a class="button primary small" href="spaceDayoff.sp">휴일 등록</a>
 								</div>
 								<c:if test="${i==1 }">
-								<div class="image fit btnList">
+								<div class="image fit marginClear">
 									<a class="button small" href="">신청</a>
 									<a class="button small" href="">삭제</a>
 								</div>
@@ -68,14 +51,23 @@
 								<div class="image fit bgImage" style="background-image:url('${contextPath }/resources/spaceImg/space${i}.PNG');">
 									<br><br><br><br><br><br><br>
 								</div>
-								<span>공간명${i}</span>
-								<div class="image fit btnList">
+								<h2 class="marginClear">공간명${i}</h2>
+								<div class="marginClear">
+									<span>등록일 : 2019.09.22</span>
+									<span>&nbsp;&nbsp;&nbsp;</span>
+									<label class="switch">
+										<input type="checkbox" class="operStatus" checked>
+						            	<!-- <input type="hidden" value="Y"> -->
+							            <span class="slider round"></span>
+							        </label>
+						        </div>
+								<div class="image fit marginClear">
 									<a class="button primary small" href="spaceUpdateForm.sp">수정</a>
 									<a class="button primary small" href="spacePrice.sp">가격 등록</a>
 									<a class="button primary small" href="spaceDayoff.sp">휴일 등록</a>
 								</div>
 								<c:if test="${i==1 }">
-								<div class="image fit btnList">
+								<div class="image fit marginClear">
 									<a class="button small" href="">신청</a>
 									<a class="button small" href="">삭제</a>
 								</div>
@@ -85,8 +77,14 @@
 					</div>
 					<script>
 						$(document).ready(function(){
-							;
-						});
+			                $("input[type='checkbox']").click(function(){
+			                    if ($(this).prop("checked") == true) {
+			                    	$(this).attr("checked", true);
+			                    } else {
+			                    	$(this).attr("checked", false);
+			                    };
+			                });
+			            });
 					</script>
 					<br><br>
 					<div class="row">

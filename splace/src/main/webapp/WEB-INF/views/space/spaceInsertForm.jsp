@@ -54,17 +54,17 @@
 							</div>
 							<div class="col-10 col-12-xsmall">
 								<label for="spaceAddress">* 주소</label>
-								<input type="text" name="spaceAddress" id="spaceAddress" placeholder="도로명주소">
+								<input type="text" name="spaceAddress" id="spaceAddress" placeholder="도로명주소" class="postcodify_address" value="">
 							</div>
 							<div class="col-2 col-12-xsmall">
 								<label>&nbsp;</label>
-								<input type="button" class="button primary small" value="주소찾기">
+								<input type="button" id="addressBtn" class="button primary small" value="주소찾기">
 							</div>
 							<div class="col-6 col-12-xsmall">
-								<input type="text" name="" id="" placeholder="상세주소">
+								<input type="text" name="address" placeholder="상세주소" class="postcodify_extra_info" value="">
 							</div>
 							<div class="col-3 col-12-xsmall">
-								<input type="text" name=""  size="6" placeholder="우편번호">
+								<input type="text" name="post" placeholder="우편번호" class="postcodify_postcode5" value="" size="6">
 							</div>
 						</div>
 						<br><br>
@@ -249,6 +249,8 @@
 		</div>
 		<jsp:include page="/WEB-INF/views/common/bottom.jsp"/>
 	</div>
+	<!-- 주소 검색 -->
+	<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 	<script src="${contextPath}/resources/js/spaceInfo.js"></script>
 </body>
 </html>
