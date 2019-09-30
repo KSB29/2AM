@@ -103,18 +103,18 @@
 			<c:choose>
 			<c:when test="${empty sessionScope.loginUser}">
 				<c:url var="loginForm" value="loginForm.sp"/>
-				<c:url var="signupForm" value="signupForm.sp"/>
+				<c:url var="joinForm" value="joinForm.sp"/>
 				<div class="row" id="section2row">
 					<div class="col-6">
 						<button class="button primary small" onclick="location.href='${loginForm}'">로그인</button>
 					</div>
 					<div class="col-6">
-						<button class="button primary small" onclick="location.href='${signupForm}'">회원가입</button>
+						<button class="button primary small" onclick="location.href='${joinForm}'">회원가입</button>
 					</div>
 				</div>
 			</c:when>
 			<c:when test="${!empty sessionScope.loginUser}">
-				<c:url var="pwdCheckForm" value="pwdCheckForm.sp"/>
+				<c:url var="profileView" value="profileView.sp"/>
 				<c:url var="hostApplyForm" value="hostApplyForm.sp">
 					<c:param name="memberId" value="${loginUser.memberId}"/>
 				</c:url>
@@ -129,7 +129,7 @@
 						</c:when>
 						<c:otherwise>
 							<div class="col-6">
-								<button class="button primary small" onclick="location.href='${pwdCheckForm}'">회원</button>
+								<button class="button primary small" onclick="location.href='${profileView}'">회원</button>
 							</div>
 							<div class="col-6">
 								<c:choose>
