@@ -18,8 +18,8 @@
 		top.jsp, bottom.jsp, style.css, fontawesome-all.min.css, noscript.css,
 		main.js, browser.min.js, breakpoints.min.js, util.js파일은 수정 금지
 	-->
+	<jsp:include page="../../../WEB-INF/views/common/top.jsp"/>
 	<div id="wrapper">
-		<jsp:include page="../../../WEB-INF/views/common/top.jsp"/>
 		<div id="main">
 			<div class="inner">
 				<!-- 여기에만 씁시다.(다른 부분은 고정!)
@@ -81,7 +81,7 @@
 										<td>3명</td>
 									</tr>
 								</table>
-								<span>호스트 승인 후 결제가 가능합니다.</span>
+								<span><i class="fas fa-exclamation-circle"></i> 호스트 승인 후 결제가 가능합니다.</span>
 							</article>
 
 							<div class="col-12 titleBox">
@@ -139,7 +139,7 @@
 										</td>
 									</tr>
 								</table>
-								<span>예약자 정보로 이메일이 발송됩니다. 정확한 정보인지 확인해주세요.</span>
+								<span><i class="fas fa-exclamation-circle"></i> 예약자 정보로 이메일이 발송됩니다. 정확한 정보인지 확인해주세요.</span>
 							</article>
 
 							<div class="col-12 titleBox">
@@ -265,7 +265,7 @@
 										</td>
 									</tr>
 								</table>
-								<span class="warning">서비스 이용약관 동의는 필수입니다.</span>
+								<span class="warning"><i class="fas fa-exclamation-circle"></i> 서비스 이용약관 동의는 필수입니다.</span>
 							</article>
 						</div>
 
@@ -289,7 +289,7 @@
 											<td>예약시간</td>
 											<td>18시 ~ 21시, 3시간</td>
 										</tr>
-										<tr>
+										<tr class="borderBottom2">
 											<td>예약인원</td>
 											<td>3명</td>
 										</tr>
