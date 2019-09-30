@@ -128,10 +128,10 @@ public class MemberController {
 	
 	
 	
-	// 프로젝트용 로그인 
+	// 프로젝트용 로그인  
 	@RequestMapping(value="login.sp", method=RequestMethod.POST)
 	public String MemberLogin(Member mem, Model model) {
-		Member loginUser = mService.loginMember(mem);
+		Member loginUser = mService.loginMember(mem) ;
 		
 		if(loginUser==null) {
 			System.out.println("실패");
