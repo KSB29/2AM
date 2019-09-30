@@ -52,6 +52,7 @@ article table tr td .col-3{display: inline-block; padding: 0;}
 #rightCol article table tr:last-child td{font-size: 100%;}
 #rightCol article table tr:last-child td button{width: 49%;}
 #rightCol.col-12{padding: 0 !important;}
+
 /* MODAL */
 .close{
     padding: 0;
