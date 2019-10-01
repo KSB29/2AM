@@ -116,9 +116,7 @@
 			</c:when>
 			<c:when test="${!empty sessionScope.loginUser}">
 				<c:url var="profileView" value="profileView.sp"/>
-				<c:url var="hostApplyForm" value="hostApplyForm.sp">
-					<c:param name="memberId" value="${loginUser.memberId}"/>
-				</c:url>
+				<c:url var="hostApplyForm" value="hostApplyForm.sp"/>
 				<c:url var="hostInfoForm" value="hostInfoForm.sp"/>
 				<c:url var="adminHome" value="adminHome.sp"/>
 				<div class="row" id="section2row">
@@ -132,15 +130,8 @@
 							<div class="col-6">
 								<button class="button primary small" onclick="location.href='${profileView}'">회원</button>
 							</div>
-							<div class="col-6">
-								<c:choose>
-									<c:when test="${loginUser.grade eq '1'}">				
-										<button class="button primary small" onclick="location.href='${hostApplyForm}'">호스트</button>
-									</c:when>
-									<c:when test="${loginUser.grade eq '2'}">
-										<button class="button primary small" onclick="location.href='${hostInfoForm}'">호스트</button>
-									</c:when>
-								</c:choose>
+							<div class="col-6">		
+								<button class="button primary small" onclick="location.href='${hostApplyForm}'">호스트</button>
 							</div>
 						</c:otherwise>
 					</c:choose>

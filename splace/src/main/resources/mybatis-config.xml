@@ -11,11 +11,15 @@
 		<typeAlias type="com.project.splace.host.model.vo.Host" alias="Host"/>
 		<typeAlias type="com.project.splace.space.model.vo.Space" alias="Space"/>
 		<typeAlias type="com.project.splace.search.model.vo.Search" alias="Search"/>
+		<typeAlias type="com.project.splace.book.model.vo.Book" alias="Book"/>
+		<typeAlias type="com.project.splace.space.model.vo.Space" alias="Space"/>
+		<typeAlias type="com.project.splace.space.model.vo.Option" alias="Option"/>
 	</typeAliases>
 	
   	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/host-mapper.xml"/>
 		<mapper resource="mappers/search-mapper.xml"/>
+		<mapper resource="mappers/book-mapper.xml"/>
   	</mappers>
 </configuration>
