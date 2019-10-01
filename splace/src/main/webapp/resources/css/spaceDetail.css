@@ -43,7 +43,7 @@ ol{
 
 /* 공간 소개 관련 */
 .detailLeft{
-	width: 70%;
+	width: 65%;
 	height:100%;
 	float: left;
 	margin-top: 2em;
@@ -220,9 +220,11 @@ ol{
 
 /* 호스트의 다른 공간 */
 
+
+
 /* 공간 예약관련  */
 .detailRight{
-	width: 30%;
+	width: 35%;
 	float: left;
 	margin-top: 2em; 
 }
@@ -237,4 +239,81 @@ ol{
 	border-bottom: 3px solid #4C74B9;
 }
 
+/* 시간 예약*/
+.swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 16px;
+      background: #fff;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+ 
+label{
+margin:0 !important;
+}
+
+
+#timeOption>label{
+margin:1em 0 1em 0 ;
+width:100%;
+padding:0;
+text-align:center;
+} 
+
+#timeOption>input.checkbox{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    z-index: -1;
+
+}
+
+input[type="checkbox"]:checked{
+border:4px solid #4c74b9;
+border-radius: 5px;
+}
+input[type="checkbox"] + label{
+padding:0 !important;
+border:
+}
+
+input[type="checkbox"]:checked+ label{
+    color:#4c74b9; 
+
+}
+input[type="checkbox"] + label:before{
+background: none !important;
+border: none !important;
+content: none !important; 
+}
+
+input.checkbox[type='checkbox'] + label {
+  display: block;
+}
+
+input.checkbox[type='checkbox']:not(:checked) {
+  display: none;
+}
+
+.timeHeader>h3{
+width:50%;
+float:left;
+}
 
