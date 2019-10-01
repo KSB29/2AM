@@ -47,8 +47,9 @@
 			<!-- Search -->
 			<ul>
 				<li>
-					<form action="." id="searchForm">
-						<input type="text" name="searchBox" id="searchBox" placeholder="공간을 검색해보세요!">
+				  <c:url var="searchArea" value="search.sp"/>
+					<form action="${searchArea }" id="searchForm" method="GET">
+						<input type="text" name="searchBox" id="searchBox" placeholder="공간을 검색해보세요!" required>
 						<button id="searchBtn"><i class="fa fa-search"></i></button>
 					</form>
 				</li>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
    -->
    <div id="wrapper">
    
-      <jsp:include page="WEB-INF/views/common/top.jsp"/>
+      <jsp:include page="../common/top.jsp"/>
       <div id="main">
          <div class="inner">
             <!-- 여기에만 씁시다.(다른 부분은 고정!)
@@ -24,7 +25,7 @@
             -->
             <section>
                <div class="row">
-                  <p>[ 검색결과 ]입니다</p>
+                  <p> "${search.searchBox}" 입니다</p>
                </div> 
             </section>
             
@@ -34,16 +35,18 @@
                </div>
             </section>
             <!-- 상세 검색 리스트 구역 -->
-            <form>
-	            <section class="optionSection">
-	               <div class="row" id="optionRow">
-	                 <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="locationOpen();">지역</button>
-	                 <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="typeOpen();">유형</button>
-	                 <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="optionOpen();">옵션</button>
-	                 <button id="searchOption" class="button primary ">search</button>
+           <c:url var="searchDetail" value="searchDetail.sp"/>
+            <form action="${searchDetail }" method="get">
+	       	 <section class="optionSection">
+	          <div class="row" id="optionRow">
+		               <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="locationOpen();">지역</button>
+		               <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="typeOpen();">유형</button>
+		               <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="optionOpen();">옵션</button>
+		               <button id="searchOption" class="button primary ">search</button>
 	               </div>
 	            </section>
 	            
+	          
 	            <!-- 지역 창 구역 -->
 					<section>
 						<div class="row" id="locationField"
@@ -152,13 +155,9 @@
 	            </div>
 	            </section>
 	            
-	
 					<!-- 옵션 창 구역  -->
 	            <section>
 	               <div class="row" id="optionField" style="border:1px solid black; display: none;">
-						<input type="checkbox" id="all">
-						<label for="all">전체 선택</label>
-					
 	                  <ul>
 	                     <li>
 	                        <input type="checkbox" id="option1" value="food">
@@ -263,209 +262,121 @@
 	           </section>
            </form>
             
-            <!-- 검색 결과 공간 리스트  -->
-            <section class="tiles">
-               <div class="row">
-                  <article>
-                     <span class="image"> <img src="resources/img/studio.jpg"
-                        alt="" />
-                     </span> <a href="#"></a> <span>
-                        <div class="locationName">
-                           <h3>Kh정보교육원</h3>
-                        </div>
-                        <div class="location">
-                           <span> <img src="resources/img/location.svg"> 서울시
-                      	        중구
-                           </span>
-                        </div>
-                        <div class="tags">
-                           <span>#파티룸 #회의실 #중구</span>
-                        </div>
-                        <div class="price">
-                           <strong>10,000</strong> <span>원/시간</span>
-                        </div>
-                        <div class="reviewHeart">
-                           <span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-                           </span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-                           </span>
-                        </div>
-                     </span>
-                  </article>
-                  <article>
-                     <span class="image"> <img src="resources/img/studio.jpg"
-                        alt="" />
-                     </span> <a href="#"></a> <span>
-                           <div class="locationName">
-                              <h3>Kh정보교육원</h3>
-                           </div>
-                           <div class="location">
-                              <span> <img src="resources/img/location.svg"> 서울시
-                           	      중구
-                              </span>
-                           </div>
-                           <div class="tags">
-                              <span>#파티룸 #회의실 #중구</span>
-                           </div>
-                           <div class="price">
-                              <strong>10,000</strong> <span>원/시간</span>
-                           </div>
-                           <div class="reviewHeart">
-                              <span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-                              </span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-                              </span>
-                           </div>
-                     </span>
-                  </article>
-                  <article>
-                     <span class="image"> <img src="resources/img/studio.jpg"
-                        alt="" />
-                     </span> <a href="#"></a> <span>
-                        <div class="locationName">
-                           <h3>Kh정보교육원</h3>
-                        </div>
-                        <div class="location">
-                           <span> <img src="resources/img/location.svg"> 서울시
-                      	        중구
-                           </span>
-                        </div>
-                        <div class="tags">
-                           <span>#파티룸 #회의실 #중구</span>
-                        </div>
-                        <div class="price">
-                           <strong>10,000</strong> <span>원/시간</span>
-                        </div>
-                        <div class="reviewHeart">
-                           <span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-                           </span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-                           </span>
-                        </div>
-                     </span>
-                  </article>
-                  <article>
-                     <span class="image"> <img src="resources/img/studio.jpg"
-                        alt="" />
-                     </span> <a href="#"></a> <span>
-                        <div class="locationName">
-                           <h3>Kh정보교육원</h3>
-                        </div>
-                        <div class="location">
-                           <span> <img src="resources/img/location.svg"> 서울시
-                          	    중구
-                           </span>
-                        </div>
-                        <div class="tags">
-                           <span>#파티룸 #회의실 #중구</span>
-                        </div>
-                        <div class="price">
-                           <strong>10,000</strong> <span>원/시간</span>
-                        </div>
-                        <div class="reviewHeart">
-                           <span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-                           </span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-                           </span>
-                        </div>
-                     </span>
-                  </article>
-                  <article>
-                     <span class="image"> <img src="resources/img/studio.jpg"
-                        alt="" />
-                     </span> <a href="#"></a> <span>
-                        <div class="locationName">
-                           <h3>Kh정보교육원</h3>
-                        </div>
-                        <div class="location">
-                           <span> <img src="resources/img/location.svg"> 서울시 중구
-                           </span>
-                        </div>
-                        <div class="tags">
-                           <span>#파티룸 #회의실 #중구</span>
-                        </div>
-                        <div class="price">
-                           <strong>10,000</strong> <span>원/시간</span>
-                        </div>
-                        <div class="reviewHeart">
-                           <span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-                           </span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-                           </span>
-                        </div>
-                     </span>
-                  </article>
-                  <article>
-                     <span class="image"> <img src="resources/img/studio.jpg"
-                        alt="" />
-                     </span> <a href="#"></a> <span>
-                        <div class="locationName">
-                           <h3>Kh정보교육원</h3>
-                        </div>
-                        <div class="location">
-                           <span> <img src="resources/img/location.svg"> 서울시
-                     	         중구
-                           </span>
-                        </div>
-                        <div class="tags">
-                           <span>#파티룸 #회의실 #중구</span>
-                        </div>
-                        <div class="price">
-                           <strong>10,000</strong> <span>원/시간</span>
-                        </div>
-                        <div class="reviewHeart">
-                           <span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-                           </span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-                           </span>
-                        </div>
-                     </span>
-                  </article>
-               </div>
-            </section>
+		<!-- 검색 결과 공간 리스트  -->
+           <c:if test="${ !empty searchList}"> 
+	           <section class="tiles">
+		       	<div class="row">
+		           	<c:forEach var="s" items="${searchList}">
+								<article>
+								
+								<!-- 공간 이미지 -->
+									<span class="image"> 
+										<img src="${contextPath }/resources/img/conference.jpg" alt=""/>
+										<%-- <img src="${contextPath }/resources/spaceImg/${s.spaceAttChange}" alt="" /> --%>
+									</span> 
+										<a href=""></a> 
+											
+										<!-- 공간 이름 -->
+											<div class="locationName">
+												<h3>${s.spaceName }</h3>
+											</div>
+											
+										<!-- 주소 -->
+										<div class="location">
+											<span> <img src="resources/img/location.svg">
+												<c:forTokens var="addr" items="${s.spaceAddress}" delims="," varStatus="status">
+													<c:if test="${status.index eq 1}">
+														${addr}
+													</c:if>
+												</c:forTokens>
+												</span>
+											</div>
+										<!-- 태그  -->
+										<div class="tags">
+											<span>${s.spaceTag }</span>
+										</div>
+										
+										<!-- 가격 -->
+											<div class="price">
+												<strong>10,000</strong> <span>원/시간</span>
+											</div>
+											
+										<!-- 리뷰 -->	
+									<!-- 	 <div class="reviewHeart">
+											<span> 
+												<img src="resources/img/comment.svg"> 
+												<span>10</span>&nbsp;&nbsp;&nbsp;
+											</span>
+											
+											찜 
+											<span> 
+												<img src="resources/img/heart.svg"> 
+											<span>10</span>
+										</span>
+									</div> -->
+								</article>
+							</c:forEach>
+	             	  </div>
+	            </section>
+            </c:if>
+            
+            <!-- 검색 결과 없을 경우 -->
+            <c:if test="${ empty searchList}">
+	            <section>
+			       	<div>
+			     		<h2 style="text-align: center">검색 결과가 없습니다</h2>  	
+			       	</div>
+			     </section>
+            </c:if>
       
 </div>      
 </div>
-   <jsp:include page="WEB-INF/views/common/bottom.jsp" />
+   <jsp:include page="../common/bottom.jsp" />
    </div>
    
    <!-- Scripts -->
    
    <script>
-   /* 옵션창 오픈클로즈 */
-   function optionOpen() {
-        var x = document.getElementById("optionField");
-        var y = document.getElementById("locationField");
-        var z = document.getElementById("typeField");
-        if (x.style.display === "none") {
-          x.style.display = "block";
-        } else {
-          x.style.display = "none";
-        }
-        y.style.display = "none";
-        z.style.display = "none";
-        
-      }
-    /* 지역창 오픈 클로즈 */
-    function locationOpen() {
-    	var x = document.getElementById("optionField");
-        var y = document.getElementById("locationField");
-        var z = document.getElementById("typeField");
-       if (y.style.display === "none") {
-         y.style.display = "block";
-       } else {
-         y.style.display = "none";
-       }
-       x.style.display = "none";
-       z.style.display = "none";
-     } 
-   /* 유형창 오픈클로즈 */
-   function typeOpen() {
-	   var x = document.getElementById("optionField");
-       var y = document.getElementById("locationField");
-       var z = document.getElementById("typeField");
-       if (z.style.display === "none") {
-         z.style.display = "block";
-       } else {
-         z.style.display = "none";
-       }
-       x.style.display = "none";
-       y.style.display = "none";
-     }  
-   </script>
+				/* 옵션창 오픈클로즈 */
+				function optionOpen() {
+					var x = document.getElementById("optionField");
+					var y = document.getElementById("locationField");
+					var z = document.getElementById("typeField");
+					if (x.style.display === "none") {
+						x.style.display = "block";
+					} else {
+						x.style.display = "none";
+					}
+					y.style.display = "none";
+					z.style.display = "none";
+
+				}
+				/* 지역창 오픈 클로즈 */
+				function locationOpen() {
+					var x = document.getElementById("optionField");
+					var y = document.getElementById("locationField");
+					var z = document.getElementById("typeField");
+					if (y.style.display === "none") {
+						y.style.display = "block";
+					} else {
+						y.style.display = "none";
+					}
+					x.style.display = "none";
+					z.style.display = "none";
+				}
+				/* 유형창 오픈클로즈 */
+				function typeOpen() {
+					var x = document.getElementById("optionField");
+					var y = document.getElementById("locationField");
+					var z = document.getElementById("typeField");
+					if (z.style.display === "none") {
+						z.style.display = "block";
+					} else {
+						z.style.display = "none";
+					}
+					x.style.display = "none";
+					y.style.display = "none";
+				}
+			</script>
 </body>
 </html>

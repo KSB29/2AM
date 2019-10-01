@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="searchMapper">
+	<resultMap type="Space" id="spaceResultSet">
+		<id property="spaceId" column="SPACE_ID"/>
+		<result property="spaceName" column="SPACE_NAME"/>
+		<result property="spaceComment" column="SPACE_COMMENT"/>
+		<result property="spaceDetail" column="SPACE_DETAIL"/>
+		<result property="spaceTag" column="SPACE_TAG"/>
+		<result property="spaceOption" column="SPACE_OPTION"/>
+		<result property="spaceAddress" column="SPACE_ADDRESS"/>
+		<result property="spaceNotice" column="SPACE_NOTICE"/>
+		<result property="spaceOperStatus" column="SPACE_OPER_STATUS"/>
+		<result property="spaceTime" column="SPACE_TIME"/>
+		<result property="spaceMinPer" column="SPACE_MIN_PER"/>
+		<result property="spaceMaxPer" column="SPACE_MAX_PER"/>
+		<result property="spaceAdd" column="SPACE_ADD"/>
+		<result property="spaceOpenTime" column="SPACE_OPEN_TIME"/>
+		<result property="spaceCloseTime" column="SPACE_CLOSE_TIME"/>
+		<result property="hostId" column="HOST_ID"/>
+		<result property="typeId" column="TYPE_ID"/>
+		<result property="statusId" column="STATUS_ID"/>
+		<result property="spaceEnroll" column="SPACE_ENROLL"/>
+		<result property="spaceUpdate" column="SPACE_UPDATE"/>
+		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
+	</resultMap>
+	
+	<!-- 검색결과  조회 -->
+	<select id="searchList" resultMap="spaceResultSet" parameterType="Search">
+	 	<bind name="sl" value="'%'+_parameter.getSearchBox()+'%'"/>
+	 	
+	 	SELECT P.*, SPACE_ATT_CHANGE FROM SPACE P
+	 	JOIN SPACE_ATT A ON(P.SPACE_ID=A.SPACE_ID)
+	 	WHERE STATUS_ID=2  
+	 	AND(SPACE_NAME LIKE #{sl}
+	 	OR SPACE_TAG LIKE #{sl}
+	 	OR SPACE_OPTION LIKE #{sl}
+	 	OR SPACE_ADDRESS LIKE #{sl})
+	 	ORDER BY SPACE_ENROLL DESC
+	</select>
+
+	
+</mapper>
