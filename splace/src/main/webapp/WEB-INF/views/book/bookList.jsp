@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,9 +38,9 @@
 								</div>
 							</div>
 						</div>
-						<table class="table-wrapper alt">
+						<table class="table-wrapper">
 							<tr>
-								<td><img src="" alt=""></td>
+								<td><img src="${contextPath}/resources/img/back03.jpg" alt="공간대표사진"></td>
 								<td>
 									<div class="col-12">승인대기</div>
 									<div class="col-12"><h2>더빅스터디</h2></div>
@@ -46,8 +48,13 @@
 									<div class="col-12"><p>17,400원</p></div>
 								</td>
 								<td>
-									<button class="button fit primary">상세보기</button>
-									<button class="button fit">후기작성</button>
+									<c:url var="bookDetail" value="bookDetail.sp">
+										<c:param name="bookId" value="${bookId }" />
+									</c:url>
+									<div>
+										<button class="button primary" onclick="location.href='${bookDetail}'">상세보기</button>
+										<button class="button">후기작성</button>
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -61,7 +68,6 @@
 									<a href="#">3</a>
 									<a href="#">4</a>
 									<a href="#">5</a>
-									<a href="#">6</a>
 								</span>
 								<a class="pagination-older" href="#">></a>
 								<a class="pagination-oldest" href="#">>></a>
