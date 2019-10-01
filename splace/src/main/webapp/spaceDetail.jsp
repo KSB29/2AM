@@ -30,13 +30,15 @@
 }
 </style>
 <title>SPLACE</title>
-	<link rel="stylesheet"
-	href="${contextPath }/resources/css/spaceDetail.css" type="text/css">
-		<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
-	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+	<link rel="stylesheet" href="${contextPath }/resources/css/spaceDetail.css" type="text/css">
+	<link rel="stylesheet" href="${contextPath }/resources/css/swiper.css" type="text/css">
+
+	<!-- 달력 -->
+	<!-- <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'> -->
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto"/>
+	<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+	<link rel="stylesheet" href="${contextPath }/resources/css/calstyle.css" type="text/css">
 	
-	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
-	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 </head>
 <body>
 	<!-- 이 형식을 꼭 지켜주세요! -->
@@ -325,6 +327,151 @@
 							<h2>예약하기</h2>
 							<p></p>
 						</div>
+						   <div class="calender">
+		                     <h3>날짜 선택</h3>
+		                     <p></p>
+		                     <input type="text" data-type="date" id="date-input" />
+		                     <div id="material-header-holder" style="display: none"></div>
+		                  </div>
+               
+		                  <div class="timeHeader" style="display:block;">
+		                     <h3>시간 선택</h3>
+		                     <h3>9시-10시</h3>
+		
+		                     <p></p>
+		
+		                     <div id="timeOption" style="display: block;">
+		                        <!-- Swiper -->
+		                        <div class="swiper-container">
+		                           <div class="swiper-wrapper">
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="1" value="1">
+		                                 <label for="1"> 1시 <br>1000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="2" value="2">
+		                                 <label for="2"> 2시 <br>2000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="3" value="3">
+		                                 <label for="3"> 3시 <br>3000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="4" value="4">
+		                                 <label for="4"> 4시 <br>4000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="5" value="5">
+		                                 <label for="5"> 5시 <br>5000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="6" value="6">
+		                                 <label for="6"> 6시 <br>6000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="7" value="7">
+		                                 <label for="7"> 7시 <br>7000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="8" value="8">
+		                                 <label for="8"> 8시 <br>8000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="9" value="9">
+		                                 <label for="9"> 9시 <br>9000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="10" value="10">
+		                                 <label for="10">10시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="11" value="11">
+		                                 <label for="11">11시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="12" value="12">
+		                                 <label for="10">12시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="13" value="13">
+		                                 <label for="10">13시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="14" value="14">
+		                                 <label for="10">14시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="15" value="15">
+		                                 <label for="10">15시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="16" value="16">
+		                                 <label for="10">16시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="17" value="17">
+		                                 <label for="10">17시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="18" value="18">
+		                                 <label for="10">18시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="19" value="19">
+		                                 <label for="10">19시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="20" value="20">
+		                                 <label for="10">20시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="21" value="21">
+		                                 <label for="10">21시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="22" value="22">
+		                                 <label for="10">22시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="23" value="23">
+		                                 <label for="10">23시 <br>10000원
+		                                 </label>
+		                              </div>
+		                              <div class="swiper-slide">
+		                                 <input type="checkbox" name="timeSelect" id="24" value="24">
+		                                 <label for="10">24시 <br>10000원
+		                                 </label>
+		                              </div>
+		                           </div>
+		
+		                           <!-- Add Arrows -->
+		                           <div class="swiper-button-next"></div>
+		                           <div class="swiper-button-prev"></div>
+		                        </div>
+		                     </div>
+		                  </div>
 
 
 
@@ -378,7 +525,7 @@
 				</section> -->
 				<section>
 					<!-- Swiper -->
-				  <div class="swiper-container">
+				  <div class="swiper-container hostSpace">
 				    <div class="swiper-wrapper">
 				      <div class="swiper-slide">
 				      	Slide 1
@@ -394,23 +541,24 @@
 				      <div class="swiper-slide">Slide 10</div>
 				    </div>
 				  </div>
-				  <script>
-				    var swiper = new Swiper('.swiper-container', {
-				      slidesPerView: 3,
-				      spaceBetween: 30,
-				      freeMode: true,
-				      pagination: {
-				        el: '.swiper-pagination',
-				        clickable: true,
-				      },
-				    });
-				  </script>
+				  
 				</section>
+				
+				
+				
+				
 				<jsp:include page="WEB-INF/views/common/bottom.jsp"/>
-				<!-- partial -->
-				<%-- <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
-				<script
-					src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
-				<script src="${contextPath }/resources/js/scrollscript.js"></script> --%>
+				
+	<script src="${contextPath }/resources/js/spaceDetail.js"></script> 
+ 	<script src="${contextPath }/resources/js/calscript.js"></script> 
+	
+	<!-- 시간, 호스트 다른 공간 슬라이드 -->
+	<script src="https://unpkg.com/swiper/js/swiper.js"></script>
+	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+
+	<!-- 달력 -->
+     <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script> 
+ 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>  
 </body>
 </html>
