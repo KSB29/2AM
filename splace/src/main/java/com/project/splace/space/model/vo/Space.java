@@ -1,5 +1,7 @@
 package com.project.splace.space.model.vo;
 
+import java.sql.Date;
+
 public class Space {
 	
 	private int spaceId;
@@ -20,13 +22,18 @@ public class Space {
 	private int hostId;
 	private int typeId;
 	private int statusId;
+	private Date spaceEnroll;
+	private Date spaceUpdate;
+	private String memberId;
+	private String spaceAttChange;
+	private String typeName;
 	
 	public Space() {}
 
 	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
 			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
 			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
-			int typeId, int statusId) {
+			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate) {
 		super();
 		this.spaceId = spaceId;
 		this.spaceName = spaceName;
@@ -46,8 +53,69 @@ public class Space {
 		this.hostId = hostId;
 		this.typeId = typeId;
 		this.statusId = statusId;
+		this.spaceEnroll = spaceEnroll;
+		this.spaceUpdate = spaceUpdate;
+	}
+	
+	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
+			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
+			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
+			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String memberId, String spaceAttChange, String typeName) {
+		super();
+		this.spaceId = spaceId;
+		this.spaceName = spaceName;
+		this.spaceComment = spaceComment;
+		this.spaceDetail = spaceDetail;
+		this.spaceTag = spaceTag;
+		this.spaceOption = spaceOption;
+		this.spaceAddress = spaceAddress;
+		this.spaceNotice = spaceNotice;
+		this.spaceOperStatus = spaceOperStatus;
+		this.spaceTime = spaceTime;
+		this.spaceMinPer = spaceMinPer;
+		this.spaceMaxPer = spaceMaxPer;
+		this.spaceAdd = spaceAdd;
+		this.spaceOpenTime = spaceOpenTime;
+		this.spaceCloseTime = spaceCloseTime;
+		this.hostId = hostId;
+		this.typeId = typeId;
+		this.statusId = statusId;
+		this.spaceEnroll = spaceEnroll;
+		this.spaceUpdate = spaceUpdate;
+		this.memberId = memberId;
+		this.spaceAttChange = spaceAttChange;
+		this.typeName = typeName;
 	}
 
+	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
+			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
+			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
+			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String spaceAttChange, String typeName) {
+		super();
+		this.spaceId = spaceId;
+		this.spaceName = spaceName;
+		this.spaceComment = spaceComment;
+		this.spaceDetail = spaceDetail;
+		this.spaceTag = spaceTag;
+		this.spaceOption = spaceOption;
+		this.spaceAddress = spaceAddress;
+		this.spaceNotice = spaceNotice;
+		this.spaceOperStatus = spaceOperStatus;
+		this.spaceTime = spaceTime;
+		this.spaceMinPer = spaceMinPer;
+		this.spaceMaxPer = spaceMaxPer;
+		this.spaceAdd = spaceAdd;
+		this.spaceOpenTime = spaceOpenTime;
+		this.spaceCloseTime = spaceCloseTime;
+		this.hostId = hostId;
+		this.typeId = typeId;
+		this.statusId = statusId;
+		this.spaceEnroll = spaceEnroll;
+		this.spaceUpdate = spaceUpdate;
+		this.spaceAttChange = spaceAttChange;
+		this.typeName = typeName;
+	}
+	
 	public int getSpaceId() {
 		return spaceId;
 	}
@@ -190,6 +258,46 @@ public class Space {
 
 	public void setStatusId(int statusId) {
 		this.statusId = statusId;
+	}
+
+	public Date getSpaceEnroll() {
+		return spaceEnroll;
+	}
+
+	public void setSpaceEnroll(Date spaceEnroll) {
+		this.spaceEnroll = spaceEnroll;
+	}
+
+	public Date getSpaceUpdate() {
+		return spaceUpdate;
+	}
+
+	public void setSpaceUpdate(Date spaceUpdate) {
+		this.spaceUpdate = spaceUpdate;
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public String getSpaceAttChange() {
+		return spaceAttChange;
+	}
+
+	public void setSpaceAttChange(String spaceAttChange) {
+		this.spaceAttChange = spaceAttChange;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
 	@Override
