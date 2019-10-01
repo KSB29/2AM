@@ -26,6 +26,7 @@ public class Space {
 	private Date spaceUpdate;
 	private String memberId;
 	private String spaceAttChange;
+	private String typeName;
 	
 	public Space() {}
 
@@ -59,7 +60,7 @@ public class Space {
 	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
 			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
 			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
-			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String memberId, String spaceAttChange) {
+			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String memberId, String spaceAttChange, String typeName) {
 		super();
 		this.spaceId = spaceId;
 		this.spaceName = spaceName;
@@ -83,12 +84,13 @@ public class Space {
 		this.spaceUpdate = spaceUpdate;
 		this.memberId = memberId;
 		this.spaceAttChange = spaceAttChange;
+		this.typeName = typeName;
 	}
 
 	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
 			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
 			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
-			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String spaceAttChange) {
+			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String spaceAttChange, String typeName) {
 		super();
 		this.spaceId = spaceId;
 		this.spaceName = spaceName;
@@ -111,6 +113,7 @@ public class Space {
 		this.spaceEnroll = spaceEnroll;
 		this.spaceUpdate = spaceUpdate;
 		this.spaceAttChange = spaceAttChange;
+		this.typeName = typeName;
 	}
 	
 	public int getSpaceId() {
@@ -287,6 +290,14 @@ public class Space {
 
 	public void setSpaceAttChange(String spaceAttChange) {
 		this.spaceAttChange = spaceAttChange;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
 	@Override
