@@ -17,18 +17,20 @@
 				<jsp:include page="/WEB-INF/views/host/hostMenu.jsp"/>
 			<!-- Content -->
 				<section id="hostSection">
+					<c:set var="hostId" value="${ host.hostId }"/>
+					<c:set var="hostStatus" value="${ host.statusId }"/>
 					<h1 class="align-center">호스트 정보</h1>
-					<c:if test="${ host.statusId == 0 }">
+					<c:if test="${ hostStatus == 0 }">
 						<div class="col-12 align-center"><h2 class="noticeColor">정보가 등록되었습니다. 호스트 승인 신청하세요.</h2></div>
 					</c:if>
-					<c:if test="${ host.statusId == 1 }">
+					<c:if test="${ hostStatus == 1 }">
 						<div class="col-12 align-center"><h2 class="noticeColor">호스트 신청 검토 중입니다.</h2></div>
 					</c:if>
-					<c:if test="${ host.statusId == 3 }">
+					<c:if test="${ hostStatus == 3 }">
 						<div class="col-12 align-center"><h2 class="noticeColor">호스트 신청이 반려되었습니다. 수정 후 재신청하세요.</h2></div>
 					</c:if>
 					<c:choose>
-						<c:when test="${ host.hostId == null }">
+						<c:when test="${ hostId == null }">
 							<c:url var="hostUrl" value="hostInsert.sp"/>
 						</c:when>
 						<c:otherwise>
@@ -38,7 +40,8 @@
 				<!-- Form -->
 					<form method="post" action="${ hostUrl }">
 						<c:if test="${ !empty host }">
-							<input type="hidden" name="hostId" value="${ host.hostId }">
+							<input type="hidden" name="hostId" id="hostId" value="${ hostId }">
+							<input type="hidden" name="hostSatus" id="hostStatus" value="${ hostStatus }">
 						</c:if>
 						<input type="hidden" name="memberId" value="${ loginUser.memberId }">
 						<h2>1. 기본정보</h2>
@@ -87,18 +90,18 @@
 						<div class="row">
 							<div class="col-4"></div>
 							<c:choose>
-								<c:when test="${ host.statusId == null }">
+								<c:when test="${ hostStatus == null }">
 									<div class="col-4">
 										<input type="submit" class="button primary fit" value="등록">
 									</div>
 								</c:when>
-								<c:when test="${ host.statusId == 0 || host.statusId == 3 }">
+								<c:when test="${ hostStatus == 0 || hostStatus == 3 }">
 									<div class="col-2">
 										<input type="submit" class="button primary fit" value="등록">
 									</div>
 									<div class="col-2">
 										<c:url var="hostApply" value="hostApply.sp">
-											<c:param name="hostId" value="${ host.hostId }"/>
+											<c:param name="hostId" value="${ hostId }"/>
 											<c:param name="memberId" value="${ loginUser.memberId }"/>
 										</c:url>
 										<input type="button" class="button primary fit" onclick="location.href='${ hostApply }'" value="신청">
@@ -119,19 +122,6 @@
 		</div>
 		<jsp:include page="/WEB-INF/views/common/bottom.jsp"/>
 	</div>
-	<script>
-		$(document).ready(function(){
-			// 승인 대기일 경우 수정버튼 비활성으로 설정
-			if (${ host.statusId == 1 }) {
-				$("#updateBtn").prop("disabled", true);
-			}
-			// 승인 상태일 경우 대표자명, 상호명, 사업자등록번호 비활성으로 설정
-			if (${ host.statusId == 2 }) {
-				$("#hostName").prop("disabled", true);
-				$("#storeName").prop("disabled", true);
-				$("#hostNo").prop("disabled", true);
-			}
-		});
-	</script>
+	<script src="${contextPath}/resources/js/hostInfo.js"></script>
 </body>
 </html>

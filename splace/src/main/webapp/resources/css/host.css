@@ -6,3 +6,9 @@
 .borderTop {
 	border-top: 3px solid #4C74B9;
 }
+a {
+	border-bottom: none;
+}
+a:hover {
+	text-decoration: none;
+}

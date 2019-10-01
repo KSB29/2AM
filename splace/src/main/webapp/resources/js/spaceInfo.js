@@ -43,6 +43,10 @@ function loadImg(value, num) {
 
 $(document).ready(function(){
 	
+	$("#addressBtn").click(function(){
+		$("#addressBtn").postcodifyPopUp();
+	});
+	
 	// 이미지 클릭 시 원본 이미지 보여주는 창 열기
 	$("#imageArea .image").click(function(){
 		var url = $(this).attr("src");
