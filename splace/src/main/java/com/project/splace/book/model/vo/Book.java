@@ -1,4 +1,4 @@
-package com.project.splace.Book.model.vo;
+package com.project.splace.book.model.vo;
 
 import java.util.Date;
 
