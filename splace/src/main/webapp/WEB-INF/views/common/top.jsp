@@ -94,7 +94,7 @@
 			</div>
 			<div class="row" id="section1row">
 				<div class="col-12">
-					<span>${loginUser.memberName}님 안녕하세요</span>
+					<span>${loginUser.memberName}님 안녕하세요 </span>
 				</div>
 			</div>
 		</section>
