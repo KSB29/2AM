@@ -11,6 +11,7 @@ public class Space {
 	private String spaceAddress;
 	private String spaceNotice;
 	private String spaceOperStatus;
+	private String spaceAttChange;
 	private int spaceTime;
 	private int spaceMinPer;
 	private int spaceMaxPer;
@@ -24,7 +25,7 @@ public class Space {
 	public Space() {}
 
 	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
-			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
+			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, String spaceAttChange, int spaceTime,
 			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
 			int typeId, int statusId) {
 		super();
@@ -37,6 +38,7 @@ public class Space {
 		this.spaceAddress = spaceAddress;
 		this.spaceNotice = spaceNotice;
 		this.spaceOperStatus = spaceOperStatus;
+		this.spaceAttChange = spaceAttChange;
 		this.spaceTime = spaceTime;
 		this.spaceMinPer = spaceMinPer;
 		this.spaceMaxPer = spaceMaxPer;
@@ -119,6 +121,14 @@ public class Space {
 	public void setSpaceOperStatus(String spaceOperStatus) {
 		this.spaceOperStatus = spaceOperStatus;
 	}
+	
+	public String getSpaceAttChange() {
+		return spaceAttChange;
+	}
+
+	public void setSpaceAttChange(String spaceAttChange) {
+		this.spaceAttChange = spaceAttChange;
+	}
 
 	public int getSpaceTime() {
 		return spaceTime;
@@ -197,7 +207,7 @@ public class Space {
 		return "Space [spaceId=" + spaceId + ", spaceName=" + spaceName + ", spaceComment=" + spaceComment
 				+ ", spaceDetail=" + spaceDetail + ", spaceTag=" + spaceTag + ", spaceOption=" + spaceOption
 				+ ", spaceAddress=" + spaceAddress + ", spaceNotice=" + spaceNotice + ", spaceOperStatus="
-				+ spaceOperStatus + ", spaceTime=" + spaceTime + ", spaceMinPer=" + spaceMinPer + ", spaceMaxPer="
+				+ spaceOperStatus + ", spaceAttChange=" + spaceAttChange + ", spaceTime=" + spaceTime + ", spaceMinPer=" + spaceMinPer + ", spaceMaxPer="
 				+ spaceMaxPer + ", spaceAdd=" + spaceAdd + ", spaceOpenTime=" + spaceOpenTime + ", spaceCloseTime="
 				+ spaceCloseTime + ", hostId=" + hostId + ", typeId=" + typeId + ", statusId=" + statusId + "]";
 	}
