@@ -17,4 +17,10 @@ public class MemberDao {
 		Member loginUser = sqlSession.selectOne("memberMapper.selectOne", mem);
 		return loginUser;
 	}
+
+
+	public int deleteMember(String memberId) {
+		return sqlSession.delete("memberMapper.deleteMember",memberId);
+		
+	}
 }

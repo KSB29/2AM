@@ -8,7 +8,7 @@
 
  .wrapper_left{
     /* margin: 0 2em 0 0em;  */
-   padding: 0 2em 0 2em;
+   padding: 0 2em 0 2em !important;
 }
  .wrapper_right{
     padding-right: 2em;

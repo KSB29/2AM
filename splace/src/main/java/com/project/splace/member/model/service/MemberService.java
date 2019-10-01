@@ -5,4 +5,6 @@ import com.project.splace.member.model.vo.Member;
 public interface MemberService {
 	
 	public abstract Member loginMember(Member mem);
+
+	public abstract int deleteMember(String memberId);
 }

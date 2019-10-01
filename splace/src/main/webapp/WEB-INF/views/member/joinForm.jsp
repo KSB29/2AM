@@ -39,22 +39,22 @@
 													
 														<h2>Join</h2>
 														<div class="form_box filed">
-															<input type="email" name="email" placeholder="이메일" required>
+															<input type="email" name="memberId" placeholder="이메일" required>
 														</div>
 														<div class="form_box filed">
-															<input type="text" name="email2" placeholder="이메일 인증번호" required>
+															<input type="text" name="memberPwd" placeholder="이메일 인증번호" required>
 														</div>
 														<div class="form_box filed">
-															<input type="text" name="nickName" placeholder="이름" required>
+															<input type="text" name="memberName" placeholder="이름" required>
 														</div>
 														<div class="form_box filed">
-															<input type="text" name="phone" placeholder="전화번호 입력" required>
+															<input type="text" name="memberPhone" placeholder="전화번호 입력" required>
 														</div>                                
 														<div class="form_box filed">
-															<input type="password" name="password" placeholder="비밀번호" required>
+															<input type="password" name="memberPwd" placeholder="비밀번호" required>
 														</div>
 														<div class="form_box filed">
-															<input type="password" name="password2" placeholder="비밀번호 확인" required>
+															<input type="password" name="memberPwd2" placeholder="비밀번호 확인" required>
 														</div>
 													</div>
 												</article>
