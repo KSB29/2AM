@@ -20,21 +20,27 @@
 					<h1 class="align-center">예약 리스트</h1>
 					<form action="">
 						<div class="row gtr-uniform">
-							<div class="col-8"></div>
-							<div class="col-2">
-								<select name="spaceId" id="spaceId">
-									<option value="">- 공간 -</option>
-									<option value="1">공간1</option>
-								</select>
+							<div class="col-6"></div>
+							<div class="col-3">
+								<div class="default-select" id="default-select">
+									<select name="spaceId" id="spaceId">
+										<option value="">- 공간 -</option>
+										<option value="1">공간1</option>
+										<option value="2">공간2</option>
+										<option value="3">공간3</option>
+									</select>
+								</div>
 							</div>
-							<div class="col-2">
-								<select name="spaceStatus" id="spaceStatus">
-									<option value="">- 예약상태 -</option>
-									<option value="0">등록</option>
-									<option value="1">대기</option>
-									<option value="2">승인</option>
-									<option value="3">반려</option>
-								</select>
+							<div class="col-3">
+								<div class="default-select" id="default-select">
+									<select name="spaceStatus" id="spaceStatus">
+										<option value="">- 예약상태 -</option>
+										<option value="0">등록</option>
+										<option value="1">대기</option>
+										<option value="2">승인</option>
+										<option value="3">반려</option>
+									</select>
+								</div>
 							</div>
 						</div>
 					</form>
@@ -56,7 +62,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="i" begin="1" end="7">
+								<c:forEach var="i" begin="1" end="5">
 								<tr class="list">
 									<td>공간1</td>
 									<td>대기</td>
@@ -66,10 +72,14 @@
 									<td>13시 ~ 14시</td>
 									<td>5</td>
 									<td>30,000</td>
-									<th><input type="checkbox" id="check${i}" name="check${i}"><label for="check${i}"></label></th>
+									<th class="checkList">
+										<c:if test="${i%2 == 0}"><input type="checkbox" id="check${i}" disabled></c:if>
+										<c:if test="${i%2 != 0}"><input type="checkbox" id="check${i}"></c:if>
+										<label for="check${i}"></label>
+									</th>
 								</tr>
 								<tr class="detail">
-									<td>예약내역</td>
+									<td></td>
 									<td colspan="9">홍길동 / 010-0000-0000 / kdhong@test.com / 예약 시 요청사항</td>
 								</tr>
 								</c:forEach>
@@ -79,10 +89,10 @@
 					<div class="row">
 						<div class="col-3"></div>
 						<div class="col-3">
-							<input type="button" class="button primary fit" value="승인">
+							<input type="button" class="button primary fit" value="승인" onclick="submit();">
 						</div>
 						<div class="col-3">
-							<input type="button" class="button fit" value="반려">
+							<input type="button" class="button fit" value="반려" onclick="reject();">
 						</div>
 						<div class="col-3"></div>
 					</div>
@@ -93,18 +103,6 @@
 		</div>
 		<jsp:include page="/WEB-INF/views/common/bottom.jsp"/>
 	</div>
-<script>
-	$(document).ready(function(){
-		$(".detail").css("display", "none");
-		$(".list td").click(function(){
-			if($(this).parent().next("tr").css("display") == "none") {
-				$(this).parent().siblings(".detail").slideUp();
-				$(this).parent().next().slideDown();
-			} else {
-				$(this).parent().next().slideUp();
-			}
-		});
-	});
-</script>
+	<script src="${contextPath}/resources/js/spaceBook.js"></script>
 </body>
 </html>

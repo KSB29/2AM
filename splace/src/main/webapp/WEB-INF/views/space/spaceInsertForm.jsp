@@ -32,25 +32,15 @@
 								<input type="text" name="spaceName" id="spaceName" placeholder="공간이름" maxlength="100" required>
 							</div>
 							<div class="col-12 col-12-small"><label>* 공간유형</label></div>
-							<div class="col-2 col-12-small">
-								<input type="radio" id="typeId1" name="typeId" value="1">
-								<label for="typeId1">스터디룸</label>
-							</div>
-							<div class="col-2 col-12-small">
-								<input type="radio" id="typeId2" name="typeId" value="2">
-								<label for="typeId2">파티룸</label>
-							</div>
-							<div class="col-2 col-12-small">
-								<input type="radio" id="typeId3" name="typeId" value="3">
-								<label for="typeId3">스튜디오</label>
-							</div>
-							<div class="col-2 col-12-small">
-								<input type="radio" id="typeId4" name="typeId" value="4">
-								<label for="typeId4">회의실</label>
-							</div>
-							<div class="col-4 col-12-small">
-								<input type="radio" id="typeId5" name="typeId" value="5">
-								<label for="typeId5">카페</label>
+							<div class="col-12 col-12-small">
+								<div class="row gtr-uniform">
+									<c:forEach var="tList" items="${ tList }">
+									<div class="col-2 col-12-small">
+										<input type="radio" id="typeId${ tList.typeId }" name="typeId" value="${ tList.typeId }">
+										<label for="typeId${ tList.typeId }">${ tList.typeName }</label>
+									</div>
+									</c:forEach>
+								</div>
 							</div>
 							<div class="col-1 col-12-xsmall">
 								<label>* 주소</label>
@@ -89,76 +79,26 @@
 								<input type="button" class="button primary small" id="addTagBtn" value="추가">
 							</div>
 							<div class="col-12 col-12-xsmall" id="tagList"></div>
-							<!-- <input type="hidden" name="spaceTag" id="spaceTag" maxlength="150"> -->
-							<input type="text" name="spaceTag" id="spaceTag" maxlength="150">
+							<input type="hidden" name="spaceTag" id="spaceTag" maxlength="150">
+							<!-- <input type="text" name="spaceTag" id="spaceTag" maxlength="150"> -->
 							
 							<div class="col-12 col-12-xsmall">
 								<label>세부옵션</label>
 								<div class="row" id="optionField">
 									<ul>
+										<c:forEach var="oList" items="${ oList }">
 										<li>
-											<input type="checkbox" id="option1" class="option" value="1">
-											<label for="option1"><i class="material-icons">fastfood</i> 음식물반입가능</label>
+											<input type="checkbox" id="option${ oList.optionId }" class="option" value="${ oList.optionId }">
+											<label for="option${ oList.optionId }">
+												<c:if test="${ oList.optionId <= 8 }"><i class="material-icons">${ oList.optionIcon }</i> ${ oList.optionName }</c:if>
+												<c:if test="${ oList.optionId > 8 }"><i class="${ oList.optionIcon }"></i> ${ oList.optionName }</c:if>
+											</label>
 										</li>
-										<li>
-											<input type="checkbox" id="option2" class="option" value="2">
-											<label for="option2"><i class="material-icons">local_parking</i> 주차가능</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option3" class="option" value="3">
-											<label for="option3"><i class="material-icons">mic</i> 음향/마이크</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option4" class="option" value="4">
-											<label for="option4"><i class="material-icons">wifi</i> 인터넷/와이파이</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option5" class="option" value="5">
-											<label for="option5"><i class="material-icons">pets</i> 반려동물동반가능</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option6" class="option" value="6">
-											<label for="option6"><i class="material-icons">smoke_free</i> 금연</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option7" class="option" value="7">
-											<label for="option7"><i class="material-icons">live_tv</i> TV/프로젝터</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option8" class="option" value="8">
-											<label for="option8"><i class="material-icons">local_bar</i> 주류반입가능</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option9" class="option" value="9">
-											<label for="option9"><i class="material-icons">local_printshop</i> 복사/인쇄기</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option10" class="option" value="10">
-											<label for="option10"><i class='fas fa-restroom'></i> 화장실</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option11" class="option" value="11">
-											<label for="option11"><i class='fas fa-chalkboard'></i> 화이트보드</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option12" class="option" value="12">
-											<label for="option12"><i class='fab fa-hotjar'></i> 난방기</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option13" class="option" value="13">
-											<label for="option13"><i class='fas fa-wind'></i> 에어컨</label>
-										</li>
-										<li>
-											<input type="checkbox" id="option14" class="option" value="14">
-											<label for="option14"><i class='fas fa-video'></i> CCTV</label>
-										</li>
+										</c:forEach>
 									</ul>
 								</div>
 							</div>
-							
-							<div class="col-12 col-12-xsmall">
-								<input type="text" name="spaceOption" id="spaceOption" readonly>
-							</div>
+							<!-- <input type="hidden" name="spaceOption" id="spaceOption" readonly> -->
 							
 							<div class="col-10 col-12-xsmall">
 								<label for="">주의사항 <span id="noticeLength"></span></label>
@@ -169,8 +109,8 @@
 								<input type="button" class="button primary small" id="addNoticeBtn" value="추가">
 							</div>
 							<div class="col-12 col-12-xsmall" id="noticeList"></div>
-							<!-- <input type="hidden" name="spaceNotice" id="spaceNotice" maxlength="1000"> -->
-							<input type="text" name="spaceNotice" id="spaceNotice" maxlength="1000">
+							<input type="hidden" name="spaceNotice" id="spaceNotice" maxlength="1000">
+							<!-- <input type="text" name="spaceNotice" id="spaceNotice" maxlength="1000"> -->
 							
 						</div>
 						<br><br>

@@ -1,6 +1,6 @@
 package com.project.splace.host.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.splace.host.model.service.HostService;
 import com.project.splace.host.model.vo.Host;
+import com.project.splace.member.model.vo.Member;
 
 @Controller
 public class HostController {
@@ -17,10 +18,15 @@ public class HostController {
 	private HostService hService;
 	
 	@RequestMapping("hostApplyForm.sp")
-	public String hostApplyForm(String memberId, Model model, HttpServletRequest request) {
-		Host hostInfo = hService.selectOne(memberId);
-		if (hostInfo != null) model.addAttribute("host", hostInfo);
-		return "host/hostApplyForm";
+	public String hostApplyForm(Model model, HttpSession session) {
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		if (memberId != null) {
+			Host hostInfo = hService.selectOne(memberId);
+			if (hostInfo != null) model.addAttribute("host", hostInfo);
+			return "host/hostApplyForm";
+		} else {
+			return "redirect:member/loginForm";
+		}
 	}
 	
 	@RequestMapping("hostInsert.sp")

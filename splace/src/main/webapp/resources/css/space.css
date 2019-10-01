@@ -37,6 +37,7 @@ input[type="file"] {
 .bgImage {
 	background-size:cover;
 	margin-bottom: 10px !important;
+	height: 250px;
 }
 .marginClear {
 	margin-bottom: 10px !important;
@@ -52,6 +53,14 @@ input[type="file"] {
 	color: #fff;
 	display: table;
 	text-align: center;
+}
+
+.bgBlur em {
+	color: #fff;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	height: 250px;
 }
 
 /* 체크박스 스위치 토글 처리 */

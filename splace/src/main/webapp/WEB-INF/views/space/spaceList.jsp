@@ -19,26 +19,40 @@
 				<section id="spaceArea">
 					<h1 class="align-center">공간 리스트</h1>
 					<div class="row gtr-uniform">
-						<c:forEach var="i" begin="1" end="3">
+						<c:forEach var="list" items="${ sList }">
 							<div class="col-4">
-								<div class="image fit bgImage" style="background-image:url('${contextPath }/resources/spaceImg/space${i}.PNG');">
-									<span class="bgBlur"><br><br><br><br><br><br><br><span>비공개 중입니다.</span></span>
+								<div class="image fit bgImage" style="background-image:url('${contextPath }/resources/spaceImg/space1.PNG');">
+									<c:if test="${ list.statusId != 2 || list.spaceOperStatus == 'N' }"><span class="bgBlur"><em>비공개 중입니다.</em></span></c:if>
 								</div>
-								<h2 class="marginClear">공간명${i}</h2>
+								<h2 class="marginClear">${ list.spaceName }</h2>
 								<div class="marginClear">
-									<span>등록일 : 2019.09.20</span>
+									<span>등록일 : ${ list.spaceEnroll }</span>
 									<span>&nbsp;&nbsp;&nbsp;</span>
 									<label class="switch">
+							            <c:if test="${ list.spaceOperStatus == 'Y' }">
+							            <input type="checkbox" class="operStatus" checked>
+							            </c:if>
+							            <c:if test="${ list.spaceOperStatus == 'N' }">
 							            <input type="checkbox" class="operStatus">
+							            </c:if>
 							            <span class="slider round"></span>
 							        </label>
 						        </div>
 								<div class="image fit marginClear">
-									<a class="button primary small" href="spaceUpdateForm.sp">수정</a>
-									<a class="button primary small" href="spacePrice.sp">가격 등록</a>
-									<a class="button primary small" href="spaceDayoff.sp">휴일 등록</a>
+									<c:url var="spaceUpdateForm" value="spaceUpdateForm.sp">
+										<c:param name="spaceId" value="${ list.spaceId }"/>
+									</c:url>
+									<c:url var="spacePrice" value="spacePrice.sp">
+										<c:param name="spaceId" value="${ list.spaceId }"/>
+									</c:url>
+									<c:url var="spaceDayoff" value="spaceDayoff.sp">
+										<c:param name="spaceId" value="${ list.spaceId }"/>
+									</c:url>
+									<a class="button primary small" href="${ spaceUpdateForm }">수정</a>
+									<a class="button primary small" href="${ spacePrice }">가격 등록</a>
+									<a class="button primary small" href="${ spaceDayoff }">휴일 등록</a>
 								</div>
-								<c:if test="${i==1 }">
+								<c:if test="${ list.statusId != 2 }">
 								<div class="image fit marginClear">
 									<a class="button small" href="">신청</a>
 									<a class="button small" href="">삭제</a>
@@ -48,9 +62,7 @@
 						</c:forEach>
 						<c:forEach var="i" begin="4" end="7">
 							<div class="col-4">
-								<div class="image fit bgImage" style="background-image:url('${contextPath }/resources/spaceImg/space${i}.PNG');">
-									<br><br><br><br><br><br><br>
-								</div>
+								<div class="image fit bgImage" style="background-image:url('${contextPath }/resources/spaceImg/space${i}.PNG');"></div>
 								<h2 class="marginClear">공간명${i}</h2>
 								<div class="marginClear">
 									<span>등록일 : 2019.09.22</span>
@@ -86,6 +98,7 @@
 			                });
 			            });
 					</script>
+					<%-- <c:if test="${ loginUser.grade == '2' }"> --%>
 					<br><br>
 					<div class="row">
 						<div class="col-4"></div>
@@ -94,6 +107,7 @@
 						</div>
 						<div class="col-4"></div>
 					</div>
+					<%-- </c:if> --%>
 				</section>
 			</div>
 		</div>

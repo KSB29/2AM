@@ -12,10 +12,7 @@
 	<section>
 		<div class="row gtr-uniform">
 			<div class="col-2 align-center">
-				<c:url var="hostApplyForm" value="hostApplyForm.sp">
-					<c:param name="memberId" value="${ loginUser.memberId }"/>
-				</c:url>
-				<h2><a href="${ hostApplyForm }">마이페이지</a></h2>
+				<h2><a href="hostApplyForm.sp">마이페이지</a></h2>
 			</div>
 			<div class="col-2 align-center">
 				<h2><a href="spaceList.sp">공간관리</a></h2>

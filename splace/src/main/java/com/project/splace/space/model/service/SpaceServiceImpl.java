@@ -2,50 +2,69 @@ package com.project.splace.space.model.service;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.splace.space.model.dao.SpaceDao;
+import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Space;
+import com.project.splace.space.model.vo.SpaceAtt;
+import com.project.splace.space.model.vo.Type;
 
 @Service("sService")
 public class SpaceServiceImpl implements SpaceService {
 	
+	@Autowired
+	private SpaceDao sDao;
+	
+	@Autowired
+	private SpaceAtt sAtt;
+	
 	@Override
 	public int insertSpace(Space space, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files) {
+		
+		// 개행문자 변경
+		space.setSpaceDetail(space.getSpaceDetail().replace("\n", "<br>"));
+		
 		// file명 변경
 		String renameFileName = null;
-		int result;
+		
+		// 공간ID 생성
+		int spaceId = sDao.selectSpaceId();
+		space.setSpaceId(spaceId);
+		int result = sDao.insertSpace(space);
 		
 		// 업로드된 파일이 있을 경우 파일명 변경
 		// 파일이 없을 경우 null이 아니라 빈문자열로 전송이 됨
 		if (!uploadFile.getOriginalFilename().equals("")) {
-			renameFileName = "5_main_" + renameFile(uploadFile); // 변경된 파일명
-			System.out.println(renameFileName);
-			//board.setOriginalFileName(uploadFile.getOriginalFilename());
-			//board.setRenameFileName(renameFileName);
+			renameFileName = renameFile(uploadFile, spaceId, 0); // 변경된 파일명
+			sAtt.setSpaceId(spaceId);
+			sAtt.setSpaceAttOrigin(uploadFile.getOriginalFilename());
+			sAtt.setSpaceAttChange(renameFileName);
+			// 서버에 파일 저장
 			result = saveFile(renameFileName, uploadFile, request);
-			System.out.println(result);
 		}
 		
-		if (files.size() > 0) {
+		// DB에 파일 저장
+		result = sDao.insertFile(sAtt);
+		
+		/*if (files.size() > 0) {
 			for (int i = 0; i < files.size(); i++) {
 				if (!files.get(i).getOriginalFilename().equals("")) {
-					renameFileName = "5_sub_" + i + "_" + renameFile(files.get(i));
-					System.out.println(renameFileName);
+					renameFileName = renameFile(files.get(i), spaceId, i);
+					//System.out.println(renameFileName);
+					// 서버에 파일 저장
 					result = saveFile(renameFileName, files.get(i), request);
-					System.out.println(result);
 				}
 			}
-		}
-		
-		// DB에 게시글 저장
-		//int result = sDao.insertSpace(space);
-		result = 1;
+		}*/
 		
 		// 서버에 파일 저장
 		//if (renameFileName != null && result == 1) {
@@ -56,12 +75,12 @@ public class SpaceServiceImpl implements SpaceService {
 	
 	
 	// 파일명 변경 메소드
-	public String renameFile(MultipartFile file) {
+	public String renameFile(MultipartFile file, int spaceId, int index) {
 		
-		// "년월일시분초.확장자"로 파일명 변경
+		// "공간아이디_순번_년월일시분초.확장자"로 파일명 변경
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new Date()) + "."
+		String renameFileName = spaceId + "_" + index + "_" + sdf.format(new Date()) + "."
 							+ originFileName.substring(originFileName.lastIndexOf(".")+1);
 		return renameFileName;
 	}
@@ -71,6 +90,7 @@ public class SpaceServiceImpl implements SpaceService {
 		// 파일 저장 경로
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\spaceImg";
+		System.out.println("savePath : " + savePath);
 		
 		// 저장 폴더 선택
 		File folder = new File(savePath);
@@ -79,6 +99,7 @@ public class SpaceServiceImpl implements SpaceService {
 		if (!folder.exists()) folder.mkdir(); // 폴더 생성
 		
 		String filePath = folder + "\\" + renameFileName;
+		System.out.println("filePath : " + filePath);
 		
 		// 파일 저장 성공 여부, 성공 1, 실패 0
 		int result = 0;
@@ -94,6 +115,24 @@ public class SpaceServiceImpl implements SpaceService {
 		}
 		
 		return result;
+	}
+
+
+	@Override
+	public ArrayList<Space> selectList(String memberId) {
+		return sDao.selectList(memberId);
+	}
+
+
+	@Override
+	public ArrayList<Type> selectType() {
+		return sDao.selectType();
+	}
+
+
+	@Override
+	public ArrayList<Option> selectOption() {
+		return sDao.selectOption();
 	}
 
 }
