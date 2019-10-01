@@ -52,19 +52,20 @@
 								<input type="radio" id="typeId5" name="typeId" value="5">
 								<label for="typeId5">카페</label>
 							</div>
-							<div class="col-10 col-12-xsmall">
-								<label for="spaceAddress">* 주소</label>
-								<input type="text" name="spaceAddress" id="spaceAddress" placeholder="도로명주소" class="postcodify_address" value="">
-							</div>
-							<div class="col-2 col-12-xsmall">
-								<label>&nbsp;</label>
+							<div class="col-1 col-12-xsmall">
+								<label>* 주소</label>
 								<input type="button" id="addressBtn" class="button primary small" value="주소찾기">
 							</div>
-							<div class="col-6 col-12-xsmall">
+							<div class="col-11 col-12-xsmall">
+								<label>&nbsp;</label>
+								<input type="text" name="spaceAddress" id="spaceAddress" placeholder="주소찾기 버튼을 클릭하세요" class="postcodify_address" value="" readonly>
+							</div>
+							<div class="col-1 col-12-xsmall"></div>
+							<div class="col-7 col-12-xsmall">
 								<input type="text" name="address" placeholder="상세주소" class="postcodify_extra_info" value="">
 							</div>
-							<div class="col-3 col-12-xsmall">
-								<input type="text" name="post" placeholder="우편번호" class="postcodify_postcode5" value="" size="6">
+							<div class="col-4 col-12-xsmall">
+								<input type="text" name="post" placeholder="우편번호" class="postcodify_postcode5" value="" size="6" readonly>
 							</div>
 						</div>
 						<br><br>
