@@ -10,16 +10,31 @@
 .filterContainer{width: 12%; float: right;}
 .filterContainer .current {font-size: 70%;}
 .filterContainer .option {font-size: 60% !important;}
+.filterContainer .nice-select .list{background-color: white !important; border: 1px solid #4c74b9 !important; border-radius: 5px !important;}
 
 /* table------------------------------------ */
 table{padding: 0 !important}
 table *{margin: 0 !important;}
 table tr{background-color: transparent !important;}
-table td:first-child{width: 20%;}
-table td:nth-child(2){width: 60%;}
-table td:nth-child(2) .col-12:first-child{font-weight: bold; color: #4c74b9; letter-spacing: -1px; font-size: 80%}
-table td:last-child{width: 20%; padding: 0;}
-table td:last-child button{padding: 0 1.2em !important; margin: 2% 0;}
+table td:first-child{width: 20%; vertical-align: middle; text-align: center}
+table td:first-child img{height: 15%;}
+table td:nth-child(2){width: 60%;vertical-align: middle}
+table td:nth-child(2)>div{border-left: 1px solid #c9c9c9;border-right: 1px solid #c9c9c9;}
+table td:nth-child(2) .col-12:first-child{
+    font-weight: bold; 
+    color: #4c74b9; 
+    letter-spacing: -1px; 
+    font-size: 80%;
+}
+table td:last-child{width: 20%; vertical-align: middle}
+table td:last-child div{
+    width: fit-content;
+    margin: auto !important;
+}
+table td:last-child button{
+    padding: 0 1.2em !important; 
+    /* width: 49%; */ 
+}
 
 /* pagination-------------------------------- */
 .pagination-container {

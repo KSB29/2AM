@@ -1,7 +1,6 @@
 package com.project.splace.space.model.vo;
 
 public class Option {
-	
 	private int optionId;
 	private String optionName;
 	private String optionIcon;
@@ -43,5 +42,4 @@ public class Option {
 	public String toString() {
 		return "Option [optionId=" + optionId + ", optionName=" + optionName + ", optionIcon=" + optionIcon + "]";
 	}
-
 }

@@ -43,8 +43,10 @@
 							<article>
 								<table class="table-wrapper">
 									<tr>
-										<td rowspan="5"></td>
-										<td colspan="3"><h2>더빅스터디, 3층 3번룸</h2></td>
+										<td rowspan="4" id="imgBox">
+											<img alt="공간대표사진" src="${contextPath }/resources/img/back03.jpg">
+										</td>
+										<td colspan="2"><h2>더빅스터디, 3층 3번룸</h2></td>
 									</tr>
 									<tr>
 										<td colspan="3">3-6인 스터디룸으로 회의 및 스터디로 쾌적한 공간입니다.</td>
@@ -154,10 +156,6 @@
 									<tr>
 										<td>대표자명</td>
 										<td>정주헌</td>
-									</tr>
-									<tr>
-										<td>소재지</td>
-										<td>서울특별시 종로구 관철동 7-16 번지 2,3층 더빅스터디</td>
 									</tr>
 									<tr>
 										<td>사업자번호</td>

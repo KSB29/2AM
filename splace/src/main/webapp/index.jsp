@@ -102,14 +102,17 @@ margin-bottom: 1em !important;
 				</section>
 				
 				<!-- 목록 -->
-				<c:url var="bookForm" value="bookForm.sp" />
+				<c:url var="bookForm" value="bookForm.sp">
+					<c:param name="spaceId" value="1000"/>
+					<c:param name="bookDate" value="191009"/>
+					<c:param name="startTime" value="18"/>
+					<c:param name="endTime" value="22"/>
+					<c:param name="bookPer" value="3"/>
+					<c:param name="price" value="1000"/>
+				</c:url>
 				<c:url var="bookList" value="bookList.sp" />
 				<c:url var="bookDetail" value="bookDetail.sp" />
 				<c:url var="bookCancel" value="bookCancel.sp" />
-				<c:url var="paymentForm" value="paymentForm.sp" />
-				<c:url var="paymentList" value="paymentList.sp" />
-				<c:url var="paymentDetail" value="paymentDetail.sp" />
-				<c:url var="paymentCancel" value="paymentCancel.sp" />
 				<section class="tiles">
 					<div class="row">
 						<article>
