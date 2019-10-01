@@ -14,7 +14,13 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Member loginMember(Member mem) {
 		Member loginUser =mDao.selectMember(mem);
-		
+	
 		return loginUser;
+	}
+
+	@Override
+	public int deleteMember(String memberId) {
+		
+		return mDao.deleteMember(memberId);
 	}
 }

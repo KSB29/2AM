@@ -1,0 +1,8 @@
+
+.delete_btn{
+    display: inline-block;
+    width: 49% ;
+}
+.delete_btn_box{
+    padding: 0 2em 0 2em;
+}

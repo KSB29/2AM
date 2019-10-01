@@ -101,7 +101,7 @@
 								<table class="table-wrapper">
 									<tr>
 										<td colspan="2">
-											<span class="warning">이용당일(첫 날) 이후에 환불 관련 사항은 호스트에게 직접 문의하셔야 합니다.</span>
+											<span class="warning"><i class="fas fa-exclamation-circle"></i> 이용당일(첫 날) 이후에 환불 관련 사항은 호스트에게 직접 문의하셔야 합니다.</span>
 											<br><span>결제 후 2시간 이내에는 100% 환불이 가능합니다.(단, 이용시간 전까지만 가능)</span>
 										</td>
 									</tr>
@@ -220,7 +220,7 @@
 											<td>예약시간</td>
 											<td>18시 ~ 21시, 3시간</td>
 										</tr>
-										<tr>
+										<tr class="borderBottom2">
 											<td>예약인원</td>
 											<td>3명</td>
 										</tr>
@@ -300,188 +300,227 @@
 								</div>
 							</div>
 						</article>
-						<c:url var="bookCancel" value="bookCancel.sp" />
-						<c:url var="payment" value="payment.sp" />
-						<c:url var="paymentCancel" value="paymentCancel.sp" />
-						<c:url var="reviewForm" value="reviewForm.sp" />
-						<script>
-							// 예약대기 - 100
-							// 예약승인 - 101
-							// 예약취소,결제취소 - 102
-							// 예약완료,결제완료 - 103
-							// 이용완료(결제) - 104
-							var bookStutus = 103; // book.status자리(100,101,102,103)
-							var paymentStutus = 103; // payment.status자리(100,101,102,103)
-							var $status = $("#status"); // 페이지제목(상태)
-							var $waitingTime = $(".waitingTime"); // 대기시간
-							var titleBox = $(".bookDetailRightCol .titleBox"); // 제목
-							var table = $(".bookDetailRightCol .table-wrapper"); // 내용
-							var btnContainer = $(".bookDetailRightCol .btnContainer"); // 버튼틀
-							// modal
-							var modal = $("#modalContainer .modal");
-							var modalTitle = $("#modalContainer .modal-title");
-							var modalForm = $("#modalContainer #modalForm");
-							var modalBodyTitle = $(".modal-body h2");
-							var modalBody = $("#modalContainer .modal-body table");
-							var modalBtn = $("#modalContainer .modal-footer button:last-child");
-
-							var result = "";
-							// 예약대기
-							if(bookStutus == 100){ 
-								$status.html("(승인대기)");
-								$waitingTime.html("");
-								
-								result = "<td>승인대기기한</td>"
-									   + "<td>ddddddddddddddd</td>";
-								$waitingTime.append(result);
-								btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#bookCancel'>예약취소</button>");
-								modal.attr("id", "bookCancel").attr("aria-labelledby", "bookCancelTitle");
-								modalTitle.attr("id", "bookCancelTitle");
-								modalForm.attr("action", "${bookCancel}");
-								modalBodyTitle.text("예약을 취소하시겠습니까?");
-								modalBody.html("");
-								modalBtn.html("예약취소");
-							} 
-							// 예약승인 
-							else if(bookStutus == 101){ 
-								$status.html("(결제대기)");
-								$waitingTime.html("");
-								result = "<td>승인대기기한</td>";
-									   + "<td></td>";
-								$waitingTime.append(result);
-								
-							} 
-							// 예약취소 
-							else if(bookStutus == 102){ 
-								$status.html("(취소완료)");
-								$waitingTime.html("");
-								titleBox.html("");
-								titleBox.html(
-									 "<h2>예약취소</h2>"
-								);
-								
-							} 
-							// 예약완료 && 결제완료
-							else if(bookStutus == 103 && paymentStutus == 103){ 
-								$status.html("(예약완료)");
-								$waitingTime.html("");
-								titleBox.html("");
-								titleBox.html(
-									 "<h2>결제금액</h2>"
-									+"<div>"
-									+"<span>&#8361;12,900</span>"
-									+"</div>"
-								);
-								// 예약일 뺀 전날까지
-								btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#paymentCancel'>예약취소</button>");
-								modal.attr("id", "paymentCancel").attr("aria-labelledby", "paymentCancelTitle");
-								modalTitle.attr("id", "paymentCancelTitle");
-								modalForm.attr("action", "${bookCancel}");
-								modalBodyTitle.text("예약을 취소하시겠습니까?");
-								modalBody.html("");
-								modalBody.html(
-									
-								);
-								modalBtn.html("예약취소");
-							} 
-							// 예약취소 && 결제취소
-							else if(bookStutus == 102 && paymentStutus == 102){ 
-								$status.html("(취소완료)");
-								$waitingTime.html("");
-								titleBox.html("");
-								titleBox.html(
-									 "<h2>결제취소</h2>"
-									+"<div>"
-									+"<span>&#8361;12,900</span>"
-									+"</div>"
-								);
-							} 
-							// 예약완료 && 이용완료
-							else if(bookStutus == 103 && paymentStutus == 104){ 
-								$status.html("(이용완료)");
-								$waitingTime.html("");
-								titleBox.html("");
-								titleBox.html(
-									 "<h2>결제금액</h2>"
-									+"<div>"
-									+"<span>&#8361;12,900</span>"
-									+"</div>"
-								);
-							}
-						</script>
 					</div>
 				</section>
 			</div>
 		</div>
 		<jsp:include page="../../../WEB-INF/views/common/bottom.jsp"/>
 	</div>
+	<c:url var="bookCancel" value="bookCancel.sp" />
+	<c:url var="payment" value="payment.sp" />
+	<c:url var="paymentCancel" value="paymentCancel.sp" />
+	<c:url var="reviewForm" value="reviewForm.sp" />
+	<script>
+		// 예약대기 - 100
+		// 예약승인 - 101
+		// 예약취소,결제취소 - 102
+		// 예약완료,결제완료 - 103
+		// 이용완료(결제) - 104
+		var bookStutus = 103; // book.status자리(100,101,102,103)
+		var paymentStutus = 104; // payment.status자리(100,101,102,103)
+		var $status = $("#status"); // 페이지제목(상태)
+		var $waitingTime = $(".waitingTime"); // 대기시간
+		var titleBox = $(".bookDetailRightCol .titleBox"); // 제목
+		var table = $(".bookDetailRightCol .table-wrapper"); // 내용
+		var btnContainer = $(".bookDetailRightCol .btnContainer"); // 버튼틀
+		// modal
+		var modalContainer = $("#modalContainer");
+		var modal = $("#modalContainer .modal");
+		var modalTitle = $("#modalContainer .modal-title");
+		var modalForm = $("#modalContainer #modalForm");
+		var modalBodyTitle = $(".modal-body h2");
+		var modalBody = $("#modalContainer .modal-body table");
+		var modalBtn = $("#modalContainer .modal-footer button:last-child");
+
+		var result = "";
+		// 예약대기
+		if(bookStutus == 100){ 
+			$status.html("(승인대기)");
+			$waitingTime.html("");
+			
+			result = "<td>승인대기기한</td>"
+					+ "<td>ddddddddddddddd</td>";
+			$waitingTime.append(result);
+			btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#bookCancel'>예약취소</button>");
+			modalTitle.attr("id", "bookCancelTitle");
+			modalForm.attr("action", "${bookCancel}");
+			modalBodyTitle.text("예약을 취소하시겠습니까?");
+			modalBody.html("");
+			modalBtn.html("예약취소");
+		} 
+		// 예약승인 
+		else if(bookStutus == 101){ 
+			$status.html("(결제대기)");
+			$waitingTime.html("");
+			result = "<td>결제대기기한</td>"
+					+ "<td>f</td>";
+			$waitingTime.append(result);
+			titleBox.html("");
+			titleBox.html(
+					"<h2>결제예정금액</h2>"
+				+"<div>"
+				+"<span>&#8361;12,900</span>"
+				+"</div>"
+			);
+			btnContainer.append("<button type='button' class='button fit' data-toggle='modal' data-target='#bookCancel'>예약취소</button>");
+			btnContainer.append("<button type='button' class='button primary fit' data-toggle='modal' data-target='#paymentForm'>결제</button>");
+			modalTitle.attr("id", "bookCancelTitle");
+			modalForm.attr("action", "${bookCancel}");
+			modalBodyTitle.text("예약을 취소하시겠습니까?");
+			modalBody.html("");
+			modalBtn.html("예약취소");
+			modalContainer.append(
+					'<div class="modal fade" id="paymentForm" tabindex="-1" role="dialog" aria-labelledby="paymentFormTitle" aria-hidden="true">'
+				+ '<div class="modal-dialog modal-dialog-centered" role="document">'
+				+ '<div class="modal-content">'
+				+ '<div class="modal-header">'
+				+ '<h5 class="modal-title" id="paymentFormTitle">예약취소</h5>'
+				+ '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'
+				+ '<span aria-hidden="true">&times;</span>'
+				+ '</button>'
+				+ '</div>'
+				+ '<form action="${payment}" method="post" id="modalForm">'
+				+ '<div class="modal-body">'
+				+ '<h2>결제하시겠습니까?</h2>'
+				+ '<table class="table-wrapper">'
+				+ '<tr>'
+				+ '<td>예약공간</td>'
+				+ '<td><input type="text" name="spaceId" id="spaceId" value="더빅스터디, 3층 3번룸" readonly></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td>예약날짜</td>'
+				+ '<td><input type="text" name="bookDate" id="bookDate" value="2019.10.04 (금)" readonly></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td>예약시간</td>'
+				+ '<td>'
+				+ '<input type="text" name="last-child" id="bookStartTime" value="18" readonly> ~ '
+				+ '<input type="text" name="bookEndTime" id="bookEndTime" value="21" readonly> '
+				+ ', <span>(${21-18}시간)</span>'
+				+ '</td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td>예약인원</td>'
+				+ '<td><input type="text" name="bookPer" id="bookPer" value="3" readonly>명</td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td>결제예정금액</td>'
+				+ '<td>&#8361;<input type="text" name="totalPrice" id="totalPrice" readonly></td>'
+				+ '</tr>'
+				+ '</table>'
+				+ '<span class="warning"><i class="fas fa-exclamation-circle"></i> 결제 전에, 환불기준과 예약내용을 반드시 확인해주세요!</span>'
+				+ '</div>'
+				+ '<div class="modal-footer">'
+				+ '<button type="button" class="button small primary" data-dismiss="modal">취소</button>'
+				+ '<button type="button" class="button small" id="payment">결제하기</button>'
+				+ '</div>'
+				+ '</form>'
+				+ '</div>'
+				+ '</div>'
+				+ '</div>'
+			);
+		} 
+		// 예약완료 && 결제완료
+		else if(bookStutus == 103 && paymentStutus == 103){ 
+			$status.html("(예약완료)");
+			$waitingTime.html("");
+			titleBox.html("");
+			titleBox.html(
+					"<h2>결제금액</h2>"
+				+"<div>"
+				+"<span>&#8361;12,900</span>"
+				+"</div>"
+			);
+			// 예약일 뺀 전날까지
+			$("#rightCol article table tr:first-child td:nth-child(3)").css("border","0");
+			$(".bookDetailRightCol table tbody tr:nth-child(3)").removeClass("borderBottom2");
+			$(".bookDetailRightCol table tbody tr:last-child").before("<tr class='borderBottom2'><td>결제정보</td><td>카드결제</td></tr>");
+			btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#paymentCancel'>예약취소</button>");
+			modal.attr("id", "paymentCancel").attr("aria-labelledby", "paymentCancelTitle");
+			modalTitle.attr("id", "paymentCancelTitle");
+			modalForm.attr("action", "${paymentCancel}");
+			modalBodyTitle.text("예약을 취소하시겠습니까?");
+			modalBody.html("");
+			modalBody.html(
+					"<tbody>"
+				+ "<tr><td>결제금액</td><td>&#8361;12900</td></tr>"
+				+ "<tr><td>차감금액</td><td>&#8361;0</td></tr>"
+				+ "<tr><td>환불금액</td><td>&#8361;12900</td></tr>"
+				+ "</tbody>"
+			);
+			modalBtn.html("예약취소");
+		} 
+		// 예약취소 && 결제취소
+		else if(bookStutus == 102 && paymentStutus == 102){ 
+			$status.html("(취소완료)");
+			$waitingTime.html("");
+			titleBox.html("");
+			titleBox.html(
+					"<h2>환불 금액</h2>"
+				+"<div>"
+				+"<span>&#8361;12,900</span>"
+				+"</div>"
+			);
+			table.html("");
+			table.html(
+					"<tbody>"
+				+ "<tr><td>취소날짜</td><td>2019.09.20(금)</td></tr>"
+				+ "<tr><td>결제금액</td>"
+				+ "<td>&#8361;12000</td></tr>"
+				+ "<tr><td>차감금액</td>"
+				+ "<td>0</td></tr>"
+				+ "<tr class='borderBottom2'><td>결제정보</td>"
+				+ "<td>카드결제</td></tr>"
+				+ "<tr><td colspan='2' class='btnContainer'>"
+				+ "<div class='fit-100'>예약 취소가 완료되었습니다.</div>"
+				+ "</td></tr></tbody>"
+			);
+			modalContainer.html("");
+		} 
+		// 예약완료 && 이용완료
+		else if(bookStutus == 103 && paymentStutus == 104){ 
+			$status.html("(이용완료)");
+			$waitingTime.html("");
+			titleBox.html("");
+			titleBox.html(
+					"<h2>결제금액</h2>"
+				+"<div>"
+				+"<span>&#8361;12,900</span>"
+				+"</div>"
+			);
+			$("#rightCol article table tr:first-child td:nth-child(3)").css("border","0");
+			$(".bookDetailRightCol table tbody tr:nth-child(3)").removeClass("borderBottom2");
+			table.find("tr:last-child").before(
+					"<tr class='borderBottom2'><td>결제정보</td>"
+				+"<td>카드결제</td></tr>"
+			);
+			if(1){ // 리뷰 안썼으면
+				btnContainer.append("<button class='button primary fit-100'>이용후기 작성</button>");
+			} else{ // 리뷰 썼으면
+				btnContainer.append("<button class='button primary fit-100'>이용후기 보기</button>");
+			}
+			modalContainer.html("");
+		}
+		// 예약취소 
+		else if(bookStutus == 102){ 
+			$status.html("(취소완료)");
+			$waitingTime.html("");
+			titleBox.html("");
+			titleBox.html("<h2>예약취소</h2>");
+			table.html("");
+			table.html(
+					"<tr><td>취소날짜</td><td>2019.09.20(금)</td></tr>"
+				+"<tr><td colspan='2' class='btnContainer'>"
+				+"<div class='fit-100'>예약 취소가 완료되었습니다.</div>"
+				+"</td></tr>"
+			);
+			table.children("tr:last-child").css("border-top","2px solid #4c74b9");
+			modalContainer.html("");
+		} 
+	</script>
 	<!-- 결제 연동 -->
 	<script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.5.min.js" type="application/javascript"></script>
-	<script>
-		$("#payment").click(function(){
-			//실제 복사하여 사용시에는 모든 주석을 지운 후 사용하세요
-			BootPay.request({
-				price: '1000', //실제 결제되는 가격
-				application_id: "5d7209d802f57e003591d597",
-				name: '블링블링 마스카라', //결제창에서 보여질 이름
-				pg: 'inicis',
-				method: 'card', //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
-				show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
-				items: [
-					{
-						item_name: '나는 아이템', //상품명
-						qty: 1, //수량
-						unique: '123', //해당 상품을 구분짓는 primary key
-						price: 1000, //상품 단가
-						cat1: 'TOP', // 대표 상품의 카테고리 상, 50글자 이내
-						cat2: '티셔츠', // 대표 상품의 카테고리 중, 50글자 이내
-						cat3: '라운드 티', // 대표상품의 카테고리 하, 50글자 이내
-					}
-				],
-				user_info: {
-					username: '사용자 이름',
-					email: '',
-					addr: '사용자 주소',
-					phone: '010-1234-4567'
-				},
-				order_id: '고유order_id_1234', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
-				params: {callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
-				account_expire_at: '2018-05-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
-				extra: {
-					start_at: '2019-05-10', // 정기 결제 시작일 - 시작일을 지정하지 않으면 그 날 당일로부터 결제가 가능한 Billing key 지급
-					end_at: '2022-05-10', // 정기결제 만료일 -  기간 없음 - 무제한
-					vbank_result: 1, // 가상계좌 사용시 사용, 가상계좌 결과창을 볼지(1), 말지(0), 미설정시 봄(1)
-					quota: '0,2,3' // 결제금액이 5만원 이상시 할부개월 허용범위를 설정할 수 있음, [0(일시불), 2개월, 3개월] 허용, 미설정시 12개월까지 허용
-				}
-			}).error(function (data) {
-				//결제 진행시 에러가 발생하면 수행됩니다.
-				console.log(data);
-			}).cancel(function (data) {
-				//결제가 취소되면 수행됩니다.
-				console.log(data);
-			}).ready(function (data) {
-				// 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
-				console.log(data);
-			}).confirm(function (data) {
-				//결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
-				//주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
-				console.log(data);
-				var enable = true; // 재고 수량 관리 로직 혹은 다른 처리
-				if (enable) {
-					BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
-				} else {
-					BootPay.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
-				}
-			}).close(function (data) {
-				// 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
-				console.log(data);
-			}).done(function (data) {
-				//결제가 정상적으로 완료되면 수행됩니다
-				//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
-				console.log(data);
-			});
-		});
-	</script>
+	<script src="${contextPath}/resources/js/payment.js"></script>
 	<script src="${contextPath}/resources/js/book.js"></script>
 </body>
 </html>
