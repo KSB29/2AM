@@ -103,7 +103,7 @@ margin-bottom: 1em !important;
 				
 				<!-- 목록 -->
 				<c:url var="bookForm" value="bookForm.sp">
-					<c:param name="spaceId" value="1000"/>
+					<c:param name="spaceId" value="4"/>
 					<c:param name="bookDate" value="191009"/>
 					<c:param name="startTime" value="18"/>
 					<c:param name="endTime" value="22"/>

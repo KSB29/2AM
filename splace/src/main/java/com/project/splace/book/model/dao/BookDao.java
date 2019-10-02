@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.splace.book.model.vo.Book;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Space;
@@ -40,5 +41,23 @@ public class BookDao {
 	 */
 	public Host selectHost(int spaceId) {
 		return sqlSession.selectOne("bookMapper.selectHost", spaceId);
+	}
+
+	/**
+	 * 3. 공간 예약 신청
+	 * @param book
+	 * @return result
+	 */
+	public int insertBook(Book book) {
+		return sqlSession.insert("bookMapper.insertBook", book);
+	}
+
+	/**
+	 * 4. 예약목록 조회
+	 * @param memberId
+	 * @return bList
+	 */
+	public ArrayList<Book> selectBlist(String memberId) {
+		return (ArrayList)sqlSession.selectList("bookMapper.selectBlist", memberId);
 	}
 }

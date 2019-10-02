@@ -2,6 +2,7 @@ package com.project.splace.book.model.service;
 
 import java.util.ArrayList;
 
+import com.project.splace.book.model.vo.Book;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Space;
@@ -16,6 +17,12 @@ public interface BookService {
 	
 	// 호스트 정보 조회
 	public abstract Host selectHost(int spaceId);
+
+	// 예약 신청
+	public abstract int insertBook(Book book);
+
+	// 예약목록 조회
+	public abstract ArrayList<Book> selectBlist(String memberId);
 
 
 }
