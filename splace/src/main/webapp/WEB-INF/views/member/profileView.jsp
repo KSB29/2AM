@@ -14,7 +14,6 @@
 	</head>
 	
 	<jsp:include page="../common/top.jsp"/>
-	<jsp:include page="memberMenu.jsp"/>
 	
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -22,18 +21,21 @@
 
 				<!-- url -->
 	
+			<c:url var="checkPwForm" value="checkPsForm.sp"/>
+			<c:url var="deleteForm" value="deleteForm.sp"/>
 			<c:url var="changePwForm" value="changePwForm.sp"/>
-			<c:url var="deleteMember" value="deleteMember.sp"/>
+			
 		
 				<!-- Menu -->
-			 <jsp:include page="../common/top.jsp"/> 
 
 				<!-- Main -->
 				<div id="main">
 					<div class="inner">
+						<jsp:include page="memberMenu.jsp"/>
+					
 						<div class="profile_wrapper row display">
 							<section class="co1-12">
-								<h2>프로필</h2>
+								<h1>프로필</h1>
 							</section>
 							<section class="profile_box col-12">
 								<p></p>
@@ -44,7 +46,7 @@
 								</div>
 								<div class="row">
 									<p class="col-2">이메일</p>
-									<p class="col-2">tset@naver.com</p>
+									<p class="col-2">test@naver.com</p>
 									<span class="col-8"></span>
 
 								</div>
@@ -56,9 +58,8 @@
 								</div>
 								<div class="row">
 									<p class="col-2">비밀번호</p>
-									<p class="col-2"> <a href="${checkPwForm}">변경하기</a></p>
+									<p class="col-2"> <a href="#exampleModalCenter" data-toggle="modal">변경하기</a></p>
 									<span class="col-8"></span>
-
 								</div>
 								<div class="row"> 
 									<p class="col-2">SNS연동</p>
@@ -72,7 +73,31 @@
 									<span class="col-8"></span>
 								</div>
 								<div class="row">
-									<p class="col-12"> <a href="${deleteMember}">탈퇴할래요</a></p>
+									<p class="col-12"> <a href="${deleteForm}">탈퇴할래요</a></p>
+								</div>
+								<!-- Modal -->
+								<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header modal_title">
+											<h2 class="modal-title center" id="exampleModalCenterTitle">비밀번호 확인</h2>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<input type="password" id="pwCheck" placeholder="password">
+										</div>
+										<div class="modal_btn_box center">
+											<div class="modal_btn">
+												<button type="button" class="button fit" onclick="pwCheck();">확인</button>
+											</div>
+											<div class="modal_btn">
+												<button type="button" class="button fit primary" data-dismiss="modal">취소</button>											
+											</div>
+										</div>
+									</div>
+									</div>
 								</div>
 							</section>
 
@@ -80,7 +105,14 @@
 					</div>
 				</div>
 			</div>		
-			
+			<script>
+				function pwCheck(){
+					var pw = document.getElementById('pwCheck').value;
+					if(pw==${loginUser.memberPwd}){
+						location.href="${changePwForm}";		
+					}
+				}
+			</script>
 
 
 

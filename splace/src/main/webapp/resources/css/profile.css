@@ -9,3 +9,14 @@
     border-bottom: 0.5px solid #c9c9c9 ;
 }
 
+.modal_btn_box{
+	margin: 1rem 1rem 2rem 1rem;
+}
+.modal_title{
+	border_bottom: 0px !important;
+}
+
+.modal_btn{
+	display:inline-block;
+	width:48%;
+}
