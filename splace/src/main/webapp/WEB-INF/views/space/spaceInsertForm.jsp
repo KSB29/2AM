@@ -90,8 +90,8 @@
 										<li>
 											<input type="checkbox" id="option${ oList.optionId }" class="option" value="${ oList.optionId }">
 											<label for="option${ oList.optionId }">
-												<c:if test="${ oList.optionId <= 8 }"><i class="material-icons">${ oList.optionIcon }</i> ${ oList.optionName }</c:if>
-												<c:if test="${ oList.optionId > 8 }"><i class="${ oList.optionIcon }"></i> ${ oList.optionName }</c:if>
+												<c:if test="${ oList.optionId <= 'I' }"><i class="material-icons">${ oList.optionIcon }</i> ${ oList.optionName }</c:if>
+												<c:if test="${ oList.optionId > 'I' }"><i class="${ oList.optionIcon }"></i> ${ oList.optionName }</c:if>
 											</label>
 										</li>
 										</c:forEach>
