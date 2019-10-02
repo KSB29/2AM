@@ -15,6 +15,7 @@
 		<typeAlias type="com.project.splace.search.model.vo.Search" alias="Search"/>
 		<typeAlias type="com.project.splace.book.model.vo.Book" alias="Book"/>
 		<typeAlias type="com.project.splace.space.model.vo.Option" alias="Option"/>
+		<typeAlias type="com.project.splace.space.model.vo.Price" alias="Price"/>
 	</typeAliases>
 	
   	<mappers>

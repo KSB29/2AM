@@ -32,12 +32,65 @@
 	 	SELECT P.*, SPACE_ATT_CHANGE FROM SPACE P
 	 	JOIN SPACE_ATT A ON(P.SPACE_ID=A.SPACE_ID)
 	 	WHERE STATUS_ID=2  
-	 	AND(SPACE_NAME LIKE #{sl}
+	 	AND(SPACE_ATT_TYPE=0
+	 	AND SPACE_OPER_STATUS='Y'
+	 	AND SPACE_NAME LIKE #{sl}
 	 	OR SPACE_TAG LIKE #{sl}
 	 	OR SPACE_OPTION LIKE #{sl}
 	 	OR SPACE_ADDRESS LIKE #{sl})
 	 	ORDER BY SPACE_ENROLL DESC
 	</select>
 
-	
+	<!-- 검색 결과 상세 조회  -->
+	<select id="searchDeatilList" resultMap="spaceResultSet" parameterType="Search">
+		<bind name="sl" value="'%'+_parameter.getSearchBox()+'%'"/>
+		SELECT P.*, SPACE_ATT_CHANGE FROM SPACE P
+	 	JOIN SPACE_ATT A ON(P.SPACE_ID=A.SPACE_ID)
+	 	<where> 
+	 	( STATUS_ID=2  
+	 	AND SPACE_ATT_TYPE=0
+	 	AND SPACE_OPER_STATUS='Y')
+	 	
+	 	AND (SPACE_NAME LIKE #{sl}
+	 	OR SPACE_TAG LIKE #{sl}
+	 	OR SPACE_OPTION LIKE #{sl}
+	 	OR SPACE_ADDRESS LIKE #{sl})
+	 	
+	 <!-- 	<choose>
+	 	<when test="locationSelect !=null || typeSelect !=null || optionSelect !=null">
+	 	AND(-->
+	 	
+	 	<if test="locationSelect !=null">
+	 		AND 
+	 			SPACE_ADDRESS LIKE '%'||#{locationSelect}||'%'	 		
+	 		<!-- <foreach collection="locationSelect" item="locationSelect"  index="index" separator="or" open="(" close=")">
+	 		</foreach> -->
+	 	</if>
+	 	
+	 	<if test="typeSelect !=null">
+	 	<!-- <if test="locationSelect !=null">
+	 		OR  
+	 	</if> -->
+	 		AND
+	 		<foreach collection="typeSelect" item="typeSelect"  index="index" separator="or" open="(" close=")">
+	 			TYPE_ID = #{typeSelect}
+	 		</foreach>
+	 	</if>
+	 	<if test="optionSelect !=null">
+	 	 	AND
+	 	<!-- <if test="locationSelect !=null || typeSelect !=null">
+	 		OR  
+	 	</if> -->
+	 		<foreach collection="optionSelect" item="optionSelect"  index="index" separator="or" open="(" close=")">
+	 		 SPACE_OPTION LIKE '%'||#{optionSelect}||'%'
+	 		<!-- OR	SPACE_OPTION LIKE '%'||#{optionSelect}||'#%' -->
+	 		</foreach>
+	 	</if>
+	 	
+	 	<!--</when>
+		 </choose> -->
+		 
+		</where>
+		ORDER BY SPACE_ENROLL DESC
+	</select>
 </mapper>

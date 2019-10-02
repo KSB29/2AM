@@ -21,7 +21,7 @@ public class SearchDao {
 
 	public ArrayList<Space> searchDetailList(Search search) {
 		
-		return null;
+		return (ArrayList)sqlSession.selectList("searchMapper.searchDeatilList", search);
 	}
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.splace.space.model.dao.SpaceDao;
 import com.project.splace.space.model.vo.Option;
+import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
 import com.project.splace.space.model.vo.SpaceAtt;
 import com.project.splace.space.model.vo.Type;
@@ -133,6 +134,12 @@ public class SpaceServiceImpl implements SpaceService {
 	@Override
 	public ArrayList<Option> selectOption() {
 		return sDao.selectOption();
+	}
+
+
+	@Override
+	public ArrayList<Price> selectPrice(String spaceId) {
+		return sDao.selectPrice(spaceId);
 	}
 
 }
