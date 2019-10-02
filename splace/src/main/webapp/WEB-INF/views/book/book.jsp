@@ -37,33 +37,41 @@
 							<div class="col-12 titleBox">
 								<h2>예약 공간</h2>
 								<div>
-									<span>&#8361;12,900</span><span>/시간(인)</span>
+									<span>&#8361;${bookPrice}</span><span>/시간(인)</span>
 								</div>
 							</div>
 							<article>
 								<table class="table-wrapper">
 									<tr>
 										<td rowspan="4" id="imgBox">
-											<img alt="공간대표사진" src="${contextPath }/resources/img/back03.jpg">
+											<img alt="공간대표사진" src="${contextPath }/resources/img/${space.spaceAttChange}">
 										</td>
-										<td colspan="2"><h2>더빅스터디, 3층 3번룸</h2></td>
+										<td colspan="2"><h2>${space.spaceName}</h2></td>
 									</tr>
 									<tr>
-										<td colspan="3">3-6인 스터디룸으로 회의 및 스터디로 쾌적한 공간입니다.</td>
+										<td colspan="3">${space.spaceComment }</td>
 									</tr>
 									<tr>
 										<td><li>공간유형</li></td>
-										<td colspan="2">회의실, 스터디룸</td>
+										<td colspan="2">${space.typeId }</td>
 									</tr>
 									<tr>
 										<td><li>예약인원</li></td>
-										<td colspan="2">최소 3명 ~ 최대 6명</td>
+										<td colspan="2">최소 ${space.spaceMinPer}명 ~ 최대 ${space.spaceMaxPer }명</td>
 									</tr>
 									<tr>
 										<td colspan="3">
-											<span>금연</span>
-											<span>화이트보드</span>
-											<span>인터넷/WIFI</span>
+											<c:forEach items="${spaceO}" var="option">
+												<c:if test="${option.optionId < 9}">
+													<i class="material-icons">
+														<c:out value="${option.optionIcon }"/>
+													</i>
+												</c:if>
+												<c:if test="${option.optionId >= 9}">
+													<i class='<c:out value="${option.optionIcon }"/>'></i>												
+												</c:if>
+												<c:out value="${option.optionName }"/> &nbsp;
+											</c:forEach>
 										</td>
 									</tr>
 								</table>
@@ -76,11 +84,11 @@
 								<table class="table-wrapper">
 									<tr>
 										<td>예약날짜</td>
-										<td>2019.10.04 (금) 18시 ~ 21시</td>
+										<td>${bookDate } ${startTime}시 ~ ${endTime }시</td>
 									</tr>
 									<tr>
 										<td>예약인원</td>
-										<td>3명</td>
+										<td>${bookPer }명</td>
 									</tr>
 								</table>
 								<span><i class="fas fa-exclamation-circle"></i> 호스트 승인 후 결제가 가능합니다.</span>
@@ -151,19 +159,19 @@
 								<table class="table-wrapper">
 									<tr>
 										<td>공간상호</td>
-										<td>더빅스터디</td>
+										<td>${host.storeName }</td>
 									</tr>
 									<tr>
 										<td>대표자명</td>
-										<td>정주헌</td>
+										<td>${host.hostName }</td>
 									</tr>
 									<tr>
 										<td>사업자번호</td>
-										<td>0000000000</td>
+										<td>${host.hostNo }</td>
 									</tr>
 									<tr>
 										<td>연락처</td>
-										<td>000-0000-0000 / og@namver.com</td>
+										<td>${host.hostPhone } / ${host.hostEmail }</td>
 									</tr>
 								</table>
 							</article>
@@ -173,26 +181,7 @@
 							</div>
 							<article id="article5">
 								<table class="table-wrapper">
-									<tr>
-										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
-										</td>
-									</tr>
+									<c:if test=""></c:if>
 									<tr>
 										<td>
 											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>

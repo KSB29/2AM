@@ -24,6 +24,7 @@
 		<result property="spaceAddress" column="SPACE_ADDRESS"/>
 		<result property="spaceNotice" column="SPACE_NOTICE"/>
 		<result property="spaceOperStatus" column="SPACE_OPER_STATUS"/>
+		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
 		<result property="spaceTime" column="SPACE_TIME"/>
 		<result property="spaceMinPer" column="SPACE_MIN_PER"/>
 		<result property="spaceMaxPer" column="SPACE_MAX_PER"/>

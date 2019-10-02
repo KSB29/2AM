@@ -1,5 +1,6 @@
 package com.project.splace.book.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,13 +29,12 @@ public class BookController {
 		// 공간정보
 		Space space = bookService.selectSpace(4);
 		
-		
 		if(space != null) {
-
-			// 세부옵션
+			
 			String spaceOption1[] = space.getSpaceOption().substring(1).split("#");
 			ArrayList<Option> oList = bookService.selectOption();
-			ArrayList<Option> spaceO = new ArrayList<Option>();
+			// 세부옵션
+			ArrayList<Option> spaceO = new ArrayList<Option>(); 
 			for(String o : spaceOption1) { // 공간 옵션
 				for(Option op : oList) { // OPTION 테이블
 					if(op.getOptionId() == Integer.parseInt(o)) {
@@ -48,9 +48,29 @@ public class BookController {
 			
 			// 호스트정보
 			Host host = bookService.selectHost(space.getSpaceId());
+			
+			if(host != null) {
+				// 예약정보
+				Date date = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd (E)");
+				String bookDate = sdf.format(date);
+				int startTime = 18;
+				int endTime = 22;
+				int bookPer = 3;
+
+				mv.addObject("space", space) 				// 예약공간정보
+				  .addObject("spaceO", spaceO)				// 세부옵션
+				  .addObject("spaceNotice", spaceNotice)	// 주의사항
+				  .addObject("host", host)					// 호스트정보
+				  .addObject("bookDate", bookDate)			// 예약날짜
+				  .addObject("startTime", startTime)		// 예약시작시간
+				  .addObject("endTime", endTime)			// 예약끝시간
+				  .addObject("bookPer", bookPer) 			// 예약인원
+				  .addObject("bookPrice", 12900);			// 예약최종가격
+				mv.setViewName("book/book");
+			}
 		}
 		
-		mv.setViewName("book/book");
 		return mv;
 	}
 	
