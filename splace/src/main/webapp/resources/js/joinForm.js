@@ -101,7 +101,7 @@ $(function(){
 				if(result==1){	
 					  $("#memberId").css({
 			               "box-shadow":"inset 0 -1px 0 0 #1b6b2e)", 
-			               "border-color":"#1b6b2e"}
+			               "border-color":"#1b6b2e" } 
 					  );
 			            $(".noticeSpan3").text("사용중인 아이디입니다 :p").css("color","#1b6b2e");
 			            
