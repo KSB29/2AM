@@ -53,7 +53,7 @@
 									</tr>
 									<tr>
 										<td><li>공간유형</li></td>
-										<td colspan="2">${space.typeId }</td>
+										<td colspan="2">${space.typeName }</td>
 									</tr>
 									<tr>
 										<td><li>예약인원</li></td>
@@ -181,12 +181,13 @@
 							</div>
 							<article id="article5">
 								<table class="table-wrapper">
-									<c:if test=""></c:if>
+									<c:forEach items="${spaceNotice }" var="no">
 									<tr>
 										<td>
-											<li>요금은 예약된 시간을 기준으로 정산합니다.</li>
+											<li><c:out value="${no }" /></li>
 										</td>
 									</tr>
+									</c:forEach>
 								</table>
 							</article>
 
@@ -262,23 +263,23 @@
 								<div class="col-12 titleBox">
 									<h2>결제 예정금액</h2>
 									<div>
-										<span>&#8361;12,900</span>
+										<span>&#8361;${bookPrice }</span>
 									</div>
 								</div>
 								<article>
 									<table class="table-wrapper">
 										<tr>
 											<td>예약날짜</td>
-											<td>2019.10.04 (금)</td>
-											<td rowspan="3">&#8361;12,900</td>
+											<td>${bookDate }</td>
+											<td rowspan="3">&#8361;${bookPrice }</td>
 										</tr>
 										<tr>
 											<td>예약시간</td>
-											<td>18시 ~ 21시, 3시간</td>
+											<td>${startTime }시 ~ ${endTime }시, ${endTime-startTime }시간</td>
 										</tr>
 										<tr class="borderBottom2">
 											<td>예약인원</td>
-											<td>3명</td>
+											<td>${bookPer }명</td>
 										</tr>
 										<tr>
 											<td colspan="3">
@@ -300,30 +301,32 @@
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
-									<c:url var="bookList" value="bookList.sp" />
-									<form action="${bookList}" method="post">
+									<c:url var="book" value="book.sp">
+										<c:param name="spaceId" value="${space.spaceId }" />
+									</c:url>
+									<form action="${book}" method="post">
 										<div class="modal-body">
 											<h2>예약 내용을 확인해주세요.</h2>
 											<table class="table-wrapper">
 												<tr>
 													<td>예약공간</td>
-													<td><input type="text" name="spaceId" id="spaceId" value="더빅스터디, 3층 3번룸" readonly></td>
+													<td><input type="text" name="spaceName" id="spaceName" value="${space.spaceName }" readonly></td>
 												</tr>
 												<tr>
 													<td>예약날짜</td>
-													<td><input type="text" name="bookDate" id="bookDate" value="2019.10.04 (금)" readonly></td>
+													<td><input type="text" name="bookDateS" id="bookDateS" value="${bookDate }" readonly></td>
 												</tr>
 												<tr>
 													<td>예약시간</td>
 													<td>
-														<input type="text" name="last-child" id="bookStartTime" value="18" readonly> ~ 
-														<input type="text" name="bookEndTime" id="bookEndTime" value="21" readonly> 
+														<input type="text" name="bookStartTime" id="bookStartTime" value="${startTime }" readonly>시 ~ 
+														<input type="text" name="bookEndTime" id="bookEndTime" value="${endTime }" readonly>시 
 														, <span>(${21-18}시간)</span>
 													</td>
 												</tr>
 												<tr>
 													<td>예약인원</td>
-													<td><input type="text" name="bookPer" id="bookPer" value="3" readonly>명</td>
+													<td><input type="text" name="bookPer" id="bookPer" value="${bookPer }" readonly>명</td>
 												</tr>
 												<tr>
 													<td>예약자</td>
@@ -345,7 +348,7 @@
 												</tr>
 												<tr>
 													<td>결제예정금액</td>
-													<td>&#8361;<input type="text" name="totalPrice" id="totalPrice" readonly></td>
+													<td>&#8361;<input type="text" name="bookPrice" id="bookPrice" value="${bookPrice}" readonly></td>
 												</tr>
 											</table>
 										</div>
