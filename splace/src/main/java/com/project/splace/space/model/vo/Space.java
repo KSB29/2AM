@@ -13,7 +13,6 @@ public class Space {
 	private String spaceAddress;
 	private String spaceNotice;
 	private String spaceOperStatus;
-	private String spaceAttChange;
 	private int spaceTime;
 	private int spaceMinPer;
 	private int spaceMaxPer;
@@ -188,14 +187,6 @@ public class Space {
 
 	public void setSpaceOperStatus(String spaceOperStatus) {
 		this.spaceOperStatus = spaceOperStatus;
-	}
-	
-	public String getSpaceAttChange() {
-		return spaceAttChange;
-	}
-
-	public void setSpaceAttChange(String spaceAttChange) {
-		this.spaceAttChange = spaceAttChange;
 	}
 
 	public int getSpaceTime() {
