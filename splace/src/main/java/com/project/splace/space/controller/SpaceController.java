@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.space.model.service.SpaceService;
 import com.project.splace.space.model.vo.Option;
+import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
 import com.project.splace.space.model.vo.Type;
 
@@ -77,8 +78,15 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spacePrice.sp")
-	public String spacePrice() {
-		return "space/spacePrice";
+	public ModelAndView spacePrice(String spaceId, HttpSession session, ModelAndView mv) {
+		if (((Member)session.getAttribute("loginUser")).getMemberId() == null) {
+			mv.setViewName("redirect:loginForm.sp");
+		} else {
+			//ArrayList<Price> pList = sService.selectPrice(spaceId);
+			//mv.addObject("pList", pList);
+			mv.setViewName("space/spacePrice");
+		}
+		return mv;
 	}
 	
 	@RequestMapping("spaceReview.sp")
@@ -89,6 +97,11 @@ public class SpaceController {
 	@RequestMapping("spaceUpdateForm.sp")
 	public String spaceUpdateForm() {
 		return "space/spaceUpdateForm";
+	}
+	
+	@RequestMapping("spacePriceInsert.sp")
+	public String spacePriceInsert() {
+		return null;
 	}
 
 }

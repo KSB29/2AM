@@ -1,7 +1,14 @@
 @charset "UTF-8";
 
+.labelText {
+	font-size: 0.9em;
+	font-weight: 900;
+}
 .noticeColor {
 	color: #4C74B9;
+}
+.warningColor {
+	color: #cc0000;
 }
 .borderTop {
 	border-top: 3px solid #4C74B9;

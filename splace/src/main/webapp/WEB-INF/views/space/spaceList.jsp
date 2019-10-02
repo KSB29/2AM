@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${contextPath}/resources/css/host.css" type="text/css">
 <link rel="stylesheet" href="${contextPath}/resources/css/space.css" type="text/css">
 <title>공간 리스트</title>
 </head>
@@ -30,13 +31,18 @@
 									<span>&nbsp;&nbsp;&nbsp;</span>
 									<label class="switch">
 							            <c:if test="${ list.spaceOperStatus == 'Y' }">
+							            <c:set var="operValue" value="운영"/>
+							            <c:set var="operColor" value="noticeColor"/>
 							            <input type="checkbox" class="operStatus" checked>
 							            </c:if>
 							            <c:if test="${ list.spaceOperStatus == 'N' }">
+							            <c:set var="operValue" value="운영중지"/>
+							            <c:set var="operColor" value="warningColor"/>
 							            <input type="checkbox" class="operStatus">
 							            </c:if>
 							            <span class="slider round"></span>
 							        </label>
+							        <span class="switchText ${ operColor }">${ operValue }</span>
 						        </div>
 								<div class="image fit marginClear">
 									<c:url var="spaceUpdateForm" value="spaceUpdateForm.sp">
@@ -53,32 +59,7 @@
 									<a class="button primary small" href="${ spaceDayoff }">휴일 등록</a>
 								</div>
 								<c:if test="${ list.statusId != 2 }">
-								<div class="image fit marginClear">
-									<a class="button small" href="">신청</a>
-									<a class="button small" href="">삭제</a>
-								</div>
-								</c:if>
-							</div>
-						</c:forEach>
-						<c:forEach var="i" begin="4" end="7">
-							<div class="col-4">
-								<div class="image fit bgImage" style="background-image:url('${contextPath }/resources/spaceImg/space${i}.PNG');"></div>
-								<h2 class="marginClear">공간명${i}</h2>
-								<div class="marginClear">
-									<span>등록일 : 2019.09.22</span>
-									<span>&nbsp;&nbsp;&nbsp;</span>
-									<label class="switch">
-										<input type="checkbox" class="operStatus" checked>
-						            	<!-- <input type="hidden" value="Y"> -->
-							            <span class="slider round"></span>
-							        </label>
-						        </div>
-								<div class="image fit marginClear">
-									<a class="button primary small" href="spaceUpdateForm.sp">수정</a>
-									<a class="button primary small" href="spacePrice.sp">가격 등록</a>
-									<a class="button primary small" href="spaceDayoff.sp">휴일 등록</a>
-								</div>
-								<c:if test="${i==1 }">
+								<!-- 승인 전에만 가능 -->
 								<div class="image fit marginClear">
 									<a class="button small" href="">신청</a>
 									<a class="button small" href="">삭제</a>
@@ -87,18 +68,7 @@
 							</div>
 						</c:forEach>
 					</div>
-					<script>
-						$(document).ready(function(){
-			                $("input[type='checkbox']").click(function(){
-			                    if ($(this).prop("checked") == true) {
-			                    	$(this).attr("checked", true);
-			                    } else {
-			                    	$(this).attr("checked", false);
-			                    };
-			                });
-			            });
-					</script>
-					<%-- <c:if test="${ loginUser.grade == '2' }"> --%>
+					<c:if test="${ loginUser.grade == '2' }">
 					<br><br>
 					<div class="row">
 						<div class="col-4"></div>
@@ -107,11 +77,12 @@
 						</div>
 						<div class="col-4"></div>
 					</div>
-					<%-- </c:if> --%>
+					</c:if>
 				</section>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/common/bottom.jsp"/>
 	</div>
+	<script src="${contextPath}/resources/js/spaceList.js"></script>
 </body>
 </html>

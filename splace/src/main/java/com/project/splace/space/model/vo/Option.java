@@ -1,24 +1,25 @@
 package com.project.splace.space.model.vo;
 
 public class Option {
-	private int optionId;
+	
+	private String optionId;
 	private String optionName;
 	private String optionIcon;
 	
 	public Option() {}
 
-	public Option(int optionId, String optionName, String optionIcon) {
+	public Option(String optionId, String optionName, String optionIcon) {
 		super();
 		this.optionId = optionId;
 		this.optionName = optionName;
 		this.optionIcon = optionIcon;
 	}
 
-	public int getOptionId() {
+	public String getOptionId() {
 		return optionId;
 	}
 
-	public void setOptionId(int optionId) {
+	public void setOptionId(String optionId) {
 		this.optionId = optionId;
 	}
 

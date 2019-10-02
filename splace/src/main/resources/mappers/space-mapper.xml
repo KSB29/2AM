@@ -25,6 +25,13 @@
 		<result property="spaceUpdate" column="SPACE_UPDATE"/>
 	</resultMap>
 	
+	<resultMap type="Price" id="priceResultSet">
+		<id property="priceId" column="PRICE_ID"/>
+		<result property="priceWeekend" column="PRICE_WEEKEND"/>
+		<result property="priceTime" column="PRICE_TIME" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="spaceId" column="SPACE_ID"/>
+	</resultMap>
+	
 	<resultMap type="Type" id="typeResultSet">
 		<id property="typeId" column="TYPE_ID"/>
 		<result property="typeName" column="TYPE_NAME"/>
@@ -86,6 +93,16 @@
 			   HOST H
 		WHERE  S.HOST_ID = H.HOST_ID
 		AND    MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- 공간 가격 조회 -->
+	<select id="selectPrice" parameterType="_int" resultMap="priceResultSet">
+		SELECT S.SPACE_OPEN_TIME,
+			   S.SPACE_CLOSE_TIME,
+			   S.SPACE_ADD,
+			   P.*
+		FROM   SPACE S LEFT JOIN PRICE P ON (S.SPACE_ID = P.SPACE_ID)
+		WHERE  S.SPACE_ID = #{spaceId}
 	</select>
 	
 	<!-- 공간 타입 리스트 조회 -->

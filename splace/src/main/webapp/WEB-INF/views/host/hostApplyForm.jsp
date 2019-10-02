@@ -46,14 +46,11 @@
 						<input type="hidden" name="memberId" value="${ loginUser.memberId }">
 						<h2>1. 기본정보</h2>
 						<div class="row gtr-uniform borderTop">
-							<div class="col-12 col-12-xsmall">
-								<p>관리자 승인 이후에는 대표자명, 상호명, 사업자등록번호 변경이 불가능합니다.</p>
-							</div>
-							<div class="col-4 col-12-xsmall">
+							<div class="col-3 col-12-xsmall">
 								<label for="hostName">* 대표자명</label>
-								<input type="text" name="hostName" id="hostName" value="${ host.hostName }" placeholder="대표자명" required autocomplete="off">
+								<input type="text" name="hostName" id="hostName" value="${ host.hostName }" placeholder="2글자 이상 5글자 이내 한글로 입력해주세요." required autocomplete="off">
 							</div>
-							<div class="col-4 col-12-xsmall">
+							<div class="col-5 col-12-xsmall">
 								<label for="storeName">* 상호명(개인/법인)</label>
 								<input type="text" name="storeName" id="storeName" value="${ host.storeName }" placeholder="상호명(개인/법인)" required autocomplete="off">
 							</div>
@@ -61,14 +58,27 @@
 								<label for="hostNo">* 사업자등록번호</label>
 								<input type="text" name="hostNo" id="hostNo" value="${ host.hostNo }" placeholder="사업자등록번호" required autocomplete="off">
 							</div>
-							<div class="col-4 col-12-xsmall">
-								<label for="hostPhone">* 전화번호(-없이)</label>
-								<input type="text" name="hostPhone" id="hostPhone" value="${ host.hostPhone }" placeholder="전화번호" required>
+							<div class="col-12 col-12-xsmall">
+								<span id="regCheck1" class="warningColor"></span>
+								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">관리자 승인 이후에는 대표자명, 상호명, 사업자등록번호 변경이 불가능합니다. 정확한 정보인지 확인해주세요.</span>
 							</div>
-							<div class="col-8 col-12-xsmall">
+							<div class="col-2 col-12-xsmall">
+								<label for="hostPhone">* 전화번호</label>
+								<input type="text" name="hostPhone1" id="hostPhone1" value="${ host.hostPhone }" required>
+							</div>
+							<div class="col-2 col-12-xsmall">
+								<label for="hostPhone">&nbsp;</label>
+								<input type="text" name="hostPhone2" id="hostPhone2" size="4" maxlength="4" value="${ host.hostPhone }" required>
+							</div>
+							<div class="col-2 col-12-xsmall">
+								<label for="hostPhone">&nbsp;</label>
+								<input type="text" name="hostPhone3" id="hostPhone3" size="4" maxlength="4" value="${ host.hostPhone }" required>
+							</div>
+							<div class="col-6 col-12-xsmall">
 								<label for="hostEmail">* 이메일</label>
 								<input type="email" name="hostEmail" id="hostEmail" value="${ host.hostEmail }" placeholder="이메일" required>
 							</div>
+							<span id="regCheck1" class="warningColor"></span>
 						</div>
 						<br><br>
 						<h2>2. 정산정보</h2>
