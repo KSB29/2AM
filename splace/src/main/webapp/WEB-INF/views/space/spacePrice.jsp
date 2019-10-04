@@ -74,8 +74,8 @@
 								<input type="radio" name="day" id="day8" value="day8">
 								<label for="day8">공휴일&nbsp;&nbsp;</label>
 							</div>
-							<c:set var="spaceOpen" value="9"/>
-							<c:set var="spaceClose" value="21"/>
+							<c:set var="spaceOpen" value="${ spaceOpenTime }"/>
+							<c:set var="spaceClose" value="${ spaceCloseTime }"/>
 							<div class="col-2 col-12-xsmall noticeDiv">
 								<span class="labelText">운영 시간 </span>
 							</div>
@@ -156,24 +156,30 @@
 						<div class="row gtr-uniform">
 							<div class="col-2 col-12-xsmall">
 								<label for="spaceAdd">1인당 추가 금액</label>
-								<input type="number" class="align-right" name="spaceAdd" id="spaceAdd" min="0">
+								<input type="number" class="align-right" name="spaceAdd" id="spaceAdd" min="0" value="${ spaceAdd }">
 							</div>
 							<div class="col-10 col-12-xsmall">
 							</div>
 						</div>
 						<br>
 						<input type="hidden" name="spaceId" value="${ spaceId }">
+						<c:forEach var="list" items="${ pList }" varStatus="pList">
+						<c:if test="${ list.priceWeekend == null }">
 						<input type="hidden" name="spacePrice" id="spacePrice1">
-						<input type="hidden" name="spacePrice" id="spacePrice2">
-						<input type="hidden" name="spacePrice" id="spacePrice3">
-						<input type="hidden" name="spacePrice" id="spacePrice4">
-						<input type="hidden" name="spacePrice" id="spacePrice5">
-						<input type="hidden" name="spacePrice" id="spacePrice6">
-						<input type="hidden" name="spacePrice" id="spacePrice7">
-						<input type="hidden" name="spacePrice" id="spacePrice8">
+						</c:if>
+						<c:if test="${ list.priceWeekend != null }">
+						<input type="hidden" name="spacePrice" id="spacePrice${ list.priceWeekend }" value='${ list.priceTime }'>
+						</c:if>
+						<c:set var="length" value="${ pList.index + 1 }"/>
+						</c:forEach>
+						<c:if test="${ length != 8 }">
+							<c:forEach var="len" begin="${ length + 1 }" end="8">
+								<input type="hidden" name="spacePrice" id="spacePrice${ len }">
+							</c:forEach>
+						</c:if>
 						<div class="row">
 							<div class="col-3"></div>
-							<div class="col-3"><input type="submit" id="submitBtn" class="button primary fit" value="등록"></div>
+							<div class="col-3"><input type="button" id="submitBtn" class="button primary fit" value="등록"></div>
 							<div class="col-3"><input type="button" class="button fit" value="취소" onclick="location.href='spaceList.sp'"></div>
 							<div class="col-3"></div>
 						</div>

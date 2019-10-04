@@ -31,6 +31,9 @@ public class SpaceServiceImpl implements SpaceService {
 	@Autowired
 	private Price price;
 	
+	@Autowired
+	private Space space;
+	
 	@Override
 	public int insertSpace(Space space, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files) {
 		
@@ -148,28 +151,40 @@ public class SpaceServiceImpl implements SpaceService {
 		
 		return sDao.selectspaceDetail(spaceId);
   }
+	
 	@Override
-	public ArrayList<Price> selectPrice(String spaceId) {
+	public ArrayList<Price> selectPrice(int spaceId) {
 		return sDao.selectPrice(spaceId);
 	}
 
 
 	@Override
-	public int insertPrice(int spaceId, String[] spacePrice) {
-		// {1},
-		String dayArr[] =  {"월", "화", "수", "목", "금", "토", "일", "휴"};
+	public int insertPrice(int spaceId, int spaceAdd, String[] spacePrice) {
 		int result = 0;
-		for (int i = 0; i < spacePrice.length; i++) {
-			price.setPriceWeekend(dayArr[i]);
-			price.setPriceTime(spacePrice[i].substring(4));
-			price.setSpaceId(spaceId);
-			
-			result += sDao.insertPrice(price);
-			
-			System.out.println(spacePrice[i].toString());
+		
+		// 1 인당 추가 금액 저장
+		if (spaceAdd > 0) {
+			space.setSpaceId(spaceId);
+			space.setSpaceAdd(spaceAdd);
+			result = sDao.updateAddPrice(space);
 		}
-		if (result == spacePrice.length) return 1;
-		else return 0;
+		
+		if (spaceAdd > 0 && result > 0 ) {
+			// 공간 가격 등록
+			String dayArr[] = {"월", "화", "수", "목", "금", "토", "일", "휴"};
+			int day;
+			for (int i = 0; i < spacePrice.length; i++) {
+				day = Integer.parseInt(spacePrice[i].substring(0, 1));
+				price.setPriceWeekend(dayArr[day-1]);
+				price.setPriceTime(spacePrice[i].substring(1));
+				price.setSpaceId(spaceId);
+				result += sDao.insertPrice(price);
+			}
+			if (result == spacePrice.length) return 1;
+			else return 0;
+		} else {
+			return result;
+		}
 	}
 
 }

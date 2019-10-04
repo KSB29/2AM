@@ -26,10 +26,17 @@
 	</resultMap>
 	
 	<resultMap type="Price" id="priceResultSet">
-		<id property="priceId" column="PRICE_ID"/>
+		<!-- <id property="priceId" column="PRICE_ID"/>
 		<result property="priceWeekend" column="PRICE_WEEKEND"/>
 		<result property="priceTime" column="PRICE_TIME" jdbcType="CLOB" javaType="java.lang.String"/>
-		<result property="spaceId" column="SPACE_ID"/>
+		<result property="spaceId" column="SPACE_ID"/> -->
+		<id property="spaceId" column="SPACE_ID"/>
+		<result property="priceId" column="PRICE_ID"/>
+		<result property="priceWeekend" column="PRICE_WEEKEND"/>
+		<result property="priceTime" column="PRICE_TIME" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="spaceOpenTime" column="SPACE_OPEN_TIME"/>
+		<result property="spaceCloseTime" column="SPACE_CLOSE_TIME"/>
+		<result property="spaceAdd" column="SPACE_ADD"/>
 	</resultMap>
 	
 	<resultMap type="Type" id="typeResultSet">
@@ -109,7 +116,11 @@
 		SELECT S.SPACE_OPEN_TIME,
 			   S.SPACE_CLOSE_TIME,
 			   S.SPACE_ADD,
-			   P.*
+			   S.SPACE_ID,
+			   P.PRICE_ID,
+			   DECODE(P.PRICE_WEEKEND, '월', '1', '화', '2', '수', '3', '목', '4', '금', '5', '토', '6', '일', '7', '휴', '8', '') PRICE_WEEKEND,
+			   <!-- P.PRICE_WEEKEND, -->
+			   P.PRICE_TIME
 		FROM   SPACE S LEFT JOIN PRICE P ON (S.SPACE_ID = P.SPACE_ID)
 		WHERE  S.SPACE_ID = #{spaceId}
 	</select>

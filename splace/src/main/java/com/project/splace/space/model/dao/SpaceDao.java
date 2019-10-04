@@ -86,7 +86,7 @@ public class SpaceDao {
 	 * @param spaceId
 	 * @return pList
 	 */
-	public ArrayList<Price> selectPrice(String spaceId) {
+	public ArrayList<Price> selectPrice(int spaceId) {
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectPrice", spaceId);
 	}
 
@@ -97,6 +97,15 @@ public class SpaceDao {
 	 */
 	public int insertPrice(Price price) {
 		return sqlSession.insert("spaceMapper.insertPrice", price);
+	}
+	
+	/**
+	 * 1인당 추가 금액 저장
+	 * @param space
+	 * @return result
+	 */
+	public int updateAddPrice(Space space) {
+		return sqlSession.update("spaceMapper.updateAddPrice", space);
 	}
 
 }

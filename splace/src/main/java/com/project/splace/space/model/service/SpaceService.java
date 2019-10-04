@@ -46,9 +46,9 @@ public interface SpaceService {
 	/**
 	 * 공간 가격 조회 Service
 	 * @param spaceId 
-	 * @return result
+	 * @return
 	 */
-	public abstract ArrayList<Price> selectPrice(String spaceId);
+	public abstract ArrayList<Price> selectPrice(int spaceId);
 
 	/**
 	 * 공간 가격 등록 Service
@@ -56,7 +56,7 @@ public interface SpaceService {
 	 * @param spacePrice
 	 * @return result
 	 */
-	public abstract int insertPrice(int spaceId, String[] spacePrice);
+	public abstract int insertPrice(int spaceId, int spaceAdd, String[] spacePrice);
 	
 	//-------------------- 191002 추가 ----------------------------
 	/**
