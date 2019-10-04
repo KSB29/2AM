@@ -124,4 +124,27 @@
 		SELECT * FROM "OPTION" ORDER BY OPTION_ID
 	</select>
 	
+	
+	
+	
+	<!--10/04 강미리 추가 -->
+	<!-- 공간 상세 조회 -->
+	<select id="selectspaceDetail" parameterType="_int" resultMap="spaceResultSet">
+		SELECT * 
+		FROM SPACE 
+		WHERE SPACE_ID =#{spaceId}
+	</select>
+	
+	<!-- 공간 타입 조회 -->
+	<select id="selectTypeName" parameterType="_int" resultMap="typeResultSet">
+	SELECT TYPE_NAME
+	FROM TYPE
+	WHERE TYPE_ID=#{typeId}
+	</select>
+	
+	<!-- 공간 세부 옵션 조회 -->
+	<select id="selectOptionList" resultMap="optionResultSet">
+	SELECT * FROM "OPTION"
+	</select>
+	
 </mapper>

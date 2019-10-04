@@ -104,11 +104,38 @@ public class SpaceController {
 	// 공간 상세보기 조회
 	@RequestMapping("spaceDetail.sp")
 	public ModelAndView spaceDatail(int spaceId, ModelAndView mv) {
-		Space space =sService.selectspaceDetail(spaceId);
 		
-		System.out.print(space);
+		Space space =sService.selectspaceDetail(spaceId);
+		System.out.println(space);
 		if(space !=null) {
-			mv.addObject("space", space).setViewName("spaceDatail");
+			// 공간 타입 조회
+			Type type = sService.selectTypeName(space.getTypeId());
+			
+			// 공간 세부 옵션 조회
+			String spaceOption1[] = space.getSpaceOption().substring(1).split("#");
+			ArrayList<Option> oList = sService.selectOptionList();
+			// 세부옵션
+			ArrayList<Option> spaceO = new ArrayList<Option>(); 
+			
+			
+			for(String o : spaceOption1) { // 공간 옵션
+				for(Option op : oList) { 
+					if(op.getOptionId().equals(o)) {
+						spaceO.add(new Option(op.getOptionId(), op.getOptionName(), op.getOptionIcon()));
+						
+					}
+				}
+			}
+			
+			// 주의사항
+			String spaceNotice[] = space.getSpaceNotice().substring(1).split("#");
+			mv.addObject("spaceNotice", spaceNotice);				
+			mv.addObject("spaceO", spaceO);	
+			mv.addObject("type", type);
+			mv.addObject("space", space);
+			mv.setViewName("space/spaceDetail");
+		}else {
+			mv.setViewName("space/spaceDetail");
 		}
 		return mv;
 	}

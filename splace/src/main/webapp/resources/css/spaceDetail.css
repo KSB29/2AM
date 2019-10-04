@@ -364,3 +364,12 @@ width:50%;
 float:left;
 }
 
+
+/* 공간 세부 옵션   */
+.fontStyle>ol{
+	margin-top:3%
+}
+.optionOl{
+padding:0 !important;
+list-style: none !important;
+}
