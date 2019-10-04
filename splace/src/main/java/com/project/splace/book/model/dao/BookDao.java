@@ -86,4 +86,13 @@ public class BookDao {
 	public Book selectBook(int bookId) {
 		return sqlSession.selectOne("bookMapper.selectBook", bookId);
 	}
+
+	/**
+	 * 7. 예약 취소
+	 * @param bookId
+	 * @return result
+	 */
+	public int deleteBook(int bookId) {
+		return sqlSession.update("bookMapper.deleteBook", bookId);
+	}
 }

@@ -46,7 +46,7 @@
 								<table class="table-wrapper bookDetailTable">
 									<tr class="waitingTime">
 										<td>승인대기기한</td>
-										<td>${book.bookEnroll}까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
+										<td><fmt:formatDate value="${book.bookEnroll}" pattern="yyyy.MM.dd (E)"/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
 									</tr>
 									<tr>
 										<td>신청일</td>
@@ -142,7 +142,7 @@
 							</article>
 
 							<div class="col-12 titleBox">
-								<h2>더빅스터디</h2>
+								<h2>${book.spaceName }</h2>
 							</div>
 							<article id="article6">
 								<div id="spaceInfo">
@@ -215,23 +215,23 @@
 								<div class="col-12 titleBox">
 									<h2>결제 예정금액</h2>
 									<div>
-										<span>&#8361;12,900</span>
+										<span><fmt:formatNumber value="${book.bookPrice }" type="currency"/></span>
 									</div>
 								</div>
 								<article>
 									<table class="table-wrapper">
 										<tr>
 											<td>예약날짜</td>
-											<td>2019.10.04 (금)</td>
-											<td rowspan="3">&#8361;12,900</td>
+											<td><fmt:formatDate value="${book.bookDate}" pattern="yyyy.MM.dd (E)"/></td>
+											<td rowspan="3"><fmt:formatNumber value="${book.bookPrice }" type="currency"/></td>
 										</tr>
 										<tr>
 											<td>예약시간</td>
-											<td>18시 ~ 21시, 3시간</td>
+											<td>${book.bookStartTime}시 ~ ${book.bookEndTime}시, ${book.bookEndTime-book.bookStartTime}시간</td>
 										</tr>
 										<tr class="borderBottom2">
 											<td>예약인원</td>
-											<td>3명</td>
+											<td>${book.bookPer}명</td>
 										</tr>
 										<tr>
 											<td colspan="3" class="btnContainer">
@@ -258,23 +258,23 @@
 												<table class="table-wrapper">
 													<tr>
 														<td>예약공간</td>
-														<td><input type="text" name="spaceId" id="spaceId" value="더빅스터디, 3층 3번룸" readonly></td>
+														<td><input type="text" name="spaceId" id="spaceId" value="${book.spaceName }" readonly></td>
 													</tr>
 													<tr>
 														<td>예약날짜</td>
-														<td><input type="text" name="bookDate" id="bookDate" value="2019.10.04 (금)" readonly></td>
+														<td><input type="text" name="bookDate" id="bookDate" value="<fmt:formatDate value="${book.bookDate}" pattern="yyyy.MM.dd (E)"/>" readonly></td>
 													</tr>
 													<tr>
 														<td>예약시간</td>
 														<td>
-															<input type="text" name="last-child" id="bookStartTime" value="18" readonly> ~ 
-															<input type="text" name="bookEndTime" id="bookEndTime" value="21" readonly> 
-															, <span>(${21-18}시간)</span>
+															<input type="text" name="last-child" id="bookStartTime" value="${book.bookStartTime}" readonly> ~ 
+															<input type="text" name="bookEndTime" id="bookEndTime" value="${book.bookEndTime}" readonly> 
+															, <span>(${book.bookEndTime-book.bookStartTime}시간)</span>
 														</td>
 													</tr>
 													<tr>
 														<td>예약인원</td>
-														<td><input type="text" name="bookPer" id="bookPer" value="3" readonly>명</td>
+														<td><input type="text" name="bookPer" id="bookPer" value="${book.bookPer }" readonly>명</td>
 													</tr>
 													<tr>
 														<td>예약자</td>
@@ -325,8 +325,9 @@
 		// 예약취소,결제취소 - 102
 		// 예약완료,결제완료 - 103
 		// 이용완료(결제) - 104
-		var bookStutus = 103; // book.status자리(100,101,102,103)
-		var paymentStutus = 104; // payment.status자리(100,101,102,103)
+		var bookStatus = ${book.statusId}; // book.status자리(100,101,102,103)
+		var paymentStatus = ${book.pStatusId}; // payment.status자리(100,101,102,103)
+		console.log("b: "+bookStatus+", p: "+paymentStatus);
 		var $status = $("#status"); // 페이지제목(상태)
 		var $waitingTime = $(".waitingTime"); // 대기시간
 		var titleBox = $(".bookDetailRightCol .titleBox"); // 제목
@@ -343,32 +344,32 @@
 
 		var result = "";
 		// 예약대기
-		if(bookStutus == 100){ 
+		if(bookStatus == 100){ 
 			$status.html("(승인대기)");
 			$waitingTime.html("");
 			
 			result = "<td>승인대기기한</td>"
-					+ "<td>ddddddddddddddd</td>";
+					+ "<td><fmt:formatDate value='${deadline}' type='date' pattern='yyyy.MM.dd (E)'/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>";
 			$waitingTime.append(result);
 			btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#bookCancel'>예약취소</button>");
 			modalTitle.attr("id", "bookCancelTitle");
-			modalForm.attr("action", "${bookCancel}");
+			modalForm.attr("action", "${bookCancel}?bookId=${book.bookId}");
 			modalBodyTitle.text("예약을 취소하시겠습니까?");
 			modalBody.html("");
 			modalBtn.html("예약취소");
 		} 
 		// 예약승인 
-		else if(bookStutus == 101){ 
+		else if(bookStatus == 101){ 
 			$status.html("(결제대기)");
 			$waitingTime.html("");
 			result = "<td>결제대기기한</td>"
-					+ "<td>f</td>";
+					+ "<td><fmt:formatDate value='${deadline}' type='date' pattern='yyyy.MM.dd (E)'/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>";
 			$waitingTime.append(result);
 			titleBox.html("");
 			titleBox.html(
 					"<h2>결제예정금액</h2>"
 				+"<div>"
-				+"<span>&#8361;12,900</span>"
+				+"<span><fmt:formatNumber value="${book.bookPrice }" type="currency"/></span>"
 				+"</div>"
 			);
 			btnContainer.append("<button type='button' class='button fit' data-toggle='modal' data-target='#bookCancel'>예약취소</button>");
@@ -394,27 +395,29 @@
 				+ '<table class="table-wrapper">'
 				+ '<tr>'
 				+ '<td>예약공간</td>'
-				+ '<td><input type="text" name="spaceId" id="spaceId" value="더빅스터디, 3층 3번룸" readonly></td>'
+				+ '<td><input type="text" name="spaceId" id="spaceId" value="${book.spaceName}" readonly></td>'
 				+ '</tr>'
 				+ '<tr>'
 				+ '<td>예약날짜</td>'
-				+ '<td><input type="text" name="bookDate" id="bookDate" value="2019.10.04 (금)" readonly></td>'
+				+ '<td><input type="text" name="bookDate" id="bookDate" value="'
+				+ '<fmt:formatDate value="${book.bookDate}" pattern="yyyy.MM.dd (E)"/>'
+				+ '" readonly></td>'
 				+ '</tr>'
 				+ '<tr>'
 				+ '<td>예약시간</td>'
 				+ '<td>'
-				+ '<input type="text" name="last-child" id="bookStartTime" value="18" readonly> ~ '
-				+ '<input type="text" name="bookEndTime" id="bookEndTime" value="21" readonly> '
-				+ ', <span>(${21-18}시간)</span>'
+				+ '<input type="text" name="last-child" id="bookStartTime" value="${book.bookStartTime}" readonly> ~ '
+				+ '<input type="text" name="bookEndTime" id="bookEndTime" value="${book.bookEndTime}" readonly> '
+				+ ', <span>(${book.bookEndTime-book.bookStartTime}시간)</span>'
 				+ '</td>'
 				+ '</tr>'
 				+ '<tr>'
 				+ '<td>예약인원</td>'
-				+ '<td><input type="text" name="bookPer" id="bookPer" value="3" readonly>명</td>'
+				+ '<td><input type="text" name="bookPer" id="bookPer" value="${book.bookPer}" readonly>명</td>'
 				+ '</tr>'
 				+ '<tr>'
 				+ '<td>결제예정금액</td>'
-				+ '<td>&#8361;<input type="text" name="totalPrice" id="totalPrice" readonly></td>'
+				+ '<td><input type="text" name="totalPrice" id="totalPrice" value="<fmt:formatNumber value="${book.bookPrice }" type="currency"/>" readonly></td>'
 				+ '</tr>'
 				+ '</table>'
 				+ '<span class="warning"><i class="fas fa-exclamation-circle"></i> 결제 전에, 환불기준과 예약내용을 반드시 확인해주세요!</span>'
@@ -430,14 +433,14 @@
 			);
 		} 
 		// 예약완료 && 결제완료
-		else if(bookStutus == 103 && paymentStutus == 103){ 
+		else if(bookStatus == 103 && paymentStatus == 103){ 
 			$status.html("(예약완료)");
 			$waitingTime.html("");
 			titleBox.html("");
 			titleBox.html(
 					"<h2>결제금액</h2>"
 				+"<div>"
-				+"<span>&#8361;12,900</span>"
+				+"<span><fmt:formatNumber value="${book.bookPrice }" type="currency"/></span>"
 				+"</div>"
 			);
 			// 예약일 뺀 전날까지
@@ -452,30 +455,30 @@
 			modalBody.html("");
 			modalBody.html(
 					"<tbody>"
-				+ "<tr><td>결제금액</td><td>&#8361;12900</td></tr>"
-				+ "<tr><td>차감금액</td><td>&#8361;0</td></tr>"
-				+ "<tr><td>환불금액</td><td>&#8361;12900</td></tr>"
+				+ "<tr><td>결제금액</td><td><fmt:formatNumber value="${book.bookPrice }" type="currency"/></td></tr>"
+				+ "<tr><td>차감금액</td><td><fmt:formatNumber value="0" type="currency"/></td></tr>"
+				+ "<tr><td>환불금액</td><td><fmt:formatNumber value="${book.bookPrice }" type="currency"/></td></tr>"
 				+ "</tbody>"
 			);
 			modalBtn.html("예약취소");
 		} 
 		// 예약취소 && 결제취소
-		else if(bookStutus == 102 && paymentStutus == 102){ 
+		else if(bookStatus == 102 && paymentStatus == 102){ 
 			$status.html("(취소완료)");
 			$waitingTime.html("");
 			titleBox.html("");
 			titleBox.html(
 					"<h2>환불 금액</h2>"
 				+"<div>"
-				+"<span>&#8361;12,900</span>"
+				+"<span><fmt:formatNumber value="${book.bookPrice }" type="currency"/></span>"
 				+"</div>"
 			);
 			table.html("");
 			table.html(
 					"<tbody>"
-				+ "<tr><td>취소날짜</td><td>2019.09.20(금)</td></tr>"
+				+ "<tr><td>취소날짜</td><td><fmt:formatDate value='${book.bookCancel}' pattern='yyyy.MM.dd (E)'/></td></tr>"
 				+ "<tr><td>결제금액</td>"
-				+ "<td>&#8361;12000</td></tr>"
+				+ "<td><fmt:formatNumber value="${book.bookPrice }" type="currency"/></td></tr>"
 				+ "<tr><td>차감금액</td>"
 				+ "<td>0</td></tr>"
 				+ "<tr class='borderBottom2'><td>결제정보</td>"
@@ -487,14 +490,14 @@
 			modalContainer.html("");
 		} 
 		// 예약완료 && 이용완료
-		else if(bookStutus == 103 && paymentStutus == 104){ 
+		else if(bookStatus == 103 && paymentStatus == 104){ 
 			$status.html("(이용완료)");
 			$waitingTime.html("");
 			titleBox.html("");
 			titleBox.html(
 					"<h2>결제금액</h2>"
 				+"<div>"
-				+"<span>&#8361;12,900</span>"
+				+"<span><fmt:formatNumber value="${book.bookPrice }" type="currency"/></span>"
 				+"</div>"
 			);
 			$("#rightCol article table tr:first-child td:nth-child(3)").css("border","0");
@@ -518,7 +521,7 @@
 			titleBox.html("<h2>예약취소</h2>");
 			table.html("");
 			table.html(
-					"<tr><td>취소날짜</td><td>2019.09.20(금)</td></tr>"
+					"<tr><td>취소날짜</td><td><fmt:formatDate value='${book.bookCancel}' pattern='yyyy.MM.dd (E)'/></td></tr>"
 				+"<tr><td colspan='2' class='btnContainer'>"
 				+"<div class='fit-100'>예약 취소가 완료되었습니다.</div>"
 				+"</td></tr>"

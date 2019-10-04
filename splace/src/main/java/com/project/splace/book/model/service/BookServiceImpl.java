@@ -55,4 +55,9 @@ public class BookServiceImpl implements BookService{
 	public Book selectBook(int bookId) {
 		return bookDao.selectBook(bookId);
 	}
+
+	@Override
+	public int deleteBook(int bookId) {
+		return bookDao.deleteBook(bookId);
+	}
 }

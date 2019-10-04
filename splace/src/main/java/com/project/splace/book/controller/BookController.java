@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -101,6 +102,11 @@ public class BookController {
 			rd.addFlashAttribute("msg", "예약이 취소됐습니다.");
 		}
 		return "redirect:bookList.sp";
+	}
+	// 12시간 이후 승인안되면 자동으로 예약 취소
+	@Scheduled(fixedDelay=43200000)
+	public void bookDeadline() {
+		
 	}
 	// 메일 코드
 	@Autowired
@@ -260,7 +266,22 @@ public class BookController {
 		Book book = bookService.selectBook(bookId);
 		System.out.println(book);
 		
-		mv.addObject("book", book).setViewName("book/bookDetail");
+		// 승인기한
+		Date deadline = new Date(book.getBookEnroll().getTime() + (60*60*24*1000)*2);
+		
+		mv.addObject("book", book).addObject("deadline", deadline).setViewName("book/bookDetail");
+		
+		return mv;
+	}
+
+	// 4. 예약취소
+	@RequestMapping("bookCancel.sp")
+	public ModelAndView bookCancel(ModelAndView mv, int bookId) {
+		int result = bookService.deleteBook(bookId);
+		
+		if(result>0) {
+			mv.addObject("msg", "예약이 취소되었습니다.").setViewName("book/bookList");
+		} else {mv.addObject("msg", "예약이 취소되지 않았습니다. 다시 시도해주세요!").setViewName("book/bookList");}
 		
 		return mv;
 	}
