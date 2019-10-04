@@ -20,8 +20,17 @@ public class Book {
 	private Date bookCancel; 	// 예약취소날짜
 	private String spaceName; 	// 공간이름
 	private String spaceAttChange; // 공간대표사진
+	private int pStatusId;		// 결제상태번호
+	private String spaceAddress; // 공간주소
 
 	public Book() {}
+	
+	// 예약목록조회용
+	public Book(String memberId, int statusId) {
+		super();
+		this.memberId = memberId;
+		this.statusId = statusId;
+	}
 	public Book(int bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
 			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
 			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String spaceAttChange) {
@@ -63,6 +72,55 @@ public class Book {
 		this.bookerPhone = bookerPhone;
 		this.bookerEmail = bookerEmail;
 		this.bookCancel = bookCancel;
+	}
+	public Book(int bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
+			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
+			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String spaceAttChange,
+			int pStatusId) {
+		super();
+		this.bookId = bookId;
+		this.bookEnroll = bookEnroll;
+		this.bookPrice = bookPrice;
+		this.bookDate = bookDate;
+		this.bookStartTime = bookStartTime;
+		this.bookEndTime = bookEndTime;
+		this.bookPer = bookPer;
+		this.bookRequest = bookRequest;
+		this.spaceId = spaceId;
+		this.memberId = memberId;
+		this.statusId = statusId;
+		this.booker = booker;
+		this.bookerPhone = bookerPhone;
+		this.bookerEmail = bookerEmail;
+		this.bookCancel = bookCancel;
+		this.spaceName = spaceName;
+		this.spaceAttChange = spaceAttChange;
+		this.pStatusId = pStatusId;
+	}
+	public Book(int bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
+			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
+			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String spaceAttChange,
+			int pStatusId, String spaceAddress) {
+		super();
+		this.bookId = bookId;
+		this.bookEnroll = bookEnroll;
+		this.bookPrice = bookPrice;
+		this.bookDate = bookDate;
+		this.bookStartTime = bookStartTime;
+		this.bookEndTime = bookEndTime;
+		this.bookPer = bookPer;
+		this.bookRequest = bookRequest;
+		this.spaceId = spaceId;
+		this.memberId = memberId;
+		this.statusId = statusId;
+		this.booker = booker;
+		this.bookerPhone = bookerPhone;
+		this.bookerEmail = bookerEmail;
+		this.bookCancel = bookCancel;
+		this.spaceName = spaceName;
+		this.spaceAttChange = spaceAttChange;
+		this.pStatusId = pStatusId;
+		this.spaceAddress = spaceAddress;
 	}
 
 	public int getBookId() {
@@ -167,6 +225,19 @@ public class Book {
 	public void setSpaceAttChange(String spaceAttChange) {
 		this.spaceAttChange = spaceAttChange;
 	}
+	public int getpStatusId() {
+		return pStatusId;
+	}
+	public void setpStatusId(int pStatusId) {
+		this.pStatusId = pStatusId;
+	}
+	public String getSpaceAddress() {
+		return spaceAddress;
+	}
+	public void setSpaceAddress(String spaceAddress) {
+		this.spaceAddress = spaceAddress;
+	}
+
 	@Override
 	public String toString() {
 		return "Book [bookId=" + bookId + ", bookEnroll=" + bookEnroll + ", bookPrice=" + bookPrice + ", bookDate="
@@ -174,6 +245,6 @@ public class Book {
 				+ bookPer + ", bookRequest=" + bookRequest + ", spaceId=" + spaceId + ", memberId=" + memberId
 				+ ", statusId=" + statusId + ", booker=" + booker + ", bookerPhone=" + bookerPhone + ", bookerEmail="
 				+ bookerEmail + ", bookCancel=" + bookCancel + ", spaceName=" + spaceName + ", spaceAttChange="
-				+ spaceAttChange + "]";
+				+ spaceAttChange + ", pStatusId=" + pStatusId + ", spaceAddress=" + spaceAddress + "]";
 	}
 }

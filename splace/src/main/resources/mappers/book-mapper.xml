@@ -19,6 +19,9 @@
 		<result property="bookCancel" column="BOOK_CANCEL" />
 		<result property="spaceName" column="SPACE_NAME" />
 		<result property="spaceAttChange" column="SPACE_ATT_CHANGE" />
+		<result property="pStatusId" column="P_STATUS_ID" />
+		<result property="spaceAddress" column="SPACE_ADDRESS" />
+		<result property="spacePhone" column="SPACE_TEL" />
 	</resultMap>
 	<resultMap type="Space" id="spaceResultSet">
 		<id property="spaceId" column="SPACE_ID"/>
@@ -108,11 +111,31 @@
 	</insert>
 	
 	<!-- 예약 목록 조회 쿼리 -->
-	<select id="selectBlist" resultMap="bookResultSet" parameterType="string">
-		SELECT B.*, SPACE_NAME, SPACE_ATT_CHANGE FROM BOOK B
+	<select id="selectBlist" resultMap="bookResultSet" parameterType="Book">
+		SELECT B.*, SPACE_NAME, SPACE_ATT_CHANGE, P.STATUS_ID P_STATUS_ID FROM BOOK B
 		JOIN SPACE S ON (S.SPACE_ID = B.SPACE_ID)
 		JOIN SPACE_ATT SA ON (S.SPACE_ID = SA.SPACE_ID)
+		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
 		WHERE MEMBER_ID = #{memberId}
+		<if test="_parameter.statusId != 0">
+			 AND B.STATUS_ID = #{statusId}
+		</if>
 		ORDER BY BOOK_ENROLL DESC
+	</select>
+	
+	<!-- 전체 예약 수 조회 쿼리 -->
+	<select id="getbListCount" parameterType="Book" resultType="_int">
+		SELECT COUNT(*) FROM BOOK WHERE MEMBER_ID = #{memberId}
+		<if test="_parameter.statusId != 0">
+			 AND STATUS_ID = #{statusId}
+		</if>
+	</select>
+	
+	<!-- 예약 내역 조회 쿼리 -->
+	<select id="selectBook" parameterType="_int" resultMap="bookResultSet">
+		SELECT B.*, SPACE_NAME, SPACE_ADDRESS, P.STATUS_ID P_STATUS_ID FROM BOOK B
+		JOIN SPACE S ON (S.SPACE_ID = B.SPACE_ID)
+		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
+		WHERE B.BOOK_ID = #{bookId}
 	</select>
 </mapper>
