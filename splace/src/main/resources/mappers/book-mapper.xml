@@ -120,7 +120,7 @@
 		<if test="_parameter.statusId != 0">
 			 AND B.STATUS_ID = #{statusId}
 		</if>
-		ORDER BY BOOK_ENROLL DESC
+		ORDER BY B.BOOK_ID DESC
 	</select>
 	
 	<!-- 전체 예약 수 조회 쿼리 -->
@@ -138,4 +138,9 @@
 		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
 		WHERE B.BOOK_ID = #{bookId}
 	</select>
+	
+	<!-- 예약 취소 쿼리 -->
+	<update id="deleteBook" parameterType="_int">
+		UPDATE BOOK SET STATUS_ID = 102 WHERE BOOK_ID = #{bookId}
+	</update>
 </mapper>

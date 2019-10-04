@@ -27,5 +27,8 @@ public interface BookService {
 	// 예약 내역 조회
 	public abstract Book selectBook(int bookId);
 
+	// 예약 취소
+	public abstract int deleteBook(int bookId);
+
 
 }

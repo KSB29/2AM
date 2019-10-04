@@ -26,7 +26,8 @@
 				-->
 				<section>
 					<div class="row">
-						<div class="col-12">
+						<div class="col-12 bookListTop">
+							<div class="listCount">total: ${pi.listCount }</div>
 							<div class="filterContainer">
 								<div class="default-select" id="default-select">
 									<select name="filter" id="filter">
@@ -58,7 +59,8 @@
 							</c:if>
 							<c:forEach items="${bList }" var="book">
 								<tr>
-									<td><img src="${contextPath}/resources/img/${book.spaceAttChange}" alt="공간대표사진"></td>
+									<td>${book.bookId }</td>
+									<td><img src="${contextPath}/resources/spaceImg/${book.spaceAttChange}" alt="공간대표사진"></td>
 									<td>
 										<c:choose>
 											<c:when test="${book.statusId == 100 }">
