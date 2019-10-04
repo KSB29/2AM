@@ -16,6 +16,7 @@ $(document).ready(function(){
 			clickable: true,
 		},
 	});*/
+	
 	// 글자수 세기 
     $('.content').keyup(function (e){
         var content = $(this).val();

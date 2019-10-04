@@ -68,4 +68,16 @@ public class SpaceDao {
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectOption");
 	}
 
+	// -------------------------191002 추가 -------------------------------------------------
+	
+	/**
+	 * 공간 상세보기 조회 
+	 * @param spaceId
+	 * @return
+	 */
+	public Space selectspaceDetail(int spaceId) {
+		
+		return sqlSession.selectOne("spaceMapper.selectspaceDetail",spaceId);
+	}
+
 }

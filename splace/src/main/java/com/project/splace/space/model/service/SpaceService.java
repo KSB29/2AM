@@ -41,5 +41,13 @@ public interface SpaceService {
 	 * @return oList
 	 */
 	public abstract ArrayList<Option> selectOption();
+
 	
+	//-------------------- 191002 추가 ----------------------------
+	/**
+	 * 공간 상세보기 조회
+	 * @param spaceId
+	 * @return space
+	 */
+	public abstract Space selectspaceDetail(int spaceId); 
 }

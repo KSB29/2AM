@@ -135,4 +135,15 @@ public class SpaceServiceImpl implements SpaceService {
 		return sDao.selectOption();
 	}
 
+
+	
+	// -------------------------191002 추가 -------------------------------------------------
+	
+	// 공간 상세보기 조회 
+	@Override
+	public Space selectspaceDetail(int spaceId) {
+		
+		return sDao.selectspaceDetail(spaceId);
+	}
+
 }

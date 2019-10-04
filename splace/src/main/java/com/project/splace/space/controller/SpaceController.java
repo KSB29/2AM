@@ -90,5 +90,20 @@ public class SpaceController {
 	public String spaceUpdateForm() {
 		return "space/spaceUpdateForm";
 	}
+	
+	
+	// -------------------------191002 추가-------------------------------------------------------
+	// 공간 상세보기 조회
+	@RequestMapping("spaceDetail.sp")
+	public ModelAndView spaceDatail(int spaceId, ModelAndView mv) {
+		Space space =sService.selectspaceDetail(spaceId);
+		
+		System.out.print(space);
+		if(space !=null) {
+			mv.addObject("space", space).setViewName("spaceDatail");
+		}
+		return mv;
+	}
+	
 
 }
