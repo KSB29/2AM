@@ -1,7 +1,6 @@
 package com.project.splace.space.model.vo;
 
 public class Option {
-	
 	private String optionId;
 	private String optionName;
 	private String optionIcon;

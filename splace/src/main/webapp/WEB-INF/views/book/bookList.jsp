@@ -10,6 +10,10 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/bookList.css">
 </head>
 <body>
+	<c:if test="${empty sessionScope.loginUser}">
+		<c:set var="msg" value="로그인 해주세요!" scope="session" />
+		<c:redirect url="/"/>
+	</c:if>
 	<!-- 이 형식을 꼭 지켜주세요! 
 		top.jsp, bottom.jsp, style.css, fontawesome-all.min.css, noscript.css,
 		main.js, browser.min.js, breakpoints.min.js, util.js파일은 수정 금지
