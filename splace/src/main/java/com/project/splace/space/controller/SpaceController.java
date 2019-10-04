@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.space.model.service.SpaceService;
 import com.project.splace.space.model.vo.Option;
+import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
 import com.project.splace.space.model.vo.Type;
 
@@ -77,8 +78,16 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spacePrice.sp")
-	public String spacePrice() {
-		return "space/spacePrice";
+	public ModelAndView spacePrice(String spaceId, HttpSession session, ModelAndView mv) {
+		if (((Member)session.getAttribute("loginUser")).getMemberId() == null) {
+			mv.setViewName("redirect:loginForm.sp");
+		} else {
+			//ArrayList<Price> pList = sService.selectPrice(spaceId);
+			//mv.addObject("pList", pList);
+			mv.addObject("spaceId", spaceId);
+			mv.setViewName("space/spacePrice");
+		}
+		return mv;
 	}
 	
 	@RequestMapping("spaceReview.sp")
@@ -89,6 +98,25 @@ public class SpaceController {
 	@RequestMapping("spaceUpdateForm.sp")
 	public String spaceUpdateForm() {
 		return "space/spaceUpdateForm";
+	}
+	
+	// -------------------------191002 추가-------------------------------------------------------
+	// 공간 상세보기 조회
+	@RequestMapping("spaceDetail.sp")
+	public ModelAndView spaceDatail(int spaceId, ModelAndView mv) {
+		Space space =sService.selectspaceDetail(spaceId);
+		
+		System.out.print(space);
+		if(space !=null) {
+			mv.addObject("space", space).setViewName("spaceDatail");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("spacePriceInsert.sp")
+	public String spacePriceInsert(int spaceId, String[] spacePrice) {
+		int result = sService.insertPrice(spaceId, spacePrice);
+		return null;
 	}
 
 }

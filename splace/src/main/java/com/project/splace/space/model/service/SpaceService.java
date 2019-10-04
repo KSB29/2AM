@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.splace.space.model.vo.Option;
+import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
 import com.project.splace.space.model.vo.Type;
 
@@ -41,5 +42,27 @@ public interface SpaceService {
 	 * @return oList
 	 */
 	public abstract ArrayList<Option> selectOption();
+
+	/**
+	 * 공간 가격 조회 Service
+	 * @param spaceId 
+	 * @return result
+	 */
+	public abstract ArrayList<Price> selectPrice(String spaceId);
+
+	/**
+	 * 공간 가격 등록 Service
+	 * @param spaceId
+	 * @param spacePrice
+	 * @return result
+	 */
+	public abstract int insertPrice(int spaceId, String[] spacePrice);
 	
+	//-------------------- 191002 추가 ----------------------------
+	/**
+	 * 공간 상세보기 조회
+	 * @param spaceId
+	 * @return space
+	 */
+	public abstract Space selectspaceDetail(int spaceId); 
 }

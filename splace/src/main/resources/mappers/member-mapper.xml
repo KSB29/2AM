@@ -46,6 +46,18 @@
 		FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
 	</select>
-	
-	
+
+   <select id="selectOne" parameterType="Member" resultMap="memberResultSet">
+      SELECT * FROM MEMBER
+      WHERE MEMBER_ID = #{memberId} 
+      AND MEMBER_PWD = #{memberPwd}
+      AND MEMBER_STATUS = 'Y'
+   </select>
+  
+   <delete id="memberMapper" parameterType="string">
+      UPDATE MEMBER 
+      SET MEMBER_STATUS ='N'
+      WHERE MEMBER_ID = #{memberId}
+   </delete>
 </mapper>
+

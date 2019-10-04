@@ -37,12 +37,13 @@
             <!-- 상세 검색 리스트 구역 -->
            <c:url var="searchDetail" value="searchDetail.sp"/>
             <form action="${searchDetail }" method="get">
+            <input type="hidden" value="${search.searchBox}" name="searchBox">
 	       	 <section class="optionSection">
 	          <div class="row" id="optionRow">
 		               <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="locationOpen();">지역</button>
 		               <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="typeOpen();">유형</button>
 		               <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="optionOpen();">옵션</button>
-		               <button id="searchOption" class="button primary ">search</button>
+		               <button id="searchOption" class="button primary searchBtn ">search</button>
 	               </div>
 	            </section>
 	            
@@ -52,55 +53,55 @@
 						<div class="row" id="locationField"
 							style="border: 1px solid black;  display: none;">
 							<ul>
-								<li><input type="checkbox" id="location1" value="1"> <label
+								<li><input type="radio" id="location1" class="locationSelect"  name ="locationSelect" value="강남구"> <label
 									for="location1"> 강남구 </label></li>
-								<li><input type="checkbox" id="location2" value="2"> <label
+								<li><input type="radio" id="location2" class="locationSelect"  name ="locationSelect" value="강동구"> <label
 									for="location2"> 강동구 </label></li>
-								<li><input type="checkbox" id="location3" value="3"> <label
+								<li><input type="radio" id="location3" class="locationSelect"  name ="locationSelect" value="강북구"> <label
 									for="location3"> 강북구 </label></li>
-								<li><input type="checkbox" id="location4" value="4"> <label
+								<li><input type="radio" id="location4" class="locationSelect"  name ="locationSelect" value="강서구"> <label
 									for="location4"> 강서구 </label></li>
-								<li><input type="checkbox" id="location5" value="5"> <label
+								<li><input type="radio" id="location5" class="locationSelect"  name ="locationSelect" value="구로구"> <label
 									for="location5"> 구로구 </label></li>
-								<li><input type="checkbox" id="location6" value="6"> <label
+								<li><input type="radio" id="location6" class="locationSelect"  name ="locationSelect" value="금천구"> <label
 									for="location6"> 금천구 </label></li>
-								<li><input type="checkbox" id="location7" value="7"> <label
+								<li><input type="radio" id="location7" class="locationSelect"  name ="locationSelect" value="광진구"> <label
 									for="location7"> 광진구 </label></li>
-								<li><input type="checkbox" id="location8" value="8"> <label
+								<li><input type="radio" id="location8" class="locationSelect"  name ="locationSelect" value="관악구"> <label
 									for="location8"> 관악구 </label></li>
-								<li><input type="checkbox" id="location9" value="9"> <label
+								<li><input type="radio" id="location9" class="locationSelect"  name ="locationSelect" value="노원구"> <label
 									for="location9"> 노원구 </label></li>
-								<li><input type="checkbox" id="location10" value="10"> <label
+								<li><input type="radio" id="location10" class="locationSelect"  name ="locationSelect" value="도봉구"> <label
 									for="location10"> 도봉구 </label></li>
-								<li><input type="checkbox" id="location11" value="11"> <label
+								<li><input type="radio" id="location11" class="locationSelect" name ="locationSelect" value="동대문구"> <label
 									for="location11"> 동대문구 </label></li>
-								<li><input type="checkbox" id="location12" value="12"> <label
+								<li><input type="radio" id="location12" class="locationSelect" name ="locationSelect" value="동작구"> <label
 									for="location12"> 동작구 </label></li>
-								<li><input type="checkbox" id="location13" value="13"> <label
+								<li><input type="radio" id="location13" class="locationSelect" name ="locationSelect" value="마포구"> <label
 									for="location13"> 마포구 </label></li>
-								<li><input type="checkbox" id="location14" value="14"> <label
+								<li><input type="radio" id="location14" class="locationSelect"  name ="locationSelect"value="서대문구"> <label
 									for="location14"> 서대문구 </label></li>
-								<li><input type="checkbox" id="location15" value="15"> <label
+								<li><input type="radio" id="location15" class="locationSelect"  name ="locationSelect"value="서초구"> <label
 									for="location15"> 서초구 </label></li>
-								<li><input type="checkbox" id="location16" value="16"> <label
+								<li><input type="radio" id="location16" class="locationSelect" name ="locationSelect" value="성북구"> <label
 									for="location16"> 성북구 </label></li>
-								<li><input type="checkbox" id="location17" value="17"> <label
+								<li><input type="radio" id="location17" class="locationSelect" name ="locationSelect" value="송파구"> <label
 									for="location17"> 송파구 </label></li>
-								<li><input type="checkbox" id="location18" value="18"> <label
+								<li><input type="radio" id="location18" class="locationSelect" name ="locationSelect" value="양천구"> <label
 									for="location18"> 양천구 </label></li>
-								<li><input type="checkbox" id="location19" value="19"> <label
+								<li><input type="radio" id="location19" class="locationSelect" name ="locationSelect" value="영등포구"> <label
 									for="location19"> 영등포구 </label></li>
-								<li><input type="checkbox" id="location20" value="20"> <label
+								<li><input type="radio" id="location20" class="locationSelect" name ="locationSelect" value="용산구"> <label
 									for="location20"> 용산구 </label></li>
-								<li><input type="checkbox" id="location21" value="21"> <label
+								<li><input type="radio" id="location21" class="locationSelect" name ="locationSelect" value="은평구"> <label
 									for="location21"> 은평구 </label></li>
-								<li><input type="checkbox" id="location22" value="22"> <label
+								<li><input type="radio" id="location22" class="locationSelect" name ="locationSelect" value="종로구"> <label
 									for="location22"> 종로구 </label></li>
-								<li><input type="checkbox" id="location23" value="23"> <label
+								<li><input type="radio" id="location23" class="locationSelect" name ="locationSelect" value="중구"> <label
 									for="location23"> 중구 </label></li>
-								<li><input type="checkbox" id="location24" value="24"> <label
+								<li><input type="radio" id="location24" class="locationSelect" name ="locationSelect" value="중랑구"> <label
 									for="location24"> 중랑구 </label></li>
-								<li><input type="checkbox" id="location25" value="25"> <label
+								<li><input type="radio" id="location25" class="locationSelect" name ="locationSelect" value="송파구"> <label
 									for="location25"> 송파구 </label></li>
 							</ul>
 						</div>
@@ -111,14 +112,14 @@
 	               <div class="row" id="typeField" style="border:1px solid black; display: none;">
 	                  <ul>
 	                     <li>
-	                        <input type="checkbox" id="type1" value="cafe">
+	                        <input type="checkbox" id="type1" class="typeSelect"  name="typeSelect" value="0">
 	                        <label for="type1">
 	                   		    <i class="fas fa-coffee"></i>
 	              		         카페
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="type2" value="partyRoom">
+	                        <input type="checkbox" id="type2"  class="typeSelect" value="1">
 	                        <label for="type2">
 	                         <i class="material-icons">
 								cake
@@ -127,7 +128,7 @@
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="type3" value="meetingRoom">
+	                        <input type="checkbox" id="type3" class="typeSelect" name="typeSelect" value="2">
 	                        <label for="type3">
 	                           <i class="material-icons">
 								business
@@ -136,7 +137,7 @@
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="type4" value="studyRoom">
+	                        <input type="checkbox" id="type4" class="typeSelect"  name="typeSelect" value="3">
 	                        <label for="type4">
 	                          <i class="material-icons">
 								menu_book
@@ -145,7 +146,7 @@
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="type5" value="studio">
+	                        <input type="checkbox" id="type5" class="typeSelect" name="typeSelect" value="4">
 	                        <label for="type5">
 	                        <i class="fas fa-camera"></i>
 	                          	스튜디오
@@ -160,98 +161,98 @@
 	               <div class="row" id="optionField" style="border:1px solid black; display: none;">
 	                  <ul>
 	                     <li>
-	                        <input type="checkbox" id="option1" value="food">
+	                        <input type="checkbox" id="option1" class="optionSelect"  name ="optionSelect" value="A">
 	                        <label for="option1">
 	                           <i class="material-icons">fastfood</i>
 	              		             음식물반입가능
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option2" value="parking">
+	                        <input type="checkbox" id="option2" class="optionSelect" name ="optionSelect" value="B">
 	                        <label for="option2">
 	                           <i class="material-icons">local_parking</i>
 	                  		         주차가능
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option3" value="mic">
+	                        <input type="checkbox" id="option3" class="optionSelect" name ="optionSelect" value="C">
 	                        <label for="option3">
 	                           <i class="material-icons">mic</i>
 	               	  	          음향/마이크
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option4" value="wifi">
+	                        <input type="checkbox" id="option4" class="optionSelect" name ="optionSelect" value="D">
 	                        <label for="option4">
 	                           <i class="material-icons">wifi</i>
 	                	   	        인터넷/와이파이
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option5" value="pet">
+	                        <input type="checkbox" id="option5" class="optionSelect" name ="optionSelect" value="E">
 	                        <label for="option5">
 	                        <i class="material-icons">pets</i>
 	                          	 반려동물동반가능
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option6" value="nonsmoke">
+	                        <input type="checkbox" id="option6" class="optionSelect" name ="optionSelect" value="F">
 	                        <label for="option6">
 	                           <i class="material-icons">smoke_free</i>
 	                        	   금연
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option7" value="tv">
+	                        <input type="checkbox" id="option7" class="optionSelect" name ="optionSelect" value="G">
 	                        <label for="option7">
 	                           <i class="material-icons">live_tv</i>
 	                     	      TV/프로젝터
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option8" value="drink">
+	                        <input type="checkbox" id="option8" class="optionSelect" name ="optionSelect" value="H">
 	                        <label for="option8">
 	                           <i class="material-icons">local_bar</i>
 	                   		        주류반입가능
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option9" value="copy">
+	                        <input type="checkbox" id="option9" class="optionSelect" name ="optionSelect" value="I">
 	                        <label for="option9">
 	                           <i class="material-icons">local_printshop</i>
 	                      	        복사/인쇄기
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option10" value="toilet">
+	                        <input type="checkbox" id="option10" class="optionSelect" name ="optionSelect" value="J">
 	                        <label for="option10">
 	                           <i class='fas fa-restroom'></i>
 	                                                             화장실
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option11" value="board">
+	                        <input type="checkbox" id="option11" class="optionSelect" name ="optionSelect" value="K">
 	                        <label for="option11">
 	                           <i class='fas fa-chalkboard'></i>
 	                                                                 화이트보드
 	                        </label>
 	                     </li>
 	                   <li>
-	                        <input type="checkbox" id="option12" value="heater">
+	                        <input type="checkbox" id="option12" class="optionSelect" name ="optionSelect" value="L">
 	                        <label for="option12">
 	                           <i class='fab fa-hotjar'></i>
 	                          	    난방기
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option13" value="air">
+	                        <input type="checkbox" id="option13" class="optionSelect" name ="optionSelect" value="M">
 	                        <label for="option13">
 	                           <i class='fas fa-wind'></i>
 	                           	   에어컨
 	                        </label>
 	                     </li>
 	                        <li>
-	                        <input type="checkbox" id="option14" value="cctv">
+	                        <input type="checkbox" id="option14" class="optionSelect" name ="optionSelect" value="N">
 	                        <label for="option14">
 	                           <i class='fas fa-video'></i>
 	                           CCTV
@@ -267,14 +268,17 @@
 	           <section class="tiles">
 		       	<div class="row">
 		           	<c:forEach var="s" items="${searchList}">
-								<article>
+		           		<c:url var="sDetail" value="spaceDetail.sp">
+		           			<c:param name="spaceId" value="${s.spaceId}"></c:param>
+		           		</c:url>
+						<article>
 								
 								<!-- 공간 이미지 -->
 									<span class="image"> 
 										<img src="${contextPath }/resources/img/conference.jpg" alt=""/>
 										<%-- <img src="${contextPath }/resources/spaceImg/${s.spaceAttChange}" alt="" /> --%>
 									</span> 
-										<a href=""></a> 
+										<a href="${s.spaceId }"></a> 
 											
 										<!-- 공간 이름 -->
 											<div class="locationName">
