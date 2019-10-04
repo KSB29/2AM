@@ -22,7 +22,10 @@ public interface BookService {
 	public abstract int insertBook(Book book);
 
 	// 예약목록 조회
-	public abstract ArrayList<Book> selectBlist(String memberId);
+	public abstract ArrayList<Book> selectBlist(int currentPage, Book book);
+
+	// 예약 내역 조회
+	public abstract Book selectBook(int bookId);
 
 
 }

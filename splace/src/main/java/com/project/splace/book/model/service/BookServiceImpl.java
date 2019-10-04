@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.project.splace.book.model.dao.BookDao;
 import com.project.splace.book.model.vo.Book;
+import com.project.splace.common.PageInfo;
+import com.project.splace.common.Pagination;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Space;
@@ -38,7 +40,19 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public ArrayList<Book> selectBlist(String memberId) {
-		return bookDao.selectBlist(memberId);
+	public ArrayList<Book> selectBlist(int currentPage, Book book) {
+		
+		// 전체 예약 수 조회
+		int bListCount = bookDao.getbListCount(book);
+		
+		// 페이지 정보 저장
+		PageInfo pi = Pagination.getPageInfo(currentPage, bListCount);
+		
+		return bookDao.selectBlist(book, pi);
+	}
+
+	@Override
+	public Book selectBook(int bookId) {
+		return bookDao.selectBook(bookId);
 	}
 }

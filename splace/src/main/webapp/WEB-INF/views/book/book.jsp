@@ -62,12 +62,12 @@
 									<tr>
 										<td colspan="3">
 											<c:forEach items="${spaceO}" var="option">
-												<c:if test="${option.optionId < 9}">
+												<c:if test="${option.optionId <= 'I'}">
 													<i class="material-icons">
 														<c:out value="${option.optionIcon }"/>
 													</i>
 												</c:if>
-												<c:if test="${option.optionId >= 9}">
+												<c:if test="${option.optionId > 'I'}">
 													<i class='<c:out value="${option.optionIcon }"/>'></i>												
 												</c:if>
 												<c:out value="${option.optionName }"/> &nbsp;

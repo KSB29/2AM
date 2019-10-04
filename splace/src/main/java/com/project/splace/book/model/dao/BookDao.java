@@ -2,11 +2,13 @@ package com.project.splace.book.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.splace.book.model.vo.Book;
+import com.project.splace.common.PageInfo;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Space;
@@ -54,10 +56,34 @@ public class BookDao {
 
 	/**
 	 * 4. 예약목록 조회
-	 * @param memberId
+	 * @param book
+	 * @param pi 
 	 * @return bList
 	 */
-	public ArrayList<Book> selectBlist(String memberId) {
-		return (ArrayList)sqlSession.selectList("bookMapper.selectBlist", memberId);
+	public ArrayList<Book> selectBlist(Book book, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return (ArrayList)sqlSession.selectList("bookMapper.selectBlist", book, rowBounds);
+	}
+
+	/**
+	 * 5. 전체 예약 수 조회
+	 * @param memberId
+	 * @param status 
+	 * @return bListCount
+	 */
+	public int getbListCount(Book book) {
+		return sqlSession.selectOne("bookMapper.getbListCount", book);
+	}
+
+	/**
+	 * 6. 예약 내역 조회
+	 * @param bookId
+	 * @return book
+	 */
+	public Book selectBook(int bookId) {
+		return sqlSession.selectOne("bookMapper.selectBook", bookId);
 	}
 }

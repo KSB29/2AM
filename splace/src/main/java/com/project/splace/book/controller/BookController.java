@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.splace.book.model.service.BookService;
 import com.project.splace.book.model.vo.Book;
+import com.project.splace.common.Pagination;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.space.model.vo.Option;
@@ -38,7 +37,7 @@ public class BookController {
 		
 		// 공간정보
 		Space space = bookService.selectSpace(spaceId);
-		
+		System.out.println(space);
 		if(space != null) {
 			
 			String spaceOption1[] = space.getSpaceOption().substring(1).split("#");
@@ -47,7 +46,8 @@ public class BookController {
 			ArrayList<Option> spaceO = new ArrayList<Option>(); 
 			for(String o : spaceOption1) { // 공간 옵션
 				for(Option op : oList) { // OPTION 테이블
-					if(op.getOptionId() == o) {
+					if(op.getOptionId().equals(o)) {
+						System.out.println("일치");
 						spaceO.add(new Option(op.getOptionId(), op.getOptionName(), op.getOptionIcon()));
 					}
 				}
@@ -229,17 +229,39 @@ public class BookController {
 	
 	// 2. 예약목록 화면으로 이동
 	@RequestMapping("bookList.sp")
-	public ModelAndView bookList(ModelAndView mv, HttpSession session) {
-		ArrayList<Book> bList = bookService.selectBlist(((Member)session.getAttribute("loginUser")).getMemberId());
+	public ModelAndView bookList(ModelAndView mv, HttpSession session, Integer page, String filter) {
 		
+		if(session.getAttribute("loginUser") == null) {
+			mv.addObject("msg","로그인 해주세요!").setViewName("member/loginForm");
+			return mv;
+		}
+		
+		// filter
+		int statusId = 0;
+		if(filter != null) {
+			statusId = Integer.parseInt(filter);
+		}
+		Book book = new Book(((Member)session.getAttribute("loginUser")).getMemberId(), statusId);
+		
+		// 현재페이지
+		int currentPage = (page == null ? 1 : page);
+		
+		// 목록 조회
+		ArrayList<Book> bList = bookService.selectBlist(currentPage, book);
 		System.out.println(bList);
-		mv.addObject("bList", bList).setViewName("book/bookList");
+		
+		mv.addObject("bList", bList).addObject("pi", Pagination.getPageInfo()).addObject("filter", statusId).setViewName("book/bookList");
 		return mv;
 	}
 	
 	// 3. 예약내역 화면으로 이동
 	@RequestMapping("bookDetail.sp")
-	public String bookDetail() {
-		return "book/bookDetail";
+	public ModelAndView bookDetail(ModelAndView mv, int bookId) {
+		Book book = bookService.selectBook(bookId);
+		System.out.println(book);
+		
+		mv.addObject("book", book).setViewName("book/bookDetail");
+		
+		return mv;
 	}
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -38,38 +39,38 @@
 							<div class="col-12 titleBox">
 								<h2>예약 내용</h2>
 								<div>
-									<span>예약번호 : 877624</span>
+									<span>예약번호 : ${book.bookId}</span>
 								</div>
 							</div>
 							<article>
 								<table class="table-wrapper bookDetailTable">
 									<tr class="waitingTime">
 										<td>승인대기기한</td>
-										<td>2019.09.09 12:00까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
+										<td>${book.bookEnroll}까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
 									</tr>
 									<tr>
 										<td>신청일</td>
-										<td>2019.09.11 (수)</td>
+										<td><fmt:formatDate value="${book.bookEnroll}" pattern="yyyy.MM.dd (E)"/></td>
 									</tr>
 									<tr>
 										<td>예약공간</td>
-										<td><a href="#">더빅스터디, 3층 3번룸</a></td>
+										<td><a href="#">${book.spaceName }</a></td>
 									</tr>
 									<tr>
 										<td>예약날짜</td>
-										<td>2019.09.27 (금)</td>
+										<td><fmt:formatDate value="${book.bookDate}" pattern="yyyy.MM.dd (E)"/></td>
 									</tr>
 									<tr>
 										<td>예약시간</td>
-										<td>18시 ~ 21시, ${21-18}</td>
+										<td>${book.bookStartTime}시 ~ ${book.bookEndTime}시, ${book.bookEndTime-book.bookStartTime}시간</td>
 									</tr>
 									<tr>
 										<td>예약인원</td>
-										<td>${3}명</td>
+										<td>${book.bookPer}명</td>
 									</tr>
 									<tr>
 										<td>요청사항</td>
-										<td>없음</td>
+										<td>${book.bookRequest }</td>
 									</tr>
 								</table>
 							</article>
@@ -81,15 +82,15 @@
 								<table class="table-wrapper">
 									<tr>
 										<td>예약명</td>
-										<td>나나나</td>
+										<td>${book.booker }</td>
 									</tr>
 									<tr>
 										<td>연락처</td>
-										<td>000000000</td>
+										<td>${book.bookerPhone }</td>
 									</tr>
 									<tr>
 										<td>이메일</td>
-										<td>dd@naver.com</td>
+										<td>${book.bookerEmail }</td>
 									</tr>
 								</table>
 							</article>
@@ -146,7 +147,11 @@
 							<article id="article6">
 								<div id="spaceInfo">
 									<div>
-										<p>주소: 서울 중구 남대문로 120</p>
+										<c:forTokens items="${book.spaceAddress }" delims="," varStatus="status" var="addr">
+										<c:if test="${status.index eq 1 }">
+											<p>주소: ${addr}</p>										
+										</c:if>
+										</c:forTokens>
 										<p>번호: 010-0000-3333</p>
 									</div>
 									<button id="directions" class="button fit">길찾기</button>
@@ -168,7 +173,11 @@
 									var geocoder = new kakao.maps.services.Geocoder();
 									
 									// 주소로 좌표를 검색합니다
-									geocoder.addressSearch('서울 중구 남대문로 120', function(result, status) {
+									<c:forTokens items="${book.spaceAddress }" delims="," varStatus="status" var="addr">
+									<c:if test="${status.index eq 1 }">										
+										geocoder.addressSearch('${addr}', function(result, status) {
+									</c:if>
+									</c:forTokens>
 									
 										// 정상적으로 검색이 완료됐으면 
 											if (status === kakao.maps.services.Status.OK) {
@@ -183,12 +192,12 @@
 											
 											// 길찾기 버튼 클릭시 페이지 이동
 											$("#directions").click(function(){
-												location.href="https://map.kakao.com/link/to/우리회사,"+coords.getLat()+","+coords.getLng();
+												location.href="https://map.kakao.com/link/to/${book.spaceName},"+coords.getLat()+","+coords.getLng();
 											});
 
 											// 인포윈도우로 장소에 대한 설명을 표시합니다
 											var infowindow = new kakao.maps.InfoWindow({
-												content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+												content: '<div style="width:150px;text-align:center;padding:6px 0;">${book.spaceName}</div>'
 											});
 											infowindow.open(map, marker);
 									
