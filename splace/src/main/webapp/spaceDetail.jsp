@@ -1,33 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <style>
-.tiles>.row>article {
-	/* border:1px solid black;   */
-	height: 23em;
-}
 
-.location>span>img, .reviewHeart>span>img {
-	width: 1em;
-	height: 1em;
-}
-
-.price, .reviewHeart {
-	width: 3em;
-	display: inline;
-}
-
-.price {
-	margin-right: 4em
-}
-
-.locationName>h3 {
-	margin-top: 1em;
-	margin-bottom: 1em !important;
-}
 </style>
 <title>SPLACE</title>
 	<link rel="stylesheet" href="${contextPath }/resources/css/spaceDetail.css" type="text/css">
@@ -43,8 +22,8 @@
 <body>
 	<!-- 이 형식을 꼭 지켜주세요! -->
 	<div id="wrapper">
-		<jsp:include page="WEB-INF/views/common/top.jsp" />
 		<div id="main">
+		<jsp:include page="WEB-INF/views/common/top.jsp" />
 			<div class="inner">
 				<!-- 여기에만 씁시다.(다른 부분은 고정!)
 					section단위로 묶고
@@ -55,19 +34,19 @@
 
 					<div class="col-11">
 						<!-- 공간 유형  -->
-						<p>[파티룸]</p>
+						<p>${space.typeName}</p>
 					</div>
 					<div class="col-1">
 						<i class="fa fa-heart"></i>
 					</div>
 					<div class="col-12">
 						<div class="detailTitle">
-							<p>아모르 파티룸</p>
+							<p>${space.spaceName }</p>
 						</div>
 					</div>
 					<div class="col-12">
 						<div class="detailTag">
-							<h3>#파티룸 #우리집같은 #편안함</h3>
+							<h3>${space.spaceTag}</h3>
 						</div>
 					</div>
 					<!-- 이미지 슬라이드  -->
@@ -109,15 +88,14 @@
 					<div class="detailLeft">
 						<!-- 공간 간단 소개 -->
 						<div class="detailSimple">
-							<p>파티룸이 필요한 여러분들을 위한 공간</p>
+							<p>${space.spaceComment}</p>
 						</div>
 
 						<!-- 공간 소개 -->
 						<div class="spaceIntro fontStyle">
 							<h2>공간소개</h2>
 							<p></p>
-							<h4>연트럴 파크 숲길 근처에 위치한 코코무드 플라워 카페입니다. 홍대입구 3번 출구부터 시작되는
-								연트럴파크길을 따라 10분정도 쭈욱 길어오시다 보면 눈과 마음이 즐거워지는 기분을 안고 코코무드에 도착하실겁니다.
+							<h4>${space.spaceDetail}
 							</h4>
 						</div>
 
@@ -125,7 +103,7 @@
 							<div class="col-4 spaceTime fontStyle">
 								<h2>영업 시간</h2>
 								<p></p>
-								<h4>[ 10시 ~ 22시 ]</h4>
+								<h4>[ ${space.spaceOpenTime }시 ~ ${space.spaceCloseTime}시 ]</h4>
 
 							</div>
 							<div class="col-4 spaceClose fontStyle">
@@ -136,34 +114,38 @@
 							<div class="col-4 spaceClose fontStyle">
 								<h2>수용인원</h2>
 								<p></p>
-								<h4>[ 최소 2명, 최대 6명 ]</h4>
+								<h4>[ 최소 ${space.spaceMinPer}명, 최대 ${space.spaceMaxPer}명 ]</h4>
 							</div>
 						</div>
-						<div class="spaceIntro fontStyle">
-							<h2>시설 소개</h2>
+						<!-- <div class="spaceIntro fontStyle">
+							<h2>공간 세부 옵션</h2>
 							<p></p>
 							<ol>
 								<li><h4>화장실</h4></li>
 								<li><h4>와아피이존</h4></li>
 								<li><h4>블루투스 스피커</h4></li>
 							</ol>
-						</div>
+						</div> -->
 
 						<div class="spaceIntro fontStyle">
 							<h2>예약시 주의사항</h2>
 							<p></p>
-							<ol>
-								<li><h4>계약된 시간 준수</h4></li>
-								<li><h4>촬영준비 및 세팅 장비철수 원상복수 시간은 계약시간에 포함</h4></li>
-								<li><h4>수용가능 인원 최대 10명</h4></li>
-							</ol>
+							
+							<!--  모르겠음  -->
+							<c:forTokens var="sp" items="${space.spaceNotice}"  delims="#" >
+								<ol>
+									<li><h4>${sp.spaceNotice}</h4></li>
+								</ol>
+							</c:forTokens>
+							<!--  모르겠음  -->
 						</div>
 
 						<div class="spaceIntro fontStyle">
 							<h2>환불 규정 안내</h2>
 							<p></p>
-							<h4>이용 7일전 총 금액의 100% 환불</h4>
-							<h4>이용 7일전 총 금액의 100% 환불</h4>
+							<h4>이용 2일전 총 금액의 <b>100% 환불</b></h4>
+							<h4>이용 전날 총 금액의 <b>50% 환불</b></h4>
+							<h4>이용 당일 <b>환불 불가</b></h4>
 						</div>
 
 						<div class="spaceIntro fontStyle">
@@ -185,20 +167,16 @@
 							</div>
 							<!-- 글쓰기 버튼 -->
 							<div class="writeBtn">
-								<button type="button" class="fa fa-edit" data-toggle="modal"
-									data-target="#exampleModalCenter" data-backdrop="static"></button>
+								<button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter" data-backdrop="static"></button>
 							</div>
 							<!-- Modal -->
-							<div class="modal fade" id="exampleModalCenter" tabindex="-1"
-								role="dialog" aria-labelledby="exampleModalCenterTitle"
-								aria-hidden="true">
+							<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalCenterTitle">Q&A
-												작성</h5>
+											<h5 class="modal-title" id="exampleModalCenterTitle">Q&A작성</h5>
 										</div>
-										<form action="">
+										<form action="insertQnA.sp" method="post">
 											<div class="modal-body">
 												<textarea class="content" maxlength="300"></textarea>
 												<!-- 글자수 세기 -->
@@ -224,9 +202,9 @@
 									<button>[삭제]</button>
 								</div>
 								<div class="QnA_Q">
-									<h5>이름</h5>
-									<h4>질문내용</h4>
-									<h6>작성날짜</h6>
+									<h5>${qna.qMemberId}</h5>
+									<h4>${qna.qContent}</h4>
+									<h6>${qna.qDate}</h6>
 								</div>
 								<div class="QnA_A">
 									<h5 class="AName">호스트이름</h5>
@@ -269,11 +247,11 @@
 													<h5 class="starGrade">별점</h5>
 													<div class="starChange">
 														<p id="star_grade">
-															<a href="#"><i class="fas fa-star"></i></a> <a href="#"><i
-																class="fas fa-star"></i></a> <a href="#"><i
-																class="fas fa-star"></i></a> <a href="#"><i
-																class="fas fa-star"></i></a> <a href="#"><i
-																class="fas fa-star"></i></a>
+															<a href="#"><i class="fas fa-star"></i></a> 
+															<a href="#"><i class="fas fa-star"></i></a>
+															<a href="#"><i class="fas fa-star"></i></a> 
+															<a href="#"><i class="fas fa-star"></i></a>
+															<a href="#"><i class="fas fa-star"></i></a>
 														</p>
 													</div>
 												</div>
@@ -284,8 +262,14 @@
 												<div class="textCount">
 													<p class="counter"></p>
 												</div>
-												<input multiple="multiple" class="fileMult" type="file"
-													name="filename[]" />
+												<div class="wrapFile">
+													<input type="file" name="file" id = "reviewFile3" class="reviewFile col-3"/>
+													<label for="reviewFile3">
+							                           <i class="far fa-image"></i>
+							                        </label>
+													<input type="file" name="file" class="reviewFile col-3"/>
+													<input type="file" name="file" class="reviewFile col-3"/>
+												</div>
 											</div>
 
 											<div class="modal-footer">
@@ -472,20 +456,20 @@
 		                        </div>
 		                     </div>
 		                  </div>
-
-
-
-
-
-
-					</div>
-					<!-- detailRight끝 -->
-
+		                  
+		                  <!-- 인원수 선택 -->
+		                  <section>
+		                  	<div>
+		                  		
+		                  	
+		                  	</div>
+		                  
+		                  </section>
+					</div><!-- detailRight끝 -->
 				</section>
 
 
 				<section class="section">
-
 					<!-- 호스트의 다른 공간 -->
 					<div class="spaceIntro">
 						<div class="write fontStyle">
@@ -494,10 +478,79 @@
 						</div>
 					</div>
 				</section>
-				<!-- 				<section class="tiles">
-					<article>
+
+				<section class="spaceIntro">
+					<!-- Swiper -->
+				  	<div class="swiper-container ">
+				    	<div class="swiper-wrapper">
+				      		<div class="swiper-slide hostSpace">
+				      		<article>
+								<span class="image">
+									<img src="resources/img/studio.jpg" alt=""/>
+								</span> 
+								 <a href="#"></a>
+								<span>
+									<div class="locationName">
+										<h3>Kh정보교육원</h3>
+									</div>
+									<div class="location">
+										<span>
+											<img src="resources/img/location.svg"> 서울시 중구
+										</span>
+									</div>
+									<div class="tags">
+										<span>#파티룸 #회의실 #중구</span>
+									</div>
+									<div class="price">
+										<strong>10,000</strong> <span>원/시간</span>
+									</div>
+									<div class="reviewHeart">
+										<span>
+											<img src="resources/img/comment.svg"><span>10</span>&nbsp;&nbsp;&nbsp;
+										</span> 
+										<span> 
+											<img src="resources/img/heart.svg"> <span>10</span>
+										</span>
+									</div>
+								</span> 
+							</article>
+				      		</div>
+							<div class="swiper-slide hostSpace">
+						      	<article>
+									<span class="image">
+										<img src="resources/img/studio.jpg" alt=""/>
+									</span> 
+								 	<a href="#"></a>
+									<span>
+										<div class="locationName">
+											<h3>Kh정보교육원</h3>
+										</div>
+										<div class="location">
+											<span> 
+												<img src="resources/img/location.svg"> 서울시 중구
+											</span>
+										</div>
+										<div class="tags">
+											<span>#파티룸 #회의실 #중구</span>
+										</div>
+										<div class="price">
+											<strong>10,000</strong> <span>원/시간</span>
+										</div>
+										<div class="reviewHeart">
+											<span> 
+												<img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
+											</span> 
+											<span> 
+												<img src="resources/img/heart.svg"> <span>10</span>
+											</span>
+										</div>
+									</span> 
+								</article>
+					      	</div>
+				      	<div class="swiper-slide hostSpace">
+				      	<article>
 						<span class="image">
-							<img src="resources/img/studio.jpg" alt="" />
+							<img src="resources/img/studio.jpg" alt=""/>
 						</span> 
 						 <a href="#"></a>
 						<span>
@@ -521,33 +574,20 @@
 								</span>
 							</div>
 						</span> 
-					</article>
-				</section> -->
-				<section>
-					<!-- Swiper -->
-				  <div class="swiper-container hostSpace">
-				    <div class="swiper-wrapper">
-				      <div class="swiper-slide">
-				      	Slide 1
+						</article>
 				      </div>
-				      <div class="swiper-slide">Slide 2</div>
-				      <div class="swiper-slide">Slide 3</div>
-				      <div class="swiper-slide">Slide 4</div>
-				      <div class="swiper-slide">Slide 5</div>
-				      <div class="swiper-slide">Slide 6</div>
-				      <div class="swiper-slide">Slide 7</div>
-				      <div class="swiper-slide">Slide 8</div>
-				      <div class="swiper-slide">Slide 9</div>
-				      <div class="swiper-slide">Slide 10</div>
+
 				    </div>
 				  </div>
 				  
 				</section>
+	</div><!-- wrapper -->
+	</div><!--main  -->
+	</div><!-- inner -->
 				
 				
 				
-				
-				<jsp:include page="WEB-INF/views/common/bottom.jsp"/>
+	<jsp:include page="WEB-INF/views/common/bottom.jsp"/>
 				
 	<script src="${contextPath }/resources/js/spaceDetail.js"></script> 
  	<script src="${contextPath }/resources/js/calscript.js"></script> 
