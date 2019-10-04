@@ -100,6 +100,19 @@ public class SpaceController {
 		return "space/spaceUpdateForm";
 	}
 	
+	// -------------------------191002 추가-------------------------------------------------------
+	// 공간 상세보기 조회
+	@RequestMapping("spaceDetail.sp")
+	public ModelAndView spaceDatail(int spaceId, ModelAndView mv) {
+		Space space =sService.selectspaceDetail(spaceId);
+		
+		System.out.print(space);
+		if(space !=null) {
+			mv.addObject("space", space).setViewName("spaceDatail");
+		}
+		return mv;
+	}
+	
 	@RequestMapping("spacePriceInsert.sp")
 	public String spacePriceInsert(int spaceId, String[] spacePrice) {
 		int result = sService.insertPrice(spaceId, spacePrice);

@@ -58,4 +58,11 @@ public interface SpaceService {
 	 */
 	public abstract int insertPrice(int spaceId, String[] spacePrice);
 	
+	//-------------------- 191002 추가 ----------------------------
+	/**
+	 * 공간 상세보기 조회
+	 * @param spaceId
+	 * @return space
+	 */
+	public abstract Space selectspaceDetail(int spaceId); 
 }
