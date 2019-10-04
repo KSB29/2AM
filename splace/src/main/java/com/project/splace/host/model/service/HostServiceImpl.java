@@ -19,15 +19,11 @@ public class HostServiceImpl implements HostService {
 
 	@Override
 	public int insertHost(Host host) {
-		// 전호번호 - 제거
-		host.setHostPhone(host.getHostPhone().replace("-", ""));
 		return dHost.insertHost(host);
 	}
 
 	@Override
 	public int updateHost(Host host) {
-		// 전호번호 - 제거
-		host.setHostPhone(host.getHostPhone().replace("-", ""));
 		return dHost.updateHost(host);
 	}
 

@@ -47,6 +47,8 @@ $(document).ready(function(){
 		$("#addressBtn").postcodifyPopUp();
 	});
 	
+	$(".tagClear").css("cursor", "pointer");
+	
 	// 이미지 클릭 시 원본 이미지 보여주는 창 열기
 	$("#imageArea .image").click(function(){
 		var url = $(this).attr("src");
@@ -74,7 +76,7 @@ $(document).ready(function(){
 		if (tag != "") {
 			var $tagList = $("#tagList");
 			var $span = $("<span class='tag'>").text("#"+tag);
-			var $clear = $("<i class='material-icons tagClear'>").text("cancel");
+			var $clear = $("<i class='material-icons tagClear warningColor'>").text("cancel");
 			$span.append($clear);
 			$tagList.append($span);
 			$("#spaceTag").val(tags + "#" + tag);
@@ -102,7 +104,7 @@ $(document).ready(function(){
 		if (notice != "") {
 			var $noticeList = $("#noticeList");
 			var $span = $("<span class='notice'>").text(notice);
-			var $clear = $("<i class='material-icons noticeClear'>").text("cancel");
+			var $clear = $("<i class='material-icons noticeClear warningColor'>").text("cancel");
 			$span.append($clear);
 			$noticeList.append($span);
 			$("#notice").val("");
@@ -130,7 +132,7 @@ $(document).ready(function(){
 		maxLengthCheck("spaceNotice");
 	};
 	
-	// 옵션 저장 형태 : #음식물반입가능#주차가능#반려동물동반가능
+	// 옵션 저장 형태 : #A#B#C
 	$("#optionField input:checkbox").click(function(){
 		var check = $(this).prop("checked");
 		var option = $(this).val();
@@ -138,9 +140,11 @@ $(document).ready(function(){
 		// 옵션 선택 체크
 		if (check == true) {
 			$("#spaceOption").val(options + "#" + option);
+			$(this).next().css("color", "#4C74B9");
 		// 옵션 선택 해제
 		} else {
 			$("#spaceOption").val("");
+			$(this).next().css("color", "#585858");
 			var arr = options.substring(1).split("#");
 			var idx = arr.indexOf(option);
 			arr.splice(idx, 1);

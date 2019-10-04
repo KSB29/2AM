@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.splace.space.model.vo.Option;
+import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
 import com.project.splace.space.model.vo.SpaceAtt;
 import com.project.splace.space.model.vo.Type;
@@ -78,6 +79,24 @@ public class SpaceDao {
 	public Space selectspaceDetail(int spaceId) {
 		
 		return sqlSession.selectOne("spaceMapper.selectspaceDetail",spaceId);
+  }
+  
+	/**
+	 * 공간 가격 조회 Dao
+	 * @param spaceId
+	 * @return pList
+	 */
+	public ArrayList<Price> selectPrice(String spaceId) {
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectPrice", spaceId);
+	}
+
+	/**
+	 * 공간 가격 등록 Dao
+	 * @param price
+	 * @return result
+	 */
+	public int insertPrice(Price price) {
+		return sqlSession.insert("spaceMapper.insertPrice", price);
 	}
 
 }

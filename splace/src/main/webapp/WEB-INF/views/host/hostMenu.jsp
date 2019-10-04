@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/css/host.css" type="text/css">
 <title>SPLACE</title>
 </head>

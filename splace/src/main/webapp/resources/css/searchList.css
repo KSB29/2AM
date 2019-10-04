@@ -101,7 +101,7 @@ button:focus: {
 background-color: none!important;
 }
 
-.primary{
+.searchBtn{
 margin-left: 14.8% !important;
 outline-style: none;
 
@@ -187,7 +187,7 @@ text-align:left;
     z-index: -1;
 
 }
-input[type="checkbox"]:checked+ label{
+input[type="checkbox"]:checked+ label, input[type="radio"]:checked + label{
     color:#4c74b9; 
 
 }
@@ -197,11 +197,11 @@ border: none !important;
 content: none !important;
 }
 
-input.checkbox[type='checkbox'] + label {
+input.checkbox[type='checkbox'] + label ,  input[type="radio"] + label:before{
   display: block;
 }
 
-input.checkbox[type='checkbox']:not(:checked) {
+input.checkbox[type='checkbox']:not(:checked) , input[type="radio"]:not(:checked){
   display: none;
 }
 

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.splace.space.model.dao.SpaceDao;
 import com.project.splace.space.model.vo.Option;
+import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
 import com.project.splace.space.model.vo.SpaceAtt;
 import com.project.splace.space.model.vo.Type;
@@ -26,6 +27,9 @@ public class SpaceServiceImpl implements SpaceService {
 	
 	@Autowired
 	private SpaceAtt sAtt;
+	
+	@Autowired
+	private Price price;
 	
 	@Override
 	public int insertSpace(Space space, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files) {
@@ -135,7 +139,6 @@ public class SpaceServiceImpl implements SpaceService {
 		return sDao.selectOption();
 	}
 
-
 	
 	// -------------------------191002 추가 -------------------------------------------------
 	
@@ -144,6 +147,29 @@ public class SpaceServiceImpl implements SpaceService {
 	public Space selectspaceDetail(int spaceId) {
 		
 		return sDao.selectspaceDetail(spaceId);
+  }
+	@Override
+	public ArrayList<Price> selectPrice(String spaceId) {
+		return sDao.selectPrice(spaceId);
+	}
+
+
+	@Override
+	public int insertPrice(int spaceId, String[] spacePrice) {
+		// {1},
+		String dayArr[] =  {"월", "화", "수", "목", "금", "토", "일", "휴"};
+		int result = 0;
+		for (int i = 0; i < spacePrice.length; i++) {
+			price.setPriceWeekend(dayArr[i]);
+			price.setPriceTime(spacePrice[i].substring(4));
+			price.setSpaceId(spaceId);
+			
+			result += sDao.insertPrice(price);
+			
+			System.out.println(spacePrice[i].toString());
+		}
+		if (result == spacePrice.length) return 1;
+		else return 0;
 	}
 
 }
