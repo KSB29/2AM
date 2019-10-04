@@ -1,0 +1,33 @@
+
+#like-container {
+  position: absolute;
+  width: 80px;
+  height: 120px;
+  margin: 0;
+  left: calc(50% - 40px);
+  top: calc(50% - 60px);
+}
+
+#svg-container {
+  position: relative;
+  width: 68.3px;
+  height: 61.1px;
+  left: calc(50% - 34.1px);
+  top: 0;
+}
+
+.heartbtn {
+  color: white;
+  text-align: center;
+  letter-spacing: 1px;
+  border: 1px solid white;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-top: 1.5rem;
+}
+.heartbtn:hover {
+  cursor: pointer;
+}
+.heartbtn:active {
+  transform: scale(0.95);
+}

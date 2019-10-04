@@ -99,4 +99,23 @@ public class SpaceDao {
 		return sqlSession.insert("spaceMapper.insertPrice", price);
 	}
 
+	/**
+	 * 공간 유형 타입 Dao
+	 * @param typeId
+	 * @return 
+	 */
+	public Type selectTypeName(int typeId) {
+		
+		return sqlSession.selectOne("spaceMapper.selectTypeName",typeId);
+	}
+
+	/**
+	 * 공간 세부 옵션 조회 Dao
+	 * @return
+	 */
+	public ArrayList<Option> selectOptionList() {
+		
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectOptionList");
+	}
+
 }

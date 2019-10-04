@@ -278,7 +278,7 @@
 										<img src="${contextPath }/resources/img/conference.jpg" alt=""/>
 										<%-- <img src="${contextPath }/resources/spaceImg/${s.spaceAttChange}" alt="" /> --%>
 									</span> 
-										<a href="${s.spaceId }"></a> 
+										<a href="${sDetail }"></a> 
 											
 										<!-- 공간 이름 -->
 											<div class="locationName">

@@ -172,4 +172,19 @@ public class SpaceServiceImpl implements SpaceService {
 		else return 0;
 	}
 
+	
+	// 공간 유형 타입 조회
+	@Override
+	public Type selectTypeName(int typeId) {
+		
+		return sDao.selectTypeName(typeId);
+	}
+
+
+	@Override
+	public ArrayList<Option> selectOptionList() {
+		
+		return sDao.selectOptionList();
+	}
+
 }

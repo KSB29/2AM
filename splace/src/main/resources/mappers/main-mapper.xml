@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mainMapper">
+
+	<resultMap type="Space" id="spaceResultSet">
+		<id property="spaceId" column="SPACE_ID"/>
+		<result property="spaceName" column="SPACE_NAME"/>
+		<result property="spaceComment" column="SPACE_COMMENT"/>
+		<result property="spaceDetail" column="SPACE_DETAIL"/>
+		<result property="spaceTag" column="SPACE_TAG"/>
+		<result property="spaceOption" column="SPACE_OPTION"/>
+		<result property="spaceAddress" column="SPACE_ADDRESS"/>
+		<result property="spaceNotice" column="SPACE_NOTICE"/>
+		<result property="spaceOperStatus" column="SPACE_OPER_STATUS"/>
+		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
+		<result property="spaceTime" column="SPACE_TIME"/>
+		<result property="spaceMinPer" column="SPACE_MIN_PER"/>
+		<result property="spaceMaxPer" column="SPACE_MAX_PER"/>
+		<result property="spaceAdd" column="SPACE_ADD"/>
+		<result property="spaceOpenTime" column="SPACE_OPEN_TIME"/>
+		<result property="spaceCloseTime" column="SPACE_CLOSE_TIME"/>
+		<result property="hostId" column="HOST_ID"/>
+		<result property="typeId" column="TYPE_ID"/>
+		<result property="statusId" column="STATUS_ID"/>
+		<result property="spaceEnroll" column="SPACE_ENROLL"/>
+	</resultMap>
+	
+
+	
+	<!-- 공간 정보 조회 쿼리 -->
+	<select id="newSelectList" resultMap="spaceResultSet"  parameterType="Space">
+		SELECT ROWNUM, SPACE_NAME, SPACE_ADDRESS, SPACE_TAG, SPACE_ATT_CHANGE
+		FROM SPACE
+		JOIN SPACE_ATT USING(SPACE_ID)
+		WHERE SPACE_ATT_TYPE=0
+		AND STATUS_ID = 2
+		AND SPACE_ATT_STATUS = 'Y'
+		AND <!--[CDATA[ROWNUM < 7 ]]-->
+		ORDER BY SPACE_ENROLL DESC
+	</select>
+	
+</mapper>

@@ -64,5 +64,18 @@ public interface SpaceService {
 	 * @param spaceId
 	 * @return space
 	 */
-	public abstract Space selectspaceDetail(int spaceId); 
+	public abstract Space selectspaceDetail(int spaceId);
+
+	/**
+	 * 공간 유형 조회
+	 * @param typeId
+	 * @return type
+	 */
+	public abstract Type selectTypeName(int typeId);
+
+	/**
+	 * 공간 세부 옵션 조회
+	 * @return 
+	 */
+	public abstract ArrayList<Option> selectOptionList(); 
 }
