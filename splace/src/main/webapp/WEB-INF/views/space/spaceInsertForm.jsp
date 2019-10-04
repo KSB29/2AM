@@ -5,8 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/css/host.css" type="text/css">
 <link rel="stylesheet" href="${contextPath}/resources/css/space.css" type="text/css">
 <title>공간 등록</title>
@@ -24,9 +22,6 @@
 					<form method="post" action="spaceInsert.sp" enctype="multipart/form-data">
 						<h2>1. 기본정보</h2>
 						<div class="row gtr-uniform borderTop">
-							<div class="col-12 col-12-xsmall">
-								<p>관리자 승인 이후에는 공간이름, 공간유형, 주소 변경이 불가능합니다.</p>
-							</div>
 							<div class="col-12 col-12-xsmall">
 								<label for="spaceName">* 공간이름 <span id="nameLength"></span></label>
 								<input type="text" name="spaceName" id="spaceName" placeholder="공간이름" maxlength="100" required>
@@ -48,7 +43,7 @@
 							</div>
 							<div class="col-11 col-12-xsmall">
 								<label>&nbsp;</label>
-								<input type="text" name="spaceAddress" id="spaceAddress" placeholder="주소찾기 버튼을 클릭하세요" class="postcodify_address" value="" readonly>
+								<input type="text" name="spaceAddress" id="spaceAddress" placeholder="주소찾기 버튼을 클릭하세요." class="postcodify_address" value="" readonly>
 							</div>
 							<div class="col-1 col-12-xsmall"></div>
 							<div class="col-7 col-12-xsmall">
@@ -56,6 +51,9 @@
 							</div>
 							<div class="col-4 col-12-xsmall">
 								<input type="text" name="post" placeholder="우편번호" class="postcodify_postcode5" value="" size="6" readonly>
+							</div>
+							<div class="col-12 col-12-xsmall noticeDiv">
+								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">관리자 승인 이후에는 공간이름, 공간유형, 주소 변경이 불가능합니다. 정확한 정보인지 확인해주세요.</span>
 							</div>
 						</div>
 						<br><br>
@@ -98,7 +96,10 @@
 									</ul>
 								</div>
 							</div>
-							<!-- <input type="hidden" name="spaceOption" id="spaceOption" readonly> -->
+							<input type="hidden" name="spaceOption" id="spaceOption" readonly>
+							<div class="col-12 col-12-xsmall noticeDiv">
+								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">구비된 편의시설을 선택해주세요.</span>
+							</div>
 							
 							<div class="col-10 col-12-xsmall">
 								<label for="">주의사항 <span id="noticeLength"></span></label>
@@ -129,6 +130,9 @@
 								<label for="spaceTime">* 최소예약시간(시간)</label>
 								<input type="number" name="spaceTime" id="spaceTime" min="1" max="24">
 							</div>
+							<div class="col-12 col-12-xsmall noticeDiv">
+								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">실제로 공간 공유가 가능한 시간을 입력해주세요.</span>
+							</div>
 							<div class="col-4 col-12-xsmall">
 								<label for="spaceMinPer">* 최소예약인원(명)</label>
 								<input type="number" name="spaceMinPer" id="spaceMinPer" min="1">
@@ -146,7 +150,7 @@
 						<!-- <div class="box alt"> -->
 							<div class="row gtr-uniform borderTop" id="imageArea">
 								<div class="col-2 col-12-xsmall">
-									<label for="mainFile" class="button primary small">메인 이미지 등록</label>
+									<label for="mainFile" class="button primary small">대표 이미지 등록</label>
 									<input type="file" name="uploadFile" id="mainFile" value="등록" onchange="loadImg(this,1);" required>
 									<img id="mainImg" class="image fit">
 								</div>

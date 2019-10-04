@@ -25,28 +25,28 @@
 							<div class="col-12 col-12-xsmall">
 								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">해당 기준에 의해 환불 처리됩니다.</span>
 							</div>
-							<div class="col-1 col-12-xsmall">
+							<div class="col-1 col-12-xsmall noticeDiv">
 							</div>
-							<div class="col-2 col-12-xsmall">
+							<div class="col-2 col-12-xsmall noticeDiv">
 								<label>이용 2일 전</label>
 							</div>
-							<div class="col-9 col-12-xsmall">
+							<div class="col-9 col-12-xsmall noticeDiv">
 								<span>총 금액의 100% 환불</span>
 							</div>
-							<div class="col-1 col-12-xsmall">
+							<div class="col-1 col-12-xsmall noticeDiv">
 							</div>
-							<div class="col-2 col-12-xsmall">
+							<div class="col-2 col-12-xsmall noticeDiv">
 								<label>이용 전날</label>
 							</div>
-							<div class="col-9 col-12-xsmall">
+							<div class="col-9 col-12-xsmall noticeDiv">
 								<span>총 금액의 50% 환불</span>
 							</div>
-							<div class="col-1 col-12-xsmall">
+							<div class="col-1 col-12-xsmall noticeDiv">
 							</div>
-							<div class="col-2 col-12-xsmall">
+							<div class="col-2 col-12-xsmall noticeDiv">
 								<label>이용 당일</label>
 							</div>
-							<div class="col-9 col-12-xsmall">
+							<div class="col-9 col-12-xsmall noticeDiv">
 								<span>환불 불가</span>
 							</div>
 						</div>
@@ -76,14 +76,14 @@
 							</div>
 							<c:set var="spaceOpen" value="9"/>
 							<c:set var="spaceClose" value="21"/>
-							<div class="col-2 col-12-xsmall" class="align-right">
+							<div class="col-2 col-12-xsmall noticeDiv">
 								<span class="labelText">운영 시간 </span>
 							</div>
-							<div class="col-2 col-12-xsmall" class="align-right">
+							<div class="col-10 col-12-xsmall noticeDiv">
 								<span>${ spaceOpen } 시 ~ ${ spaceClose } 시</span>
 							</div>
-							<div class="col-2 col-12-xsmall" class="align-right">
-								<label for="price">시간 당 금액</label>
+							<div class="col-2 col-12-xsmall">
+								<span class="labelText" id="dayText"></span>
 							</div>
 							<div class="col-2 col-12-xsmall">
 								<input type="number" name="inputPrice" id="inputPrice" min="1" class="align-right">
@@ -92,9 +92,12 @@
 								<input type="button" id="insertBtn" class="button primary small" value="모두 입력">
 							</div>
 							<div class="col-1 col-12-xsmall">
-								<input type="button" id="clearBtn" class="button primary small" value="입력 취소">
+								<input type="button" id="clearBtn" class="button small" value="입력 취소">
 							</div>
-							<div class="col-2 col-12-xsmall">
+							<div class="col-6 col-12-xsmall">
+							</div>
+							<div class="col-12 col-12-xsmall noticeDiv">
+								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">부가세 포함한 금액을 입력해주세요.</span>
 							</div>
 						</div>
 						<br>
@@ -113,7 +116,7 @@
 										<c:forEach var="hour" begin="0" end="11">
 										<td>
 											<c:if test="${ hour >= spaceOpen && hour <= spaceClose-1 }">
-											<input type="number" class="price align-right">
+											<input type="number" id="timeTableAm${ day }hour${ hour }" class="price align-right">
 											</c:if>
 											<c:if test="${ hour < spaceOpen || hour > spaceClose-1 }">
 											<input type="number">
@@ -138,7 +141,7 @@
 										<c:forEach var="hour" begin="12" end="23">
 										<td>
 											<c:if test="${ hour >= spaceOpen && hour <= spaceClose-1 }">
-											<input type="number" class="price align-right">
+											<input type="number" id="timeTablePm${ day }hour${ hour }" class="price align-right">
 											</c:if>
 											<c:if test="${ hour < spaceOpen || hour > spaceClose-1 }">
 											<input type="number">
@@ -152,19 +155,25 @@
 						</div>
 						<div class="row gtr-uniform">
 							<div class="col-2 col-12-xsmall">
-								<label for="spaceAdd">1인당 추가 금액(원)</label>
+								<label for="spaceAdd">1인당 추가 금액</label>
 								<input type="number" class="align-right" name="spaceAdd" id="spaceAdd" min="0">
 							</div>
 							<div class="col-10 col-12-xsmall">
 							</div>
 						</div>
 						<br>
-						<c:url var="spacePriceInsert" value="spacePriceInsert.sp">
-							<c:param name="" value=""/>
-						</c:url>
+						<input type="hidden" name="spaceId" value="${ spaceId }">
+						<input type="hidden" name="spacePrice" id="spacePrice1">
+						<input type="hidden" name="spacePrice" id="spacePrice2">
+						<input type="hidden" name="spacePrice" id="spacePrice3">
+						<input type="hidden" name="spacePrice" id="spacePrice4">
+						<input type="hidden" name="spacePrice" id="spacePrice5">
+						<input type="hidden" name="spacePrice" id="spacePrice6">
+						<input type="hidden" name="spacePrice" id="spacePrice7">
+						<input type="hidden" name="spacePrice" id="spacePrice8">
 						<div class="row">
 							<div class="col-3"></div>
-							<div class="col-3"><input type="button" class="button primary fit" value="등록"></div>
+							<div class="col-3"><input type="submit" id="submitBtn" class="button primary fit" value="등록"></div>
 							<div class="col-3"><input type="button" class="button fit" value="취소" onclick="location.href='spaceList.sp'"></div>
 							<div class="col-3"></div>
 						</div>

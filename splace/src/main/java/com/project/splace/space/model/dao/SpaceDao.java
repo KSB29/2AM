@@ -78,4 +78,13 @@ public class SpaceDao {
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectPrice", spaceId);
 	}
 
+	/**
+	 * 공간 가격 등록 Dao
+	 * @param price
+	 * @return result
+	 */
+	public int insertPrice(Price price) {
+		return sqlSession.insert("spaceMapper.insertPrice", price);
+	}
+
 }

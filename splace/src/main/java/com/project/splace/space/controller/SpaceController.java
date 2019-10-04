@@ -84,6 +84,7 @@ public class SpaceController {
 		} else {
 			//ArrayList<Price> pList = sService.selectPrice(spaceId);
 			//mv.addObject("pList", pList);
+			mv.addObject("spaceId", spaceId);
 			mv.setViewName("space/spacePrice");
 		}
 		return mv;
@@ -100,7 +101,8 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spacePriceInsert.sp")
-	public String spacePriceInsert() {
+	public String spacePriceInsert(int spaceId, String[] spacePrice) {
+		int result = sService.insertPrice(spaceId, spacePrice);
 		return null;
 	}
 
