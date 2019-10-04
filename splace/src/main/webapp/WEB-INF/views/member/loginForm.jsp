@@ -74,13 +74,13 @@
 														<input type="submit" value="login" class="button fit"/>
 													</div>
 													<div class="login_type col-12">
-														<a class="button fit primary" href="${njoinForm}"> 네이버 로그인</a>
+														<a id="naver_id_login" class="button fit primary" href="${njoinForm}"> 네이버 로그인</a>
 													</div>														
 													<div class="login_type col-12">
-														<a class="button fit primary" href=""> 카카오 로그인 </a>	
+														<a class="button fit primary" href="#"> 카카오 로그인 </a>	
 													</div>									
 													<div class="login_type col-12">
-														<a class="button fit primary" href=""> 구글 로그인</a>
+														<a class="button fit primary" href="#"> 구글 로그인</a>
 													</div>																	
 												</article>
 											</form>
@@ -117,26 +117,21 @@
 						</div>		
 	   
 	      <!-- //네이버아이디로로그인 버튼 노출 영역 -->
-<!-- 		  <script type="text/javascript">
+ 		  <script type="text/javascript">
 		  	var naver_id_login = new naver_id_login("6M93f_6j07ur8krVEjU9", "http://localhost:8080/splace/njoinForm.sp");
 		  	var state = naver_id_login.getUniqState();
-		  	naver_id_login.setButton("white", 2,40);
+		  	/* naver_id_login.setButton("white", 2,40); */
 		  	naver_id_login.setDomain("http://localhost:8080/splace/loginForm.sp");
 		  	naver_id_login.setState(state);
 		  	naver_id_login.setPopup();
 		  	naver_id_login.init_naver_id_login();
-		  </script> -->
+		  </script> 
 			
 	
 	
 	
 			<!-- Scripts -->
-				<script src="assets/js/jquery.min.js"></script>
-				<script src="assets/js/browser.min.js"></script>
-				<script src="assets/js/breakpoints.min.js"></script>
-				<script src="assets/js/util.js"></script>
-				<script src="assets/js/main.js"></script>
-	
+
 		</body>
 	<jsp:include page="../common/bottom.jsp"/>
 	

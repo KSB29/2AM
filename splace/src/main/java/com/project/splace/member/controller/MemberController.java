@@ -1,7 +1,9 @@
 package com.project.splace.member.controller;
 
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,11 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 import com.project.splace.member.model.service.MemberService;
 import com.project.splace.member.model.vo.Member;
@@ -54,6 +56,9 @@ public class MemberController {
 	public String MemberJoinForm() {
 		return "member/joinForm";
 	}
+	
+	
+	
 	@RequestMapping("njoinForm.sp")
 	public String naverJoinForm() {
 		return "member/njoinForm";
@@ -130,14 +135,13 @@ public class MemberController {
 	}*/
 	
 	
-	
+	/*
 	//로그아웃
 	@RequestMapping(value = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
 	public String logout(HttpSession session)throws IOException {
 	session.invalidate();
 	return "redirect:/";
-	}
-
+	}*/
 	
 	@RequestMapping(value="login.sp", method=RequestMethod.POST)
 	public String MemberLogin(Member mem, Model model) {
@@ -158,12 +162,27 @@ public class MemberController {
 		return "redirect:index.jsp";
 	}
 	
-	// 2. 로그아웃
+	// 로그아웃
 	@RequestMapping("logout.sp")
 	public String MemberLogout(SessionStatus status, HttpSession session) {
 		status.setComplete();
 		return "redirect:/";
 	}
+	
+	// 회원가입 
+	@RequestMapping(value= "checkId.sp", method=RequestMethod.POST)
+	@ResponseBody
+	public boolean CheckId(String memberId) {
+		
+		boolean result = mService.checkId(memberId) == 0 ? true : false; 
+		logger.info("아이디:"+ memberId);
+		logger.info("결과:"+result );
+		
+		return result ; 
+	}
+	
+	
+	
 	
 	@RequestMapping("changePw.sp")
 	public ModelAndView changePw(ModelAndView mv ) {
@@ -171,9 +190,9 @@ public class MemberController {
 		return mv;
 	}
 	
-	
 	@RequestMapping("delete.sp")
-	public String deleteUser(String memberId, SessionStatus status, RedirectAttributes rdAttr, Model model ) {
+	public String deleteUser(String memberId, SessionStatus status, 
+			RedirectAttributes rdAttr, Model model ) {
 		int result = mService.deleteMember(memberId);
 		
 		if(result>0) {
@@ -182,6 +201,23 @@ public class MemberController {
 		}
 			rdAttr.addFlashAttribute("msg", "회원 탈퇴 실패");
 			return "member/deleteForm";
+	}
+	
+	
+	@RequestMapping(value="join.sp", method=RequestMethod.POST)
+	public String insetMember(Member mem, Model model, HttpServletRequest request){
+		
+		int result = mService.insertMember(mem);
+		
+
+
+		if(result>1) {
+			return "redirect:loginForm.jsp"; 
+		}else {
+			return "redirect:loginForm.jsp";
+		}
+		
+		
 	}
 
 

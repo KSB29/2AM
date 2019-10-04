@@ -25,4 +25,27 @@
 		SET MEMBER_STATUS ='N'
 		WHERE MEMBER_ID = #{memberId}
 	</delete>
+	
+	<insert id="insertMember" parameterType="Member" >
+		INSERT INTO MEMBER 
+		VALUES (#{memberId},
+				#{memberPwd},
+				#{memberName},
+				#{memberPhone},
+				DEFAULT,
+				DEFAULT,
+				DEFAULT,
+				DEFAULT,
+				DEFAULT,
+				'Y'			
+		)
+		
+	</insert>
+	<select id="checkId" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	
 </mapper>
