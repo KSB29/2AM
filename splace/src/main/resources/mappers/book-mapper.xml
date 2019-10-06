@@ -18,6 +18,7 @@
 		<result property="bookerEmail" column="BOOKER_EMAIL" />
 		<result property="bookCancel" column="BOOK_CANCEL" />
 		<result property="spaceName" column="SPACE_NAME" />
+		<result property="typeName" column="TYPE_NAME" />
 		<result property="spaceAttChange" column="SPACE_ATT_CHANGE" />
 		<result property="pStatusId" column="P_STATUS_ID" />
 		<result property="spaceAddress" column="SPACE_ADDRESS" />
@@ -102,7 +103,7 @@
 			#{bookRequest},
 			#{spaceId},
 			#{memberId},
-			#{statusId},
+			100,
 			#{booker},
 			#{bookerPhone},
 			#{bookerEmail},
@@ -133,14 +134,15 @@
 	
 	<!-- 예약 내역 조회 쿼리 -->
 	<select id="selectBook" parameterType="_int" resultMap="bookResultSet">
-		SELECT B.*, SPACE_NAME, SPACE_ADDRESS, P.STATUS_ID P_STATUS_ID FROM BOOK B
+		SELECT B.*, SPACE_NAME, SPACE_ADDRESS, TYPE_NAME, P.STATUS_ID P_STATUS_ID FROM BOOK B
 		JOIN SPACE S ON (S.SPACE_ID = B.SPACE_ID)
+		JOIN TYPE T ON (S.TYPE_ID = T.TYPE_ID)
 		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
 		WHERE B.BOOK_ID = #{bookId}
 	</select>
 	
 	<!-- 예약 취소 쿼리 -->
 	<update id="deleteBook" parameterType="_int">
-		UPDATE BOOK SET STATUS_ID = 102 WHERE BOOK_ID = #{bookId}
+		UPDATE BOOK SET STATUS_ID = 102, BOOK_CANCEL = SYSDATE WHERE BOOK_ID = #{bookId}
 	</update>
 </mapper>
