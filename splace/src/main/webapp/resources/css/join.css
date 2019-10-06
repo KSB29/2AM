@@ -38,10 +38,9 @@ hr{
 	display:inline-block;
 	width:79% ; 
 }
-.form_btn:nth-child(2){
+.form_btn:nth-child(2),.form_btn:nth-child(3){
 		display:inline-block;
-		width:20% ;
-	
+		width:20% ;	
 }
 
 .modal_btn_box{
@@ -82,5 +81,11 @@ border-color:#1b6b2e;
 .error{
 	box-shadow:inset 0 -1px 0 0 rgb(204, 0, 0);
 	border-color: rgb(204, 0, 0);
+}
+#sendOk{
+	display: none;
+}
+#timer{
+	display: none;
 }
 

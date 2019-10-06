@@ -6,6 +6,11 @@
 	<head>
 		<title>Phantom by HTML5 UP</title>
 		<meta charset="utf-8" />
+		<!-- js -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		
+		<!-- css -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${contextPath }/resources/css/style.css" type="text/css">
@@ -13,7 +18,6 @@
 		<link rel="stylesheet" href="${contextPath }/resources/css/common.css" type="text/css">
 	</head>
 	
-	<jsp:include page="../common/top.jsp"/>
 	
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -21,7 +25,6 @@
 
 				<!-- url -->
 	
-			<c:url var="checkPwForm" value="checkPsForm.sp"/>
 			<c:url var="deleteForm" value="deleteForm.sp"/>
 			<c:url var="changePwForm" value="changePwForm.sp"/>
 			
@@ -31,6 +34,8 @@
 				<!-- Main -->
 				<div id="main">
 					<div class="inner">
+						<jsp:include page="../common/top.jsp"/>
+					
 						<jsp:include page="memberMenu.jsp"/>
 					
 						<div class="profile_wrapper row display">
@@ -41,18 +46,18 @@
 								<p></p>
 								<div class="row">
 									<p class="col-2">이름</p>
-									<p class="col-2">테스트1</p>
+									<p class="col-2">${loginUser.memberName}</p>
 									<span class="col-8"></span>
 								</div>
 								<div class="row">
 									<p class="col-2">이메일</p>
-									<p class="col-2">test@naver.com</p>
+									<p class="col-2">${loginUser.memberId}</p>
 									<span class="col-8"></span>
 
 								</div>
 								<div class="row">
 									<p class="col-2">연락처</p>
-									<p class="col-2">010-1111-2222</p>
+									<p class="col-2">${loginUser.memberPhone}</p>
 									<span class="col-8"></span>
 
 								</div>
@@ -85,49 +90,64 @@
 												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
-										<div class="modal-body">
-											<input type="password" id="pwCheck" placeholder="password">
-										</div>
-										<div class="modal_btn_box center">
-											<div class="modal_btn">
-												<button type="button" class="button fit" onclick="pwCheck();">확인</button>
+											<div class="modal-body">
+												<input type="password" id="memberPwd" name="memberPwd" placeholder="password">
+												<input type="hidden" id="memberId" value="${loginUser.memberId}" name="memberId" >
+												<span class="warning"></span>
 											</div>
-											<div class="modal_btn">
-												<button type="button" class="button fit primary" data-dismiss="modal">취소</button>											
-											</div>
+											<div class="modal_btn_box center">
+												<div class="modal_btn">
+													<button  type="button" onclick="pwdCheck();"  class="button fit">확인</button>
+												</div>
+												
+												<div class="modal_btn">
+													<button type="button" class="button fit primary" data-dismiss="modal">취소</button>											
+												</div>
+											</div>						
 										</div>
-									</div>
 									</div>
 								</div>
 							</section>
 
 						</div>
+						
 					</div>
 				</div>
-			</div>		
+			</div>	
+			
+			 <c:url value="changePwForm" var="changePwForm.sp"/> 
+			
 			<script>
-				function pwCheck(){
-					var pw = document.getElementById('pwCheck').value;
-					if(pw==${loginUser.memberPwd}){
-						location.href="${changePwForm}";		
-					}
-				}
-			</script>
-
-
-
-
-
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
-		<!-- Footer -->
-		<jsp:include page="../common/bottom.jsp"/>
 	
+				function pwdCheck(){
+									var memberPwd = $("#memberPwd").val();
+									var memberId = $("#memberId").val();
+					 				console.log(memberId);
+									
+							 	$.ajax({
+									url: "checkPwForm.sp",
+									type: "POST",
+									data: {memberPwd:memberPwd, memberId:memberId},
+									success:function(result){				
+										console.log('ajax성공')
+										if(!result){							
+											$(".warning").text('비밀번호를 잘못 입력하셨습니다').css('color','rgb(204, 0, 0)');
+											setTimeout(function(){
+												$(".warning").text("");
+											},2000);
+										}else{
+											console.log('비밀번호 변경 폼으로 이동')
+											location.href="${changePwForm}";
+										}
+									}
+								}); 
+	 
+							}
+										
+				
+			</script>
+			<!-- Footer -->
+			<jsp:include page="../common/bottom.jsp"/>
+			
+	</body>
 </html>

@@ -31,7 +31,7 @@
 										<section class="join_left col-5">
 											<div class="center">
 												<h2 class="col-12">환영합니다!</h2>
-												<p class="col-12">SPLACE의 다양한 혜택을 만나보세요~</p>
+												<p class="col-12">SPLACE의 다양한 혜택을 만나보세요</p>
 											</div>
 										</section>
 										<section class="join_right col-7">
@@ -53,13 +53,18 @@
 																								
 														<div class="form_box filed">
 															<div class="form_btn">											
-																<input type="text" name="memberPwd" placeholder="이메일 인증번호" required>
+																<input type="text" id="certiNo" name="certiNo" placeholder="이메일 인증번호" required>															
+															</div>		
+															<div id="certi_box" class=" form_box form_btn">
+																<button type="button" id="sendNo" class="button fit">인증 번호</button>
+																<button type="button" id="sendOk" class="button fit">인증 확인</button>
 															</div>
-															<div class="form_box form_btn">
-																<button type="button" class="button fit">인증 번호</button>
-															</div>
-														</div>
 														
+															<div id="timer" class="timer">
+																<span id="min">03</span><span>&nbsp;:&nbsp;</span><span id="sec">00</span>
+															</div>										
+														</div>
+										
 														<div class="form_box filed">
 															<input type="text" class="" id="memberName" name="memberName" placeholder="이름" required>																						
 															<span class="noticeSpan"></span>
@@ -80,7 +85,7 @@
 												</article>
 												<article class="join_box_2">
 													<div>
-														<input type="checkbox" class="policy_ck" id="policy2" name="policy_ck" >
+														<input type="checkbox" class="policy_ck" id="policy2" name="policy_ck" disabled >
 														<label for="policy2"> <a id="policy_modal" href="#exampleModalCenter" data-toggle="modal">서비스 이용약관(필수)</a></label>
 													</div>
 													<div>
@@ -91,7 +96,10 @@
 												<article class="join_box_3 center">
 													<button id="join_btn" type="submit" class="button fit">회원가입</button>
 												</article>
-												   <!-- 클릭 시 이용약관 모달 창 추가 -->
+												
+																								
+												   <!-- Modal-->
+												   
 													<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 														<div class="modal-dialog modal-dialog-centered" role="document">
 														<div class="modal-content">
@@ -163,12 +171,12 @@
 															</td>
 														</tr>
 													</table>
-													<span class="warning">서비스 이용약관 동의는 필수입니다.</span>
+													<span id="warning" class="warning"></span>
 												</article>															
 															</div>
 															<div class="modal_btn_box center">
 																<div class="modal_btn">
-																	<button type="button" class="button small fit" onclick="javascript:window.reutrnValue" data-dismiss="modal">동의</button>
+																	<button id="agree" type="button" class="button small fit" data-dismiss="modal">동의</button>
 																</div>
 																<div class="modal_btn">
 																	<button type="button" class="button small fit primary" data-dismiss="modal">취소</button>											

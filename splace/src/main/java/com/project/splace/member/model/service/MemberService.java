@@ -11,6 +11,10 @@ public interface MemberService {
 	public abstract int insertMember(Member mem);
 
 	public abstract int checkId(String memberId);
+
+	public abstract Member checkPwd(Member mem);
+
+	public abstract int updatePwd(Member mem);
 	
 	
 	

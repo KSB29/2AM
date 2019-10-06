@@ -18,7 +18,7 @@
 				<link rel="stylesheet" href="${contextPath }/resources/css/fontawesome-all.min.css" type="text/css">
 				<link rel="stylesheet" href="${contextPath}/resources/css/nice-select.css">
 				<link rel="stylesheet" href="${contextPath }/resources/css/style.css" type="text/css">
-				<link rel="stylesheet" href="${contextPath }/resources/css/login.css" type="text/css">
+				<link rel="stylesheet" href="${contextPath }/resources/css/delete.css" type="text/css">
 				<link rel="stylesheet" href="${contextPath }/resources/css/common.css" type="text/css">
 				
 </head>
@@ -29,52 +29,55 @@
 	
 	
 	
-	<!-- Header -->
-	<jsp:include page="../common/top.jsp">
 	<body class="is-preload">
+	<!-- Header -->
+	<jsp:include page="../common/top.jsp"/>
 		<!-- Wrapper -->
 			<div id="wrapper">
 
 
-				<!-- Menu -->
-
+				<!-- url -->
+				<c:url var="delete" value="delete.sp"/>
+				<c:url var="profileView" value="profileView.sp"/>
+			
 				<!-- Main -->
 				<div id="main">
 					<div class="inner">
 							<div class="common_wrapper row type_2">
-									<section class="wrapper_left welcome_bg col-5 center">
-												<article class="welcome_box col-12">
-												
-												</article>
+									<section class="wrapper_left delete_bg col-5 center">
+										<article class="col-12">
+										
+										</article>
 									</section>
 									<section class="wrapper_right col-7 change_bg">
-									<form action="#" method="POST">
+									<form action="" method="POST">
 										<article class="join_Form ">
-													<div class="gjoin_box_1  center">
-														<h2>떠나시려구요??</h2>
-														<h3>
-															떠나기 전에 확인해주세요!
-														</h3> 
-														<p> 
-															서비스 탈퇴시 내 프로필, 
-															예약 내용 등의 모든 정보가 삭제되며<br>
-															이후 복구가 불가능합니다.
-														</p>
-														
-														<div class="center">
-															<input type="checkbox" id="delete_ck" required >
-															<label for="delete_ck">위의 내용을 숙지했으며 탈퇴에 동의합니다.</label>
-														</div>
-													</div>	
-													
-													<div class="delete_btn_box center">
-														<div class="delete_btn">
-															<button id="delete_btn" class="button fit">서비스 탈퇴</button>
-														</div>
-														<div class="delete_btn">
-															<button class="button primary fit " value="reset">취소</button>
-														</div>
-													</div>
+											<div class="deleteMem_box_1  center">
+												<h1>떠나시려구요??</h1>
+												<h2>
+													떠나기 전에 확인해주세요!
+												</h2> 
+												<p> 
+													서비스 탈퇴시 내 프로필, 
+													예약 내용 등의 모든 정보가 삭제되며<br>
+													이후 복구가 불가능합니다.
+												</p>
+												
+												<div class="center">
+													<input type="checkbox" id="delete_ck" required >
+													<label for="delete_ck">위의 내용을 숙지했으며 탈퇴에 동의합니다.</label>
+												</div>
+											</div>	
+											
+											<div class="delete_btn_box center">
+												<div class="delete_btn">
+													<button type="submit" id="delete_btn" class="button fit" onclick="${delete}">서비스 탈퇴</button>
+												</div>
+												
+												<div class="delete_btn">
+													<button type="button" class="button primary fit " onclick="window.history.back();" value="reset">취소</button>
+												</div>
+											</div>
 										</article>
 									</form>									
 
@@ -83,8 +86,6 @@
 							</div>
 						</div>
 					</div>	
-			<c:url var="delete" value="delete.sp"/>
-				<!-- Footer -->
 			<script>
 			$(function(){
 				$("#delete_btn").click(function(){
@@ -96,6 +97,7 @@
 						alert('탈퇴 완료되었습니다.')
 					}else{
 						 alert('탈퇴에 동의해주세요!');
+						 $("#delete_ck").focus();
 						 return false;
 					}
 
@@ -104,16 +106,9 @@
 			});
 		
 		</script>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
+		<!-- Footer -->
+		<jsp:include page="../common/bottom.jsp"/>
 	</body>
 	
-		<jsp:include page="../common/bottom.jsp">
 	
 </html>
