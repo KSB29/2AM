@@ -51,7 +51,7 @@
 										<section class="wrapper_left col-7">
 											<form  method="POST" action="login.sp">
 												<header class="title_box center col-12">
-													<h2> login</h2>
+													<h2> login </h2>
 												</header>
 												<article class="col-12 form_box1 row">
 													<div class="col-12">
