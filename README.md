@@ -6,7 +6,6 @@ SPLACE
 
 
 <h3>KSB </h3>
-<ul>
   <li>예약</li>
   <li>예약내역</li>
   <li>예약취소</li>
@@ -18,7 +17,6 @@ SPLACE
   <li>정산관리</li>
   <li>회원관리</li>
   <li>호스트관리</li>
-</ul>
 
 <h3>MIRI, freeze</h3>
 <li>공간검색
