@@ -250,12 +250,12 @@ $(function(){
     	var pwd = $("#memberPwd").val();
     	var pwd2 = $("#memberPwd2").val();
     	if(pwd == pwd2){
-        	$("#memberPwd").removeClass('error');
+        	$("#memberPwd2").removeClass('error');
             $("#memberPwd2").addClass('ok');
             $(".noticeSpan5").text("");
     	}else{
-        	$("#memberPwd").removeClass('ok');
-    	    $("#memberPwd2").addclass('error');
+        	$("#memberPwd2").removeClass('ok');
+    	    $("#memberPwd2").addClass('error');
             $(".noticeSpan5").text("비밀번호를 확인해주세요!").css("color","rgb(204, 0, 0)");
     	}
     	
@@ -298,6 +298,7 @@ $(function(){
     var min = 2;
     var sec =59;
     var timer;
+    var checkOk;
     
     
     // 타이머 리셋 메소드
@@ -348,18 +349,21 @@ $(function(){
 	        	}
 	        	sec--;
 	        }, 1000);
-	        
-	        
-	
+	 
 	    	
 	        // 인증시간 초과시 
-	      window.setTimeout(function(){
+	      checkOk = window.setTimeout(function(){
+	    
 	        	clearInterval(timer);
 	        	$("#timer").text("");
 	        	$("#timer").text("인증 시간이 초과되었습니다.").css("color","rgb(204, 0, 0)");
 	        	$("#sendOk").css("display","none");
 	        	$("#sendNo").css("display","block");
 	        	resetTimer();	
+	        	
+	        	alert('인증시간이 초과되었습니다. 회원가입을 다시 진행해 주세요!');
+	        	location.reload();    
+	        	
 	        },180000);
 	        
 	        var email=$("#memberId").val();
@@ -388,32 +392,32 @@ $(function(){
 				$("#timer").text("");
 			},2000);
 		}else{
+			
 			if(code!=null){
 				console.log("인증번호 입력 확인");
 
-				if($("#certiNo").val()==code){
-					
+				if($("#certiNo").val()==code){	
 					console.log("인증번호 입력 인증완료");
-
 					$("#timer").text("인증이 완료되었습니다 :)").css("color","#1b6b2e");
-					resetTimer();
+					clearInterval(checkOk);
 					emailC=true;
 				}else{
-					
 					console.log("인증번호 틀림1");
-
-					$("#timer").text("인증번호가 틀렸습니다").css("color","rgb(204, 0, 0)");
+					$("#timer").css("display","none");
+					$(".noticeSpan1").css({"color":"rgb(204, 0, 0)","display":"block"});
 					setTimeout(function(){
-						$("#timer").text("");
+						$(".noticeSpan1").css("display","none");
+						$("#timer").css("display","block");		
 					},2000);
 				}
 			}else{
-				
-				console.log("인증번호 틀림2");
-
-				$("#timer").text("인증번호가 틀렸습니다").css("color","rgb(204, 0, 0)");
+				// code가 null일 때
+				console.log("code : "+code);
+				$("#timer").css("display","none");
+				$(".noticeSpan1").text("인증번호가 틀렸습니다").css({"color":"rgb(204, 0, 0)","display":"block"});
 				setTimeout(function(){
-					$("#timer").text("");
+					$(".noticeSpan1").css("display","none");
+					$("#timer").css("display","block");	
 				},2000);
 			}
 		}

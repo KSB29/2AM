@@ -88,4 +88,6 @@ border-color:#1b6b2e;
 #timer{
 	display: none;
 }
-
+.noticeSpan1{
+	display:none;
+}

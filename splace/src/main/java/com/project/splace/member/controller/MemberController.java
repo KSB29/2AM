@@ -146,19 +146,24 @@ public class MemberController {
 	}*/
 	
 	@RequestMapping(value="login.sp", method=RequestMethod.POST)
-	public String MemberLogin(Member mem, Model model) {
+	public String MemberLogin(Member mem, Model model, RedirectAttributes rd) {
 		Member loginUser = mService.loginMember(mem);
-		
+	
 		if(loginUser==null) {
+			boolean fail = true;
 			logger.info("login 실패");
+			model.addAttribute("loginUser", loginUser);
+			model.addAttribute("fail", fail  );
+			return "member/loginForm";
 		} else {
 			if(logger.isInfoEnabled()) {
-				model.addAttribute("loginUser", loginUser);
+				model.addAttribute("loginUser", loginUser);				
 				logger.info(loginUser.getMemberId()+": login 성공");
 			}
+			model.addAttribute("loginUser", loginUser);
+			return "redirect:index.jsp";
 		}
-		model.addAttribute("loginUser", loginUser);
-		return "redirect:index.jsp";
+
 	}
 	
 	// 로그아웃
@@ -211,14 +216,15 @@ public class MemberController {
 	public String updatePwd(SessionStatus status, RedirectAttributes rd, Model model , Member mem) {
 		
 		int result = mService.updatePwd(mem);
+	
 		
 		if(result>0) {
 			model.addAttribute("loginUser", mem);
-			rd.addFlashAttribute("msg", "비밀번호가 변경되었습니다. \n 다시 로그인해주세요 :) ");
+			rd.addFlashAttribute("msg", "비밀번호가 변경되었습니다. 다시 로그인해주세요 :) ");
 			status.setComplete();
 			return "redirect:loginForm.sp";
 		}else {
-			model.addAttribute("msg", "비밀번호 변경이 실패했습니다. \n 다시 한 번 시도해 주세요 :*( ");
+			model.addAttribute("msg", "비밀번호 변경이 실패했습니다. 다시 한 번 시도해 주세요 :*( ");
 			return "redirect:loginForm.sp";	
 		}
 
@@ -231,12 +237,12 @@ public class MemberController {
 		int result = mService.deleteMember(memberId);
 		if(result>0) {
 			logger.info("회원 탈퇴 성공");
-			status.setComplete(); // 세션 완료
 			rdAttr.addFlashAttribute("msg", "정상적으로 탈퇴되었습니다. 다음에 다시만나요 :)");
+			status.setComplete(); // 세션 완료
 			return "redirect:loginForm.sp";
 		}else {
 			logger.info("회원 탈퇴 실패");
-			rdAttr.addAttribute("msg", "회원 탈퇴 실패");
+			rdAttr.addAttribute("msg", "회원 탈퇴에 실패했습니다. 다시 시도해주세요!");
 			return "member/deleteForm";
 			
 		}
