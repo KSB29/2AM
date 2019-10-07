@@ -58,7 +58,7 @@
 														<input type="text" name="memberId" id="memberId" placeholder="Email"/>
 														<span id="guide" class="guide"></span>
 													</div>										
-													<div class="col-12">
+													<div class="col-12" >
 														<input type="password" name="memberPwd" id="memberPwd" placeholder="Password" />
 													</div>
 													<c:if test="${fail}">
