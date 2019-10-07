@@ -14,23 +14,23 @@ public interface HostService {
 	/**
 	 * 호스트 정보 등록 Service
 	 * @param host
-	 * @return result
+	 * @return hostInfo
 	 */
-	public abstract int insertHost(Host host);
+	public abstract Host insertHost(Host host);
 
 	/**
 	 * 호스트 정보 수정 Service
 	 * @param host
-	 * @return result
+	 * @return hostInfo
 	 */
-	public abstract int updateHost(Host host);
+	public abstract Host updateHost(Host host);
 
 	/**
 	 * 호스트 승인 요청 Service
 	 * @param hostId
 	 * @param memberId
-	 * @return result
+	 * @return hostInfo
 	 */
-	public abstract int applyHost(int hostId);
+	public abstract Host applyHost(int hostId);
 	
 }
