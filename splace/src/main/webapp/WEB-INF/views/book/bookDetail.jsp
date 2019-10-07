@@ -27,9 +27,10 @@
 					section단위로 묶고 nav 템플릿에 elements.html를 참고해주세요.
 				-->
 				<section>
-					<div class="row titleBox" id="titleBox1">
+					<div class="row titleBox bookDetailTitleBox" id="titleBox1">
 						<h1 id="title">공간 예약내역</h1>
 						<span id="status"></span>
+						<a href="bookList.sp">목록으로</a>
 					</div>
 					
 					<div class="row">
@@ -103,28 +104,7 @@
 									<tr>
 										<td colspan="2">
 											<span class="warning"><i class="fas fa-exclamation-circle"></i> 이용당일(첫 날) 이후에 환불 관련 사항은 호스트에게 직접 문의하셔야 합니다.</span>
-											<br><span>결제 후 2시간 이내에는 100% 환불이 가능합니다.(단, 이용시간 전까지만 가능)</span>
 										</td>
-									</tr>
-									<tr>
-										<td>이용 7일 전</td>
-										<td>총 금액의 100% 환불</td>
-									</tr>
-									<tr>
-										<td>이용 6일 전</td>
-										<td>총 금액의 100% 환불</td>
-									</tr>
-									<tr>
-										<td>이용 5일 전</td>
-										<td>총 금액의 100% 환불</td>
-									</tr>
-									<tr>
-										<td>이용 4일 전</td>
-										<td>총 금액의 100% 환불</td>
-									</tr>
-									<tr>
-										<td>이용 3일 전</td>
-										<td>총 금액의 100% 환불</td>
 									</tr>
 									<tr>
 										<td>이용 2일 전</td>
@@ -132,11 +112,11 @@
 									</tr>
 									<tr>
 										<td>이용 전날</td>
-										<td>총 금액의 100% 환불</td>
+										<td>총 금액의 50% 환불</td>
 									</tr>
 									<tr>
 										<td>이용 당일</td>
-										<td>총 금액의 100% 환불</td>
+										<td>환불 불가</td>
 									</tr>
 								</table>
 							</article>
@@ -320,6 +300,19 @@
 	<c:url var="paymentCancel" value="paymentCancel.sp" />
 	<c:url var="reviewForm" value="reviewForm.sp" />
 	<script>
+		var today = new Date();
+		var bookDate = new Date("${book.bookDate}");
+		var bookDateEve = new Date("${book.bookDate}");
+		bookDateEve.setDate(bookDateEve.getDate()-1);
+		console.log("오늘: "+today+", 당일: "+bookDate+", 전날: "+bookDateEve);
+		if(today == bookDate){ // 예약당일
+			
+		} else if(today == bookDateEve){ // 예약전날
+			
+		} else{
+			console.log("당일: "+bookDate+", 전날: "+bookDateEve);
+		}
+		
 		// 예약대기 - 100
 		// 예약승인 - 101
 		// 예약취소,결제취소 - 102
@@ -375,7 +368,7 @@
 			btnContainer.append("<button type='button' class='button fit' data-toggle='modal' data-target='#bookCancel'>예약취소</button>");
 			btnContainer.append("<button type='button' class='button primary fit' data-toggle='modal' data-target='#paymentForm'>결제</button>");
 			modalTitle.attr("id", "bookCancelTitle");
-			modalForm.attr("action", "${bookCancel}");
+			modalForm.attr("action", "${bookCancel}?bookId=${book.bookId}");
 			modalBodyTitle.text("예약을 취소하시겠습니까?");
 			modalBody.html("");
 			modalBtn.html("예약취소");
@@ -390,34 +383,38 @@
 				+ '</button>'
 				+ '</div>'
 				+ '<form action="${payment}" method="post" id="modalForm">'
+				+ '<input type="hidden" name="paymentId">'
+				+ '<input type="hidden" name="paymentType">'
+				+ '<input type="hidden" name="bookId">'
+				+ '<input type="hidden" name="receiptId">'
 				+ '<div class="modal-body">'
 				+ '<h2>결제하시겠습니까?</h2>'
 				+ '<table class="table-wrapper">'
 				+ '<tr>'
 				+ '<td>예약공간</td>'
-				+ '<td><input type="text" name="spaceId" id="spaceId" value="${book.spaceName}" readonly></td>'
+				+ '<td>${book.spaceName}</td>'
 				+ '</tr>'
 				+ '<tr>'
 				+ '<td>예약날짜</td>'
-				+ '<td><input type="text" name="bookDate" id="bookDate" value="'
+				+ '<td>'
 				+ '<fmt:formatDate value="${book.bookDate}" pattern="yyyy.MM.dd (E)"/>'
-				+ '" readonly></td>'
+				+ '</td>'
 				+ '</tr>'
 				+ '<tr>'
 				+ '<td>예약시간</td>'
 				+ '<td>'
-				+ '<input type="text" name="last-child" id="bookStartTime" value="${book.bookStartTime}" readonly> ~ '
-				+ '<input type="text" name="bookEndTime" id="bookEndTime" value="${book.bookEndTime}" readonly> '
+				+ '${book.bookStartTime} ~ '
+				+ '${book.bookEndTime}'
 				+ ', <span>(${book.bookEndTime-book.bookStartTime}시간)</span>'
 				+ '</td>'
 				+ '</tr>'
 				+ '<tr>'
 				+ '<td>예약인원</td>'
-				+ '<td><input type="text" name="bookPer" id="bookPer" value="${book.bookPer}" readonly>명</td>'
+				+ '<td>${book.bookPer}명</td>'
 				+ '</tr>'
 				+ '<tr>'
 				+ '<td>결제예정금액</td>'
-				+ '<td><input type="text" name="totalPrice" id="totalPrice" value="<fmt:formatNumber value="${book.bookPrice }" type="currency"/>" readonly></td>'
+				+ '<td><fmt:formatNumber value="${book.bookPrice }" type="currency"/></td>'
 				+ '</tr>'
 				+ '</table>'
 				+ '<span class="warning"><i class="fas fa-exclamation-circle"></i> 결제 전에, 환불기준과 예약내용을 반드시 확인해주세요!</span>'
@@ -514,7 +511,7 @@
 			modalContainer.html("");
 		}
 		// 예약취소 
-		else if(bookStutus == 102){ 
+		else if(bookStatus == 102){ 
 			$status.html("(취소완료)");
 			$waitingTime.html("");
 			titleBox.html("");
@@ -531,6 +528,78 @@
 		} 
 	</script>
 	<!-- 결제 연동 -->
+	<script>
+		// 결제API--------------------------------
+		$("#payment").click(function(){
+		    //실제 복사하여 사용시에는 모든 주석을 지운 후 사용하세요
+		    BootPay.request({
+		        price: '1000', //실제 결제되는 가격
+		        application_id: "5d7209d802f57e003591d597",
+		        name: '${book.spaceName}', //결제창에서 보여질 이름
+		        pg: 'inicis',
+		        method: 'card', //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
+		        show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
+		        items: [
+		            {
+		                item_name: '${book.spaceName}', //상품명
+		                qty: 1, //수량
+		                unique: '${book.spaceId}', //해당 상품을 구분짓는 primary key
+		                price: 1000, //상품 단가
+		                cat1: '${book.typeName}', // 대표 상품의 카테고리 상, 50글자 이내
+		                cat2: '${book.spaceName}'
+		            }
+		        ],
+		        user_info: {
+		            username: '사용자 이름',
+		            email: '${book.memberId}',
+		            addr: '사용자 주소',
+		            phone: '010-1234-4567'
+		        },
+		        order_id: '${paymentId}', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
+		        params: {
+		            callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'
+		        },
+		        account_expire_at: '2018-05-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
+		        extra: {
+		            start_at: '2019-05-10', // 정기 결제 시작일 - 시작일을 지정하지 않으면 그 날 당일로부터 결제가 가능한 Billing key 지급
+		            end_at: '2022-05-10', // 정기결제 만료일 -  기간 없음 - 무제한
+		            vbank_result: 1, // 가상계좌 사용시 사용, 가상계좌 결과창을 볼지(1), 말지(0), 미설정시 봄(1)
+		            quota: '0,2,3' // 결제금액이 5만원 이상시 할부개월 허용범위를 설정할 수 있음, [0(일시불), 2개월, 3개월] 허용, 미설정시 12개월까지 허용
+		        }
+		    }).error(function (data) {
+		        //결제 진행시 에러가 발생하면 수행됩니다.
+		        console.log(data);
+		    }).cancel(function (data) {
+		        //결제가 취소되면 수행됩니다.
+		        console.log(data);
+		    }).ready(function (data) {
+		        // 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
+		        console.log(data);
+		    }).confirm(function (data) {
+		        //결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
+		        //주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
+		        console.log(data);
+		        var enable = true; // 재고 수량 관리 로직 혹은 다른 처리
+		        if (enable) {
+		            BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
+		        } else {
+		            BootPay.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+		        }
+		    }).close(function (data) {
+		        // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
+		        console.log(data);
+		    }).done(function (data) {
+		        //결제가 정상적으로 완료되면 수행됩니다
+		        //비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.]
+		        $("input[name='paymentId']").val("${paymentId}");
+		        $("input[name='paymentType']").val(data.method);
+		        $("input[name='bookId']").val("${book.bookId}");
+		        $("input[name='receiptId']").val(data.receipt_id);
+		        $("#paymentForm form").submit();
+		        console.log(data);
+		    });
+		});
+	</script>
 	<script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.5.min.js" type="application/javascript"></script>
 	<script src="${contextPath}/resources/js/payment.js"></script>
 	<script src="${contextPath}/resources/js/book.js"></script>
