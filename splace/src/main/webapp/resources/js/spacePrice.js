@@ -6,6 +6,32 @@ $(document).ready(function(){
 	
 	dayChange($("#dayArea input:checked").attr("id"));
 	
+	//toJson();
+	
+	function toJson() {
+		
+		for (var i = 1; i <= 8; i++) {
+			
+			var str = $("#spacePrice" + i).val();
+			
+			if (str != "") {
+				var json = JSON.parse(str);
+				var hour, price, id;
+				for (var j = 0; j < json.length; j++) {
+					hour = json[j].hour;
+					price = json[j].price;
+					hour = hour.substring(0,hour.indexOf("~"));
+					if (hour < 12) {
+						id = "#timeTableAm" + (i) + "hour" + hour;
+					} else {
+						id = "#timeTablePm" + (i) + "hour" + hour;
+					}
+					$(id).val(price);
+				}
+			}
+		}
+	}
+	
 	$("#submitBtn").click(function(){
 		
 		for (var i = 1; i <= 8; i++ ) {
