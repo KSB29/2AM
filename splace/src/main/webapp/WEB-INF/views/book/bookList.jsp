@@ -16,7 +16,6 @@
 		main.js, browser.min.js, breakpoints.min.js, util.js파일은 수정 금지
 	-->
 	<div id="wrapper">
-<%-- 		<jsp:include page="../../../WEB-INF/views/common/top.jsp"/> --%>
 		<%@ include file="../../../WEB-INF/views/common/top.jsp"%>
 		<div id="main">
 			<div class="inner">
@@ -53,7 +52,6 @@
 							</c:if>
 							<c:forEach items="${bList }" var="book">
 								<tr>
-									<td>${book.bookId }</td>
 									<td><img src="${contextPath}/resources/spaceImg/${book.spaceAttChange}" alt="공간대표사진"></td>
 									<td>
 										<c:choose>
@@ -63,17 +61,17 @@
 											<c:when test="${book.statusId == 101 }">
 												<div class="col-12">결제대기</div>			
 											</c:when>
-											<c:when test="${book.statusId == 102 && filter == 102 }">
+											<c:when test="${book.statusId == 102 && book.pStatusId == 102 }">
 												<div class="col-12">취소/환불</div>
 											</c:when>
 											<c:when test="${book.statusId == 102 }">
 												<div class="col-12">취소/환불</div>
 											</c:when>
-											<c:when test="${book.statusId == 103 && filter == 103 }">
+											<c:when test="${book.statusId == 103 && book.pStatusId == 103 }">
 												<!-- 예약완료 && 결제완료 -->
 												<div class="col-12">예약완료</div>		
 											</c:when>
-											<c:when test="${book.statusId == 103 && filter == 104 }">
+											<c:when test="${book.statusId == 103 && book.pStatusId == 104 }">
 												<div class="col-12">이용완료</div>		
 											</c:when>
 										</c:choose>
@@ -87,8 +85,8 @@
 									<td>
 										<c:url var="bookDetail" value="bookDetail.sp"/>
 										<div>
-											<button class="button primary" onclick="location.href='${bookDetail}?bookId=${book.bookId }'">상세보기</button>
-											<button class="button">후기작성</button>
+											<button class="button fit primary" onclick="location.href='${bookDetail}?bookId=${book.bookId }'">상세보기</button>
+											<button class="button fit">후기작성</button>
 										</div>
 									</td>
 								</tr>
@@ -155,6 +153,5 @@
 		</div>
 		<jsp:include page="../../../WEB-INF/views/common/bottom.jsp"/>
 	</div>
-	<script src="${contextPath}/resources/js/bookList.js"></script>
 </body>
 </html>

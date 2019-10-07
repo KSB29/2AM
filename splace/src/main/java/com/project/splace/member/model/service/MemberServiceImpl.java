@@ -28,9 +28,10 @@ public class MemberServiceImpl implements MemberService{
 		logger.info("입력 비밃번호 :"+mem.getMemberPwd());
 		logger.info("암호화된 비밀번호 :"+loginUser.getMemberPwd());
 		
-		if(!bCryptPasswordEncoder.matches(mem.getMemberPwd(), loginUser.getMemberPwd())) {
-			loginUser =null;
-		}
+//		잠깐만 풀어놓을게요!
+//		if(!bCryptPasswordEncoder.matches(mem.getMemberPwd(), loginUser.getMemberPwd())) {
+//			loginUser =null;
+//		}
 		return loginUser;
 	}
 
