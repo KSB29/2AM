@@ -55,16 +55,23 @@
 										<c:param name="spaceId" value="${ list.spaceId }"/>
 									</c:url>
 									<a class="button primary small" href="${ spaceUpdateForm }">수정</a>
-									<a class="button primary small" href="${ spacePrice }">가격 등록</a>
-									<a class="button primary small" href="${ spaceDayoff }">휴일 등록</a>
+									<c:set var="priceFlag" value="${ list.priceFlag }"/>
+									<a class="button primary small" href="${ spacePrice }">가격 정보</a>
+									<a class="button primary small" href="${ spaceDayoff }">휴일 정보</a>
 								</div>
-								<c:if test="${ list.statusId != 2 }">
-								<!-- 승인 전에만 가능 -->
 								<div class="image fit marginClear">
-									<a class="button small" href="">신청</a>
-									<a class="button small" href="">삭제</a>
+									<c:if test="${ list.statusId == 0 }">
+									<c:if test="${ priceFlag == 'Y' }">
+										<input type="button" class="button small" onClick="spaceApply(${ list.spaceId });" value="신청">
+									</c:if>
+									<c:if test="${ priceFlag == null }">
+										<input type="button" class="button small" value="신청" disabled>
+									</c:if>
+									</c:if>
+									<c:if test="${ list.statusId != 2 }">
+									<input type="button" class="button small" onClick="spaceDelete(${ list.spaceId });" value="삭제">
+									</c:if>
 								</div>
-								</c:if>
 							</div>
 						</c:forEach>
 					</div>

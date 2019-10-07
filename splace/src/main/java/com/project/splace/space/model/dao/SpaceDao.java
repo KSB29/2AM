@@ -100,12 +100,40 @@ public class SpaceDao {
 	}
 	
 	/**
-	 * 1인당 추가 금액 저장
+	 * 1인당 추가 금액 저장 Dao
 	 * @param space
 	 * @return result
 	 */
 	public int updateAddPrice(Space space) {
 		return sqlSession.update("spaceMapper.updateAddPrice", space);
+	}
+
+	/**
+	 * 공간 승인 요청 Dao
+	 * @param spaceId
+	 * @return result
+	 */
+	public int updateApply(int spaceId) {
+		return sqlSession.update("spaceMapper.updateApply", spaceId);
+	}
+	
+	
+	/**
+	 * 공간 삭제 Dao
+	 * @param spaceId
+	 * @return result
+	 */
+	public int deleleSpace(int spaceId) {
+		return sqlSession.delete("spaceMapper.deleteSpace", spaceId);
+	}
+
+	/**
+	 * 공간 정보 조회 Dao
+	 * @param spaceId
+	 * @return space
+	 */
+	public Space selectSpace(int spaceId) {
+		return sqlSession.selectOne("spaceMapper.selectSpace", spaceId);
 	}
 
 	/**
@@ -125,6 +153,34 @@ public class SpaceDao {
 	public ArrayList<Option> selectOptionList() {
 		
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectOptionList");
+	}
+
+	/**
+	 * 공간 사진 파일 조회 Dao
+	 * @param spaceId
+	 * @return attList
+	 */
+	public ArrayList<SpaceAtt> selectSpaceAtt(int spaceId) {
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectSpaceAtt", spaceId);
+	}
+
+	/**
+	 * 공간 정보 수정 Dao
+	 * @param space
+	 * @return result
+	 */
+	public int updateSpace(Space space) {
+		return sqlSession.update("spaceMapper.updateSpace", space);
+	}
+	
+	
+	/**
+	 * 공간 사진 파일 수정 Dao
+	 * @param sAtt
+	 * @return result
+	 */
+	public int updateFile(SpaceAtt sAtt) {
+		return sqlSession.update("spaceMapper.updateFile", sAtt);
 	}
 
 }

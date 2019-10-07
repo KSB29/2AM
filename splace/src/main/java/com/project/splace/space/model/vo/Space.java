@@ -30,6 +30,7 @@ public class Space {
 	private String memberId;
 	private String spaceAttChange;
 	private String typeName;
+	private String priceFlag;
 	
 	public Space() {}
 
@@ -59,36 +60,6 @@ public class Space {
 		this.statusId = statusId;
 		this.spaceEnroll = spaceEnroll;
 		this.spaceUpdate = spaceUpdate;
-	}
-	
-	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
-			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
-			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
-			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String memberId, String spaceAttChange, String typeName) {
-		super();
-		this.spaceId = spaceId;
-		this.spaceName = spaceName;
-		this.spaceComment = spaceComment;
-		this.spaceDetail = spaceDetail;
-		this.spaceTag = spaceTag;
-		this.spaceOption = spaceOption;
-		this.spaceAddress = spaceAddress;
-		this.spaceNotice = spaceNotice;
-		this.spaceOperStatus = spaceOperStatus;
-		this.spaceTime = spaceTime;
-		this.spaceMinPer = spaceMinPer;
-		this.spaceMaxPer = spaceMaxPer;
-		this.spaceAdd = spaceAdd;
-		this.spaceOpenTime = spaceOpenTime;
-		this.spaceCloseTime = spaceCloseTime;
-		this.hostId = hostId;
-		this.typeId = typeId;
-		this.statusId = statusId;
-		this.spaceEnroll = spaceEnroll;
-		this.spaceUpdate = spaceUpdate;
-		this.memberId = memberId;
-		this.spaceAttChange = spaceAttChange;
-		this.typeName = typeName;
 	}
 
 	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
@@ -120,6 +91,38 @@ public class Space {
 		this.typeName = typeName;
 	}
 	
+	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
+			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
+			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
+			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String memberId, String spaceAttChange,
+			String typeName, String priceFlag) {
+		super();
+		this.spaceId = spaceId;
+		this.spaceName = spaceName;
+		this.spaceComment = spaceComment;
+		this.spaceDetail = spaceDetail;
+		this.spaceTag = spaceTag;
+		this.spaceOption = spaceOption;
+		this.spaceAddress = spaceAddress;
+		this.spaceNotice = spaceNotice;
+		this.spaceOperStatus = spaceOperStatus;
+		this.spaceTime = spaceTime;
+		this.spaceMinPer = spaceMinPer;
+		this.spaceMaxPer = spaceMaxPer;
+		this.spaceAdd = spaceAdd;
+		this.spaceOpenTime = spaceOpenTime;
+		this.spaceCloseTime = spaceCloseTime;
+		this.hostId = hostId;
+		this.typeId = typeId;
+		this.statusId = statusId;
+		this.spaceEnroll = spaceEnroll;
+		this.spaceUpdate = spaceUpdate;
+		this.memberId = memberId;
+		this.spaceAttChange = spaceAttChange;
+		this.typeName = typeName;
+		this.priceFlag = priceFlag;
+	}
+
 	public int getSpaceId() {
 		return spaceId;
 	}
@@ -302,6 +305,14 @@ public class Space {
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+
+	public String getPriceFlag() {
+		return priceFlag;
+	}
+
+	public void setPriceFlag(String priceFlag) {
+		this.priceFlag = priceFlag;
 	}
 
 	@Override

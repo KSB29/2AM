@@ -21,7 +21,7 @@ public class HostServiceImpl implements HostService {
 	public Host insertHost(Host host) {
 		int result = dHost.insertHost(host);
 		// 호스트 등록 완료 후 호스트 정보 리턴
-		if (result > 0) return dHost.selectInfo(host.getHostId());
+		if (result > 0) return dHost.selectOne(host.getMemberId());
 		else return null;
 	}
 
