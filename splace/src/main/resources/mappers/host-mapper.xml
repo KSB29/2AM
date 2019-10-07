@@ -24,6 +24,13 @@
 		WHERE  MEMBER_ID = #{memberId}
 	</select>
 	
+	<!-- 호스트 정보 조회 -->
+	<select id="selectInfo" resultMap="hostResultSet" parameterType="_int">
+		SELECT *
+		FROM   HOST
+		WHERE  HOST_ID = #{hostId}
+	</select>
+	
 	<!-- 호스트 신규 등록 -->
 	<insert id="insertHost" parameterType="Host">
 		INSERT INTO HOST

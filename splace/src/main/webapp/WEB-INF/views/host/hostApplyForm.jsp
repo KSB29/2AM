@@ -61,9 +61,11 @@
 							<div class="col-12 col-12-xsmall noticeDiv" id="regCheck1">
 								<i class="fas fa-exclamation-circle warningColor"></i> <span class="warningColor"></span>
 							</div>
+							<c:if test="${ hostStatus != 2 }">
 							<div class="col-12 col-12-xsmall noticeDiv">
 								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">관리자 승인 이후에는 사업자등록번호, 대표자명, 상호명 변경이 불가능합니다. 정확한 정보인지 확인해주세요.</span>
 							</div>
+							</c:if>
 							<div class="col-6 col-12-xsmall">
 								<label for="hostEmail">* 이메일</label>
 								<input type="email" name="hostEmail" id="hostEmail" value="${ host.hostEmail }" placeholder="이메일" required>
@@ -115,10 +117,7 @@
 										<input type="submit" class="button primary fit" value="등록">
 									</div>
 									<div class="col-2">
-										<c:url var="hostApply" value="hostApply.sp">
-											<c:param name="hostId" value="${ hostId }"/>
-											<c:param name="memberId" value="${ loginUser.memberId }"/>
-										</c:url>
+										<c:url var="hostApply" value="hostApply.sp"/>
 										<input type="button" class="button primary fit" onclick="location.href='${ hostApply }'" value="신청">
 									</div>
 								</c:when>
