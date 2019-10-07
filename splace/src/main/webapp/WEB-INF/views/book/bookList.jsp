@@ -42,12 +42,6 @@
 							</div>
 						</div>
 						<c:url var="bookList" value="bookList.sp" />
-						<c:if test="${book.pStatusId == 0 }">
-							<c:set value="0" var="pStatusId" />
-						</c:if>
-						<c:if test="${book.pStatusId != 0 }">
-							<c:set value="${book.pStatusId }" var="pStatusId" />
-						</c:if>
 						<script>
 							$("#filter").on("change", function() {
 								location.href = "${contextPath}/${bookList}?page="+${pi.startPage}+"&filter="+$(this).val();
@@ -69,14 +63,17 @@
 											<c:when test="${book.statusId == 101 }">
 												<div class="col-12">결제대기</div>			
 											</c:when>
-											<c:when test="${book.statusId == 102 && pStatusId == 102 }">
+											<c:when test="${book.statusId == 102 && filter == 102 }">
 												<div class="col-12">취소/환불</div>
 											</c:when>
-											<c:when test="${book.statusId == 103 && pStatusId == 103 }">
+											<c:when test="${book.statusId == 102 }">
+												<div class="col-12">취소/환불</div>
+											</c:when>
+											<c:when test="${book.statusId == 103 && filter == 103 }">
 												<!-- 예약완료 && 결제완료 -->
 												<div class="col-12">예약완료</div>		
 											</c:when>
-											<c:when test="${book.statusId == 103 && pStatusId == 104 }">
+											<c:when test="${book.statusId == 103 && filter == 104 }">
 												<div class="col-12">이용완료</div>		
 											</c:when>
 										</c:choose>

@@ -15,7 +15,7 @@ public class HostDao {
 	/**
 	 * 호스트 정보 조회 Dao
 	 * @param memberId
-	 * @return
+	 * @return host
 	 */
 	public Host selectOne(String memberId) {
 		return sqlSession.selectOne("hostMapper.selectOne", memberId);
@@ -47,5 +47,14 @@ public class HostDao {
 	 */
 	public int applyHost(int hostId) {
 		return sqlSession.update("hostMapper.applyHost", hostId);
+	}
+
+	/**
+	 * 호스트 정보 조회 Dao
+	 * @param hostId
+	 * @return hostInfo
+	 */
+	public Host selectInfo(int hostId) {
+		return sqlSession.selectOne("hostMapper.selectInfo", hostId);
 	}
 }

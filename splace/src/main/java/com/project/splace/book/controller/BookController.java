@@ -262,27 +262,39 @@ public class BookController {
 	
 	// 3. 예약내역 화면으로 이동
 	@RequestMapping("bookDetail.sp")
-	public ModelAndView bookDetail(ModelAndView mv, int bookId) {
+	public ModelAndView bookDetail(ModelAndView mv, HttpSession session, int bookId) {
+		
+		if(session.getAttribute("loginUser") == null) {
+			mv.addObject("msg","로그인 해주세요!").setViewName("member/loginForm");
+			return mv;
+		}
+		
 		Book book = bookService.selectBook(bookId);
 		System.out.println(book);
 		
 		// 승인기한
 		Date deadline = new Date(book.getBookEnroll().getTime() + (60*60*24*1000)*2);
+		// 결제번호생성
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String paymentId = sdf.format(today) + "_" + new Date().getTime();
 		
-		mv.addObject("book", book).addObject("deadline", deadline).setViewName("book/bookDetail");
+		mv.addObject("book", book).addObject("deadline", deadline).addObject("paymentId", paymentId).setViewName("book/bookDetail");
 		
 		return mv;
 	}
 
 	// 4. 예약취소
 	@RequestMapping("bookCancel.sp")
-	public ModelAndView bookCancel(ModelAndView mv, int bookId) {
+	public ModelAndView bookCancel(ModelAndView mv, int bookId, RedirectAttributes rd) {
 		int result = bookService.deleteBook(bookId);
 		
+		mv.setViewName("redirect:bookList.sp");
 		if(result>0) {
-			mv.addObject("msg", "예약이 취소되었습니다.").setViewName("book/bookList");
-		} else {mv.addObject("msg", "예약이 취소되지 않았습니다. 다시 시도해주세요!").setViewName("book/bookList");}
-		
+			rd.addFlashAttribute("msg", "예약이 취소되었습니다!");
+		} else {
+			rd.addFlashAttribute("msg", "예약이 취소되지 않았니다!");
+		}
 		return mv;
 	}
 }
