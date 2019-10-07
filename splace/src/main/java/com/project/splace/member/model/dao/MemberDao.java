@@ -14,8 +14,10 @@ public class MemberDao {
 
 
 	public Member selectMember(Member mem) {
+		
 		Member loginUser = sqlSession.selectOne("memberMapper.selectOne", mem);
 		return loginUser;
+		
 	}
 
 
@@ -32,5 +34,16 @@ public class MemberDao {
 
 	public int checkId(String memberId) {
 		return sqlSession.selectOne("memberMapper.checkId",memberId);
+	}
+
+
+	public Member selectPwd(Member mem) {
+		Member checkPwd = sqlSession.selectOne("memberMapper.checkPwd", mem);
+		return checkPwd;
+	}
+
+
+	public int updatePwd(Member mem) {
+		return sqlSession.update("memberMapper.changePwd", mem);
 	}
 }

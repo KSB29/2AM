@@ -16,11 +16,11 @@
 	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		SELECT * FROM MEMBER
-		WHERE MEMBER_ID = #{memberId} 
-		AND MEMBER_PWD = #{memberPwd}
+		WHERE MEMBER_ID = #{memberId}
+		<!-- AND MEMBER_PWD = #{memberPwd} -->
 		AND MEMBER_STATUS = 'Y'
 	</select>
-	<delete id="memberMapper" parameterType="string">
+	<delete id="deleteMember" parameterType="_int">
 		UPDATE MEMBER 
 		SET MEMBER_STATUS ='N'
 		WHERE MEMBER_ID = #{memberId}
@@ -45,5 +45,17 @@
 		FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
 	</select>
+	<select id="checkPwd" parameterType="Member" resultMap="memberResultSet">
+		SELECT MEMBER_PWD FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND MEMBER_STATUS = 'Y'
+	</select>
+	
+	<update id="changePwd" parameterType="Member"> 
+		UPDATE MEMBER 
+		SET MEMBER_PWD = #{memberPwd},
+		MEMBER_UPDATE = SYSDATE
+		WHERE MEMBER_ID = #{memberId}
+	</update>
 </mapper>
 

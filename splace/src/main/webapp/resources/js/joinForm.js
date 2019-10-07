@@ -58,22 +58,29 @@ $(function(){
 	
 	/* 필수 항목 check & 유효성 검사 */
 	$("#join_btn").on('click', function(){
+		
 		var ck = $("#policy2").is(":checked");
 		var ck2 = $("#policy3").is(":checked");
-		var validate = $("#dupCheck").val();
 		
+		var validate = $("#dupCheck").val();
+
 		if(!ck){
+
 			alert('필수 항목을 체크해주세요!');
 			$('#policy_modal').focus();
-			return false ;						
+			return false ;	
+			
 		}
 		
 		// 유효성 검사
 		if(validate==0){
 			alert("중복확인을 깜박 하셨네요 :p!");
-			$("#checkId").focus();
-			return false;
+			$("#checkId").focus();			
+			return false;		
 		}
+		
+		alert("환영합니다! 회원가입이 완료되었습니다 :) ");
+		
 		
 	});
 
@@ -129,8 +136,9 @@ $(function(){
 });
 
 
-	$(function(){
+$(function(){
 	    // 체크박스
+	
 	    $("#all").on("change", function(){
 	        if($("#all").prop("checked") == true){
 	            $("[id^='check']").prop("checked", true);
@@ -183,7 +191,7 @@ $(function(){
         }
     });
     
-    //전화번호 정규식
+    // 전화번호 정규식
     $("#memberPhone").on("input", function(){
         var input = $("#memberPhone").val();
         var regExp = /^\d{3}\d{3,4}\d{4}$/;
@@ -205,8 +213,6 @@ $(function(){
             regExpCheck=false;
         }
     });
-    
-
     
     
     // 회원 비밀번호 정규식 - 숫자와 문자 포함 8자 이상
@@ -244,22 +250,180 @@ $(function(){
     	var pwd = $("#memberPwd").val();
     	var pwd2 = $("#memberPwd2").val();
     	if(pwd == pwd2){
-
-            $("#memberPwd2").css({
-                "box-shadow":"inset 0 -1px 0 0 #1b6b2e", 
-                "border-color":"#1b6b2e"}
-             );
-             $(".noticeSpan5").text("");
+        	$("#memberPwd").removeClass('error');
+            $("#memberPwd2").addClass('ok');
+            $(".noticeSpan5").text("");
     	}else{
-    	       $("#memberPwd2").css({
-                   "box-shadow":"inset 0 -1px 0 0 rgb(204, 0, 0)", 
-                   "border-color":"rgb(204, 0, 0)"}
-                );
-                $(".noticeSpan5").text("비밀번호를 확인해주세요!").css("color","rgb(204, 0, 0)");
+        	$("#memberPwd").removeClass('ok');
+    	    $("#memberPwd2").addclass('error');
+            $(".noticeSpan5").text("비밀번호를 확인해주세요!").css("color","rgb(204, 0, 0)");
     	}
     	
     	
-    })
+    });
+    
+    // Modal 약관 동의 
+    $("#agree").on("click", function(){
+        var check1 = $("#check1").is(":checked");
+        var check2 = $("#check2").is(":checked");
+        var check3 = $("#check3").is(":checked");
+
+        
+        if(!check1){
+          	$("#warning").text("서비스 이용약관 동의는 필수입니다.");
+        	$("#check1").focus();
+        	return false;   	
+        }else if(!check2){
+           	$("#warning").text("서비스 이용약관 동의는 필수입니다.");
+        	$("#check2").focus();
+        	return false;       	
+        }else if(!check3) {
+        	$("#warning").text("서비스 이용약관 동의는 필수입니다.");
+        	$("#check3").focus();
+        	return false;
+        }
+        
+        $("#policy2").prop("checked",true);
+        
+        
+    });
+    
+    
+    
+    // 인증 번호 발송
+    var code;
+    var emailC=false;
+    var pwdC = false;
+    var nickC= false;
+    var min = 2;
+    var sec =59;
+    var timer;
+    
+    
+    // 타이머 리셋 메소드
+	function resetTimer(){
+		clearInterval(timer);
+		min=2;
+		sec=59;
+		//$("#timer").css("display","none"); 
+		$("#min").text("3");
+		$("#sec").text("00");
+		
+	}
+
+    $("#sendNo").click(function(){
+    	
+		var validate = $("#dupCheck").val();
+
+
+    	if($("#memberId").val().trim()==""){
+    		alert('아이디를 먼저 입력해 주세요!');
+    		return false;
+    		
+    	}else if(validate==0){
+
+    		alert('사용가능한 아이디인지 확인해 주세요!');
+    		$("#checkId").focus();
+    		return false;
+    		
+    	}else if(validate==1){
+    		
+	    	alert('인증번호가 발송되었습니다.');
+	        $("#sendNo").css("display","none");
+	        $("#sendOk").css("display","block");
+	    	$("#timer").css("display","block");  
+	        
+	        timer = window.setInterval(function(){
+	        	$("#min").text("0"+min);
+	        	if(sec < 0){
+	        		sec =59;
+	        	}
+	        	if(sec == 0){
+	        		"0"+min--;
+	        	}
+	        	if(sec >= 10){
+	        		$("#sec").text(sec);
+	        	}else{
+	        		$("#sec").text("0"+sec);
+	        	}
+	        	sec--;
+	        }, 1000);
+	        
+	        
+	
+	    	
+	        // 인증시간 초과시 
+	      window.setTimeout(function(){
+	        	clearInterval(timer);
+	        	$("#timer").text("");
+	        	$("#timer").text("인증 시간이 초과되었습니다.").css("color","rgb(204, 0, 0)");
+	        	$("#sendOk").css("display","none");
+	        	$("#sendNo").css("display","block");
+	        	resetTimer();	
+	        },180000);
+	        
+	        var email=$("#memberId").val();
+	        $.ajax({
+	        	url:"sendCertiNo.sp",
+	        	data:{email:email},
+	        	type:"post",
+	        	success:function(num){       	 
+	        		console.log("ajax통신 성공");
+	        		code=num;
+	        	}
+	        });
+    	}
+    }); 
+    
+    
+	/*인증버튼 클릭  */
+	$("#sendOk").click(function(){
+		console.log("인증버튼 클릭");
+		if($("#certiNo").val()==""){
+			
+			console.log("인증번호 미입력");
+			
+			$("#timer").text("인증번호를 입력해주세요!").css("color","rgb(204, 0, 0)");						
+			setTimeout(function(){
+				$("#timer").text("");
+			},2000);
+		}else{
+			if(code!=null){
+				console.log("인증번호 입력 확인");
+
+				if($("#certiNo").val()==code){
+					
+					console.log("인증번호 입력 인증완료");
+
+					$("#timer").text("인증이 완료되었습니다 :)").css("color","#1b6b2e");
+					resetTimer();
+					emailC=true;
+				}else{
+					
+					console.log("인증번호 틀림1");
+
+					$("#timer").text("인증번호가 틀렸습니다").css("color","rgb(204, 0, 0)");
+					setTimeout(function(){
+						$("#timer").text("");
+					},2000);
+				}
+			}else{
+				
+				console.log("인증번호 틀림2");
+
+				$("#timer").text("인증번호가 틀렸습니다").css("color","rgb(204, 0, 0)");
+				setTimeout(function(){
+					$("#timer").text("");
+				},2000);
+			}
+		}
+		
+	});
+	
+	
+
+	
+	
 });
 
 

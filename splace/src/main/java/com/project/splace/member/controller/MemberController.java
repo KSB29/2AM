@@ -1,7 +1,6 @@
 package com.project.splace.member.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.splace.member.model.service.MemberService;
@@ -33,11 +31,12 @@ public class MemberController {
 //	this.naverLoginBO = naverLoginBO;
 //	}
 	
+
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	
 	/* Form */ 
-	@RequestMapping(value = "loginForm.sp",method= { RequestMethod.POST, RequestMethod.GET  })
+	@RequestMapping(value = "loginForm.sp",method= { RequestMethod.POST, RequestMethod.GET})
 	public String MemberLoginForm(Model model , HttpSession session) {
 		
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
@@ -70,6 +69,8 @@ public class MemberController {
 	
 	@RequestMapping("profileView.sp")
 	public String selectProfile() {
+
+		
 		return "member/profileView";
 	}
 	@RequestMapping("changePwForm.sp")
@@ -87,6 +88,7 @@ public class MemberController {
 	}
 	@RequestMapping("deleteForm.sp")
 	public String deleteForm() {
+		
 		return "member/deleteForm";
 	}
 
@@ -147,15 +149,12 @@ public class MemberController {
 	public String MemberLogin(Member mem, Model model) {
 		Member loginUser = mService.loginMember(mem);
 		
-		
 		if(loginUser==null) {
 			logger.info("login 실패");
-
 		} else {
-
 			if(logger.isInfoEnabled()) {
 				model.addAttribute("loginUser", loginUser);
-				logger.info(loginUser.getMemberId()+"login 성공");
+				logger.info(loginUser.getMemberId()+": login 성공");
 			}
 		}
 		model.addAttribute("loginUser", loginUser);
@@ -183,11 +182,46 @@ public class MemberController {
 	
 	
 	
-	
-	@RequestMapping("changePw.sp")
-	public ModelAndView changePw(ModelAndView mv ) {
+	@RequestMapping(value = "checkPwForm.sp", method=RequestMethod.POST)
+	@ResponseBody
+	public boolean checkPwd(HttpSession session, Member mem) {
 		
-		return mv;
+		boolean result;
+		logger.info(mem.getMemberId());
+		logger.info(mem.getMemberPwd());
+		
+		
+		Member checkPwd = mService.checkPwd(mem);
+		
+		
+		if(checkPwd == null) {
+			result = false;
+			logger.info("비밀번호 확인 실패");	
+			return result;
+		}else {
+			result = true;
+			logger.info("비밀번호 확인 성공");
+			return result;
+		}
+		
+		
+	}
+	
+	@RequestMapping(value = "changePw.sp", method=RequestMethod.POST)
+	public String updatePwd(SessionStatus status, RedirectAttributes rd, Model model , Member mem) {
+		
+		int result = mService.updatePwd(mem);
+		
+		if(result>0) {
+			model.addAttribute("loginUser", mem);
+			rd.addFlashAttribute("msg", "비밀번호가 변경되었습니다. \n 다시 로그인해주세요 :) ");
+			status.setComplete();
+			return "redirect:loginForm.sp";
+		}else {
+			model.addAttribute("msg", "비밀번호 변경이 실패했습니다. \n 다시 한 번 시도해 주세요 :*( ");
+			return "redirect:loginForm.sp";	
+		}
+
 	}
 	
 	@RequestMapping("delete.sp")
@@ -196,25 +230,27 @@ public class MemberController {
 		int result = mService.deleteMember(memberId);
 		
 		if(result>0) {
+			logger.info("회원 탈퇴 성공");
 			status.setComplete(); // 세션 완료
-			return "redirect:/";
+			rdAttr.addFlashAttribute("msg", "정상적으로 탈퇴되었습니다. /n 다음에 다시만나요 :)");
+			return "redirect:loginForm.sp";
 		}
-			rdAttr.addFlashAttribute("msg", "회원 탈퇴 실패");
+			logger.info("회원 탈퇴 실패");
+			rdAttr.addAttribute("msg", "회원 탈퇴 실패");
 			return "member/deleteForm";
 	}
 	
 	
 	@RequestMapping(value="join.sp", method=RequestMethod.POST)
-	public String insetMember(Member mem, Model model, HttpServletRequest request){
+	public String insertMember(Member mem, Model model, HttpServletRequest request){
 		
 		int result = mService.insertMember(mem);
-		
-
 
 		if(result>1) {
-			return "redirect:loginForm.jsp"; 
+			return "redirect:loginForm.sp"; 
 		}else {
-			return "redirect:loginForm.jsp";
+			
+			return "redirect:loginForm.sp";
 		}
 		
 		
