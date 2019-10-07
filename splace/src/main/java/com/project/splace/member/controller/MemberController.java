@@ -227,17 +227,20 @@ public class MemberController {
 	@RequestMapping("delete.sp")
 	public String deleteUser(String memberId, SessionStatus status, 
 			RedirectAttributes rdAttr, Model model ) {
+		logger.info("회원아이디 :"+ memberId);
 		int result = mService.deleteMember(memberId);
-		
 		if(result>0) {
 			logger.info("회원 탈퇴 성공");
 			status.setComplete(); // 세션 완료
-			rdAttr.addFlashAttribute("msg", "정상적으로 탈퇴되었습니다. /n 다음에 다시만나요 :)");
+			rdAttr.addFlashAttribute("msg", "정상적으로 탈퇴되었습니다. 다음에 다시만나요 :)");
 			return "redirect:loginForm.sp";
-		}
+		}else {
 			logger.info("회원 탈퇴 실패");
 			rdAttr.addAttribute("msg", "회원 탈퇴 실패");
 			return "member/deleteForm";
+			
+		}
+
 	}
 	
 	
