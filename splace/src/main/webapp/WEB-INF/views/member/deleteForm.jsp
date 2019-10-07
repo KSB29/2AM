@@ -37,7 +37,6 @@
 
 
 				<!-- url -->
-				<c:url var="delete" value="delete.sp"/>
 				<c:url var="profileView" value="profileView.sp"/>
 			
 				<!-- Main -->
@@ -50,7 +49,7 @@
 										</article>
 									</section>
 									<section class="wrapper_right col-7 change_bg">
-									<form action="" method="POST">
+									<form action="delete.sp" method="POST">
 										<article class="join_Form ">
 											<div class="deleteMem_box_1  center">
 												<h1>떠나시려구요??</h1>
@@ -66,12 +65,13 @@
 												<div class="center">
 													<input type="checkbox" id="delete_ck" required >
 													<label for="delete_ck">위의 내용을 숙지했으며 탈퇴에 동의합니다.</label>
+													<input type="hidden" name="memberId" value="${loginUser.memberId}" >
 												</div>
 											</div>	
 											
 											<div class="delete_btn_box center">
 												<div class="delete_btn">
-													<button type="submit" id="delete_btn" class="button fit" onclick="${delete}">서비스 탈퇴</button>
+													<button type="submit" id="delete_btn" class="button fit" >서비스 탈퇴</button>
 												</div>
 												
 												<div class="delete_btn">
@@ -91,16 +91,11 @@
 				$("#delete_btn").click(function(){
 					var check = $("input:checkbox[id='delete_ck']").is(":checked");
 					console.log(check);
-
-					if(check==true){
-						location.href="${delete}"
-						alert('탈퇴 완료되었습니다.')
-					}else{
-						 alert('탈퇴에 동의해주세요!');
+					if(check==false){
+						alert('탈퇴에 동의해주세요!');
 						 $("#delete_ck").focus();
 						 return false;
 					}
-
 				});
 
 			});

@@ -20,11 +20,13 @@
 		<!-- AND MEMBER_PWD = #{memberPwd} -->
 		AND MEMBER_STATUS = 'Y'
 	</select>
-	<delete id="deleteMember" parameterType="_int">
+	
+	<delete id="deleteMember" parameterType="String">
 		UPDATE MEMBER 
 		SET MEMBER_STATUS ='N'
 		WHERE MEMBER_ID = #{memberId}
 	</delete>
+	
 	
 	<insert id="insertMember" parameterType="Member" >
 		INSERT INTO MEMBER 
