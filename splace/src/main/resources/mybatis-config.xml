@@ -14,6 +14,7 @@
 		<typeAlias type="com.project.splace.space.model.vo.Type" alias="Type"/>
 		<typeAlias type="com.project.splace.search.model.vo.Search" alias="Search"/>
 		<typeAlias type="com.project.splace.book.model.vo.Book" alias="Book"/>
+		<typeAlias type="com.project.splace.payment.model.vo.Payment" alias="Payment"/>
 		<typeAlias type="com.project.splace.space.model.vo.Option" alias="Option"/>
 		<typeAlias type="com.project.splace.qna.model.vo.QnA" alias="QnA"/>
 		<typeAlias type="com.project.splace.space.model.vo.Price" alias="Price"/>
@@ -24,6 +25,7 @@
 		<mapper resource="mappers/host-mapper.xml"/>
 		<mapper resource="mappers/search-mapper.xml"/>
 		<mapper resource="mappers/book-mapper.xml"/>
+		<mapper resource="mappers/payment-mapper.xml"/>
 		<mapper resource="mappers/space-mapper.xml"/>
 		<mapper resource="mappers/qna-mapper.xml"/>
   	</mappers>

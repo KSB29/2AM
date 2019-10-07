@@ -19,6 +19,7 @@ public class Book {
 	private String bookerEmail; // 예약자이메일
 	private Date bookCancel; 	// 예약취소날짜
 	private String spaceName; 	// 공간이름
+	private String typeName; 	// 공간이름
 	private String spaceAttChange; // 공간대표사진
 	private int pStatusId;		// 결제상태번호
 	private String spaceAddress; // 공간주소
@@ -118,6 +119,32 @@ public class Book {
 		this.bookerEmail = bookerEmail;
 		this.bookCancel = bookCancel;
 		this.spaceName = spaceName;
+		this.spaceAttChange = spaceAttChange;
+		this.pStatusId = pStatusId;
+		this.spaceAddress = spaceAddress;
+	}
+	public Book(int bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
+			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
+			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String typeName,
+			String spaceAttChange, int pStatusId, String spaceAddress) {
+		super();
+		this.bookId = bookId;
+		this.bookEnroll = bookEnroll;
+		this.bookPrice = bookPrice;
+		this.bookDate = bookDate;
+		this.bookStartTime = bookStartTime;
+		this.bookEndTime = bookEndTime;
+		this.bookPer = bookPer;
+		this.bookRequest = bookRequest;
+		this.spaceId = spaceId;
+		this.memberId = memberId;
+		this.statusId = statusId;
+		this.booker = booker;
+		this.bookerPhone = bookerPhone;
+		this.bookerEmail = bookerEmail;
+		this.bookCancel = bookCancel;
+		this.spaceName = spaceName;
+		this.typeName = typeName;
 		this.spaceAttChange = spaceAttChange;
 		this.pStatusId = pStatusId;
 		this.spaceAddress = spaceAddress;
@@ -237,6 +264,12 @@ public class Book {
 	public void setSpaceAddress(String spaceAddress) {
 		this.spaceAddress = spaceAddress;
 	}
+	public String getTypeName() {
+		return typeName;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
 
 	@Override
 	public String toString() {
@@ -244,7 +277,8 @@ public class Book {
 				+ bookDate + ", bookStartTime=" + bookStartTime + ", bookEndTime=" + bookEndTime + ", bookPer="
 				+ bookPer + ", bookRequest=" + bookRequest + ", spaceId=" + spaceId + ", memberId=" + memberId
 				+ ", statusId=" + statusId + ", booker=" + booker + ", bookerPhone=" + bookerPhone + ", bookerEmail="
-				+ bookerEmail + ", bookCancel=" + bookCancel + ", spaceName=" + spaceName + ", spaceAttChange="
-				+ spaceAttChange + ", pStatusId=" + pStatusId + ", spaceAddress=" + spaceAddress + "]";
+				+ bookerEmail + ", bookCancel=" + bookCancel + ", spaceName=" + spaceName + ", typeName=" + typeName
+				+ ", spaceAttChange=" + spaceAttChange + ", pStatusId=" + pStatusId + ", spaceAddress=" + spaceAddress
+				+ "]";
 	}
 }
