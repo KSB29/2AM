@@ -46,7 +46,7 @@
 				
 					<!-- Main -->
 					<div id="main">
-						<div class="inner">
+						<div class="inner ">
 						
 								<div class="common_wrapper row type_2">
 										<section class="wrapper_left col-7">
