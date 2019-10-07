@@ -3,7 +3,7 @@ package com.project.splace.book.model.vo;
 import java.util.Date;
 
 public class Book {
-	private int bookId;			// 예약번호
+	private String bookId;		// 예약번호
 	private Date bookEnroll;	// 예약날짜
 	private int bookPrice;		// 예약가격
 	private Date bookDate;		// 이용날짜
@@ -21,8 +21,13 @@ public class Book {
 	private String spaceName; 	// 공간이름
 	private String typeName; 	// 공간이름
 	private String spaceAttChange; // 공간대표사진
+	private String spaceAddress;// 공간주소
+	private String paymentId;	// 결제번호
+	private Date paymentDate; 	// 결제일
+	private String paymentType;	// 결제방법
 	private int pStatusId;		// 결제상태번호
-	private String spaceAddress; // 공간주소
+	private String receiptId;	// 영수증번호
+	private int paymentCancelPrice; // 환불금액
 
 	public Book() {}
 	
@@ -32,101 +37,11 @@ public class Book {
 		this.memberId = memberId;
 		this.statusId = statusId;
 	}
-	public Book(int bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
-			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
-			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String spaceAttChange) {
-		super();
-		this.bookId = bookId;
-		this.bookEnroll = bookEnroll;
-		this.bookPrice = bookPrice;
-		this.bookDate = bookDate;
-		this.bookStartTime = bookStartTime;
-		this.bookEndTime = bookEndTime;
-		this.bookPer = bookPer;
-		this.bookRequest = bookRequest;
-		this.spaceId = spaceId;
-		this.memberId = memberId;
-		this.statusId = statusId;
-		this.booker = booker;
-		this.bookerPhone = bookerPhone;
-		this.bookerEmail = bookerEmail;
-		this.bookCancel = bookCancel;
-		this.spaceName = spaceName;
-		this.spaceAttChange = spaceAttChange;
-	}
-	public Book(int bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
-			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
-			String bookerPhone, String bookerEmail, Date bookCancel) {
-		super();
-		this.bookId = bookId;
-		this.bookEnroll = bookEnroll;
-		this.bookPrice = bookPrice;
-		this.bookDate = bookDate;
-		this.bookStartTime = bookStartTime;
-		this.bookEndTime = bookEndTime;
-		this.bookPer = bookPer;
-		this.bookRequest = bookRequest;
-		this.spaceId = spaceId;
-		this.memberId = memberId;
-		this.statusId = statusId;
-		this.booker = booker;
-		this.bookerPhone = bookerPhone;
-		this.bookerEmail = bookerEmail;
-		this.bookCancel = bookCancel;
-	}
-	public Book(int bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
-			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
-			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String spaceAttChange,
-			int pStatusId) {
-		super();
-		this.bookId = bookId;
-		this.bookEnroll = bookEnroll;
-		this.bookPrice = bookPrice;
-		this.bookDate = bookDate;
-		this.bookStartTime = bookStartTime;
-		this.bookEndTime = bookEndTime;
-		this.bookPer = bookPer;
-		this.bookRequest = bookRequest;
-		this.spaceId = spaceId;
-		this.memberId = memberId;
-		this.statusId = statusId;
-		this.booker = booker;
-		this.bookerPhone = bookerPhone;
-		this.bookerEmail = bookerEmail;
-		this.bookCancel = bookCancel;
-		this.spaceName = spaceName;
-		this.spaceAttChange = spaceAttChange;
-		this.pStatusId = pStatusId;
-	}
-	public Book(int bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
-			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
-			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String spaceAttChange,
-			int pStatusId, String spaceAddress) {
-		super();
-		this.bookId = bookId;
-		this.bookEnroll = bookEnroll;
-		this.bookPrice = bookPrice;
-		this.bookDate = bookDate;
-		this.bookStartTime = bookStartTime;
-		this.bookEndTime = bookEndTime;
-		this.bookPer = bookPer;
-		this.bookRequest = bookRequest;
-		this.spaceId = spaceId;
-		this.memberId = memberId;
-		this.statusId = statusId;
-		this.booker = booker;
-		this.bookerPhone = bookerPhone;
-		this.bookerEmail = bookerEmail;
-		this.bookCancel = bookCancel;
-		this.spaceName = spaceName;
-		this.spaceAttChange = spaceAttChange;
-		this.pStatusId = pStatusId;
-		this.spaceAddress = spaceAddress;
-	}
-	public Book(int bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
+	public Book(String bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
 			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
 			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String typeName,
-			String spaceAttChange, int pStatusId, String spaceAddress) {
+			String spaceAttChange, String spaceAddress, String paymentId, Date paymentDate, String paymentType,
+			int pStatusId, String receiptId, int paymentCancelPrice) {
 		super();
 		this.bookId = bookId;
 		this.bookEnroll = bookEnroll;
@@ -146,14 +61,19 @@ public class Book {
 		this.spaceName = spaceName;
 		this.typeName = typeName;
 		this.spaceAttChange = spaceAttChange;
-		this.pStatusId = pStatusId;
 		this.spaceAddress = spaceAddress;
+		this.paymentId = paymentId;
+		this.paymentDate = paymentDate;
+		this.paymentType = paymentType;
+		this.pStatusId = pStatusId;
+		this.receiptId = receiptId;
+		this.paymentCancelPrice = paymentCancelPrice;
 	}
 
-	public int getBookId() {
+	public String getBookId() {
 		return bookId;
 	}
-	public void setBookId(int bookId) {
+	public void setBookId(String bookId) {
 		this.bookId = bookId;
 	}
 	public Date getBookEnroll() {
@@ -270,6 +190,36 @@ public class Book {
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}
+	public String getPaymentId() {
+		return paymentId;
+	}
+	public void setPaymentId(String paymentId) {
+		this.paymentId = paymentId;
+	}
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+	public String getPaymentType() {
+		return paymentType;
+	}
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+	public String getReceiptId() {
+		return receiptId;
+	}
+	public void setReceiptId(String receiptId) {
+		this.receiptId = receiptId;
+	}
+	public int getPaymentCancelPrice() {
+		return paymentCancelPrice;
+	}
+	public void setPaymentCancelPrice(int paymentCancelPrice) {
+		this.paymentCancelPrice = paymentCancelPrice;
+	}
 
 	@Override
 	public String toString() {
@@ -278,7 +228,9 @@ public class Book {
 				+ bookPer + ", bookRequest=" + bookRequest + ", spaceId=" + spaceId + ", memberId=" + memberId
 				+ ", statusId=" + statusId + ", booker=" + booker + ", bookerPhone=" + bookerPhone + ", bookerEmail="
 				+ bookerEmail + ", bookCancel=" + bookCancel + ", spaceName=" + spaceName + ", typeName=" + typeName
-				+ ", spaceAttChange=" + spaceAttChange + ", pStatusId=" + pStatusId + ", spaceAddress=" + spaceAddress
-				+ "]";
+				+ ", spaceAttChange=" + spaceAttChange + ", spaceAddress=" + spaceAddress + ", paymentId=" + paymentId
+				+ ", paymentDate=" + paymentDate + ", paymentType=" + paymentType + ", pStatusId=" + pStatusId
+				+ ", receiptId=" + receiptId + ", paymentCancelPrice=" + paymentCancelPrice + "]";
 	}
+
 }
