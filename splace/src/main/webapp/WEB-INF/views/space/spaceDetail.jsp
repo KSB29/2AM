@@ -116,19 +116,11 @@
 	                     <div id="carouselExampleInterval" class="carousel slide"
 	                        data-ride="carousel">
 	                        <div class="carousel-inner w-100 height26">
-	                           <div class="carousel-item w-100 h-100 active"
-	                              data-interval="10000">
-	                              <img src="${contextPath }/resources/img/exam2.jpg"
-	                                 class="d-block w-100 height26" alt="...">
-	                           </div>
-	                           <div class="carousel-item w-100 height26" data-interval="2000">
-	                              <img src="${contextPath }/resources/img/exam.jpg"
-	                                 class="d-block w-100 height26" alt="...">
-	                           </div>
-	                           <div class="carousel-item w-100 height26">
-	                              <img src="${contextPath }/resources/img/exam2.jpg"
-	                                 class="d-block w-100 height26" alt="...">
-	                           </div>
+								<c:forEach items="${spaceAttImg }" var="images">
+	                           		<div class="carousel-item w-100 h-100 active" data-interval="10000">
+	                              		<img src="${contextPath }/resources/spaceImg/${images}" class="d-block w-100 height26" alt="...">
+	                          		 </div>
+	                           </c:forEach>
 	                        </div>
 	                        <a class="carousel-control-prev" href="#carouselExampleInterval"
 	                           role="button" data-slide="prev"> <span
@@ -168,11 +160,6 @@
 								<h4>[ ${space.spaceOpenTime }시 ~ ${space.spaceCloseTime}시 ]</h4>
 
 							</div>
-							<!-- <div class="col-4 spaceClose fontStyle">
-								<h2>휴무일</h2>
-								<p></p>
-								<h4>[ 공휴일, 매주 일요일 ]</h4>
-							</div> -->
 							<div class="col-4 spaceClose fontStyle">
 								<h2>수용인원</h2>
 								<p></p>
@@ -290,65 +277,67 @@
 						</div>
 						<!-- 지도 끝 -->
 
-						<!------- QnA ------->
-						<div class="spaceIntro">
-							<div class="write fontStyle">
-								<h2>Q & A</h2>
-								<p></p>
-							</div>
-							<!-- 글쓰기 버튼 -->
-							<div class="writeBtn">
-								<button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter" data-backdrop="static"></button>
-							</div>
-							<!-- Modal -->
-							<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalCenterTitle">Q&A작성</h5>
-										</div>
-										<form action="insertQnA.sp" method="post">
-											<div class="modal-body">
-												<textarea class="content" maxlength="300"></textarea>
-												<!-- 글자수 세기 -->
-												<div class="textCount">
-													<p class="counter"></p>
-												</div>
-											</div>
+				   <!------- QnA ------->
+                  <div class="spaceIntro">
+                     <div class="write fontStyle">
+                        <h2>Q & A</h2>
+                        <p></p>
+                     </div>
+                     <!-- 글쓰기 버튼 -->
+                     <c:if test="${!empty loginUser}">
+                        <div class="writeBtn">
+                           <button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter" data-backdrop="static"></button>
+                        </div>
+                     </c:if>
+                     <!-- Modal -->
+                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title" id="exampleModalCenterTitle">Q&A작성</h5>
+                              </div>
+                              <div>
+                                 <h5>작성자  ${ loginUser.memberId }</h5>
+                              
+                              </div>
+                              <%-- <form action="insertQnA.sp?spaceId=${space.spaceId}" method="post"> --%>
+                                 <div class="modal-body">
+                                    <textarea class="qContent" maxlength="300" name="qContent"></textarea>
+                                    <!-- 글자수 세기 -->
+                                    <div class="textCount">
+                                       <p class="counter"></p>
+                                    </div>
+                                 </div>
 
-											<div class="modal-footer">
-												<button type="reset" class="button primary cancel"
-													data-dismiss="modal">취소</button>
-												<button type="button" class="button">등록</button>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-							<!--Modal끝  -->
+                                 <div class="modal-footer">
+                                    <button class="button primary cancel" data-dismiss="modal">취소</button>
+                                    <button class="button submitQnA" id="submitQnA" data-dismiss="modal">등록</button>
+                                 </div>
+                              <!-- </form> -->
+                           </div>
+                        </div>
+                     </div>
+                     <!--Modal끝  -->
 
-							<!-- QnA list 출력 -->
-							<div class="QnAList">
-								<div class="QDelete">
-									<button>[삭제]</button>
-								</div>
-								<div class="QnA_Q">
-									<h5>${qna.qMemberId}</h5>
-									<h4>${qna.qContent}</h4>
-									<h6>${qna.qDate}</h6>
-								</div>
-								<div class="QnA_A">
-									<h5 class="AName">호스트이름</h5>
-									<h4>답변 내용</h4>
-									<h6>작성날짜</h6>
-								</div>
-							</div>
-							<!-- Q&A 페이징 처리 -->
-							<div class="paging">
-								<p>페이징</p>
-							</div>
-						</div>
-						<!-- QnA끝 -->
+                     <!-- QnA list 출력 -->
+                     <div class="QnAList">
+                     
+                           <!-- <div class="QDelete">
+                              <button>[삭제]</button>
+                           </div> -->
+                        <div class="QnA_QA">
+                        
+                        
+                           
+                        </div>
+                     </div>
+                     <!-- Q&A 페이징 처리 -->
+                     <div class="paging">
+                        <p>페이징</p>
+                     </div>
+                  </div>
+                  <!-- QnA끝 -->
+					
 
 						<!-------리뷰 -------->
 						<div class="spaceIntro">
@@ -445,11 +434,19 @@
 						   <div class="calender">
 		                     <h3>날짜 선택</h3>
 		                     <p></p>
+		                     <i class="material-icons">today</i>
 		                     <input type="text" data-type="date" id="date-input" />
 		                     <div id="material-header-holder" style="display: none"></div>
 		                  </div>
-               
-		                  <div class="timeHeader" style="display:block;">
+               			<script>
+               				$(function(){
+               					$("#data-input").onchange(function(){
+               						$(".timeHeader")
+               					})
+               					
+               				})
+               			</script>
+		                  <div class="timeHeader" style="display:hidden;">
 		                     <h3>시간 선택</h3>
 		                     <h3>9시-10시</h3>
 		
@@ -612,121 +609,50 @@
 
 				<section class="spaceIntro">
 					<!-- Swiper -->
-				  	<div class="swiper-container ">
-				    	<div class="swiper-wrapper">
-				  	<c:if test="${!empty otherSpace }">
-				  	<c:forEach var="o" items="${otherSpace }">
-				  	<c:url var="sDetail" value="spaceDetail.sp">
-		           			<c:param name="spaceId" value="${o.spaceId}"></c:param>
-		           		</c:url>
-				      		<div class="swiper-slide hostSpace">
-				      		<article>
-								<span class="image">
-									<img src="resources/img/studio.jpg" alt=""/>
-								</span> 
-								 <a href="${sDetail}"></a>
-								<span>
-									<div class="locationName">
-										<h3>${o.spaceName }</h3>
-									</div>
-									<div class="location">
-										<span>
-											<img src="resources/img/location.svg"> 서울시 중구
-										<c:forTokens var="addr" items="${o.spaceAddress}" delims="," varStatus="status">
-													<c:if test="${status.index eq 1}">
+					<div class="swiper-container ">
+						<div class="swiper-wrapper">
+							<c:forEach items="${hostSpace}" var="host">
+								<div class="swiper-slide hostSpace">
+									<article>
+										<span class="image"> 
+											<img src="${contextPath }/resources/spaceImg/${host.spaceAttChange}" alt="" />
+										</span> 
+											<a href="${sDetail}"></a> 
+											<span>
+											<div class="locationName">
+												<h3>${host.spaceName }</h3>
+											</div>
+											<div class="location">
+												<span> <img src="resources/img/location.svg">
+													서울시 중구 <c:forTokens var="addr" items="${host.spaceAddress}"
+														delims="," varStatus="status">
+														<c:if test="${status.index eq 1}">
 														${addr}
 													</c:if>
-												</c:forTokens>
+													</c:forTokens>
+												</span>
+											</div>
+											<div class="tags">
+												<span>${host.spaceTag }</span>
+											</div>
+											<div class="price">
+												<strong>10,000</strong> <span>원/시간</span>
+											</div>
 										</span>
-									</div>
-									<div class="tags">
-										<span>${o.spaceTag }</span>
-									</div>
-									<div class="price">
-										<strong>10,000</strong> <span>원/시간</span>
-									</div>
-									<div class="reviewHeart">
-										<span>
-											<img src="resources/img/comment.svg"><span>10</span>&nbsp;&nbsp;&nbsp;
-										</span> 
-										<span> 
-											<img src="resources/img/heart.svg"> <span>10</span>
-										</span>
-									</div>
-								</span> 
-							</article>
-				      		</div>
-				      		</c:forEach>
-				      		</c:if>
-				<!-- 			<div class="swiper-slide hostSpace">
-						      	<article>
-									<span class="image">
-										<img src="resources/img/studio.jpg" alt=""/>
-									</span> 
-								 	<a href="#"></a>
-									<span>
-										<div class="locationName">
-											<h3>Kh정보교육원</h3>
-										</div>
-										<div class="location">
-											<span> 
-												<img src="resources/img/location.svg"> 서울시 중구
-											</span>
-										</div>
-										<div class="tags">
-											<span>#파티룸 #회의실 #중구</span>
-										</div>
-										<div class="price">
-											<strong>10,000</strong> <span>원/시간</span>
-										</div>
-										<div class="reviewHeart">
-											<span> 
-												<img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-											</span> 
-											<span> 
-												<img src="resources/img/heart.svg"> <span>10</span>
-											</span>
-										</div>
-									</span> 
-								</article>
-					      	</div>
-				      	<div class="swiper-slide hostSpace">
-				      	<article>
-						<span class="image">
-							<img src="resources/img/studio.jpg" alt=""/>
-						</span> 
-						 <a href="#"></a>
-						<span>
-							<div class="locationName">
-								<h3>Kh정보교육원</h3>
-							</div>
-							<div class="location">
-								<span> <img src="resources/img/location.svg"> 서울시
-									중구
-								</span>
-							</div>
-							<div class="tags">
-								<span>#파티룸 #회의실 #중구</span>
-							</div>
-							<div class="price">
-								<strong>10,000</strong> <span>원/시간</span>
-							</div>
-							<div class="reviewHeart">
-								<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-								</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-								</span>
-							</div>
-						</span> 
-						</article>
-				      </div> -->
+									</article>
+								</div>
+							</c:forEach>
 
-				    </div>
-				  </div>
-				  
+						</div>
+					</div>
+
 				</section>
-	</div><!-- wrapper -->
-	</div><!--main  -->
-	</div><!-- inner -->
+			</div>
+			<!-- wrapper -->
+	</div>
+	<!--main  -->
+	</div>
+	<!-- inner -->
 				
 				
 				
@@ -744,5 +670,111 @@
      <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script> 
  	<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>  
+	
+	<!--  ajax  -->
+	   <script>
+	   
+	   // 질문 등록 
+	    $("#submitQnA").on("click",function(){
+	       var qContent = $(".qContent").val();
+	       var spaceId = ${space.spaceId};
+	       
+	       $.ajax({
+	          url : "insertQnA.sp",
+	          data:{qContent:qContent,spaceId :spaceId },
+	          type:"POST",
+	          success: function(check){
+	             console.log(check);
+	             if(check=="success"){
+	                $(".qContent").val("");
+	                QnAList();
+	                /* console.log("됐냐"); */
+	             }
+	          }
+	       });
+	    });
+	    
+	    QnAList();
+	    
+	    // 질문 리스트 출력 
+	    function QnAList(){
+	       var spaceId = ${space.spaceId};
+	       
+	       $.ajax({
+	          url:"selectQnA.sp",
+	          data: {spaceId:spaceId },
+	          dataType:"JSON",
+	          success: function(qList){
+	             
+	             var $QnA_QA=$(".QnA_QA");
+	             var $QnAList=$(".QnAList");
+	             
+	             
+	              $QnAList.html("");
+	
+	             
+	             if(qList.length>0){
+	                $.each(qList,function(i){
+	              console.log("${loginUser.memberId}");
+	                    
+	                    
+	                   var result = "";
+	                   if("${loginUser.memberId}" == qList[i].qMemberId){
+	                      result += '<div class= "QnA_QA">'
+	                            + '<div class="QDelete"><button onclick="QADelete(' 
+	                            +qList[i].qnaId
+	                            +');">[삭제]</button></div>';
+	                   }
+	                  result += '<h6 style="display:none"> 답변 글 번호'
+	                        + qList[i].qnaId
+	                        + '</h6>'
+	                        +'<h4> 작성자 [ '
+	                         + qList[i].qMemberId 
+	                         +" ]</h4>"
+	                         +'<h5> 내용 [ '
+	                         + qList[i].qContent 
+	                         +" ]</h5>"
+	                         +'<h6> 작성일 [ ' 
+	                         + qList[i].qDate
+	                         + " ]</h6>"
+	                        + '<h5 class="AName"> 호스트 이름 [ '
+	                         + qList[i].aMemberId 
+	                         + " ]</h5>"
+	                         +'<h4 class="AName"> 답변 내용 [ '
+	                         + qList[i].aContent 
+	                         +" ]</h4>"
+	                         +'<h6 class="AName"> 답변 날짜 [ '
+	                         + qList[i].aDate 
+	                         +" ]</h6>"
+	                         +'</div>';
+	   
+	    /*                      $QnA_QA.append(result); */ 
+	                        $QnAList.append(result);
+	                });
+	             }
+	          }, 
+	          error :function(){
+	             console.log("error");
+	          }
+	       });
+	       
+	    }
+	    
+	    // 질문 삭제 
+	    function QADelete(qnaId){
+	       console.log(qnaId);
+	       $.ajax({
+	          url :"deleteQnA.sp",
+	          data:{qnaId:qnaId},
+	          type:"POST",
+	          success:function(check2){
+	             if(check2=="ok"){
+	                alert("등록된 질문이 삭제 되었습니다.");
+	                QnAList();
+	             }
+	          }
+	       });
+	    }
+</script>
 </body>
 </html>

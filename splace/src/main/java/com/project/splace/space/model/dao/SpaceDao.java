@@ -1,7 +1,6 @@
 package com.project.splace.space.model.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +87,7 @@ public class SpaceDao {
 	 * @param spaceId
 	 * @return pList
 	 */
-	public ArrayList<Price> selectPrice(int spaceId) {
+	public ArrayList<Price> selectPrice(String spaceId) {
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectPrice", spaceId);
 	}
 
@@ -99,43 +98,6 @@ public class SpaceDao {
 	 */
 	public int insertPrice(Price price) {
 		return sqlSession.insert("spaceMapper.insertPrice", price);
-	}
-	
-	/**
-	 * 1인당 추가 금액 저장 Dao
-	 * @param space
-	 * @return result
-	 */
-	public int updateAddPrice(Space space) {
-		return sqlSession.update("spaceMapper.updateAddPrice", space);
-	}
-
-	/**
-	 * 공간 승인 요청 Dao
-	 * @param spaceId
-	 * @return result
-	 */
-	public int updateApply(int spaceId) {
-		return sqlSession.update("spaceMapper.updateApply", spaceId);
-	}
-	
-	
-	/**
-	 * 공간 삭제 Dao
-	 * @param spaceId
-	 * @return result
-	 */
-	public int deleleSpace(int spaceId) {
-		return sqlSession.delete("spaceMapper.deleteSpace", spaceId);
-	}
-
-	/**
-	 * 공간 정보 조회 Dao
-	 * @param spaceId
-	 * @return space
-	 */
-	public Space selectSpace(int spaceId) {
-		return sqlSession.selectOne("spaceMapper.selectSpace", spaceId);
 	}
 
 	/**
@@ -157,28 +119,55 @@ public class SpaceDao {
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectOptionList");
 	}
 
-	public int wishList(WishList wishList){
+	/**	
+	 * 찜하기
+	 * @param wishList
+	 * @return
+	 * @throws Exception
+	 */
+	public int wishList(WishList wishList) throws Exception{
 		
 		return sqlSession.insert("spaceMapper.wishList", wishList);
 	}
 
+	/**
+	 * 찜 여부 조회하기 
+	 * @param wishList
+	 * @return
+	 */
 	public int wishSelect(WishList wishList) {
 		return sqlSession.selectOne("spaceMapper.wishSelect", wishList);
 	}
 
+	/**
+	 * 찜 삭제하기 
+	 * @param wishList
+	 * @return
+	 */
 	public int wishDelete(WishList wishList) {
 		
 		return sqlSession.delete("spaceMapper.wishDelete", wishList);
 	}
 
-	/*
-	 * public ArrayList<SpaceAtt> selectSpaceAtt(int spaceId) {
-	 * 
-	 * return (ArrayList)sqlSession.selectList("spaceMapper.selectSpaceAtt",
-	 * spaceId); }
+	/**
+	 * 공간 이미지 가져오기 
+	 * @param spaceId
+	 * @return
 	 */
+	public ArrayList<SpaceAtt> spaceAttImg(int spaceId) {
+		
+		return (ArrayList)sqlSession.selectList("spaceMapper.spaceAttImg", spaceId);
+	}
 
-
+	/**
+	 * 호스트 다른 공간
+	 * @param hostId
+	 * @return
+	 */
+	public ArrayList<Space> hostSpace(int hostId) {
+	
+		return (ArrayList)sqlSession.selectList("spaceMapper.hostSpace", hostId);
+	}
 
 	/*
 	 * public ArrayList<Space> otherSpace() {
@@ -186,34 +175,6 @@ public class SpaceDao {
 	 * return (ArrayList)sqlSession.selectList("spaceMapper.otherSpace"); }
 	 */
   
-	/**
-	 * 공간 사진 파일 조회 Dao
-	 * @param spaceId
-	 * @return attList
-	 */
-	public ArrayList<SpaceAtt> selectSpaceAtt(int spaceId) {
-		return (ArrayList)sqlSession.selectList("spaceMapper.selectSpaceAtt", spaceId);
-	}
-
-	/**
-	 * 공간 정보 수정 Dao
-	 * @param space
-	 * @return result
-	 */
-	public int updateSpace(Space space) {
-		return sqlSession.update("spaceMapper.updateSpace", space);
-	}
-	
-	
-	/**
-	 * 공간 사진 파일 수정 Dao
-	 * @param sAtt
-	 * @return result
-	 */
-	public int updateFile(SpaceAtt sAtt) {
-		return sqlSession.update("spaceMapper.updateFile", sAtt);
-	}
-
 	/**
 	 * 공간 가격 수정 Dao
 	 * @param price

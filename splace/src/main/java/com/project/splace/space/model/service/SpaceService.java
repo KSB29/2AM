@@ -49,9 +49,9 @@ public interface SpaceService {
 	/**
 	 * 공간 가격 조회 Service
 	 * @param spaceId 
-	 * @return
+	 * @return result
 	 */
-	public abstract ArrayList<Price> selectPrice(int spaceId);
+	public abstract ArrayList<Price> selectPrice(String spaceId);
 
 	/**
 	 * 공간 가격 등록 Service
@@ -59,29 +59,7 @@ public interface SpaceService {
 	 * @param spacePrice
 	 * @return result
 	 */
-	public abstract int insertPrice(int spaceId, int spaceAdd, String[] spacePrice);
-	
-	/**
-	 * 공간 승인 요청 Service
-	 * @param spaceId
-	 * @return result
-	 */
-	public abstract int updateApply(int spaceId);
-
-	/**
-	 * 공간 삭제 Service
-	 * @param spaceId
-	 * @return result
-	 */
-	public abstract int deleteSpace(int spaceId);
-
-	/**
-	 * 공간 정보 조회 Service
-	 * @param spaceId
-	 * @return space
-	 */
-	public abstract Space selectSpace(int spaceId); 
-	
+	public abstract int insertPrice(int spaceId, String[] spacePrice);
 	
 	//-------------------- 191002 추가 ----------------------------
 	/**
@@ -119,7 +97,7 @@ public interface SpaceService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public abstract int wishList(WishList wishList);
+	public abstract int wishList(WishList wishList) throws Exception;
 
 	/**
 	 * 찜 조회
@@ -140,28 +118,18 @@ public interface SpaceService {
 	 * @param spaceId
 	 * @return
 	 */
-	/*
-	 * public abstract ArrayList<SpaceAtt> selectSpaceAtt(int spaceId);
-	 */
-	
-	
-	/**
-	 * 공간 사진 파일 조회 Service
-	 * @param spaceId
-	 * @return attList
-	 */
-	public abstract ArrayList<SpaceAtt> selectSpaceAtt(int spaceId);
+	public abstract ArrayList<SpaceAtt> spaceAttImg(int spaceId);
 
 	/**
-	 * 공간 정보 수정 Service
-	 * @param space
-	 * @param request
-	 * @param uploadFile
-	 * @param files
-	 * @return result
+	 * 호스트 다른 공간
+	 * @param hostId
+	 * @return
 	 */
+	public abstract ArrayList<Space> hostSpace(int hostId);
+
 	public abstract int updateSpace(Space space, int filesIndex, HttpServletRequest request, MultipartFile uploadFile,
 			List<MultipartFile> files);
+
 
 	/**
 	 * 공간 가격 수정 Service

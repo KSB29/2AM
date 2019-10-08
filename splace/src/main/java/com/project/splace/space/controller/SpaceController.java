@@ -36,20 +36,28 @@ public class SpaceController {
 	public ModelAndView spaceInsertForm(ModelAndView mv) {
 		// 공간 타입
 		ArrayList<Type> tList = sService.selectType();
+		mv.addObject("tList", tList);
 		// 공간 옵션
 		ArrayList<Option> oList = sService.selectOption();
-		mv.addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceInsertForm");
+		mv.addObject("oList", oList);
+		
+		mv.setViewName("space/spaceInsertForm");
 		return mv;
 	}
 	
 	@RequestMapping("spaceInsert.sp")
 	public String spaceInsert(Space space, String address, String post, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
-		space.setMemberId(((Member)request.getSession().getAttribute("loginUser")).getMemberId());
-		// 주소 : 우편번호,도로명주소,상세주소
-		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
-		int result = sService.insertSpace(space, request, uploadFile, files);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		// 호스트 여부 체크
+		if (((Member)request.getSession().getAttribute("loginUser")).getGrade() != "2") {
+			return "redirect:hostApplyForm.sp";
+		} else {
+			// grade 2 : 호스트 회원
+			space.setMemberId(((Member)request.getSession().getAttribute("loginUser")).getMemberId());
+			// 주소 : 우편번호,도로명주소,상세주소
+			space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
+			int result = sService.insertSpace(space, request, uploadFile, files);
+			return "redirect:spaceList.sp";
+		}
 	}
 	
 	@RequestMapping("spaceList.sp")
@@ -172,9 +180,10 @@ public class SpaceController {
 			// 공간 세부 옵션 조회
 			String spaceOption1[] = space.getSpaceOption().substring(1).split("#");
 			ArrayList<Option> oList = sService.selectOptionList();
+			
 			// 세부옵션
 			ArrayList<Option> spaceO = new ArrayList<Option>(); 
-			
+		
 			
 			for(String o : spaceOption1) { // 공간 옵션
 				for(Option op : oList) { 
@@ -187,13 +196,15 @@ public class SpaceController {
 			
 			// 주의사항
 			String spaceNotice[] = space.getSpaceNotice().substring(1).split("#");
+		
 			// 공간 이미지
-			/*
-			 * ArrayList<SpaceAtt> spaceAttList =
-			 * sService.selectSpaceAtt(space.getSpaceId());
-			 * System.out.println(spaceAttList);
-			 */
+			ArrayList<SpaceAtt> spaceAttImg = sService.spaceAttImg(space.getSpaceId());
 			
+			// 호스트 다른 공간
+			ArrayList<Space>hostSpace = sService.hostSpace(space.getHostId());
+			System.out.println(hostSpace);
+			mv.addObject("hostSpace", hostSpace);
+			mv.addObject("spaceAttImg",spaceAttImg);
 			mv.addObject("spaceNotice", spaceNotice);				
 			mv.addObject("spaceO", spaceO);	
 			mv.addObject("type", type);
@@ -207,9 +218,9 @@ public class SpaceController {
 	
 	// 공간 가격 등록
 	@RequestMapping("spacePriceInsert.sp")
-	public String spacePriceInsert(int spaceId, int spaceAdd, String[] spacePrice) {
-		int result = sService.insertPrice(spaceId, spaceAdd, spacePrice);
-		return "redirect:spaceList.sp";
+	public String spacePriceInsert(int spaceId, String[] spacePrice) {
+		int result = sService.insertPrice(spaceId, spacePrice);
+		return null;
 	}
   
 	// 공간 가격 수정
@@ -225,13 +236,15 @@ public class SpaceController {
 	public String wishList(WishList wishList, HttpSession session) {
 		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
 		wishList.setMemberId(memberId);
-	
+		try {
 			int result=sService.wishList(wishList);
-			if(result>0) {
-				return "success";
-			}else {
-				return "fail";
-			}
+			return "success";
+		} catch (Exception e) {
+
+			return "fail";
+			
+		}
+		
 	}
 	
 	// 찜 여부 조회
@@ -268,4 +281,7 @@ public class SpaceController {
 			return "fail";
 		}
 	}
+	
+	
+	
 }
