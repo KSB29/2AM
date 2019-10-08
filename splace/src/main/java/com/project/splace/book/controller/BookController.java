@@ -59,7 +59,7 @@ public class BookController {
 					}
 				}
 			}
-			 
+			
 			// 주의사항
 			String spaceNotice[] = space.getSpaceNotice().substring(1).split("#");
 			
