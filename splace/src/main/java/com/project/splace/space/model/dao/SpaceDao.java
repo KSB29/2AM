@@ -169,12 +169,19 @@ public class SpaceDao {
 		return (ArrayList)sqlSession.selectList("spaceMapper.hostSpace", hostId);
 	}
 
-
-
 	/*
 	 * public ArrayList<Space> otherSpace() {
 	 * 
 	 * return (ArrayList)sqlSession.selectList("spaceMapper.otherSpace"); }
 	 */
+  
+	/**
+	 * 공간 가격 수정 Dao
+	 * @param price
+	 * @return result
+	 */
+	public int updatePrice(Price price) {
+		return sqlSession.update("spaceMapper.updatePrice", price);
+	}
 
 }

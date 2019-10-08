@@ -48,15 +48,30 @@
 						<div class="row gtr-uniform borderTop">
 							<div class="col-3 col-12-xsmall">
 								<label for="hostNo">* 사업자등록번호</label>
+								<c:if test="${ hostStatus != 2 }">
 								<input type="text" name="hostNo" id="hostNo" value="${ host.hostNo }" maxlength="12" placeholder="사업자등록번호" required autocomplete="off">
+								</c:if>
+								<c:if test="${ hostStatus == 2 }">
+								<span>${ host.hostNo }</span>
+								</c:if>
 							</div>
 							<div class="col-4 col-12-xsmall">
 								<label for="hostName">* 대표자명</label>
+								<c:if test="${ hostStatus != 2 }">
 								<input type="text" name="hostName" id="hostName" value="${ host.hostName }" placeholder="대표자명" required autocomplete="off">
+								</c:if>
+								<c:if test="${ hostStatus == 2 }">
+								<span>${ host.hostName }</span>
+								</c:if>
 							</div>
 							<div class="col-5 col-12-xsmall">
 								<label for="storeName">* 상호명(개인/법인)</label>
+								<c:if test="${ hostStatus != 2 }">
 								<input type="text" name="storeName" id="storeName" value="${ host.storeName }" placeholder="상호명(개인/법인)" required autocomplete="off">
+								</c:if>
+								<c:if test="${ hostStatus == 2 }">
+								<span>${ host.storeName }</span>
+								</c:if>
 							</div>
 							<div class="col-12 col-12-xsmall noticeDiv" id="regCheck1">
 								<i class="fas fa-exclamation-circle warningColor"></i> <span class="warningColor"></span>

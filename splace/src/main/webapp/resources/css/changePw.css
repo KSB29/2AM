@@ -1,9 +1,9 @@
 
 .changeForm_wrapper{
-    margin: 10rem 0 0 0;
+    margin: 8rem 0 0 0;
 }
 .changeForm_1, .changeForm_2{
-    margin: 2rem 0 0 0  !important;
+    margin: 1.5rem 0 0 0  !important;
 }
 
 .changeForm_1>div{
@@ -30,4 +30,11 @@ border-color:#1b6b2e;
 .error{
 	box-shadow:inset 0 -1px 0 0 rgb(204, 0, 0);
 	border-color: rgb(204, 0, 0);
+}
+.change_btn{
+	display: inline-block;
+	width : 49%;
+}
+.changeForm_2:nth-child(2){
+	text-align: right;
 }

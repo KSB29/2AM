@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,8 @@ public class SpaceServiceImpl implements SpaceService {
 		space.setSpaceId(spaceId);
 		int result = sDao.insertSpace(space);
 		
+		// 공간 정보 파일
+		SpaceAtt sAtt = new SpaceAtt();
 		// 업로드된 파일이 있을 경우 파일명 변경
 		// 파일이 없을 경우 null이 아니라 빈문자열로 전송이 됨
 		if (!uploadFile.getOriginalFilename().equals("")) {
@@ -63,8 +66,16 @@ public class SpaceServiceImpl implements SpaceService {
 		/*if (files.size() > 0) {
 			for (int i = 0; i < files.size(); i++) {
 				if (!files.get(i).getOriginalFilename().equals("")) {
+
 					renameFileName = renameFile(files.get(i), spaceId, i);
 					//System.out.println(renameFileName);
+
+					renameFileName = renameFile(files.get(i), spaceId, i+1); // 변경된 파일명
+					sAtt.setSpaceAttOrigin(files.get(i).getOriginalFilename());
+					sAtt.setSpaceAttChange(renameFileName);
+					sAtt.setSpaceId(spaceId);
+					sAtt.setSpaceAttType("1"); // 슬라이드
+
 					// 서버에 파일 저장
 					result = saveFile(renameFileName, files.get(i), request);
 				}
@@ -160,6 +171,7 @@ public class SpaceServiceImpl implements SpaceService {
 		// {1},
 		String dayArr[] =  {"월", "화", "수", "목", "금", "토", "일", "휴"};
 		int result = 0;
+
 		for (int i = 0; i < spacePrice.length; i++) {
 			price.setPriceWeekend(dayArr[i]);
 			price.setPriceTime(spacePrice[i].substring(4));
@@ -171,6 +183,34 @@ public class SpaceServiceImpl implements SpaceService {
 		}
 		if (result == spacePrice.length) return 1;
 		else return 0;
+		
+		// 가격 정보 필수 입력이지만 체크
+		if (spacePrice.length > 0) {
+			// 공간 가격 등록
+			String dayArr[] = {"월", "화", "수", "목", "금", "토", "일", "휴"};
+			int day;
+			Price price = new Price();
+			for (int i = 0; i < spacePrice.length; i++) {
+				day = Integer.parseInt(spacePrice[i].substring(0, 1));
+				price.setPriceWeekend(dayArr[day-1]);
+				price.setPriceTime(spacePrice[i].substring(1));
+				price.setSpaceId(spaceId);
+				result += sDao.insertPrice(price);
+			}
+			if (result == spacePrice.length) result = 1;
+			else result = 0;
+		}
+		
+		// 1 인당 추가 금액 저장
+		// 최초 등록이라 0보다 클 경우에만 저장
+		if (result > 0 && spaceAdd > 0) {
+			Space space = new Space();
+			space.setSpaceId(spaceId);
+			space.setSpaceAdd(spaceAdd);
+			result = sDao.updateAddPrice(space);
+		}
+		
+		return result;
 	}
 
 	
@@ -220,8 +260,91 @@ public class SpaceServiceImpl implements SpaceService {
 	}
 
 
+	@Override
+	public int updateSpace(Space space, int filesIndex, HttpServletRequest request, MultipartFile uploadFile,
+			List<MultipartFile> files) {
+		
+		// 개행문자 변경
+		space.setSpaceDetail(space.getSpaceDetail().replace("\n", "<br>"));
+		
+		// file명 변경
+		// 새로 업로드된 파일이 있을 경우
+		String renameFileName = null;
+		
+		int spaceId = space.getSpaceId();
+		
+		// 공간 정보 수정
+		int result = sDao.updateSpace(space);
+		
+		// 업로드된 파일이 있을 경우 파일명 변경
+		// 파일이 없을 경우 null이 아니라 빈문자열로 전송이 됨
+		// 공간 정보 파일
+		SpaceAtt sAtt = new SpaceAtt();
+		if (result > 0 && !uploadFile.getOriginalFilename().equals("")) {
+			renameFileName = renameFile(uploadFile, spaceId, 0); // 변경된 파일명
+			sAtt.setSpaceAttOrigin(uploadFile.getOriginalFilename());
+			sAtt.setSpaceAttChange(renameFileName);
+			sAtt.setSpaceId(spaceId);
+			sAtt.setSpaceAttType("0"); // 대표사진
+			// 서버에 파일 저장
+			if (renameFileName != null) result = saveFile(renameFileName, uploadFile, request);
+			// DB에 파일 저장
+			if (result > 0) result = sDao.updateFile(sAtt);
+		}
+		System.out.println(filesIndex);
+		if (result > 0 && files.size() > 0) {
+			for (int i = 0; i < files.size(); i++) {
+				if (!files.get(i).getOriginalFilename().equals("")) {
+					System.out.println(i + " : " + files.get(i).getOriginalFilename());
+					renameFileName = renameFile(files.get(i), spaceId, i+1); // 변경된 파일명
+					sAtt.setSpaceAttOrigin(files.get(i).getOriginalFilename());
+					sAtt.setSpaceAttChange(renameFileName);
+					sAtt.setSpaceId(spaceId);
+					sAtt.setSpaceAttType("1"); // 슬라이드
+					// 서버에 파일 저장
+					if (renameFileName != null) result = saveFile(renameFileName, files.get(i), request);
+					// DB에 파일 저장
+					if (result > 0) {
+						if (filesIndex < i + 1 ) result = sDao.insertFile(sAtt);
+						else result = sDao.updateFile(sAtt);
+					}
+				}
+			}
+		}
+		return result;
+	}
 
 
-
+	@Override
+	public int updatePrice(int spaceId, int spaceAdd, String[] spacePrice) {
+		int result = 0;
+		
+		// 1 인당 추가 금액 저장
+		if (spaceAdd >= 0) {
+			Space space = new Space();
+			space.setSpaceId(spaceId);
+			space.setSpaceAdd(spaceAdd);
+			result = sDao.updateAddPrice(space);
+		}
+		
+		if (spaceAdd >= 0 && result > 0 ) {
+			// 공간 가격 등록
+			int priceId;
+			Price price = new Price();
+			for (int i = 0; i < spacePrice.length; i++) {
+				int place = spacePrice[i].indexOf('[');
+				priceId = Integer.parseInt(spacePrice[i].substring(0, place));
+				price.setPriceId(priceId);
+				price.setPriceTime(spacePrice[i].substring(place));
+				price.setSpaceId(spaceId);
+				
+				result += sDao.updatePrice(price);
+			}
+			if (result == spacePrice.length) return 1;
+			else return 0;
+		} else {
+			return result;
+		}
+	}
 
 }

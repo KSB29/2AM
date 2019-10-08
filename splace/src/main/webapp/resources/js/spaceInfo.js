@@ -45,6 +45,10 @@ $(document).ready(function(){
 	
 	// 공간 수정 시 정보 표시
 	if ($("#spaceId").val() != null) {
+		
+		maxLengthCheck("spaceComment");
+		maxLengthCheck("spaceDetail");
+		
 		var option = $("#spaceOption").val();
 		var tag = $("#spaceTag").val();
 		var notice = $("#spaceNotice").val();

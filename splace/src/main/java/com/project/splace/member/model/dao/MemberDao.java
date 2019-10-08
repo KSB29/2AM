@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
 
 @Repository("mDao")
@@ -45,5 +46,20 @@ public class MemberDao {
 
 	public int updatePwd(Member mem) {
 		return sqlSession.update("memberMapper.changePwd", mem);
+	}
+
+
+	/** 임시 비밀번호 저장용 DAO
+	 * @param vo
+	 * @return result
+	 */
+	public int updatePwd(MailVO vo) {
+		return sqlSession.update("memberMapper.findPwd", vo);
+	}
+
+
+	public int insertNaverId(Member mem) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

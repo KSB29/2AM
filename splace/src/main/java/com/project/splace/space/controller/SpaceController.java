@@ -84,14 +84,30 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spacePrice.sp")
-	public ModelAndView spacePrice(String spaceId, HttpSession session, ModelAndView mv) {
+	public ModelAndView spacePrice(int spaceId, String priceFlag, HttpSession session, ModelAndView mv) {
+		// 공간이용시간
+		int spaceOpenTime = 0;
+		int spaceCloseTime = 0;
+		int spaceAdd = 0;
+		
 		if (((Member)session.getAttribute("loginUser")).getMemberId() == null) {
 			mv.setViewName("redirect:loginForm.sp");
 		} else {
-			//ArrayList<Price> pList = sService.selectPrice(spaceId);
-			//mv.addObject("pList", pList);
-			mv.addObject("spaceId", spaceId);
-			mv.setViewName("space/spacePrice");
+			
+			ArrayList<Price> pList = sService.selectPrice(spaceId);
+			if (pList != null) {
+				for (int i = 0; i < pList.size(); i++) {
+					if (i == 0) {
+						spaceOpenTime = pList.get(i).getSpaceOpenTime();
+						spaceCloseTime = pList.get(i).getSpaceCloseTime();
+						spaceAdd = pList.get(i).getSpaceAdd();
+					}
+				}
+				//System.out.println(spaceOpenTime + " ~ " + spaceCloseTime + " : spaceAdd");
+				mv.addObject("pList", pList);
+			}
+			mv.addObject("spaceOpenTime", spaceOpenTime).addObject("spaceCloseTime", spaceCloseTime).addObject("spaceAdd", spaceAdd);
+			mv.addObject("spaceId", spaceId).addObject("priceFlag", priceFlag).setViewName("space/spacePrice");
 		}
 		return mv;
 	}
@@ -102,8 +118,50 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spaceUpdateForm.sp")
-	public String spaceUpdateForm() {
-		return "space/spaceUpdateForm";
+	public ModelAndView spaceUpdateForm(int spaceId, ModelAndView mv) {
+		Space space = sService.selectSpace(spaceId);
+		if (space != null) {
+			// 공간 사진 파일(슬라이드)
+			ArrayList<SpaceAtt> attList = sService.selectSpaceAtt(spaceId);
+			mv.addObject("attList", attList);
+			// 공간 타입
+			ArrayList<Type> tList = sService.selectType();
+			// 공간 옵션
+			ArrayList<Option> oList = sService.selectOption();
+			String[] addressArr = space.getSpaceAddress().split(",");
+			//String post = space.getSpaceAddress().substring(0,space.getSpaceAddress().indexOf(',')-1);
+			space.setSpaceAddress(addressArr[1]);
+			mv.addObject("post", addressArr[0]).addObject("address", addressArr[2]);
+			mv.addObject("space", space).addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceUpdateForm");
+		} else {
+			mv.addObject("msg", "공간 정보 조회 중 오류 발생").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("spaceUpdate.sp")
+	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
+		// 주소 : 우편번호,도로명주소,상세주소
+		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
+		int result = sService.updateSpace(space, filesIndex, request, uploadFile, files);
+		if (result > 0) return "redirect:spaceList.sp";
+		else return null;
+	}
+	
+	// 공간 승인 요청
+	@RequestMapping("spaceApply.sp")
+	public String spaceApply(int spaceId) {
+		int result = sService.updateApply(spaceId);
+		if (result > 0) return "redirect:spaceList.sp";
+		else return null;
+	}
+	
+	// 공간 삭제
+	@RequestMapping("spaceDelete.sp")
+	public String spaceDelete(int spaceId) {
+		int result = sService.deleteSpace(spaceId);
+		if (result > 0) return "redirect:spaceList.sp";
+		else return null;
 	}
 	
 	// -------------------------191002 추가-------------------------------------------------------
@@ -158,12 +216,21 @@ public class SpaceController {
 		return mv;
 	}
 	
+	// 공간 가격 등록
 	@RequestMapping("spacePriceInsert.sp")
 	public String spacePriceInsert(int spaceId, String[] spacePrice) {
 		int result = sService.insertPrice(spaceId, spacePrice);
 		return null;
 	}
-	
+  
+	// 공간 가격 수정
+	@RequestMapping("spacePriceUpdate.sp")
+	public String spacePriceUpdate(int spaceId, int spaceAdd, String[] spacePrice) {
+		int result = sService.updatePrice(spaceId, spaceAdd, spacePrice);
+		return "redirect:spaceList.sp";
+	}
+
+	// 찜하기
 	@ResponseBody
 	@RequestMapping("wishList.sp")
 	public String wishList(WishList wishList, HttpSession session) {

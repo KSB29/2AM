@@ -18,8 +18,15 @@
 				<jsp:include page="/WEB-INF/views/host/hostMenu.jsp"/>
 			<!-- Content -->
 				<section>
-					<h1 class="align-center">가격 정보</h1>	
-					<form method="post" action="spacePriceInsert.sp">
+					<h1 class="align-center">가격 정보</h1>
+					<c:if test="${ priceFlag != 'Y' }">
+					<c:set var="spacePrice" value="spacePriceInsert.sp"/>
+					</c:if>
+					<c:if test="${ priceFlag == 'Y' }">	
+					<c:set var="spacePrice" value="spacePriceUpdate.sp"/>
+					</c:if>
+					<input type="hidden" id="priceFlag" value="${ priceFlag }">
+					<form method="post" action="${ spacePrice }">
 						<h2>1. 환불규정</h2>
 						<div class="row gtr-uniform borderTop">
 							<div class="col-12 col-12-xsmall">
@@ -168,7 +175,7 @@
 						<input type="hidden" name="spacePrice" id="spacePrice1">
 						</c:if>
 						<c:if test="${ list.priceWeekend != null }">
-						<input type="hidden" name="spacePrice" id="spacePrice${ list.priceWeekend }" value='${ list.priceTime }'>
+						<span id="${ list.priceId }"><input type="hidden" name="spacePrice" id="spacePrice${ list.priceWeekend }" value='${ list.priceTime }'></span>
 						</c:if>
 						<c:set var="length" value="${ pList.index + 1 }"/>
 						</c:forEach>

@@ -31,31 +31,31 @@
 							<div class="common_wrapper row type_2">
 									<section class="wrapper_left col-7 ">
 											<form action="changePw.sp" method="POST">
-												<article class="changeForm_wrapper col-12">
+												<article class="changeForm_wrapper">
 													<div class="center">
 														<h2>비밀번호 변경</h2>
 													</div>
-													<div class="changeForm_1 fields row">
-														<div class="field changePw_box1 col-12">
-															<input type="password" class="" name="currentPwd" id="currentPwd" placeholder="현재 비밀번호" required>
+													<div class="changeForm_1">
+														<div class="field changePw_box1 ">
+															<input type="password"  name="currentPwd" id="currentPwd" placeholder="현재 비밀번호" required>
 															<input type="hidden" name ="memberId" id="memberId" value="${loginUser.memberId}" name="memberId" >
 															<span class="warning3"></span>
 														</div>
-														<div class="field changePw_box2 col-12">
+														<div class="field changePw_box2 ">
 															<input type="password"name="memberPwd"id="newPwd"placeholder="변경할  비밀번호" required>
 															<span class="warning"></span>
 														</div>
-														<div class="field changePw_box2 col-12">						
+														<div class="field changePw_box2 ">						
 															<input type="password" name="newPwd2" id="newPwd2" placeholder="변경할 비밀번호 재입력" required>
 															<span class="warning2"></span>
 														</div>
 													</div>
 													
-													<div class="changeForm_2 row">
-														<div class="col-6">
+													<div class="changeForm_2">
+														<div class="change_btn">
 															<button id="change_btn" class="button fit" type="submit">확인</button>
 														</div>														
-														<div class="col-6">
+														<div class="change_btn">
 															<input class="button primary fit" type="reset" value="취소">														
 														</div>
 													</div>
