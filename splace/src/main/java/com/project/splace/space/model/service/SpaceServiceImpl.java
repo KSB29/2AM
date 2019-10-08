@@ -18,6 +18,7 @@ import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
 import com.project.splace.space.model.vo.SpaceAtt;
 import com.project.splace.space.model.vo.Type;
+import com.project.splace.space.model.vo.WishList;
 
 @Service("sService")
 public class SpaceServiceImpl implements SpaceService {
@@ -202,18 +203,44 @@ public class SpaceServiceImpl implements SpaceService {
 
 
 	@Override
+	public int wishList(WishList wishList){
+	
+		return sDao.wishList(wishList);
+
 	public int updateApply(int spaceId) {
 		return sDao.updateApply(spaceId);
 	}
 
 
 	@Override
+	public int wishSelect(WishList wishList) {
+		return sDao.wishSelect(wishList);
+    
 	public int deleteSpace(int spaceId) {
 		return sDao.deleleSpace(spaceId);
 	}
 
 
 	@Override
+	public int wishDelete(WishList wishList) {
+		return sDao.wishDelete(wishList);
+	}
+
+
+	/*
+	 * @Override public ArrayList<SpaceAtt> selectSpaceAtt(int spaceId) { return
+	 * sDao.selectSpaceAtt(spaceId); }
+	 */
+
+
+
+
+
+	/*
+	 * @Override public ArrayList<Space> otherSpace(int hostId) {
+	 * 
+	 * return sDao.otherSpace(); }
+	 */
 	public Space selectSpace(int spaceId) {
 		return sDao.selectSpace(spaceId);
 	}

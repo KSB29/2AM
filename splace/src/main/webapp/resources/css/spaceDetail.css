@@ -61,8 +61,10 @@ ol{
 .fa-heart:hover {
    color: red;
    cursor: pointer;
+} 
+#dislike,#like{
+	width:80px;
 }
-
 .detailSimple>p{
 	font-size: 45px;
 	font-weight: 200;
