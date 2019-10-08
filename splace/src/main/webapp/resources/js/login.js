@@ -2,7 +2,7 @@
 
 $(document).ready(function(){
 	
-	
+	/*ID 기억하기 */
 	var key = getCookie("saveId");
 	$("#memberId").val(key);
 	
@@ -12,7 +12,7 @@ $(document).ready(function(){
 	
 	$("#saveId").change(function(){
 		if($("saveId").is(":checked")){
-			setCookie("saveId", $("memberId").val(),7); // 7일간 쿠키 보관
+			setCookie("saveId", $("#memberId").val(),7); // 7일간 쿠키 보관
 		}else{
 			deleteCookie("saveId");
 		}
@@ -25,8 +25,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	
-	
+	/* 쿠키 생성 및 저장 함수*/
 	function setCookie(cookieName, value, exdays){
 	    var exdate = new Date();
 	    exdate.setDate(exdate.getDate() + exdays);
@@ -53,5 +52,37 @@ $(document).ready(function(){
 	    }
 	    return unescape(cookieValue);
 	}
+	
+	/*로그인 검사*/
+	
+	/*아이디 미입력시 경고 메세지 출력*/
+	$("#login_btn").on("click",function(){
+		if($("#login_btn").val().tirm() ==""){
+			$("#guide").show();
+			$("#guide").text("아이디를 입력해주세요! :p").css("color","rgb(204, 0, 0)");
+			$("#memberId").focus(); 
+			return false;
+		}else if($("#memberPwd").val.trim()==""){
+			$("#guide").show();
+			$("#guide").text("비밀번호를 입력해주세요! :p").css("color","rgb(204, 0, 0)");
+			$("#memberId").focus(); 
+			return false;
+		}
+			
+	});
+	
+	/* 아이디 입력시 경고 메세지 가림 */
+	$("#memberId").keyup(function(){
+		$("#guide").hide();
+	});
+	
+	$("#memberPwd").keyup(function(){
+		$("#guide").hide();
+	});
+	
+	
+	
+	
+	
 	 
 });

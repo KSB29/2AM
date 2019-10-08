@@ -25,10 +25,23 @@ public interface BookService {
 	public abstract ArrayList<Book> selectBlist(int currentPage, Book book);
 
 	// 예약 내역 조회
-	public abstract Book selectBook(int bookId);
+	public abstract Book selectBook(String bookId);
 
 	// 예약 취소
-	public abstract int deleteBook(int bookId);
+	public abstract int deleteBook(String bookId);
+	
+	// 자동 이용완료 처리
+	public abstract int updateBookCompleted(String bookId);
+
+	//------------------------------------------
+	//--결제-------------------------------------
+	//------------------------------------------
+	
+	// 결제
+	public abstract int insertPayment(Book payment);
+
+	// 결제 취소
+	public abstract int updatePaymentCancel(String bookId);
 
 
 }

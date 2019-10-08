@@ -272,4 +272,48 @@
 	SELECT * FROM "OPTION"
 	</select>
 	
+	<insert id="wishList" parameterType="wishList">
+	INSERT INTO WISHLIST 
+	VALUES(
+	#{memberId},
+	#{spaceId})
+	</insert>
+	
+	<!-- 호스트의 다른 공간 조회 -->
+<!-- <select id="otherSpace" parameterType="_int" resultMap="spaceResultSet">
+	SELECT P.*, SPACE_ATT_CHANGE 
+	FROM SPACE P
+	JOIN SPACE_ATT A ON(P.SPACE_ID=A.SPACE_ID)
+	WHERE STATUS_ID=2  
+	AND(SPACE_ATT_TYPE=0
+	AND SPACE_OPER_STATUS='Y'
+	AND HOST_ID=#{hostId})
+	</select>
+	 -->
+	
+	
+	<!-- 찜 조회  -->
+	<select id="wishSelect" parameterType="WishList" resultType="_int">
+	SELECT COUNT(*) 
+	FROM WISHLIST
+	WHERE MEMBER_ID=#{memberId}
+	AND SPACE_ID=#{spaceId}
+	</select>
+	
+	<!-- 찜 삭제 -->
+	<delete id="wishDelete" parameterType="WishList">
+	DELETE 
+	FROM WISHLIST
+	WHERE MEMBER_ID=#{memberId}
+	AND SPACE_ID=#{spaceId}
+	
+	</delete>
+<!-- 	
+	공간 이미지 조회 
+	<select id="selectSpaceAtt" resultMap="spaceAttResultSet">
+	SELECT SPACE_ATT_CHANGE
+	FROM SPACE_ATT
+	WHERE SPACE_ID=#{spaceId}
+	</select> -->
+	
 </mapper>

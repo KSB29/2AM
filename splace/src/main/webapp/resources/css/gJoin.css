@@ -14,12 +14,20 @@
 .join_Form{
     margin: 5em 0 0 0;
 } 
-
-
- .gjoin_box_1,
-.gjoin_box_2,
-.gjoin_box_3{
+ .gjoin_box{
     margin: 0 0 1em 0;
-
 } 
 
+
+.ok {
+box-shadow:inset 0 -1px 0 0 #1b6b2e;
+border-color:#1b6b2e;
+}
+.error{
+	box-shadow:inset 0 -1px 0 0 rgb(204, 0, 0);
+	border-color: rgb(204, 0, 0);
+}
+
+span.guide{
+	
+}

@@ -13,7 +13,7 @@
 <body>
 	<c:if test="${empty sessionScope.loginUser}">
 		<c:set var="msg" value="로그인 해주세요!" scope="session" />
-		<c:redirect url="/"/>
+		<c:redirect url="/loginForm.sp"/>
 	</c:if>
 	<!-- 이 형식을 꼭 지켜주세요! 
 		top.jsp, bottom.jsp, style.css, fontawesome-all.min.css, noscript.css,
@@ -300,19 +300,6 @@
 	<c:url var="paymentCancel" value="paymentCancel.sp" />
 	<c:url var="reviewForm" value="reviewForm.sp" />
 	<script>
-		var today = new Date();
-		var bookDate = new Date("${book.bookDate}");
-		var bookDateEve = new Date("${book.bookDate}");
-		bookDateEve.setDate(bookDateEve.getDate()-1);
-		console.log("오늘: "+today+", 당일: "+bookDate+", 전날: "+bookDateEve);
-		if(today == bookDate){ // 예약당일
-			
-		} else if(today == bookDateEve){ // 예약전날
-			
-		} else{
-			console.log("당일: "+bookDate+", 전날: "+bookDateEve);
-		}
-		
 		// 예약대기 - 100
 		// 예약승인 - 101
 		// 예약취소,결제취소 - 102
@@ -362,7 +349,7 @@
 			titleBox.html(
 					"<h2>결제예정금액</h2>"
 				+"<div>"
-				+"<span><fmt:formatNumber value="${book.bookPrice }" type="currency"/></span>"
+				+"<span><fmt:formatNumber value='${book.bookPrice }' type='currency'/></span>"
 				+"</div>"
 			);
 			btnContainer.append("<button type='button' class='button fit' data-toggle='modal' data-target='#bookCancel'>예약취소</button>");
@@ -437,7 +424,7 @@
 			titleBox.html(
 					"<h2>결제금액</h2>"
 				+"<div>"
-				+"<span><fmt:formatNumber value="${book.bookPrice }" type="currency"/></span>"
+				+"<span><fmt:formatNumber value='${book.bookPrice }' type='currency'/></span>"
 				+"</div>"
 			);
 			// 예약일 뺀 전날까지
@@ -447,17 +434,17 @@
 			btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#paymentCancel'>예약취소</button>");
 			modal.attr("id", "paymentCancel").attr("aria-labelledby", "paymentCancelTitle");
 			modalTitle.attr("id", "paymentCancelTitle");
-			modalForm.attr("action", "${paymentCancel}");
+			modalForm.attr("action", "${paymentCancel}?bookId=${book.bookId}&receiptId=${book.receiptId}");
 			modalBodyTitle.text("예약을 취소하시겠습니까?");
 			modalBody.html("");
 			modalBody.html(
 					"<tbody>"
-				+ "<tr><td>결제금액</td><td><fmt:formatNumber value="${book.bookPrice }" type="currency"/></td></tr>"
-				+ "<tr><td>차감금액</td><td><fmt:formatNumber value="0" type="currency"/></td></tr>"
-				+ "<tr><td>환불금액</td><td><fmt:formatNumber value="${book.bookPrice }" type="currency"/></td></tr>"
+				+ "<tr><td>결제금액</td><td><fmt:formatNumber value='${book.bookPrice }' type='currency'/></td></tr>"
+				+ "<tr><td>환불금액</td><td class='refund'><fmt:formatNumber value='${book.bookPrice }' type='currency'/></td></tr>"
 				+ "</tbody>"
 			);
 			modalBtn.html("예약취소");
+
 		} 
 		// 예약취소 && 결제취소
 		else if(bookStatus == 102 && paymentStatus == 102){ 
@@ -467,7 +454,7 @@
 			titleBox.html(
 					"<h2>환불 금액</h2>"
 				+"<div>"
-				+"<span><fmt:formatNumber value="${book.bookPrice }" type="currency"/></span>"
+				+"<span><fmt:formatNumber value='${book.bookPrice }' type='currency'/></span>"
 				+"</div>"
 			);
 			table.html("");
@@ -475,7 +462,7 @@
 					"<tbody>"
 				+ "<tr><td>취소날짜</td><td><fmt:formatDate value='${book.bookCancel}' pattern='yyyy.MM.dd (E)'/></td></tr>"
 				+ "<tr><td>결제금액</td>"
-				+ "<td><fmt:formatNumber value="${book.bookPrice }" type="currency"/></td></tr>"
+				+ "<td><fmt:formatNumber value='${book.bookPrice }' type='currency'/></td></tr>"
 				+ "<tr><td>차감금액</td>"
 				+ "<td>0</td></tr>"
 				+ "<tr class='borderBottom2'><td>결제정보</td>"
@@ -494,7 +481,7 @@
 			titleBox.html(
 					"<h2>결제금액</h2>"
 				+"<div>"
-				+"<span><fmt:formatNumber value="${book.bookPrice }" type="currency"/></span>"
+				+"<span><fmt:formatNumber value='${book.bookPrice }' type='currency'/></span>"
 				+"</div>"
 			);
 			$("#rightCol article table tr:first-child td:nth-child(3)").css("border","0");
@@ -526,15 +513,38 @@
 			table.children("tr:last-child").css("border-top","2px solid #4c74b9");
 			modalContainer.html("");
 		} 
+		
+		// 날짜 계산
+		function completed() {
+			$.ajax({
+				url: "bookCompleted.sp",
+				data: {bookId:"${book.bookId}"},
+				success: function(check){
+					if(check == "success"){
+						console.log("ooo");
+					} else{
+						console.log("xxx");
+					} 
+					// 한번만 새로고침
+					if (self.name != 'reload') {
+				        self.name = 'reload';
+				        self.location.reload(true);
+				    } else self.name = ''; 
+				}
+			});
+		}
 	</script>
 	<!-- 결제 연동 -->
 	<script>
 		// 결제API--------------------------------
+		// 난독화;
+		eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0 1="2";',3,3,'var|aid|5d7209d802f57e003591d597'.split('|'),0,{}))
+		
 		$("#payment").click(function(){
 		    //실제 복사하여 사용시에는 모든 주석을 지운 후 사용하세요
 		    BootPay.request({
 		        price: '1000', //실제 결제되는 가격
-		        application_id: "5d7209d802f57e003591d597",
+		        application_id: aid,
 		        name: '${book.spaceName}', //결제창에서 보여질 이름
 		        pg: 'inicis',
 		        method: 'card', //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
@@ -601,7 +611,6 @@
 		});
 	</script>
 	<script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.5.min.js" type="application/javascript"></script>
-	<script src="${contextPath}/resources/js/payment.js"></script>
 	<script src="${contextPath}/resources/js/book.js"></script>
 </body>
 </html>

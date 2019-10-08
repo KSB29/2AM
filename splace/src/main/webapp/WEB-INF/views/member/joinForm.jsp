@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE HTML>
 
@@ -15,13 +16,11 @@
 		<link rel="stylesheet" href="${contextPath }/resources/css/join.css" type="text/css">
 		<link rel="stylesheet" href="${contextPath }/resources/css/common.css" type="text/css">
 		<%-- <link rel="stylesheet" href="${contextPath}/resources/css/book.css" type="text/css"> --%>
-		
-		
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
+	
 	</head>
 	<body class="is-preload">
  		<jsp:include page="../common/top.jsp"/>
- 
 		<!-- Wrapper -->
 			<div id="wrapper">
 				<!-- Main -->
@@ -63,6 +62,7 @@
 															<div id="timer" class="timer">
 																<span id="min">03</span><span>&nbsp;:&nbsp;</span><span id="sec">00</span>
 															</div>										
+															<span class="noticeSpan1">인증번호가 틀렸습니다.</span>											
 														</div>
 										
 														<div class="form_box filed">
@@ -89,7 +89,7 @@
 														<label for="policy2"> <a id="policy_modal" href="#exampleModalCenter" data-toggle="modal">서비스 이용약관(필수)</a></label>
 													</div>
 													<div>
-														<input type="checkbox" class="policy_ck" id="policy3" name="policy_ck" required>
+														<input type="checkbox" class="policy_ck" id="policy3" name="policy_ck" >
 														<label for="policy3"> 이벤트 등 프로모션 알림 메일 수신 동의(선택)</label>
 													</div>
 												</article>

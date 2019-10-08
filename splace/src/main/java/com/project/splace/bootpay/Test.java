@@ -14,12 +14,12 @@ import com.project.splace.bootpay.model.request.SubscribeBilling;
 public class Test {
     static BootpayApi api;
     public static void main(String[] args) {
-        api = new BootpayApi("59bfc738e13f337dbd6ca48a", "FQj3jOvQYp053nxzWxHSuw+cq3zUlSWZV2ec/8fkiyA=");
+        api = new BootpayApi("5d7209d802f57e003591d59a", "nKnUBiaphtcJt3Y8fELMbowN3Di6PV+Kp6JxKLVyKVQ=");
         goGetToken();
-        goVerfity();
+//        goVerfity();
         goCancel();
-        goSubscribeBilling();
-        goRemoteForm();
+//        goSubscribeBilling();
+//        goRemoteForm();
     }
 
     public static void goGetToken() {
@@ -32,7 +32,7 @@ public class Test {
 
     public static void goVerfity() {
         try {
-            HttpResponse res = api.verify("593f8febe13f332431a8ddae");
+            HttpResponse res = api.verify("5d9ae9124f74b40050518d89");
             String str = IOUtils.toString(res.getEntity().getContent(), "UTF-8");
             System.out.println(str);
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class Test {
 
     public static void goCancel() {
         Cancel cancel = new Cancel();
-        cancel.receipt_id = "593f8febe13f332431a8ddae";
+        cancel.receipt_id = "5d9ae8664f74b4003951b453";
         cancel.name = "관리자 홍길동";
         cancel.reason = "택배 지연에 의한 구매자 취소요청";
 

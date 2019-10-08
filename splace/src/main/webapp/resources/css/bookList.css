@@ -23,12 +23,12 @@
 table{padding: 0 !important}
 table *{margin: 0 !important;}
 table tr{background-color: transparent !important;}
-table td:first-child{vertical-align: middle; text-align: center}
-table td:nth-child(2){width: 20%; vertical-align: middle; text-align: center}
-table td:nth-child(2) img{height: 15%;}
-table td:nth-child(3){width: 60%;vertical-align: middle}
-table td:nth-child(3)>div{border-left: 1px solid #c9c9c9;border-right: 1px solid #c9c9c9;}
-table td:nth-child(3) .col-12:first-child{
+table td:first-child{vertical-align: middle; text-align: center; padding: auto 0 !important;}
+table td:nth-child(1){width: 20%; vertical-align: middle; text-align: center}
+table td:nth-child(1) img{height: 15%;}
+table td:nth-child(2){width: 60%;vertical-align: middle}
+table td:nth-child(2)>div{border-left: 1px solid #c9c9c9;border-right: 1px solid #c9c9c9;}
+table td:nth-child(2) .col-12:first-child{
     font-weight: bold; 
     color: #4c74b9; 
     letter-spacing: -1px; 
@@ -41,6 +41,6 @@ table td:last-child div{
 }
 table td:last-child button{
     padding: 0 1.2em !important; 
-    /* width: 49%; */ 
+    margin: 1% 0 !important;
 }
 

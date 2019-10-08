@@ -3,22 +3,28 @@ package com.project.splace.book.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.splace.book.model.service.BookService;
 import com.project.splace.book.model.vo.Book;
+import com.project.splace.bootpay.BootpayApi;
+import com.project.splace.bootpay.model.request.Cancel;
 import com.project.splace.common.Pagination;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
@@ -88,12 +94,22 @@ public class BookController {
 	// 1.1 예약신청
 	@RequestMapping("book.sp")
 	public String book(Book book, int spaceId, String bookDateS, HttpSession session, RedirectAttributes rd) throws ParseException {
+		// 예약일
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Date bookDate = sdf.parse(bookDateS);
+		// 회원아이디
 		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		// 예약번호생성
+		Date today = new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
+		String bookId = sdf2.format(today) + "_" + new Date().getTime();
+		System.out.println(bookId);
+		
+		// 값 세팅
 		book.setMemberId(memberId);
 		book.setSpaceId(spaceId);
 		book.setBookDate(bookDate);
+		book.setBookId(bookId);
 		
 		int result = bookService.insertBook(book);
 		if(result>0) {
@@ -103,11 +119,7 @@ public class BookController {
 		}
 		return "redirect:bookList.sp";
 	}
-	// 12시간 이후 승인안되면 자동으로 예약 취소
-	@Scheduled(fixedDelay=43200000)
-	public void bookDeadline() {
-		
-	}
+	
 	// 메일 코드
 	@Autowired
 	private JavaMailSender mailSender;
@@ -254,7 +266,7 @@ public class BookController {
 		
 		// 목록 조회
 		ArrayList<Book> bList = bookService.selectBlist(currentPage, book);
-		System.out.println(bList);
+//		System.out.println(bList);
 		
 		mv.addObject("bList", bList).addObject("pi", Pagination.getPageInfo()).addObject("filter", statusId).setViewName("book/bookList");
 		return mv;
@@ -262,7 +274,7 @@ public class BookController {
 	
 	// 3. 예약내역 화면으로 이동
 	@RequestMapping("bookDetail.sp")
-	public ModelAndView bookDetail(ModelAndView mv, HttpSession session, int bookId) {
+	public ModelAndView bookDetail(ModelAndView mv, HttpSession session, String bookId) {
 		
 		if(session.getAttribute("loginUser") == null) {
 			mv.addObject("msg","로그인 해주세요!").setViewName("member/loginForm");
@@ -270,23 +282,66 @@ public class BookController {
 		}
 		
 		Book book = bookService.selectBook(bookId);
-		System.out.println(book);
+//		System.out.println(book);
 		
 		// 승인기한
 		Date deadline = new Date(book.getBookEnroll().getTime() + (60*60*24*1000)*2);
 		// 결제번호생성
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		String paymentId = sdf.format(today) + "_" + new Date().getTime();
+		String paymentId = "p" + sdf.format(today) + "_" + new Date().getTime();
 		
-		mv.addObject("book", book).addObject("deadline", deadline).addObject("paymentId", paymentId).setViewName("book/bookDetail");
+		// 예약 상태변경
+		Calendar today2 = Calendar.getInstance();
+		// 예약일
+		Calendar bookDate = Calendar.getInstance();
+		bookDate.setTime(book.getBookDate());
+		// 예약 전날
+		Calendar bookDateEve = Calendar.getInstance();
+		bookDateEve.setTime(book.getBookDate());
+		bookDateEve.add(Calendar.DAY_OF_MONTH, -1);
+		// 예약 전전날
+		Calendar bookDateEve2 = Calendar.getInstance();
+		bookDateEve2.setTime(book.getBookDate());
+		bookDateEve2.add(Calendar.DAY_OF_MONTH, -2);
+		
+		System.out.println("오늘: "+sdf.format(today2.getTime()) + today2.getTime());
+		System.out.println("예약일: "+sdf.format(bookDate.getTime()));
+		System.out.println("예약전날: "+sdf.format(bookDateEve.getTime()));
+		System.out.println("예약전전날: "+sdf.format(bookDateEve2.getTime()));
+		
+		if(book.getStatusId() == 100) { // 승인전
+			// 예약대기 ---> 예약일 2일 전까지 승인이 안되면 자동 취소
+			if(today2.getTime() == bookDateEve2.getTime()) {
+				
+			}
+		} else if(book.getStatusId() == 101) { // 승인완료/입금전
+			// 예약승인 ---> 예약일 1일 전까지 결제 안되면 자동 취소
+			
+		} else if(book.getStatusId() == 103) { // 입금완료
+			// 예약완료 ---> 
+			// 오늘 == 예약일 -> 환불불가
+			if(today2.getTime() == bookDate.getTime()) {
+				System.out.println("환불불가");
+			} 
+			// 오늘 == 예약일 하루전 -> 환불금액 50%
+			else if(today2.getTime() == bookDateEve.getTime()) {
+				System.out.println("환불금액 50%");
+			} 
+			// 오늘 < 예약일 하루전 -> 환불금액 100%
+			else if(bookDateEve.getTime().after(today2.getTime())) {
+				System.out.println("환불금액 100%");
+			}
+		}
+		
+		mv.addObject("book", book).addObject("deadline", deadline).addObject("paymentId", paymentId).addObject("bookDateEve", bookDateEve).setViewName("book/bookDetail");
 		
 		return mv;
 	}
 
 	// 4. 예약취소
 	@RequestMapping("bookCancel.sp")
-	public ModelAndView bookCancel(ModelAndView mv, int bookId, RedirectAttributes rd) {
+	public ModelAndView bookCancel(ModelAndView mv, String bookId, RedirectAttributes rd) {
 		int result = bookService.deleteBook(bookId);
 		
 		mv.setViewName("redirect:bookList.sp");
@@ -296,5 +351,70 @@ public class BookController {
 			rd.addFlashAttribute("msg", "예약이 취소되지 않았니다!");
 		}
 		return mv;
+	}
+	
+	// 5. 결제완료상태에서 예약일이 되면 자동으로 이용완료처리
+	@ResponseBody
+	@RequestMapping("bookCompleted.sp")
+	public String bookCompleted(String bookId) {
+		int result = bookService.updateBookCompleted(bookId);
+		if(result>0) {
+			return "success";			
+		} else {
+			return "xxx";						
+		}
+	}
+
+	//------------------------------------------
+	//--결제-------------------------------------
+	//------------------------------------------
+	
+	// 1. 결제
+	@RequestMapping("payment.sp")
+	public String payment(Book payment, RedirectAttributes rd) {
+		
+		int result = bookService.insertPayment(payment);
+		
+		if(result>0) {
+			rd.addAttribute("msg", "결제되었습니다!");
+		} else {
+			rd.addAttribute("msg", "결제취소되었습니다!");
+		}
+		
+		return "redirect:bookDetail.sp?bookId="+payment.getBookId();
+	}
+	
+	// 2. 결제취소
+	static BootpayApi api;
+	@RequestMapping("paymentCancel.sp")
+	public String paymentCancel(String receiptId, String bookId, RedirectAttributes rd, HttpServletRequest request) throws Exception {
+		 api = new BootpayApi(
+		        "5d7209d802f57e003591d59a",
+		        "nKnUBiaphtcJt3Y8fELMbowN3Di6PV+Kp6JxKLVyKVQ="
+		);
+		api.getAccessToken();
+
+		Cancel cancel = new Cancel();
+		cancel.receipt_id = receiptId;
+		cancel.name = "관리자";
+		cancel.reason = "구매자 취소요청";
+
+		try {
+		    HttpResponse res = api.cancel(cancel);
+		    String str = IOUtils.toString(res.getEntity().getContent(), "UTF-8");
+		    System.out.println(str);
+		    if(str != null) {
+				int result = bookService.updatePaymentCancel(bookId);
+				if(result>0) {
+					rd.addFlashAttribute("msg", "결제가 취소되었습니다.");
+				} else {
+					rd.addFlashAttribute("msg", "결제가 취소되지 않았습니다.");
+				}
+		    }
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		return "redirect:bookDetail.sp?bookId="+bookId;
 	}
 }

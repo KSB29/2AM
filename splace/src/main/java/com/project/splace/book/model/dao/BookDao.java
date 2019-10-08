@@ -83,7 +83,7 @@ public class BookDao {
 	 * @param bookId
 	 * @return book
 	 */
-	public Book selectBook(int bookId) {
+	public Book selectBook(String bookId) {
 		return sqlSession.selectOne("bookMapper.selectBook", bookId);
 	}
 
@@ -92,7 +92,47 @@ public class BookDao {
 	 * @param bookId
 	 * @return result
 	 */
-	public int deleteBook(int bookId) {
+	public int deleteBook(String bookId) {
 		return sqlSession.update("bookMapper.deleteBook", bookId);
+	}
+
+	//------------------------------------------
+	//--결제-------------------------------------
+	//------------------------------------------
+	
+	/**
+	 * 1. 결제
+	 * @param payment
+	 * @return result
+	 */
+	public int insertPayment(Book payment) {
+		return sqlSession.insert("bookMapper.insertPayment", payment);
+	}
+
+	/**
+	 * 1.1 예약 상태 UPDATE
+	 * @param bookId
+	 * @return result
+	 */
+	public int updateBookStatus(String bookId) {
+		return sqlSession.update("bookMapper.updateBookStatus", bookId);
+	}
+
+	/**
+	 * 2. 결제 취소
+	 * @param payment
+	 * @return result 
+	 */
+	public int updatePaymentCancel(String bookId) {
+		return sqlSession.update("bookMapper.updatePaymentCancel", bookId);
+	}
+
+	/**
+	 * 자동 이용완료 처리
+	 * @param bookId
+	 * @return result
+	 */
+	public int updateBookCompleted(String bookId) {
+		return sqlSession.update("bookMapper.updateBookCompleted", bookId);
 	}
 }

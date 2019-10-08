@@ -32,18 +32,22 @@
 										<article class="find_form_1">
 											<form action="findPw.sp" method="POST">
 													<div class="center">
-														<h3>비밀번호를 잊어버리셨군요</h3>
+														<h2>비밀번호를 잊어버리셨군요</h2>
 														<p>Splace가 금방 도와드릴게요 :)</p>
 													</div>
 													<div>
 														<div class="find_box_1">
-															<input type="text" placeholder="가입 시 입력한 이메일">
+															<input type="text"  name="memberId" id="memberId" placeholder="가입 시 입력한 이메일">
 														</div>
 														<div class="find_box_2">
-															<button class="button primary find_btn" type="button" onclick="" >임시비번 받기</button>
+															<button class="button primary find_btn fit" id="sendPwd" type="button" disabled>임시비번 받기</button>
+															<button class="button primary find_btn fit" id="reSendPwd" type="button" onclick="$('#sendPwd').click();" >다시 받기</button>
+															
 														</div>
 													</div>
-													<div class="input_box col-12">
+													<span class="warning"></span>
+													
+													<div class="input_box">
 														<c:url var="loginForm" value="loginForm.sp"/>
 														<a class="button fit" href="${loginForm}">로그인 하러 가기</a>
 													</div>
@@ -53,7 +57,7 @@
 									<section class="wrapper_right col-5 center find_bg">
 										<article class="find_form_2">
 											<div>
-												<h3>주의하세요! </h3>
+												<h2>주의하세요!</h2>
 											</div>
 											<div >
 												<p>
@@ -78,11 +82,8 @@
 
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="${contextPath}/resources/js/findPw.js"></script>
+
 
 	</body>
 </html>
