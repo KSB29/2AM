@@ -2,6 +2,9 @@ package com.project.splace.member;
 
 import java.util.Random;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class RandomNo {
 
 	private boolean lowerCheck;

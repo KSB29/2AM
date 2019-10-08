@@ -2,18 +2,18 @@
 /* 비밀번호 찾기 form 조 */
 
 .find_form_1, .find_form_2{
-    margin: 15rem 0 0 0;
+    margin: 9rem 0 0 0;
 }
 .find_form_2{
     color: #f6f6f6;
 }
     .find_box_1{
         width: 70%;
-        float: left;
+        display: inline-block;
     }
 
     .find_box_2{
-        width: 30%;
+        width: 29%;
         display: inline-block;
         box-sizing: border-box;
     }
@@ -24,9 +24,26 @@
 
 /* 배경 이미지 */
 .find_bg{
+	padding: 0 2em 0 2em !important ;
     background-image: url(../img/back07.jpg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-attachment: scroll;
     background-position: left center;
+}
+.warning{
+	clear:both;
+	
+}
+
+.ok {
+box-shadow:inset 0 -1px 0 0 #1b6b2e;
+border-color:#1b6b2e;
+}
+.error{
+	box-shadow:inset 0 -1px 0 0 rgb(204, 0, 0);
+	border-color: rgb(204, 0, 0);
+}
+#reSendPwd{
+	display:none;
 }

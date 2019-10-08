@@ -46,7 +46,7 @@
 				
 					<!-- Main -->
 					<div id="main">
-						<div class="inner ">
+						<div class="inner">
 						
 								<div class="common_wrapper row type_2">
 										<section class="wrapper_left col-7">
@@ -72,7 +72,9 @@
 														<label  for="saveId">ID 기억하기</label>
 													</div>  
 													<div class="form_2 col-6 ">
-														<a>비밀번호 찾기</a>
+													
+												<c:url var="findPw" value="findPwForm.sp"/>
+														<a href="${findPw}">비밀번호 찾기</a>
 													</div>
 												</article>
 												<c:url var="njoinForm" value="njoinForm.sp"/>

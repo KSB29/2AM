@@ -92,9 +92,7 @@ public class sendMailController {
 	        }
 		
 		 	//return num;
-
-		 	
-		 	 */
+		 	*/
 		Properties prop = new Properties(); 
 		prop.put("mail.smtp.host", "smtp.gmail.com");
 		prop.put("mail.smtp.port", 465); 
@@ -114,7 +112,7 @@ public class sendMailController {
 		try {
 			msg.setSentDate(new Date());
 
-			msg.setFrom(new InternetAddress("tjdcksghkd12@gmail.com", "Splace"));
+			msg.setFrom(new InternetAddress("splace.2am@gmail.com", "Splace"));
 			InternetAddress to = new InternetAddress(email);
 			msg.setRecipient(Message.RecipientType.TO, to);
 			
@@ -123,6 +121,7 @@ public class sendMailController {
 			
 			logger.info(email);
 			
+	
 			msg.setText("회원가입을 축하합니다! 아래 인증코드를 입력해주세요 \n인증 코드 : "+num);
 			
 			Transport.send(msg);

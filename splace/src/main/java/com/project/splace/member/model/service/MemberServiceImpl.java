@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.splace.member.controller.MemberController;
 import com.project.splace.member.model.dao.MemberDao;
+import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
 
 @Service("mService")
@@ -69,5 +70,22 @@ public class MemberServiceImpl implements MemberService{
 		String encPwd = bCryptPasswordEncoder.encode(mem.getMemberPwd());
 		mem.setMemberPwd(encPwd);
 		return mDao.updatePwd(mem);
+	}
+
+	@Override
+	public int updatePwd(MailVO vo) {
+		String encPwd = bCryptPasswordEncoder.encode(vo.getTemp());
+		vo.setTemp(encPwd);
+		
+		return mDao.updatePwd(vo);
+
+	}
+
+	@Override
+	public int insertNaverId(Member mem) {
+		
+		
+		
+		return mDao.insertNaverId(mem);
 	}
 }

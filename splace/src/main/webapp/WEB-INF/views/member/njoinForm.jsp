@@ -40,26 +40,31 @@
 					<div class="inner">
 							<div class="common_wrapper row type_2">
 									<section class="wrapper_left welcome_bg col-5 center">
-											<form action="#" method="POST">
 												<article class="welcome_box col-12">
 													<h2>환영합니다.</h2>
 													<p>SPLACE의 다양한 혜택을 만나보세요</p>
 												</article>
-											</form>
 									</section>
 									<section class="wrapper_right col-7 change_bg">
-										<form action="#" method="POST">
+										<form action="nJoin.sp" method="POST">
 											<article class="join_Form">
 												<div class="gjoin_box_1 col-12 center">
 													<h2>NAVER 회원가입</h2> 
 												</div>																						
 												<div class="join_Form_box row">
-														<div class="gjoin_box_2 col-12">
-															<input type="text" name="memberName" placeholder="이름을 입력하세요." readonly>
-														</div>
-														<div class="gjoin_box_3 col-12">
-															<input type="email" name="memberId" readonly>
-														</div>
+													<div class="gjoin_box col-12">
+														<input type="text" id="memberName" name="memberName" placeholder="이름을 입력하세요." readonly>
+													</div>
+													<div class="gjoin_box col-12">
+														<input type="email" id="memberId" name="memberId" readonly>
+														<input type="hidden" id="memberPwd" name="memberPwd" value="naver123" >
+														<input type="hidden" id="memberPwd" name="memberSocial" value="네이버" >
+							
+													</div>
+													<div class="gjoin_box col-12">
+														<input type="text" id="memberPhone" name="memberPhone">
+														<span class="guide"></span>
+													</div>
 												</div>													
 												<div class="join_policy_box">
 													<div>
@@ -67,8 +72,8 @@
 														<label for="policy2"> <a id="policy_modal" href="#exampleModalCenter" data-toggle="modal" >서비스 이용약관(필수)</a></label>
 													</div>
 													<div>
-														<input type="checkbox" class="policy_ck" id="policy" name="policy_ck" required>
-														<label for="policy"> 이벤트 등 프로모션 알림 메일 수신 동의(선택)</label>
+														<input type="checkbox" class="policy_ck" id="memberAgree" name="memberAgree" required>
+														<label for="memberAgree"> 이벤트 등 프로모션 알림 메일 수신 동의(선택)</label>
 													</div>
 												</div>
 												<div>
@@ -178,6 +183,7 @@
 				<!-- 네이버 로그인 -->
  				<script type="text/javascript">
 				  var naver_id_login = new naver_id_login("6M93f_6j07ur8krVEjU9", "http://localhost:8080/splace/njoinForm.sp");
+				  
 				  // 접근 토큰 값 출력
 				  /* alert(naver_id_login.oauthParams.access_token); */
 				  // 네이버 사용자 프로필 조회
@@ -186,7 +192,7 @@
 				  function naverSignInCallback() {
 					 $("input[name=memberId]").val(naver_id_login.getProfileData('email'));
 					 $("input[name=memberName]").val(naver_id_login.getProfileData('name'));
-				    /* alert(naver_id_login.getProfileData('nickname')); */
+				    // alert(naver_id_login.getProfileData('password')); 
 				    /* alert(naver_id_login.getProfileData('age')); */
 				  }
 			  	</script>  
