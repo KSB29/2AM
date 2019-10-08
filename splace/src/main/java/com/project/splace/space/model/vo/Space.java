@@ -2,9 +2,6 @@ package com.project.splace.space.model.vo;
 
 import java.sql.Date;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Space {
 	
 	private int spaceId;
@@ -28,6 +25,7 @@ public class Space {
 	private Date spaceEnroll;
 	private Date spaceUpdate;
 	private String memberId;
+	private String spaceAttOrigin;
 	private String spaceAttChange;
 	private String typeName;
 	private String priceFlag;
@@ -94,8 +92,8 @@ public class Space {
 	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
 			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
 			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
-			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String memberId, String spaceAttChange,
-			String typeName, String priceFlag) {
+			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String memberId, String spaceAttOrigin,
+			String spaceAttChange, String typeName, String priceFlag) {
 		super();
 		this.spaceId = spaceId;
 		this.spaceName = spaceName;
@@ -118,6 +116,7 @@ public class Space {
 		this.spaceEnroll = spaceEnroll;
 		this.spaceUpdate = spaceUpdate;
 		this.memberId = memberId;
+		this.spaceAttOrigin = spaceAttOrigin;
 		this.spaceAttChange = spaceAttChange;
 		this.typeName = typeName;
 		this.priceFlag = priceFlag;
@@ -313,6 +312,14 @@ public class Space {
 
 	public void setPriceFlag(String priceFlag) {
 		this.priceFlag = priceFlag;
+	}
+
+	public String getSpaceAttOrigin() {
+		return spaceAttOrigin;
+	}
+
+	public void setSpaceAttOrigin(String spaceAttOrigin) {
+		this.spaceAttOrigin = spaceAttOrigin;
 	}
 
 	@Override

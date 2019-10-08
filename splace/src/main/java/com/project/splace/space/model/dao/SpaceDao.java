@@ -183,4 +183,13 @@ public class SpaceDao {
 		return sqlSession.update("spaceMapper.updateFile", sAtt);
 	}
 
+	/**
+	 * 공간 가격 수정 Dao
+	 * @param price
+	 * @return result
+	 */
+	public int updatePrice(Price price) {
+		return sqlSession.update("spaceMapper.updatePrice", price);
+	}
+
 }

@@ -48,19 +48,20 @@
 									<c:url var="spaceUpdateForm" value="spaceUpdateForm.sp">
 										<c:param name="spaceId" value="${ list.spaceId }"/>
 									</c:url>
+									<c:set var="priceFlag" value="${ list.priceFlag }"/>
 									<c:url var="spacePrice" value="spacePrice.sp">
 										<c:param name="spaceId" value="${ list.spaceId }"/>
+										<c:param name="priceFlag" value="${ priceFlag }"/>
 									</c:url>
 									<c:url var="spaceDayoff" value="spaceDayoff.sp">
 										<c:param name="spaceId" value="${ list.spaceId }"/>
 									</c:url>
 									<a class="button primary small" href="${ spaceUpdateForm }">수정</a>
-									<c:set var="priceFlag" value="${ list.priceFlag }"/>
 									<a class="button primary small" href="${ spacePrice }">가격 정보</a>
 									<a class="button primary small" href="${ spaceDayoff }">휴일 정보</a>
 								</div>
 								<div class="image fit marginClear">
-									<c:if test="${ list.statusId == 0 }">
+									<c:if test="${ list.statusId == 0 || list.statusId == 3}">
 									<c:if test="${ priceFlag == 'Y' }">
 										<input type="button" class="button small" onClick="spaceApply(${ list.spaceId });" value="신청">
 									</c:if>

@@ -23,17 +23,61 @@
 					<form method="post" action="spaceUpdate.sp" enctype="multipart/form-data">
 						<h2>1. 기본정보</h2>
 						<input type="hidden" name="spaceId" id="spaceId" value="${ space.spaceId }">
+						<c:if test="${ space.statusId == 0 || space.statusId == 3 }">
 						<div class="row gtr-uniform borderTop">
 							<div class="col-12 col-12-xsmall">
-								<label>공간이름</label><span>${ space.spaceName }</span>
+								<label for="spaceName">* 공간이름 <span id="nameLength"></span></label>
+								<input type="text" name="spaceName" id="spaceName" placeholder="공간이름" maxlength="100" required value="${ space.spaceName }">
 							</div>
+							<div class="col-12 col-12-small"><label>* 공간유형</label></div>
 							<div class="col-12 col-12-small">
+								<div class="row gtr-uniform">
+									<c:forEach var="tList" items="${ tList }">
+									<div class="col-2 col-12-small">
+										<c:if test="${ space.typeId eq tList.typeId }">
+										<input type="radio" id="typeId${ tList.typeId }" name="typeId" value="${ tList.typeId }" checked>
+										</c:if>
+										<c:if test="${ space.typeId ne tList.typeId }">
+										<input type="radio" id="typeId${ tList.typeId }" name="typeId" value="${ tList.typeId }">
+										</c:if>
+										<label for="typeId${ tList.typeId }">${ tList.typeName }</label>
+									</div>
+									</c:forEach>
+								</div>
+							</div>
+							<div class="col-1 col-12-xsmall">
+								<label>* 주소</label>
+								<input type="button" id="addressBtn" class="button primary small" value="주소찾기">
+							</div>
+							<div class="col-11 col-12-xsmall">
+								<label>&nbsp;</label>
+								<input type="text" name="spaceAddress" id="spaceAddress" placeholder="주소찾기 버튼을 클릭하세요." class="postcodify_address" value="${ space.spaceAddress }" readonly>
+							</div>
+							<div class="col-1 col-12-xsmall"></div>
+							<div class="col-7 col-12-xsmall">
+								<input type="text" name="address" placeholder="상세주소" class="postcodify_extra_info" value="${ address }">
+							</div>
+							<div class="col-4 col-12-xsmall">
+								<input type="text" name="post" placeholder="우편번호" class="postcodify_postcode5" value="${ post }" size="6" readonly>
+							</div>
+							<div class="col-12 col-12-xsmall noticeDiv">
+								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">관리자 승인 이후에는 공간이름, 공간유형, 주소 변경이 불가능합니다. 정확한 정보인지 확인해주세요.</span>
+							</div>
+						</div>
+						</c:if>
+						<c:if test="${ space.statusId == 1 || space.statusId == 2 }">
+						<div class="row gtr-uniform borderTop">
+							<div class="col-2 col-12-xsmall">
 								<label>공간유형</label><span>${ space.typeName }</span>
+							</div>
+							<div class="col-10 col-12-small">
+								<label>공간이름</label><span>${ space.spaceName }</span>
 							</div>
 							<div class="col-12 col-12-xsmall">
 								<label>주소</label><span>${ space.spaceAddress }</span>
 							</div>
 						</div>
+						</c:if>
 						<br><br>
 						<h2>2. 공간정보</h2>
 						<div class="row gtr-uniform borderTop">
@@ -54,7 +98,7 @@
 								<label>&nbsp;</label>
 								<input type="button" class="button primary small" id="addTagBtn" value="추가">
 							</div>
-							<div class="col-12 col-12-xsmall" id="tagList"></div>
+							<div class="col-12 col-12-xsmall noticeDiv" id="tagList"></div>
 							<input type="hidden" name="spaceTag" id="spaceTag" maxlength="150" value="${ space.spaceTag }">
 							<div class="col-12 col-12-xsmall">
 								<label>세부옵션</label>
@@ -84,7 +128,8 @@
 								<label>&nbsp;</label>
 								<input type="button" class="button primary small" id="addNoticeBtn" value="추가">
 							</div>
-							<div class="col-12 col-12-xsmall" id="noticeList"></div>
+							<div class="col-10 col-12-xsmall noticeDiv" id="noticeList"></div>
+							<div class="col-2 col-12-xsmall"></div>
 							<input type="hidden" name="spaceNotice" id="spaceNotice" maxlength="1000" value="${ space.spaceNotice }">
 						</div>
 						<br><br>
@@ -123,16 +168,18 @@
 									<label for="mainFile" class="button primary small">메인 이미지 등록</label>
 									<input type="file" name="uploadFile" id="mainFile" value="등록" onchange="loadImg(this,1);">
 									<img id="mainImg" class="image fit" src="${ contextPath }/resources/spaceImg/${ space.spaceAttChange }">
+									<span>${ space.spaceAttOrigin }</span>
 								</div>
-								<c:set var="index" value="0"/>
 								<c:forEach var="attList" items="${ attList }" varStatus="vs">
 								<div class="col-2">
 									<label for="subFile${ vs.index + 1 }" class="button small">이미지${ vs.index + 1 } 등록</label>
 									<input type="file" name="files" id="subFile${ vs.index + 1 }" value="등록" multiple onchange="loadImg(this,${ vs.index + 1 });">
 									<img id="subImg${ vs.index + 1 }" class="image fit" src="${ contextPath }/resources/spaceImg/${ attList.spaceAttChange }">
+									<span>${ attList.spaceAttOrigin }</span>
 								</div>
 								</c:forEach>
 								<c:set var="length" value="${ fn:length(attList) }"/>
+								<input type="hidden" name="filesIndex" value="${ length }">
 								<c:if test="${ length < 5 }">
 								<c:forEach var="i" begin="${ length + 1 }" end="5">
 								<div class="col-2">
@@ -157,6 +204,8 @@
 		</div>
 		<jsp:include page="/WEB-INF/views/common/bottom.jsp"/>
 	</div>
+	<!-- 주소 검색 -->
+	<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 	<script src="${contextPath}/resources/js/spaceInfo.js"></script>
 </body>
 </html>

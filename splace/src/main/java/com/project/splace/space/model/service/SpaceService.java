@@ -118,8 +118,17 @@ public interface SpaceService {
 	 * @param files
 	 * @return result
 	 */
-	public abstract int updateSpace(Space space, HttpServletRequest request, MultipartFile uploadFile,
+	public abstract int updateSpace(Space space, int filesIndex, HttpServletRequest request, MultipartFile uploadFile,
 			List<MultipartFile> files);
+
+	/**
+	 * 공간 가격 수정 Service
+	 * @param spaceId
+	 * @param spaceAdd
+	 * @param spacePrice
+	 * @return result
+	 */
+	public abstract int updatePrice(int spaceId, int spaceAdd, String[] spacePrice);
 
 	
 }
