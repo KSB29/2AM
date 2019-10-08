@@ -444,6 +444,7 @@
 				+ "</tbody>"
 			);
 			modalBtn.html("예약취소");
+
 		} 
 		// 예약취소 && 결제취소
 		else if(bookStatus == 102 && paymentStatus == 102){ 
@@ -532,27 +533,6 @@
 				}
 			});
 		}
-		var today = new Date();
-		console.log(today.getDate()+","+"${book.bookDate.getDate()}");
-		if(today.getDate()+"" == "${book.bookDate.getDate()}"){ // 예약일
-			console.log("오늘: "+today+", 예약일: "+"${book.bookDate}");
-			console.log("환불안됨");
-			completed();
-		} else if(today.getDate()+"" == "${bookDateEve.getDate()}"){
-			console.log("오늘: "+today+", 예약일전날: "+"${bookDateEve}");
-			console.log("환불50%");
-			$(".refund").html("<fmt:formatNumber value='${book.bookPrice / 2 }' type='currency'/>");
-			var paymentCancelPrice = "<input type='hidden' name='paymentCancelPrice' value='${book.bookPrice / 2 }'>";
-			modalForm.append(paymentCancelPrice);
-		} else if(today.getDate()+"" < "${bookDateEve.getDate()}"){
-			console.log("환불100%");
-			console.log("오늘: "+today+", 예약일전날: ${bookDateEve}");
-		} else{
-			console.log("날짜해당없음");	
-		}
-		console.log("오늘: "+today
-				+", 예약일: <fmt:formatDate value='${book.bookDate}' type='date' pattern='yyyy.MM.dd (E)'/>, 예약일전날: <fmt:formatDate value='${bookDateEve}' type='date' pattern='yyyy.MM.dd (E)'/>");
-		
 	</script>
 	<!-- 결제 연동 -->
 	<script>

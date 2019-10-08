@@ -3,6 +3,7 @@ package com.project.splace.book.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.mail.internet.MimeMessage;
@@ -289,10 +290,49 @@ public class BookController {
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String paymentId = "p" + sdf.format(today) + "_" + new Date().getTime();
+		
+		// 예약 상태변경
+		Calendar today2 = Calendar.getInstance();
+		// 예약일
+		Calendar bookDate = Calendar.getInstance();
+		bookDate.setTime(book.getBookDate());
 		// 예약 전날
-		Date bookDateEve = new Date();
-		bookDateEve.setDate(book.getBookDate().getDate()-1);
-		System.out.println("전날"+bookDateEve);
+		Calendar bookDateEve = Calendar.getInstance();
+		bookDateEve.setTime(book.getBookDate());
+		bookDateEve.add(Calendar.DAY_OF_MONTH, -1);
+		// 예약 전전날
+		Calendar bookDateEve2 = Calendar.getInstance();
+		bookDateEve2.setTime(book.getBookDate());
+		bookDateEve2.add(Calendar.DAY_OF_MONTH, -2);
+		
+		System.out.println("오늘: "+sdf.format(today2.getTime()) + today2.getTime());
+		System.out.println("예약일: "+sdf.format(bookDate.getTime()));
+		System.out.println("예약전날: "+sdf.format(bookDateEve.getTime()));
+		System.out.println("예약전전날: "+sdf.format(bookDateEve2.getTime()));
+		
+		if(book.getStatusId() == 100) { // 승인전
+			// 예약대기 ---> 예약일 2일 전까지 승인이 안되면 자동 취소
+			if(today2.getTime() == bookDateEve2.getTime()) {
+				
+			}
+		} else if(book.getStatusId() == 101) { // 승인완료/입금전
+			// 예약승인 ---> 예약일 1일 전까지 결제 안되면 자동 취소
+			
+		} else if(book.getStatusId() == 103) { // 입금완료
+			// 예약완료 ---> 
+			// 오늘 == 예약일 -> 환불불가
+			if(today2.getTime() == bookDate.getTime()) {
+				System.out.println("환불불가");
+			} 
+			// 오늘 == 예약일 하루전 -> 환불금액 50%
+			else if(today2.getTime() == bookDateEve.getTime()) {
+				System.out.println("환불금액 50%");
+			} 
+			// 오늘 < 예약일 하루전 -> 환불금액 100%
+			else if(bookDateEve.getTime().after(today2.getTime())) {
+				System.out.println("환불금액 100%");
+			}
+		}
 		
 		mv.addObject("book", book).addObject("deadline", deadline).addObject("paymentId", paymentId).addObject("bookDateEve", bookDateEve).setViewName("book/bookDetail");
 		
