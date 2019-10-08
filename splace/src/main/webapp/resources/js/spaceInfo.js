@@ -43,6 +43,48 @@ function loadImg(value, num) {
 
 $(document).ready(function(){
 	
+	// 공간 수정 시 정보 표시
+	if ($("#spaceId").val() != null) {
+		var option = $("#spaceOption").val();
+		var tag = $("#spaceTag").val();
+		var notice = $("#spaceNotice").val();
+		// 옵션
+		if (option != null) {
+			var optionArr = option.substring(1).split("#");
+			for (var i = 0; i < optionArr.length; i++) {
+				$("#option"+optionArr[i]).prop("checked", "true").next().css("color", "#4C74B9");
+			}
+		}
+		// 태그
+		if (tag != null) {
+			// 글자 수 표시
+			$("#tagLength").html(byteCheck($("#spaceTag"))).css("color", "#4C74B9");
+			var tagArr = tag.substring(1).split("#");
+			// 태그 리스트에 추가
+			var $tagList = $("#tagList");
+			for (var i = 0; i < tagArr.length; i++) {
+				var $span = $("<span class='tag'>").text("#"+tagArr[i]);
+				var $clear = $("<i class='material-icons tagClear warningColor'>").text("cancel");
+				$span.append($clear);
+				$tagList.append($span);
+			}
+		}
+		// 주의사항
+		if (notice != null) {
+			// 글자 수 표시
+			$("#noticeLength").html(byteCheck($("#spaceNotice"))).css("color", "#4C74B9");
+			var noticeArr = notice.substring(1).split("#");
+			// 주의사항 리스트에 추가
+			var $noticeList = $("#noticeList");
+			for (var i = 0; i < noticeArr.length; i++) {
+				var $span = $("<span class='notice'>").text(noticeArr[i]);
+				var $clear = $("<i class='material-icons noticeClear warningColor'>").text("cancel");
+				$span.append($clear);
+				$noticeList.append($span);
+			}
+		}
+	}
+	
 	$("#addressBtn").click(function(){
 		$("#addressBtn").postcodifyPopUp();
 	});

@@ -1,5 +1,5 @@
 .welcome_bg{
-    background-image: url(../../images/back09.jpg);
+    background-image: url(../img/back04.jpg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-attachment: scroll;
@@ -8,7 +8,7 @@
 
 .welcome_box{
     margin: 10rem 0 0 0;
-    color: #f6f6f6
+    color: #595959;
 }
  
 .join_Form{

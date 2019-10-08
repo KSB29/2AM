@@ -21,6 +21,7 @@
 					<h1 class="align-center">공간 등록</h1>	
 					<form method="post" action="spaceInsert.sp" enctype="multipart/form-data">
 						<h2>1. 기본정보</h2>
+						<input type="hidden" name="hostId" value="${ sessionScope.hostId }">
 						<div class="row gtr-uniform borderTop">
 							<div class="col-12 col-12-xsmall">
 								<label for="spaceName">* 공간이름 <span id="nameLength"></span></label>
@@ -67,7 +68,6 @@
 								<label for="spaceDetail">* 상세소개 <span id="detailLength"></span></label>
 								<textarea name="spaceDetail" id="spaceDetail" placeholder="상세소개" rows="6" maxlength="10000" required></textarea>
 							</div>
-							
 							<div class="col-10 col-12-xsmall">
 								<label for="tag">태그 <span id="tagLength"></span></label>
 								<input type="text" id="tag" placeholder="태그">
@@ -79,7 +79,6 @@
 							<div class="col-12 col-12-xsmall" id="tagList"></div>
 							<input type="hidden" name="spaceTag" id="spaceTag" maxlength="150">
 							<!-- <input type="text" name="spaceTag" id="spaceTag" maxlength="150"> -->
-							
 							<div class="col-12 col-12-xsmall">
 								<label>세부옵션</label>
 								<div class="row" id="optionField">
@@ -96,11 +95,10 @@
 									</ul>
 								</div>
 							</div>
-							<input type="hidden" name="spaceOption" id="spaceOption" readonly>
+							<input type="hidden" name="spaceOption" id="spaceOption">
 							<div class="col-12 col-12-xsmall noticeDiv">
 								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">구비된 편의시설을 선택해주세요.</span>
 							</div>
-							
 							<div class="col-10 col-12-xsmall">
 								<label for="">주의사항 <span id="noticeLength"></span></label>
 								<input type="text" id="notice" placeholder="주의사항">
@@ -112,7 +110,6 @@
 							<div class="col-12 col-12-xsmall" id="noticeList"></div>
 							<input type="hidden" name="spaceNotice" id="spaceNotice" maxlength="1000">
 							<!-- <input type="text" name="spaceNotice" id="spaceNotice" maxlength="1000"> -->
-							
 						</div>
 						<br><br>
 						

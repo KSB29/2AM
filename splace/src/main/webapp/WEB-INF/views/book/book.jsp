@@ -12,7 +12,7 @@
 <body>
 	<c:if test="${empty sessionScope.loginUser}">
 		<c:set var="msg" value="로그인 해주세요!" scope="session" />
-		<c:redirect url="/"/>
+		<c:redirect url="/loginForm.sp"/>
 	</c:if>
 	<!-- 이 형식을 꼭 지켜주세요! 
 		top.jsp, bottom.jsp, style.css, fontawesome-all.min.css, noscript.css,
@@ -62,12 +62,12 @@
 									<tr>
 										<td colspan="3">
 											<c:forEach items="${spaceO}" var="option">
-												<c:if test="${option.optionId < 9}">
+												<c:if test="${option.optionId <= 'I'}">
 													<i class="material-icons">
 														<c:out value="${option.optionIcon }"/>
 													</i>
 												</c:if>
-												<c:if test="${option.optionId >= 9}">
+												<c:if test="${option.optionId > 'I'}">
 													<i class='<c:out value="${option.optionIcon }"/>'></i>												
 												</c:if>
 												<c:out value="${option.optionName }"/> &nbsp;

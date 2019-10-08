@@ -23,3 +23,11 @@
     background-attachment: scroll;
     background-position: left center;
 }
+ .ok {
+box-shadow:inset 0 -1px 0 0 #1b6b2e;
+border-color:#1b6b2e;
+}
+.error{
+	box-shadow:inset 0 -1px 0 0 rgb(204, 0, 0);
+	border-color: rgb(204, 0, 0);
+}

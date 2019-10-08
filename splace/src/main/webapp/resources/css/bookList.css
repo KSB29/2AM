@@ -5,7 +5,14 @@
     border: 1px solid grey;
 }
 #main>.inner table{border: 1px solid coral} */
-
+.bookListTop{padding: 0 !important;}
+/* listCount--------------------------------- */
+.listCount{
+	color: #4c74b9;
+	position: absolute;
+    left: 0;
+    bottom: 0;
+}
 /* selectBox--------------------------------- */
 .filterContainer{width: 12%; float: right;}
 .filterContainer .current {font-size: 70%;}
@@ -16,8 +23,9 @@
 table{padding: 0 !important}
 table *{margin: 0 !important;}
 table tr{background-color: transparent !important;}
-table td:first-child{width: 20%; vertical-align: middle; text-align: center}
-table td:first-child img{height: 15%;}
+table td:first-child{vertical-align: middle; text-align: center; padding: auto 0 !important;}
+table td:nth-child(1){width: 20%; vertical-align: middle; text-align: center}
+table td:nth-child(1) img{height: 15%;}
 table td:nth-child(2){width: 60%;vertical-align: middle}
 table td:nth-child(2)>div{border-left: 1px solid #c9c9c9;border-right: 1px solid #c9c9c9;}
 table td:nth-child(2) .col-12:first-child{
@@ -33,62 +41,6 @@ table td:last-child div{
 }
 table td:last-child button{
     padding: 0 1.2em !important; 
-    /* width: 49%; */ 
+    margin: 1% 0 !important;
 }
 
-/* pagination-------------------------------- */
-.pagination-container {
-    margin: 0 auto;
-    text-align: center;
-}
-.pagination {
-    position: relative;
-}
-.pagination a {
-    position: relative;
-    display: inline-block;
-    color: #585858;
-    text-decoration: none;
-    font-size: 1.2rem;
-    padding: 3px 14px;
-    text-align: center;
-    border: 0;
-}
-.pagination-inner a:first-child{padding: 3px 15.5px;}
-.pagination a:before {
-    z-index: -1;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    content: "";
-    top: 0;
-    left: 0;
-    background-color: #4c74b9;
-    border-radius: 24px;
-    -webkit-transform: scale(0);
-            transform: scale(0);
-    transition: all 0.2s;
-}
-.pagination a:hover,
-.pagination a .pagination-active {
-    color: #fff !important;
-    text-decoration: none !important;
-}
-.pagination a:hover:before,
-.pagination a .pagination-active:before {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-}
-.pagination .pagination-active {
-    color: #fff;
-}
-.pagination .pagination-active:before {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-}
-.pagination-newer {
-    margin-right: 50px;
-}
-.pagination-older {
-    margin-left: 50px;
-}

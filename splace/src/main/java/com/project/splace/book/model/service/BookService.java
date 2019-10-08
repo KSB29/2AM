@@ -22,7 +22,26 @@ public interface BookService {
 	public abstract int insertBook(Book book);
 
 	// 예약목록 조회
-	public abstract ArrayList<Book> selectBlist(String memberId);
+	public abstract ArrayList<Book> selectBlist(int currentPage, Book book);
+
+	// 예약 내역 조회
+	public abstract Book selectBook(String bookId);
+
+	// 예약 취소
+	public abstract int deleteBook(String bookId);
+	
+	// 자동 이용완료 처리
+	public abstract int updateBookCompleted(String bookId);
+
+	//------------------------------------------
+	//--결제-------------------------------------
+	//------------------------------------------
+	
+	// 결제
+	public abstract int insertPayment(Book payment);
+
+	// 결제 취소
+	public abstract int updatePaymentCancel(String bookId);
 
 
 }

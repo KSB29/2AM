@@ -1,71 +1,71 @@
 /**
  * 공간 가격
  */
-var priceArr = new Array();
 
 $(document).ready(function(){
 	
 	dayChange($("#dayArea input:checked").attr("id"));
 	
-	var priceMap;
+	//toJson();
+	
+	function toJson() {
+		
+		for (var i = 1; i <= 8; i++) {
+			
+			var str = $("#spacePrice" + i).val();
+			
+			if (str != "") {
+				var json = JSON.parse(str);
+				var hour, price, id;
+				for (var j = 0; j < json.length; j++) {
+					hour = json[j].hour;
+					price = json[j].price;
+					hour = hour.substring(0,hour.indexOf("~"));
+					if (hour < 12) {
+						id = "#timeTableAm" + (i) + "hour" + hour;
+					} else {
+						id = "#timeTablePm" + (i) + "hour" + hour;
+					}
+					$(id).val(price);
+				}
+			}
+		}
+	}
 	
 	$("#submitBtn").click(function(){
-		var day = $("#"+day).next().html();
 		
 		for (var i = 1; i <= 8; i++ ) {
 			
-			priceMap = "{" + i + "}";
+			var priceList = new Array();
 			
-			$("#timeTableAm" + i + " .price").each(function(){
-				var id = $(this).attr("id");
-				var val = $("#"+id).val();
-				if (parseInt(val) > 0) {
-					var hour = parseInt(id.replace("timeTableAm" + i, "").replace("hour", ""));
-					var key = "'" + hour + "~" + (hour + 1) + "'";
-					var value = "'" + val + "'";
-					priceMap += ",{" + key + ":" + value + "}";
-				}
-			});
+			pushPrice("timeTableAm");
+			pushPrice("timeTablePm");
 			
-			$("#timeTablePm" + i + " .price").each(function(){
-				var id = $(this).attr("id");
-				var val = $("#"+id).val();
-				if (parseInt(val) > 0) {
-					var hour = parseInt(id.replace("timeTablePm" + i, "").replace("hour", ""));
-					var key = "'" + hour + "~" + (hour + 1) + "'";
-					var value = "'" + val + "'";
-					priceMap += ",{" + key + ":" + value + "}";
-				}
-			});
+			function pushPrice(timeTable) {
+				$("#" + timeTable + i + " .price").each(function(j){
+					var priceInfo = new Object();
+					var id = $(this).attr("id");
+					var val = $("#"+id).val();
+					if (parseInt(val) > 0) {
+						var hour = parseInt(id.replace(timeTable + i, "").replace("hour", ""));
+						priceInfo.hour = hour + "~" + (hour + 1);
+						priceInfo.price = val;
+						priceList.push(priceInfo);
+					}
+				});
+			};
 			
-			$("#spacePrice" + i).val(priceMap);
+			//var jsonStr = JSON.stringify(priceList);
+			//console.log(jsonStr);
+			//var json = JSON.parse(jsonStr);
+			//console.log(json);
+			
+			$("#spacePrice" + i).val(i + JSON.stringify(priceList));
 		}
-		
-//		console.log(priceArr[0]);
-//		console.log(priceArr[1]);
-//		console.log(priceArr[2]);
 		
 		$("form").submit();
 		
 	});
-	
-	function pushPrice(timeTable) {
-		
-		$("#" + timeTable +" .price").each(function(){
-			var id = $(this).attr("id");
-			var val = $("#"+id).val();
-			console.log(id + " : " + val);
-			if (parseInt(val) > 0) {
-				var hour = parseInt(id.replace(timeTable, "").replace("hour", ""));
-				var key = "'" + hour + "~" + (hour + 1) + "'";
-				var value = "'" + val + "'";
-				priceMap += "{" + key + ":" + value + "},";
-			}
-		});
-		//console.log(timeTable.replace("timeTableAm", "").replace("timeTablePm", ""));
-		$("#spacePrice" + timeTable.replace("timeTableAm", "").replace("timeTablePm", "")).val(priceMap);
-		
-	}
 	
 	$("#dayArea input[type=radio]").change(function(){
 		dayChange($(this).attr("id"));

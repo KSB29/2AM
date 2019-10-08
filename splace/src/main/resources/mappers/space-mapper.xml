@@ -24,13 +24,34 @@
 		<result property="spaceEnroll" column="SPACE_ENROLL"/>
 		<result property="spaceUpdate" column="SPACE_UPDATE"/>
 		<result property="spaceAttChange" column="SPACE_Att_ChANGE"/>
+		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
+		<result property="typeName" column="TYPE_NAME"/>
+		<result property="priceFlag" column="PRICE_FLAG"/>
+	</resultMap>
+	
+	<resultMap type="SpaceAtt" id="spaceAttResultSet">
+		<id property="spaceAttId" column="SPACE_ATT_ID"/>
+		<result property="spaceAttOrigin" column="SPACE_ATT_ORIGIN"/>
+		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
+		<result property="spaceAttFilepath" column="SPACE_ATT_FILEPATH"/>
+		<result property="spaceAttDate" column="SPACE_ATT_DATE"/>
+		<result property="spaceAttType" column="SPACE_ATT_TYPE"/>
+		<result property="spaceAttStatus" column="SPACE_ATT_STATUS"/>
+		<result property="spaceId" column="SPACE_ID"/>
 	</resultMap>
 	
 	<resultMap type="Price" id="priceResultSet">
-		<id property="priceId" column="PRICE_ID"/>
+		<!-- <id property="priceId" column="PRICE_ID"/>
 		<result property="priceWeekend" column="PRICE_WEEKEND"/>
 		<result property="priceTime" column="PRICE_TIME" jdbcType="CLOB" javaType="java.lang.String"/>
-		<result property="spaceId" column="SPACE_ID"/>
+		<result property="spaceId" column="SPACE_ID"/> -->
+		<id property="spaceId" column="SPACE_ID"/>
+		<result property="priceId" column="PRICE_ID"/>
+		<result property="priceWeekend" column="PRICE_WEEKEND"/>
+		<result property="priceTime" column="PRICE_TIME" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="spaceOpenTime" column="SPACE_OPEN_TIME"/>
+		<result property="spaceCloseTime" column="SPACE_CLOSE_TIME"/>
+		<result property="spaceAdd" column="SPACE_ADD"/>
 	</resultMap>
 	
 	<resultMap type="Type" id="typeResultSet">
@@ -91,14 +112,14 @@
 	</insert>
 	
 	<!-- 공간 사진 등록 -->
-	<insert id="insertFile">
+	<insert id="insertFile" parameterType = "SpaceAtt">
 		INSERT INTO SPACE_ATT
 		VALUES (SEQ_SP_ATT.NEXTVAL,
 				#{spaceAttOrigin},
 				#{spaceAttChange},
 				#{spaceAttChange},
 				DEFAULT,
-				'0',
+				#{spaceAttType},
 				DEFAULT,
 				#{spaceId})
 	</insert>
@@ -112,21 +133,89 @@
 				#{spaceId})
 	</insert>
 	
+	<!-- 1인당 추가 금액 등록 -->
+	<update id="updateAddPrice" parameterType="Space">
+		UPDATE SPACE
+		SET    SPACE_ADD = #{spaceAdd},
+			   SPACE_UPDATE = SYSDATE
+		WHERE  SPACE_ID = #{spaceId}
+	</update>
+	
 	<!-- 공간 리스트 조회 -->
 	<select id="selectList" parameterType="string" resultMap="spaceResultSet">
-		SELECT S.*
+		SELECT S.*,
+			   (SELECT 'Y' FROM PRICE WHERE SPACE_ID = S.SPACE_ID AND ROWNUM = 1) PRICE_FLAG,
+			   A.SPACE_ATT_CHANGE
 		FROM   SPACE S,
-			   HOST H
+			   HOST H,
+			   SPACE_ATT A
 		WHERE  S.HOST_ID = H.HOST_ID
-		AND    MEMBER_ID = #{memberId}
+		AND    H.MEMBER_ID = #{memberId}
+		AND    S.SPACE_ID = A.SPACE_ID
+		AND    A.SPACE_ATT_TYPE = '0'
 	</select>
+	
+	<!-- 공간 정보 조회 -->
+	<select id="selectSpace" parameterType="_int" resultMap="spaceResultSet">
+		SELECT S.*,
+			   A.SPACE_ATT_CHANGE,
+			   T.TYPE_NAME
+		FROM   SPACE S,
+			   SPACE_ATT A,
+			   TYPE T
+		WHERE  S.SPACE_ID = #{spaceId}
+		AND    S.SPACE_ID = A.SPACE_ID
+		AND    S.TYPE_ID = T.TYPE_ID
+		AND    A.SPACE_ATT_TYPE = '0'
+	</select>
+	
+	<!-- 공간 파일 정보 조회 -->
+	<select id="selectSpaceAtt" parameterType="_int" resultMap="spaceAttResultSet">
+		SELECT SPACE_ATT_ID,
+			   SPACE_ATT_ORIGIN,
+			   SPACE_ATT_CHANGE,
+			   SPACE_ID
+		FROM   SPACE_ATT
+		WHERE  SPACE_ID = #{spaceId}
+		AND    SPACE_ATT_STATUS = 'Y'
+		AND    SPACE_ATT_TYPE = '1'
+		ORDER BY SPACE_ATT_CHANGE
+	</select>
+	
+	<!-- 공간 정보 수정 -->
+	<update id="updateSpace" parameterType="Space">
+		UPDATE SPACE
+		SET    SPACE_COMMENT = #{spaceComment},
+			   SPACE_DETAIL = #{spaceDetail},
+			   SPACE_TAG = #{spaceTag},
+			   SPACE_OPTION = #{spaceOption},
+			   SPACE_NOTICE = #{spaceNotice},
+			   SPACE_TIME = #{spaceTime},
+			   SPACE_MIN_PER = #{spaceMinPer},
+			   SPACE_MAX_PER = #{spaceMaxPer},
+			   SPACE_OPEN_TIME = #{spaceOpenTime},
+			   SPACE_CLOSE_TIME = #{spaceCloseTime},
+			   SPACE_UPDATE = SYSDATE
+		WHERE  SPACE_ID = #{spaceId}
+	</update>
+	
+	<update id="updateFile" parameterType="SpaceAtt">
+		UPDATE SPACE_ATT
+		SET    SPACE_ATT_ORIGIN = #{spaceAttOrigin}
+		WHERE  SPACE_ID = #{spaceId}
+		AND    SPACE_ATT_TYPE = #{spaceAttType}
+	</update>
 	
 	<!-- 공간 가격 조회 -->
 	<select id="selectPrice" parameterType="_int" resultMap="priceResultSet">
 		SELECT S.SPACE_OPEN_TIME,
 			   S.SPACE_CLOSE_TIME,
 			   S.SPACE_ADD,
-			   P.*
+			   S.SPACE_ID,
+			   P.PRICE_ID,
+			   DECODE(P.PRICE_WEEKEND, '월', '1', '화', '2', '수', '3', '목', '4', '금', '5', '토', '6', '일', '7', '휴', '8', '') PRICE_WEEKEND,
+			   <!-- P.PRICE_WEEKEND, -->
+			   P.PRICE_TIME
 		FROM   SPACE S LEFT JOIN PRICE P ON (S.SPACE_ID = P.SPACE_ID)
 		WHERE  S.SPACE_ID = #{spaceId}
 	</select>
@@ -140,6 +229,24 @@
 	<select id="selectOption" resultMap="optionResultSet">
 		SELECT * FROM "OPTION" ORDER BY OPTION_ID
 	</select>
+	
+	<!-- 공간 승인 요청 -->
+	<!-- 등록 상태일 경우에만 승인 요청 가능 -->
+	<update id="updateApply" parameterType="_int">
+		UPDATE SPACE
+		SET    STATUS_ID = '1',
+			   SPACE_UPDATE = SYSDATE
+		WHERE  SPACE_ID = #{spaceId}
+		AND    STATUS_ID = '0'
+	</update>
+	
+	<!-- 공간 삭제 -->
+	<!-- 등록, 대기, 반려 상태일 경우 삭제 가능 -->
+	<delete id="deleteSpace" parameterType="_int">
+		DELETE SPACE
+		WHERE  SPACE_ID = #{spaceId}
+		AND    STATUS_ID ^= 2
+	</delete>
 	
 	
 	
