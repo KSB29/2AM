@@ -5,9 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style>
-
-</style>
 <title>SPLACE</title>
 	<link rel="stylesheet" href="${contextPath }/resources/css/spaceDetail.css" type="text/css">
 	<link rel="stylesheet" href="${contextPath }/resources/css/swiper.css" type="text/css">
@@ -17,7 +14,8 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto"/>
 	<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
 	<link rel="stylesheet" href="${contextPath }/resources/css/calstyle.css" type="text/css">
-	<meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="${contextPath }/resources/css/heartstyle.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body>
 	<!-- 이 형식을 꼭 지켜주세요! -->
@@ -36,12 +34,72 @@
 						<!-- 공간 유형  -->
 						<p>${type.typeName}</p>
 					</div>
-					<div class="col-1">
-						<div id="like-container" style="cursor: pointer;">
-						  <svg id="svg-container" class="heartbtn" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 68.3 61.1"></svg>
-						  <!-- <div class="heartbtn">Like</div> -->
-						</div>
+					<!-- 찜 -->
+			
+					<div class="col-1" id="wishBody">
+				
+						
+						<img src="${contextPath }/resources/img/dislike.png" id="dislike" style="display:none">
+						<img src="${contextPath }/resources/img/like.png" id="like" style="display:none">
+						
 					</div>
+			
+					<script>
+					var spaceId = ${space.spaceId};
+					// 찜 하기
+						$("#dislike").click(function(){
+						var spaceId = ${space.spaceId};
+							$.ajax({
+								url:"wishList.sp",
+								data:{spaceId: spaceId},
+								type:"post",
+								success:function(result){
+									if(result=="success")
+										alert("찜 했음!");
+										checkWish();
+										}
+								});
+							});
+						 
+					$(function(){
+						checkWish();
+					});
+					
+					// 찜 여부 조회
+					function checkWish(){
+						$.ajax({
+							url:"wishSelect.sp",
+							data:{spaceId:spaceId},
+							type:"post",
+							success:function(result){
+								if(result=="success"){
+									$("#dislike").css("display","block");
+									$("#like").css("display","none");
+								}else{
+									$("#dislike").css("display","none");
+									$("#like").css("display","block");
+									}
+								}
+							});
+						}
+						// 찜 취소
+						$("#like").click(function(){
+							var spaceId = ${space.spaceId};
+							
+							$.ajax({
+								url:"wishDelete.sp",
+								data:{spaceId:spaceId},
+								type:"post",
+								success:function(result){
+									if(result=="success")
+									alert("찜취소");
+									checkWish();
+								}
+									
+							});
+						});
+					</script>
+			
 					<div class="col-12">
 						<div class="detailTitle">
 							<p>${space.spaceName }</p>
@@ -52,38 +110,39 @@
 							<h3>${space.spaceTag}</h3>
 						</div>
 					</div>
-					<!-- 이미지 슬라이드  -->
-					<div class="col-12">
-						<div class="mainImg">
-							<div id="carouselExampleInterval" class="carousel slide"
-								data-ride="carousel">
-								<div class="carousel-inner w-100 height26">
-									<div class="carousel-item w-100 h-100 active"
-										data-interval="10000">
-										<img src="${contextPath }/resources/img/exam2.jpg"
-											class="d-block w-100 height26" alt="...">
-									</div>
-									<div class="carousel-item w-100 height26" data-interval="2000">
-										<img src="${contextPath }/resources/img/exam.jpg"
-											class="d-block w-100 height26" alt="...">
-									</div>
-									<div class="carousel-item w-100 height26">
-										<img src="${contextPath }/resources/img/exam2.jpg"
-											class="d-block w-100 height26" alt="...">
-									</div>
-								</div>
-								<a class="carousel-control-prev" href="#carouselExampleInterval"
-									role="button" data-slide="prev"> <span
-									class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-									class="sr-only">Previous</span>
-								</a> <a class="carousel-control-next"
-									href="#carouselExampleInterval" role="button" data-slide="next">
-									<span class="carousel-control-next-icon" aria-hidden="true"></span>
-									<span class="sr-only">Next</span>
-								</a>
-							</div>
-						</div>
-					</div>
+				   <!-- 이미지 슬라이드  -->
+	               <div class="col-12">
+	                  <div class="mainImg">
+	                     <div id="carouselExampleInterval" class="carousel slide"
+	                        data-ride="carousel">
+	                        <div class="carousel-inner w-100 height26">
+	                           <div class="carousel-item w-100 h-100 active"
+	                              data-interval="10000">
+	                              <img src="${contextPath }/resources/img/exam2.jpg"
+	                                 class="d-block w-100 height26" alt="...">
+	                           </div>
+	                           <div class="carousel-item w-100 height26" data-interval="2000">
+	                              <img src="${contextPath }/resources/img/exam.jpg"
+	                                 class="d-block w-100 height26" alt="...">
+	                           </div>
+	                           <div class="carousel-item w-100 height26">
+	                              <img src="${contextPath }/resources/img/exam2.jpg"
+	                                 class="d-block w-100 height26" alt="...">
+	                           </div>
+	                        </div>
+	                        <a class="carousel-control-prev" href="#carouselExampleInterval"
+	                           role="button" data-slide="prev"> <span
+	                           class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+	                           class="sr-only">Previous</span>
+	                        </a> <a class="carousel-control-next"
+	                           href="#carouselExampleInterval" role="button" data-slide="next">
+	                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	                           <span class="sr-only">Next</span>
+	                        </a>
+	                     </div>
+	                  </div>
+	               </div>
+               
 					
 
 
@@ -120,29 +179,30 @@
 								<h4>[ 최소 ${space.spaceMinPer}명, 최대 ${space.spaceMaxPer}명 ]</h4>
 							</div>
 						</div>
+						
+						<!-- 공간 세부 옵션 -->
 						<div class="spaceIntro fontStyle">
 							<h2>공간 세부 옵션</h2>
 							<p></p>
-
-										
 							<ol class="optionOl">
-							
-							<c:forEach items="${spaceO}" var="option">
-								<li><h4><c:if test="${option.optionId < 'I'}">
-									<i class="material-icons">
-										<c:out value="${option.optionIcon }"/>
-									</i>
-								</c:if>
-								<c:if test="${option.optionId >= 'I'}">
-									<i class='<c:out value="${option.optionIcon }"/>'></i>												
-								</c:if>
-								<c:out value="${option.optionName }"/> &nbsp;
-								</h4></li>
-							</c:forEach>
-							
+								<c:forEach items="${spaceO}" var="option">
+									<li><h4>
+										<c:if test="${option.optionId < 'I'}">
+											<i class="material-icons">
+												<c:out value="${option.optionIcon }"/>
+											</i>
+										</c:if>
+										<c:if test="${option.optionId >= 'I'}">
+											<i class='<c:out value="${option.optionIcon }"/>'></i>												
+										</c:if>
+										<c:out value="${option.optionName }"/> &nbsp;
+									</h4></li>
+								</c:forEach>
 							</ol>
 						</div>
-
+						<!-- 공간 세부 옵션  끝-->
+	
+						<!-- 주의 사항 -->
 						<div class="spaceIntro fontStyle">
 							<h2>예약시 주의사항</h2>
 							<p></p>
@@ -156,7 +216,8 @@
 							</ol>
 							<!--  모	르겠음  -->
 						</div>
-
+						<!-- 주의 사항 끝  -->
+						<!-- 환불 규정 -->
 						<div class="spaceIntro fontStyle">
 							<h2>환불 규정 안내</h2>
 							<p></p>
@@ -164,11 +225,14 @@
 							<h4>이용 전날 총 금액의 <b>50% 환불</b></h4>
 							<h4>이용 당일 <b>환불 불가</b></h4>
 						</div>
-
+						<!-- 환불 규정 끝 -->
+					
+						<!-- 지도  -->
 						<div class="spaceIntro fontStyle">
 							<h2>찾아오시는길</h2>
 							<p></p>
 							<h3>${space.spaceName }</h3>
+							<h4>전화번호</h4>
 							<h4>${space.spaceAddress}</h4>
 							<!-- <h4>홈페이지</h4> -->
 							<%-- <img class="mapImg" src="${contextPath }/resources/img/map.png"
@@ -214,7 +278,7 @@
 
 											// 인포윈도우로 장소에 대한 설명을 표시합니다
 											var infowindow = new kakao.maps.InfoWindow({
-												content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+												content: '<div style="width:190px;text-align:center;padding:6px 0;">${space.spaceName}</div>'
 											});
 											infowindow.open(map, marker);
 									
@@ -224,7 +288,7 @@
 									}); 
 								</script>
 						</div>
-
+						<!-- 지도 끝 -->
 
 						<!------- QnA ------->
 						<div class="spaceIntro">
@@ -550,23 +614,33 @@
 					<!-- Swiper -->
 				  	<div class="swiper-container ">
 				    	<div class="swiper-wrapper">
+				  	<c:if test="${!empty otherSpace }">
+				  	<c:forEach var="o" items="${otherSpace }">
+				  	<c:url var="sDetail" value="spaceDetail.sp">
+		           			<c:param name="spaceId" value="${o.spaceId}"></c:param>
+		           		</c:url>
 				      		<div class="swiper-slide hostSpace">
 				      		<article>
 								<span class="image">
 									<img src="resources/img/studio.jpg" alt=""/>
 								</span> 
-								 <a href="#"></a>
+								 <a href="${sDetail}"></a>
 								<span>
 									<div class="locationName">
-										<h3>Kh정보교육원</h3>
+										<h3>${o.spaceName }</h3>
 									</div>
 									<div class="location">
 										<span>
 											<img src="resources/img/location.svg"> 서울시 중구
+										<c:forTokens var="addr" items="${o.spaceAddress}" delims="," varStatus="status">
+													<c:if test="${status.index eq 1}">
+														${addr}
+													</c:if>
+												</c:forTokens>
 										</span>
 									</div>
 									<div class="tags">
-										<span>#파티룸 #회의실 #중구</span>
+										<span>${o.spaceTag }</span>
 									</div>
 									<div class="price">
 										<strong>10,000</strong> <span>원/시간</span>
@@ -582,7 +656,9 @@
 								</span> 
 							</article>
 				      		</div>
-							<div class="swiper-slide hostSpace">
+				      		</c:forEach>
+				      		</c:if>
+				<!-- 			<div class="swiper-slide hostSpace">
 						      	<article>
 									<span class="image">
 										<img src="resources/img/studio.jpg" alt=""/>
@@ -642,7 +718,7 @@
 							</div>
 						</span> 
 						</article>
-				      </div>
+				      </div> -->
 
 				    </div>
 				  </div>
@@ -655,7 +731,8 @@
 				
 				
 	<jsp:include page="../common/bottom.jsp"/>
-	<script src="${contextPath }/resources/js/heartscript.js"></script>		
+	
+	
 	<script src="${contextPath }/resources/js/spaceDetail.js"></script> 
  	<script src="${contextPath }/resources/js/calscript.js"></script> 
 	

@@ -9,7 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.splace.search.model.service.SearchService;
 import com.project.splace.search.model.vo.Search;
+import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
+
+import oracle.net.aso.s;
 @Controller
 public class SearchController {
 	
@@ -23,14 +26,21 @@ public class SearchController {
 		ArrayList<Space> searchList = searchService.searchList(search);
 		
 		for(Space s: searchList) {
-			System.out.println(s);
-		}
+			/*
+			 * int spaceId = (s.getSpaceId()); System.out.println(spaceId);
+			 */
+			System.out.println("왜그래.."+s);
 	if(searchList !=null) {
+				/*
+				 * ArrayList<Price> priceList = searchService.priceList(spaceId);
+				 * System.out.println("아이디"+spaceId);
+				 */
 		mv.addObject("searchList", searchList);
 		mv.addObject("search",search);
 		mv.setViewName("search/searchList");
 	}else {
 		mv.setViewName("search/searchList");
+	}
 	}
 		return mv;
 	}

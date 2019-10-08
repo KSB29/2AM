@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,13 +20,17 @@ import com.project.splace.space.model.service.SpaceService;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
+import com.project.splace.space.model.vo.SpaceAtt;
 import com.project.splace.space.model.vo.Type;
+import com.project.splace.space.model.vo.WishList;
 
 @Controller
 public class SpaceController {
 	
 	@Autowired
 	private SpaceService sService;
+	@Autowired
+	private WishList wishList;
 	
 	@RequestMapping("spaceInsertForm.sp")
 	public ModelAndView spaceInsertForm(ModelAndView mv) {
@@ -103,8 +109,10 @@ public class SpaceController {
 	// -------------------------191002 추가-------------------------------------------------------
 	// 공간 상세보기 조회
 	@RequestMapping("spaceDetail.sp")
-	public ModelAndView spaceDatail(int spaceId, ModelAndView mv) {
-		
+	public ModelAndView spaceDatail(int spaceId, ModelAndView mv, HttpSession session) {
+		/*
+		 * String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		 */
 		Space space =sService.selectspaceDetail(spaceId);
 		System.out.println(space);
 		if(space !=null) {
@@ -129,6 +137,13 @@ public class SpaceController {
 			
 			// 주의사항
 			String spaceNotice[] = space.getSpaceNotice().substring(1).split("#");
+			// 공간 이미지
+			/*
+			 * ArrayList<SpaceAtt> spaceAttList =
+			 * sService.selectSpaceAtt(space.getSpaceId());
+			 * System.out.println(spaceAttList);
+			 */
+			
 			mv.addObject("spaceNotice", spaceNotice);				
 			mv.addObject("spaceO", spaceO);	
 			mv.addObject("type", type);
@@ -145,5 +160,53 @@ public class SpaceController {
 		int result = sService.insertPrice(spaceId, spacePrice);
 		return null;
 	}
-
+	// 찜하기
+	@ResponseBody
+	@RequestMapping("wishList.sp")
+	public String wishList(WishList wishList, HttpSession session) {
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		wishList.setMemberId(memberId);
+	
+			int result=sService.wishList(wishList);
+			if(result>0) {
+				return "success";
+			}else {
+				return "fail";
+			}
+	}
+	
+	// 찜 여부 조회
+	@ResponseBody
+	@RequestMapping("wishSelect.sp")
+	public String wishSelect(int spaceId, HttpSession session) {
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		wishList.setMemberId(memberId);
+		wishList.setSpaceId(spaceId);
+	
+		System.out.println(memberId);
+		System.out.println(spaceId);
+		
+		int result = sService.wishSelect(wishList);
+		
+		System.out.println("찜"+result);
+		if(result==0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	// 찜 삭제 
+	@ResponseBody
+	@RequestMapping("wishDelete.sp")
+	public String wishDelete(WishList wishList, HttpSession session) {
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		wishList.setMemberId(memberId);
+		int result=sService.wishDelete(wishList);
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 }

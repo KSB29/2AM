@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
+import com.project.splace.space.model.vo.SpaceAtt;
 import com.project.splace.space.model.vo.Type;
+import com.project.splace.space.model.vo.WishList;
 
 public interface SpaceService {
 	
@@ -77,5 +80,45 @@ public interface SpaceService {
 	 * 공간 세부 옵션 조회
 	 * @return 
 	 */
-	public abstract ArrayList<Option> selectOptionList(); 
+	public abstract ArrayList<Option> selectOptionList();
+
+
+	/**
+	 * 호스트 다른 공간 조회
+	 * @param hostId
+	 * @return
+	 */
+	/* public abstract ArrayList<Space> otherSpace(int hostId); */
+	
+	
+	/**
+	 * 찜 등록
+	 * @param wishList
+	 * @return
+	 * @throws Exception 
+	 */
+	public abstract int wishList(WishList wishList);
+
+	/**
+	 * 찜 조회
+	 * @param wishList
+	 * @return
+	 */
+	public abstract int wishSelect(WishList wishList);
+
+	/**
+	 * 찜삭제
+	 * @param wishList
+	 * @return
+	 */
+	public abstract int wishDelete(WishList wishList);
+
+	/**
+	 * 공간 이미지
+	 * @param spaceId
+	 * @return
+	 */
+	/*
+	 * public abstract ArrayList<SpaceAtt> selectSpaceAtt(int spaceId);
+	 */
 }

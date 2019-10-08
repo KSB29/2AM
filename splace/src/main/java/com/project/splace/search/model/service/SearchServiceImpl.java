@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.splace.search.model.dao.SearchDao;
 import com.project.splace.search.model.vo.Search;
+import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
 
 @Service("searchtService")
@@ -27,4 +28,10 @@ public class SearchServiceImpl implements SearchService{
 		
 		return searchDao.searchDetailList(search);
 	}
+	
+	// 가격 조회
+	/*
+	 * @Override public ArrayList<Price> priceList(int spaceId) { // TODO
+	 * Auto-generated method stub return searchDao.priceList(spaceId); }
+	 */
 }

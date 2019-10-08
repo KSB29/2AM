@@ -1,6 +1,7 @@
 package com.project.splace.space.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
 import com.project.splace.space.model.vo.SpaceAtt;
 import com.project.splace.space.model.vo.Type;
+import com.project.splace.space.model.vo.WishList;
 
 @Repository("sDao")
 public class SpaceDao {
@@ -117,5 +119,34 @@ public class SpaceDao {
 		
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectOptionList");
 	}
+
+	public int wishList(WishList wishList){
+		
+		return sqlSession.insert("spaceMapper.wishList", wishList);
+	}
+
+	public int wishSelect(WishList wishList) {
+		return sqlSession.selectOne("spaceMapper.wishSelect", wishList);
+	}
+
+	public int wishDelete(WishList wishList) {
+		
+		return sqlSession.delete("spaceMapper.wishDelete", wishList);
+	}
+
+	/*
+	 * public ArrayList<SpaceAtt> selectSpaceAtt(int spaceId) {
+	 * 
+	 * return (ArrayList)sqlSession.selectList("spaceMapper.selectSpaceAtt",
+	 * spaceId); }
+	 */
+
+
+
+	/*
+	 * public ArrayList<Space> otherSpace() {
+	 * 
+	 * return (ArrayList)sqlSession.selectList("spaceMapper.otherSpace"); }
+	 */
 
 }
