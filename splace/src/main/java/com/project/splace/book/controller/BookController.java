@@ -62,7 +62,7 @@ public class BookController {
 			
 			// 주의사항
 			String spaceNotice[] = space.getSpaceNotice().substring(1).split("#");
-			
+			 
 			// 호스트정보
 			Host host = bookService.selectHost(space.getSpaceId());
 			
