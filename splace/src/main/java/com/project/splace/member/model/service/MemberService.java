@@ -1,5 +1,6 @@
 package com.project.splace.member.model.service;
 
+import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
 
 public interface MemberService {
@@ -15,6 +16,10 @@ public interface MemberService {
 	public abstract Member checkPwd(Member mem);
 
 	public abstract int updatePwd(Member mem);
+
+	public abstract int updatePwd(MailVO vo);
+
+	public abstract int insertNaverId(Member mem);
 	
 	
 	

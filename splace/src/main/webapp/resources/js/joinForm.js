@@ -88,6 +88,8 @@ $(function(){
 
 	// 아이디 중복검사 	
 	$("#checkId").on("click", function(){
+		
+		
 	
 		var userId = $("#memberId").val();
 		if(userId.length < 4){
@@ -97,7 +99,8 @@ $(function(){
 			
 			return;
 		}
-			
+		
+		
 		$.ajax({
 		    type : 'POST',
 			url: 'checkId.sp',

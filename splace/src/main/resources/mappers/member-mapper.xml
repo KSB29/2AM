@@ -59,5 +59,13 @@
 		MEMBER_UPDATE = SYSDATE
 		WHERE MEMBER_ID = #{memberId}
 	</update>
+	
+	
+	<update id="findPwd" parameterType="MailVO"> 
+		UPDATE MEMBER 
+		SET MEMBER_PWD = #{temp},
+		MEMBER_UPDATE = SYSDATE
+		WHERE MEMBER_ID = #{to}
+	</update>
 </mapper>
 
