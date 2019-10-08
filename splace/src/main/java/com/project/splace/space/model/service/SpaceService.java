@@ -49,9 +49,9 @@ public interface SpaceService {
 	/**
 	 * 공간 가격 조회 Service
 	 * @param spaceId 
-	 * @return result
+	 * @return
 	 */
-	public abstract ArrayList<Price> selectPrice(String spaceId);
+	public abstract ArrayList<Price> selectPrice(int spaceId);
 
 	/**
 	 * 공간 가격 등록 Service
@@ -59,77 +59,46 @@ public interface SpaceService {
 	 * @param spacePrice
 	 * @return result
 	 */
-	public abstract int insertPrice(int spaceId, String[] spacePrice);
+	public abstract int insertPrice(int spaceId, int spaceAdd, String[] spacePrice);
 	
-	//-------------------- 191002 추가 ----------------------------
 	/**
-	 * 공간 상세보기 조회
+	 * 공간 승인 요청 Service
+	 * @param spaceId
+	 * @return result
+	 */
+	public abstract int updateApply(int spaceId);
+
+	/**
+	 * 공간 삭제 Service
+	 * @param spaceId
+	 * @return result
+	 */
+	public abstract int deleteSpace(int spaceId);
+
+	/**
+	 * 공간 정보 조회 Service
 	 * @param spaceId
 	 * @return space
 	 */
-	public abstract Space selectspaceDetail(int spaceId);
-
-	/**
-	 * 공간 유형 조회
-	 * @param typeId
-	 * @return type
-	 */
-	public abstract Type selectTypeName(int typeId);
-
-	/**
-	 * 공간 세부 옵션 조회
-	 * @return 
-	 */
-	public abstract ArrayList<Option> selectOptionList();
-
-
-	/**
-	 * 호스트 다른 공간 조회
-	 * @param hostId
-	 * @return
-	 */
-	/* public abstract ArrayList<Space> otherSpace(int hostId); */
-	
+	public abstract Space selectSpace(int spaceId); 
 	
 	/**
-	 * 찜 등록
-	 * @param wishList
-	 * @return
-	 * @throws Exception 
-	 */
-	public abstract int wishList(WishList wishList) throws Exception;
-
-	/**
-	 * 찜 조회
-	 * @param wishList
-	 * @return
-	 */
-	public abstract int wishSelect(WishList wishList);
-
-	/**
-	 * 찜삭제
-	 * @param wishList
-	 * @return
-	 */
-	public abstract int wishDelete(WishList wishList);
-
-	/**
-	 * 공간 이미지
+	 * 공간 사진 파일 조회 Service
 	 * @param spaceId
-	 * @return
+	 * @return attList
 	 */
-	public abstract ArrayList<SpaceAtt> spaceAttImg(int spaceId);
+	public abstract ArrayList<SpaceAtt> selectSpaceAtt(int spaceId);
 
 	/**
-	 * 호스트 다른 공간
-	 * @param hostId
-	 * @return
+	 * 공간 정보 수정 Service
+	 * @param space
+	 * @param request
+	 * @param uploadFile
+	 * @param files
+	 * @return result
 	 */
-	public abstract ArrayList<Space> hostSpace(int hostId);
-
 	public abstract int updateSpace(Space space, int filesIndex, HttpServletRequest request, MultipartFile uploadFile,
 			List<MultipartFile> files);
-
 
 	/**
 	 * 공간 가격 수정 Service
@@ -140,4 +109,70 @@ public interface SpaceService {
 	 */
 	public abstract int updatePrice(int spaceId, int spaceAdd, String[] spacePrice);
 
+	// 미리, 다운영역--------------------------------------------------------------------------------
+
+   /**
+    * 공간 상세보기 조회
+    * @param spaceId
+    * @return space
+    */
+   public abstract Space selectspaceDetail(int spaceId);
+
+   /**
+    * 공간 유형 조회
+    * @param typeId
+    * @return type
+    */
+   public abstract Type selectTypeName(int typeId);
+
+   /**
+    * 공간 세부 옵션 조회
+    * @return 
+    */
+   public abstract ArrayList<Option> selectOptionList();
+
+
+   /**
+    * 호스트 다른 공간 조회
+    * @param hostId
+    * @return
+    */
+   /* public abstract ArrayList<Space> otherSpace(int hostId); */
+   
+   
+   /**
+    * 찜 등록
+    * @param wishList
+    * @return
+    * @throws Exception 
+    */
+   public abstract int wishList(WishList wishList) throws Exception;
+
+   /**
+    * 찜 조회
+    * @param wishList
+    * @return
+    */
+   public abstract int wishSelect(WishList wishList);
+
+   /**
+    * 찜삭제
+    * @param wishList
+    * @return
+    */
+   public abstract int wishDelete(WishList wishList);
+
+   /**
+    * 공간 이미지
+    * @param spaceId
+    * @return
+    */
+   public abstract ArrayList<SpaceAtt> spaceAttImg(int spaceId);
+
+   /**
+    * 호스트 다른 공간
+    * @param hostId
+    * @return
+    */
+   public abstract ArrayList<Space> hostSpace(int hostId);
 }

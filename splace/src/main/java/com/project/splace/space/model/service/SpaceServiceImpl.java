@@ -27,12 +27,6 @@ public class SpaceServiceImpl implements SpaceService {
 	@Autowired
 	private SpaceDao sDao;
 	
-	@Autowired
-	private SpaceAtt sAtt;
-	
-	@Autowired
-	private Price price;
-	
 	@Override
 	public int insertSpace(Space space, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files) {
 		
@@ -45,47 +39,41 @@ public class SpaceServiceImpl implements SpaceService {
 		// 공간ID 생성
 		int spaceId = sDao.selectSpaceId();
 		space.setSpaceId(spaceId);
+		
+		// 공간 등록
 		int result = sDao.insertSpace(space);
 		
 		// 공간 정보 파일
 		SpaceAtt sAtt = new SpaceAtt();
 		// 업로드된 파일이 있을 경우 파일명 변경
 		// 파일이 없을 경우 null이 아니라 빈문자열로 전송이 됨
-		if (!uploadFile.getOriginalFilename().equals("")) {
+		if (result > 0 && !uploadFile.getOriginalFilename().equals("")) {
 			renameFileName = renameFile(uploadFile, spaceId, 0); // 변경된 파일명
-			sAtt.setSpaceId(spaceId);
 			sAtt.setSpaceAttOrigin(uploadFile.getOriginalFilename());
 			sAtt.setSpaceAttChange(renameFileName);
+			sAtt.setSpaceId(spaceId);
+			sAtt.setSpaceAttType("0"); // 대표사진
 			// 서버에 파일 저장
-			result = saveFile(renameFileName, uploadFile, request);
+			if (renameFileName != null) result = saveFile(renameFileName, uploadFile, request);
+			// DB에 파일 저장
+			if (result > 0) result = sDao.insertFile(sAtt);
 		}
 		
-		// DB에 파일 저장
-		result = sDao.insertFile(sAtt);
-		
-		/*if (files.size() > 0) {
+		if (result > 0 && files.size() > 0) {
 			for (int i = 0; i < files.size(); i++) {
 				if (!files.get(i).getOriginalFilename().equals("")) {
-
-					renameFileName = renameFile(files.get(i), spaceId, i);
-					//System.out.println(renameFileName);
-
 					renameFileName = renameFile(files.get(i), spaceId, i+1); // 변경된 파일명
 					sAtt.setSpaceAttOrigin(files.get(i).getOriginalFilename());
 					sAtt.setSpaceAttChange(renameFileName);
 					sAtt.setSpaceId(spaceId);
 					sAtt.setSpaceAttType("1"); // 슬라이드
-
 					// 서버에 파일 저장
-					result = saveFile(renameFileName, files.get(i), request);
+					if (renameFileName != null) result = saveFile(renameFileName, files.get(i), request);
+					// DB에 파일 저장
+					if (result > 0) result = sDao.insertFile(sAtt);
 				}
 			}
-		}*/
-		
-		// 서버에 파일 저장
-		//if (renameFileName != null && result == 1) {
-		//	result = saveFile(renameFileName, uploadFile, request);
-		//}
+		}
 		return result;
 	}
 	
@@ -93,11 +81,11 @@ public class SpaceServiceImpl implements SpaceService {
 	// 파일명 변경 메소드
 	public String renameFile(MultipartFile file, int spaceId, int index) {
 		
-		// "공간아이디_순번_년월일시분초.확장자"로 파일명 변경
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		// "공간아이디_순번.확장자"로 파일명 변경
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
-		String renameFileName = spaceId + "_" + index + "_" + sdf.format(new Date()) + "."
-							+ originFileName.substring(originFileName.lastIndexOf(".")+1);
+		String renameFileName = spaceId + "_" + index //+ "_" + sdf.format(new Date())
+								+ "." + originFileName.substring(originFileName.lastIndexOf(".")+1);
 		return renameFileName;
 	}
 	
@@ -106,16 +94,12 @@ public class SpaceServiceImpl implements SpaceService {
 		// 파일 저장 경로
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\spaceImg";
-		System.out.println("savePath : " + savePath);
-		
 		// 저장 폴더 선택
 		File folder = new File(savePath);
-		
 		// 만약 해당 폴더가 없는 경우
 		if (!folder.exists()) folder.mkdir(); // 폴더 생성
 		
 		String filePath = folder + "\\" + renameFileName;
-		System.out.println("filePath : " + filePath);
 		
 		// 파일 저장 성공 여부, 성공 1, 실패 0
 		int result = 0;
@@ -151,38 +135,15 @@ public class SpaceServiceImpl implements SpaceService {
 		return sDao.selectOption();
 	}
 
-	
-	// -------------------------191002 추가 -------------------------------------------------
-	
-	// 공간 상세보기 조회 
 	@Override
-	public Space selectspaceDetail(int spaceId) {
-		
-		return sDao.selectspaceDetail(spaceId);
-  }
-	@Override
-	public ArrayList<Price> selectPrice(String spaceId) {
+	public ArrayList<Price> selectPrice(int spaceId) {
 		return sDao.selectPrice(spaceId);
 	}
 
 
 	@Override
-	public int insertPrice(int spaceId, String[] spacePrice) {
-		// {1},
-		String dayArr[] =  {"월", "화", "수", "목", "금", "토", "일", "휴"};
+	public int insertPrice(int spaceId, int spaceAdd, String[] spacePrice) {
 		int result = 0;
-
-		for (int i = 0; i < spacePrice.length; i++) {
-			price.setPriceWeekend(dayArr[i]);
-			price.setPriceTime(spacePrice[i].substring(4));
-			price.setSpaceId(spaceId);
-			
-			result += sDao.insertPrice(price);
-			
-			System.out.println(spacePrice[i].toString());
-		}
-		if (result == spacePrice.length) return 1;
-		else return 0;
 		
 		// 가격 정보 필수 입력이지만 체크
 		if (spacePrice.length > 0) {
@@ -214,49 +175,26 @@ public class SpaceServiceImpl implements SpaceService {
 	}
 
 	
-	// 공간 유형 타입 조회
 	@Override
-	public Type selectTypeName(int typeId) {
-		
-		return sDao.selectTypeName(typeId);
-	}
-
-	// 공간 세부 옵션 조회
-	@Override
-	public ArrayList<Option> selectOptionList() {
-		
-		return sDao.selectOptionList();
-	}
-
-	// 공간 찜하기 
-	@Override
-	public int wishList(WishList wishList) throws Exception{
-	
-		return sDao.wishList(wishList);
-	}
-
-	// 찜 조회
-	@Override
-	public int wishSelect(WishList wishList) {
-		return sDao.wishSelect(wishList);
-	}
-
-	//찜 삭제
-	@Override
-	public int wishDelete(WishList wishList) {
-		return sDao.wishDelete(wishList);
-	}
-
-	// 이미지 가져오기
-	@Override
-	public ArrayList<SpaceAtt> spaceAttImg(int spaceId) {
-		return sDao.spaceAttImg(spaceId);
+	public int updateApply(int spaceId) {
+		return sDao.updateApply(spaceId);
 	}
 
 
 	@Override
-	public ArrayList<Space> hostSpace(int hostId) {
-		return sDao.hostSpace(hostId);
+	public int deleteSpace(int spaceId) {
+		return sDao.deleleSpace(spaceId);
+	}
+
+	@Override
+	public Space selectSpace(int spaceId) {
+		return sDao.selectSpace(spaceId);
+	}
+
+
+	@Override
+	public ArrayList<SpaceAtt> selectSpaceAtt(int spaceId) {
+		return sDao.selectSpaceAtt(spaceId);
 	}
 
 
@@ -346,5 +284,64 @@ public class SpaceServiceImpl implements SpaceService {
 			return result;
 		}
 	}
+	
+
+
+	// 미리, 다운영역--------------------------------------------------------------------------------
+
+	// 공간 상세보기 조회 
+	@Override
+	public Space selectspaceDetail(int spaceId) {
+		
+		return sDao.selectspaceDetail(spaceId);
+  }
+	
+	// 공간 유형 타입 조회
+	@Override
+   public Type selectTypeName(int typeId) {
+      
+      return sDao.selectTypeName(typeId);
+   }
+
+   // 공간 세부 옵션 조회
+   @Override
+   public ArrayList<Option> selectOptionList() {
+      
+      return sDao.selectOptionList();
+   }
+
+   // 공간 찜하기 
+   @Override
+   public int wishList(WishList wishList) throws Exception{
+   
+      return sDao.wishList(wishList);
+   }
+
+   // 찜 조회
+   @Override
+   public int wishSelect(WishList wishList) {
+      return sDao.wishSelect(wishList);
+   }
+
+   //찜 삭제
+   @Override
+   public int wishDelete(WishList wishList) {
+      return sDao.wishDelete(wishList);
+   }
+
+   // 이미지 가져오기
+   @Override
+   public ArrayList<SpaceAtt> spaceAttImg(int spaceId) {
+      return sDao.spaceAttImg(spaceId);
+   }
+
+
+   @Override
+   public ArrayList<Space> hostSpace(int hostId) {
+      return sDao.hostSpace(hostId);
+   }
+
+
+
 
 }
