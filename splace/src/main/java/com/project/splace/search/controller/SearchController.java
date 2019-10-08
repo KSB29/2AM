@@ -30,18 +30,18 @@ public class SearchController {
 			 * int spaceId = (s.getSpaceId()); System.out.println(spaceId);
 			 */
 			System.out.println("왜그래.."+s);
-	if(searchList !=null) {
-				/*
-				 * ArrayList<Price> priceList = searchService.priceList(spaceId);
-				 * System.out.println("아이디"+spaceId);
-				 */
-		mv.addObject("searchList", searchList);
-		mv.addObject("search",search);
-		mv.setViewName("search/searchList");
-	}else {
-		mv.setViewName("search/searchList");
-	}
-	}
+		}
+		if(searchList !=null) {
+					/*
+					 * ArrayList<Price> priceList = searchService.priceList(spaceId);
+					 * System.out.println("아이디"+spaceId);
+					 */
+			mv.addObject("searchList", searchList);
+			mv.addObject("search",search);
+			mv.setViewName("search/searchList");
+		}else {
+			mv.setViewName("search/searchList");
+		}
 		return mv;
 	}
 	

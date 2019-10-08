@@ -206,7 +206,9 @@ public class SpaceServiceImpl implements SpaceService {
 	public int wishList(WishList wishList){
 	
 		return sDao.wishList(wishList);
-
+	}
+	
+	@Override
 	public int updateApply(int spaceId) {
 		return sDao.updateApply(spaceId);
 	}
@@ -215,7 +217,9 @@ public class SpaceServiceImpl implements SpaceService {
 	@Override
 	public int wishSelect(WishList wishList) {
 		return sDao.wishSelect(wishList);
-    
+	}
+	
+	@Override
 	public int deleteSpace(int spaceId) {
 		return sDao.deleleSpace(spaceId);
 	}

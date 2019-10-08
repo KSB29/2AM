@@ -17,6 +17,7 @@
 		<typeAlias type="com.project.splace.space.model.vo.Option" alias="Option"/>
 		<typeAlias type="com.project.splace.qna.model.vo.QnA" alias="QnA"/>
 		<typeAlias type="com.project.splace.space.model.vo.Price" alias="Price"/>
+		<typeAlias type="com.project.splace.space.model.vo.WishList" alias="WishList"/>
 	</typeAliases>
 	
   	<mappers>
