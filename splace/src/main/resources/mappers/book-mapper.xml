@@ -17,6 +17,7 @@
 		<result property="bookerPhone" column="BOOKER_PHONE" />
 		<result property="bookerEmail" column="BOOKER_EMAIL" />
 		<result property="bookCancel" column="BOOK_CANCEL" />
+		<result property="approvalDate" column="APPROVAL_DATE" />
 		<result property="spaceName" column="SPACE_NAME" />
 		<result property="typeName" column="TYPE_NAME" />
 		<result property="spaceAttChange" column="SPACE_ATT_CHANGE" />
@@ -113,7 +114,8 @@
 			NULL,
 			#{memberId},
 			#{spaceId},
-			100
+			100,
+			NULL
 		)
 	</insert>
 	

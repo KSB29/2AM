@@ -28,6 +28,7 @@ public class Book {
 	private int pStatusId;		// 결제상태번호
 	private String receiptId;	// 영수증번호
 	private int paymentCancelPrice; // 환불금액
+	private Date approvalDate;  // 호스트승인날짜
 
 	public Book() {}
 	
@@ -41,7 +42,7 @@ public class Book {
 			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
 			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String typeName,
 			String spaceAttChange, String spaceAddress, String paymentId, Date paymentDate, String paymentType,
-			int pStatusId, String receiptId, int paymentCancelPrice) {
+			int pStatusId, String receiptId, int paymentCancelPrice, Date approvalDate) {
 		super();
 		this.bookId = bookId;
 		this.bookEnroll = bookEnroll;
@@ -68,6 +69,7 @@ public class Book {
 		this.pStatusId = pStatusId;
 		this.receiptId = receiptId;
 		this.paymentCancelPrice = paymentCancelPrice;
+		this.approvalDate = approvalDate;
 	}
 
 	public String getBookId() {
@@ -220,6 +222,12 @@ public class Book {
 	public void setPaymentCancelPrice(int paymentCancelPrice) {
 		this.paymentCancelPrice = paymentCancelPrice;
 	}
+	public Date getApprovalDate() {
+		return approvalDate;
+	}
+	public void setApprovalDate(Date approvalDate) {
+		this.approvalDate = approvalDate;
+	}
 
 	@Override
 	public String toString() {
@@ -230,7 +238,7 @@ public class Book {
 				+ bookerEmail + ", bookCancel=" + bookCancel + ", spaceName=" + spaceName + ", typeName=" + typeName
 				+ ", spaceAttChange=" + spaceAttChange + ", spaceAddress=" + spaceAddress + ", paymentId=" + paymentId
 				+ ", paymentDate=" + paymentDate + ", paymentType=" + paymentType + ", pStatusId=" + pStatusId
-				+ ", receiptId=" + receiptId + ", paymentCancelPrice=" + paymentCancelPrice + "]";
+				+ ", receiptId=" + receiptId + ", paymentCancelPrice=" + paymentCancelPrice + ", approvalDate="
+				+ approvalDate + "]";
 	}
-
 }
