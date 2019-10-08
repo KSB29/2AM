@@ -43,28 +43,33 @@
 				<!-- Wrapper -->
 				<div id="wrapper">
 				
+				
 					<!-- Main -->
 					<div id="main">
-						<div class="inner">
+						<div class="inner ">
 						
 								<div class="common_wrapper row type_2">
 										<section class="wrapper_left col-7">
 											<form  method="POST" action="login.sp">
 												<header class="title_box center col-12">
-													<h2> login</h2>
+													<h2> login </h2>
 												</header>
 												<article class="col-12 form_box1 row">
 													<div class="col-12">
 														<input type="text" name="memberId" id="memberId" placeholder="Email"/>
+														<span id="guide" class="guide"></span>
 													</div>										
-													<div class="col-12">
+													<div class="col-12" >
 														<input type="password" name="memberPwd" id="memberPwd" placeholder="Password" />
 													</div>
+													<c:if test="${fail}">
+														<span class="warning" style="color:rgb(204, 0, 0)"> 로그인에 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요! </span>
+													</c:if>
 												</article>
 												<article class="col-12 form_box2 row">
 													<div class="form_1 col-6">
-														<input type="checkbox" id="rememberId" name="rememberId" checked > 
-														<label for="rememberId">ID 기억하기</label>
+														<input type="checkbox" id="saveId" name="saveId" checked > 
+														<label  for="saveId">ID 기억하기</label>
 													</div>  
 													<div class="form_2 col-6 ">
 														<a>비밀번호 찾기</a>
@@ -75,7 +80,7 @@
 												
 												<article class="login_type_wrapper col-12 row">
 													<div class="login_btn col-12">
-														<input type="submit" value="login" class="button fit"/>
+														<input id="login_btn" type="submit" value="login" class="button fit"/>
 													</div>
 													<div class="login_type col-12">
 														<a class="button fit primary" onclick="document.getElementById('naver_id_login_anchor').click();"> 네이버 로그인</a>
@@ -130,6 +135,8 @@
 		  	naver_id_login.setPopup();
 		  	naver_id_login.init_naver_id_login();
 		  </script> 
+		  
+		  <script src="${contextPath}/resources/js/login.js"></script>
 
 		<!--Bottom-->
 		<jsp:include page="../common/bottom.jsp"/>
