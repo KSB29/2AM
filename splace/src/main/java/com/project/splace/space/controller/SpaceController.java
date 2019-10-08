@@ -36,20 +36,28 @@ public class SpaceController {
 	public ModelAndView spaceInsertForm(ModelAndView mv) {
 		// 공간 타입
 		ArrayList<Type> tList = sService.selectType();
+		mv.addObject("tList", tList);
 		// 공간 옵션
 		ArrayList<Option> oList = sService.selectOption();
-		mv.addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceInsertForm");
+		mv.addObject("oList", oList);
+		
+		mv.setViewName("space/spaceInsertForm");
 		return mv;
 	}
 	
 	@RequestMapping("spaceInsert.sp")
 	public String spaceInsert(Space space, String address, String post, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
-		space.setMemberId(((Member)request.getSession().getAttribute("loginUser")).getMemberId());
-		// 주소 : 우편번호,도로명주소,상세주소
-		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
-		int result = sService.insertSpace(space, request, uploadFile, files);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		// 호스트 여부 체크
+		if (((Member)request.getSession().getAttribute("loginUser")).getGrade() != "2") {
+			return "redirect:hostApplyForm.sp";
+		} else {
+			// grade 2 : 호스트 회원
+			space.setMemberId(((Member)request.getSession().getAttribute("loginUser")).getMemberId());
+			// 주소 : 우편번호,도로명주소,상세주소
+			space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
+			int result = sService.insertSpace(space, request, uploadFile, files);
+			return "redirect:spaceList.sp";
+		}
 	}
 	
 	@RequestMapping("spaceList.sp")
@@ -76,30 +84,14 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spacePrice.sp")
-	public ModelAndView spacePrice(int spaceId, HttpSession session, ModelAndView mv) {
-		// 공간이용시간
-		int spaceOpenTime = 0;
-		int spaceCloseTime = 0;
-		int spaceAdd = 0;
-		
+	public ModelAndView spacePrice(String spaceId, HttpSession session, ModelAndView mv) {
 		if (((Member)session.getAttribute("loginUser")).getMemberId() == null) {
 			mv.setViewName("redirect:loginForm.sp");
 		} else {
-			
-			ArrayList<Price> pList = sService.selectPrice(spaceId);
-			if (pList != null) {
-				for (int i = 0; i < pList.size(); i++) {
-					if (i == 0) {
-						spaceOpenTime = pList.get(i).getSpaceOpenTime();
-						spaceCloseTime = pList.get(i).getSpaceCloseTime();
-						spaceAdd = pList.get(i).getSpaceAdd();
-					}
-				}
-				//System.out.println(spaceOpenTime + " ~ " + spaceCloseTime + " : spaceAdd");
-				mv.addObject("pList", pList);
-			}
-			mv.addObject("spaceOpenTime", spaceOpenTime).addObject("spaceCloseTime", spaceCloseTime).addObject("spaceAdd", spaceAdd);
-			mv.addObject("spaceId", spaceId).setViewName("space/spacePrice");
+			//ArrayList<Price> pList = sService.selectPrice(spaceId);
+			//mv.addObject("pList", pList);
+			mv.addObject("spaceId", spaceId);
+			mv.setViewName("space/spacePrice");
 		}
 		return mv;
 	}
@@ -110,42 +102,8 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spaceUpdateForm.sp")
-	public ModelAndView spaceUpdateForm(int spaceId, ModelAndView mv) {
-		Space space = sService.selectSpace(spaceId);
-		if (space != null) {
-			// 공간 사진 파일(슬라이드)
-			ArrayList<SpaceAtt> attList = sService.selectSpaceAtt(spaceId);
-			mv.addObject("attList", attList);
-			// 공간 옵션
-			ArrayList<Option> oList = sService.selectOption();
-			mv.addObject("space", space).addObject("oList", oList).setViewName("space/spaceUpdateForm");
-		} else {
-			mv.addObject("msg", "공간 정보 조회 중 오류 발생").setViewName("common/errorPage");
-		}
-		return mv;
-	}
-	
-	@RequestMapping("spaceUpdate.sp")
-	public String spaceUpdate(Space space, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
-		int result = sService.updateSpace(space, request, uploadFile, files);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
-	}
-	
-	// 공간 승인 요청
-	@RequestMapping("spaceApply.sp")
-	public String spaceApply(int spaceId) {
-		int result = sService.updateApply(spaceId);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
-	}
-	
-	// 공간 삭제
-	@RequestMapping("spaceDelete.sp")
-	public String spaceDelete(int spaceId) {
-		int result = sService.deleteSpace(spaceId);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+	public String spaceUpdateForm() {
+		return "space/spaceUpdateForm";
 	}
 	
 	// -------------------------191002 추가-------------------------------------------------------
@@ -164,9 +122,10 @@ public class SpaceController {
 			// 공간 세부 옵션 조회
 			String spaceOption1[] = space.getSpaceOption().substring(1).split("#");
 			ArrayList<Option> oList = sService.selectOptionList();
+			
 			// 세부옵션
 			ArrayList<Option> spaceO = new ArrayList<Option>(); 
-			
+		
 			
 			for(String o : spaceOption1) { // 공간 옵션
 				for(Option op : oList) { 
@@ -179,13 +138,15 @@ public class SpaceController {
 			
 			// 주의사항
 			String spaceNotice[] = space.getSpaceNotice().substring(1).split("#");
+		
 			// 공간 이미지
-			/*
-			 * ArrayList<SpaceAtt> spaceAttList =
-			 * sService.selectSpaceAtt(space.getSpaceId());
-			 * System.out.println(spaceAttList);
-			 */
+			ArrayList<SpaceAtt> spaceAttImg = sService.spaceAttImg(space.getSpaceId());
 			
+			// 호스트 다른 공간
+			ArrayList<Space>hostSpace = sService.hostSpace(space.getHostId());
+			System.out.println(hostSpace);
+			mv.addObject("hostSpace", hostSpace);
+			mv.addObject("spaceAttImg",spaceAttImg);
 			mv.addObject("spaceNotice", spaceNotice);				
 			mv.addObject("spaceO", spaceO);	
 			mv.addObject("type", type);
@@ -198,23 +159,25 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spacePriceInsert.sp")
-	public String spacePriceInsert(int spaceId, int spaceAdd, String[] spacePrice) {
-		int result = sService.insertPrice(spaceId, spaceAdd, spacePrice);
-		return "redirect:spaceList.sp";
+	public String spacePriceInsert(int spaceId, String[] spacePrice) {
+		int result = sService.insertPrice(spaceId, spacePrice);
+		return null;
 	}
-	// 찜하기
+	
 	@ResponseBody
 	@RequestMapping("wishList.sp")
 	public String wishList(WishList wishList, HttpSession session) {
 		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
 		wishList.setMemberId(memberId);
-	
+		try {
 			int result=sService.wishList(wishList);
-			if(result>0) {
-				return "success";
-			}else {
-				return "fail";
-			}
+			return "success";
+		} catch (Exception e) {
+
+			return "fail";
+			
+		}
+		
 	}
 	
 	// 찜 여부 조회
@@ -251,4 +214,7 @@ public class SpaceController {
 			return "fail";
 		}
 	}
+	
+	
+	
 }

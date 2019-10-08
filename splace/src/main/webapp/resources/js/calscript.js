@@ -51,7 +51,7 @@ $("input[data-type='date']").on("focus", function() {
 
 $("input[data-type='date']").datepicker({
   showButtonPanel: true,
-  minDate: 0,
+  minDate: 1,
   closeText: 'OK',
   onSelect: function(date, inst) {
     changeMaterialHeader(headerHtml, moment(date, 'YYYY/MM/DD'));

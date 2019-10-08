@@ -269,7 +269,7 @@
 	</insert>
 	
 	<!-- 호스트의 다른 공간 조회 -->
-<!-- <select id="otherSpace" parameterType="_int" resultMap="spaceResultSet">
+	<select id="hostSpace" parameterType="_int" resultMap="spaceResultSet">
 	SELECT P.*, SPACE_ATT_CHANGE 
 	FROM SPACE P
 	JOIN SPACE_ATT A ON(P.SPACE_ID=A.SPACE_ID)
@@ -278,7 +278,7 @@
 	AND SPACE_OPER_STATUS='Y'
 	AND HOST_ID=#{hostId})
 	</select>
-	 -->
+	 
 	
 	
 	<!-- 찜 조회  -->
@@ -295,14 +295,14 @@
 	FROM WISHLIST
 	WHERE MEMBER_ID=#{memberId}
 	AND SPACE_ID=#{spaceId}
-	
 	</delete>
-<!-- 	
-	공간 이미지 조회 
-	<select id="selectSpaceAtt" resultMap="spaceAttResultSet">
+	
+	<!-- 공간 이미지 조회  -->
+	<select id="spaceAttImg" parameterType="SpaceAtt" resultType="string">
 	SELECT SPACE_ATT_CHANGE
 	FROM SPACE_ATT
 	WHERE SPACE_ID=#{spaceId}
-	</select> -->
+	</select> 
+	
 	
 </mapper>

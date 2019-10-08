@@ -1,32 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="qnaMapper">
-	<resultMap type="QnA" id="QnAResultSet">
-		<id property="qnaId" column="QNA_ID"/>
-		<result property="qContent" column="Q_CONTENT"/>
-		<result property="qDate" column="Q_DATE"/>
-		<result property="aContent" column="A_CONTENT"/>
-		<result property="aDate" column="A_DATE"/>
-		<result property="qType" column="Q_TYPE"/>
-		<result property="qStatus" column="Q_STATUS"/>
-		<result property="qMemberId" column="Q_MEMBER_ID"/>
-		<result property="aMemberId" column="A_MEMBER_ID"/>
-		<result property="spaceId" column="SPACE_ID"/>
-	</resultMap>
+   <resultMap type="QnA" id="QnAResultSet">
+      <id property="qnaId" column="QNA_ID"/>
+      <result property="qContent" column="Q_CONTENT"/>
+      <result property="qDate" column="Q_DATE"/>
+      <result property="aContent" column="A_CONTENT"/>
+      <result property="aDate" column="A_DATE"/>
+      <result property="qType" column="Q_TYPE"/>
+      <result property="qStatus" column="Q_STATUS"/>
+      <result property="qMemberId" column="Q_MEMBER_ID"/>
+      <result property="aMemberId" column="A_MEMBER_ID"/>
+      <result property="spaceId" column="SPACE_ID"/>
+   </resultMap>
 
-	<!-- QnA 공간 문의 등록  -->
-	<insert id="insertQnA" parameterType="QnA">
-		INSERT INTO QNA VALUES{
-			SEQ_Q.NEXTVAL,
-			#{qContent},
-			SYSDATE,
-			NULL,
-			SYSDATE,
-			O,
-			DEFAULT,
-			NULL,
-			#{spaceId}
-		}
-	</insert>
-	
+   <!-- QnA 공간 문의 등록  -->
+   <insert id="insertQnA" parameterType="QnA">
+      INSERT INTO QNA VALUES(
+         SEQ_Q.NEXTVAL,
+         #{qContent},
+         SYSDATE,
+         NULL,
+         NULL,
+         0,
+         DEFAULT,
+         #{qMemberId},
+         NULL,
+         #{spaceId}
+      )
+   </insert>
+   
+
+   <!-- 공간 질문 조회  -->
+   <select id="selectQnA" parameterType="_int" resultMap="QnAResultSet">
+      SELECT *
+      FROM QNA
+      WHERE Q_STATUS='Y'
+      AND SPACE_ID=#{spaceId}
+      ORDER BY QNA_ID DESC
+   </select>
+   
+   
+   <!-- 공간에 대한 질문 삭제 (답변 포함)-->
+   <update id="deleteQnA" parameterType="_int">
+      UPDATE QNA
+      SET Q_STATUS='N'
+      WHERE QNA_ID=#{qnaId}
+   </update>
+   
 </mapper>

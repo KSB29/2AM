@@ -290,7 +290,6 @@ margin-bottom: 1em !important;
 				<!-- 목록  -->
 				<section class="tiles">
 					<div class="row">
-						<c:if test="${!empty spaceList}">
 						<article>
 							<span class="image"> 
 								<img src="resources/img/studio.jpg" alt="" />
@@ -319,7 +318,6 @@ margin-bottom: 1em !important;
 								</div> -->
 							</span>
 						</article>
-						</c:if>
 					</div>
 				</section>
 			</div>
