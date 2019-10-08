@@ -4,9 +4,10 @@
 
 $(document).ready(function(){
 	
-	dayChange($("#dayArea input:checked").attr("id"));
+	// 등록되어 있는 가격 화면에 표시
+	if ($("#priceFlag").val() == 'Y') toJson();
 	
-	//toJson();
+	dayChange($("#dayArea input:checked").attr("id"));
 	
 	function toJson() {
 		
@@ -60,7 +61,12 @@ $(document).ready(function(){
 			//var json = JSON.parse(jsonStr);
 			//console.log(json);
 			
-			$("#spacePrice" + i).val(i + JSON.stringify(priceList));
+			if ($("#priceFlag").val() == 'Y') {
+				var priceId = $("#spacePrice" + i).parent().attr("id");
+				$("#spacePrice" + i).val(priceId + JSON.stringify(priceList));
+			} else {
+				$("#spacePrice" + i).val(i + JSON.stringify(priceList));
+			}
 		}
 		
 		$("form").submit();

@@ -76,7 +76,7 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spacePrice.sp")
-	public ModelAndView spacePrice(int spaceId, HttpSession session, ModelAndView mv) {
+	public ModelAndView spacePrice(int spaceId, String priceFlag, HttpSession session, ModelAndView mv) {
 		// 공간이용시간
 		int spaceOpenTime = 0;
 		int spaceCloseTime = 0;
@@ -99,7 +99,7 @@ public class SpaceController {
 				mv.addObject("pList", pList);
 			}
 			mv.addObject("spaceOpenTime", spaceOpenTime).addObject("spaceCloseTime", spaceCloseTime).addObject("spaceAdd", spaceAdd);
-			mv.addObject("spaceId", spaceId).setViewName("space/spacePrice");
+			mv.addObject("spaceId", spaceId).addObject("priceFlag", priceFlag).setViewName("space/spacePrice");
 		}
 		return mv;
 	}
@@ -116,9 +116,15 @@ public class SpaceController {
 			// 공간 사진 파일(슬라이드)
 			ArrayList<SpaceAtt> attList = sService.selectSpaceAtt(spaceId);
 			mv.addObject("attList", attList);
+			// 공간 타입
+			ArrayList<Type> tList = sService.selectType();
 			// 공간 옵션
 			ArrayList<Option> oList = sService.selectOption();
-			mv.addObject("space", space).addObject("oList", oList).setViewName("space/spaceUpdateForm");
+			String[] addressArr = space.getSpaceAddress().split(",");
+			//String post = space.getSpaceAddress().substring(0,space.getSpaceAddress().indexOf(',')-1);
+			space.setSpaceAddress(addressArr[1]);
+			mv.addObject("post", addressArr[0]).addObject("address", addressArr[2]);
+			mv.addObject("space", space).addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceUpdateForm");
 		} else {
 			mv.addObject("msg", "공간 정보 조회 중 오류 발생").setViewName("common/errorPage");
 		}
@@ -126,8 +132,10 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spaceUpdate.sp")
-	public String spaceUpdate(Space space, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
-		int result = sService.updateSpace(space, request, uploadFile, files);
+	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
+		// 주소 : 우편번호,도로명주소,상세주소
+		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
+		int result = sService.updateSpace(space, filesIndex, request, uploadFile, files);
 		if (result > 0) return "redirect:spaceList.sp";
 		else return null;
 	}
@@ -197,11 +205,20 @@ public class SpaceController {
 		return mv;
 	}
 	
+	// 공간 가격 등록
 	@RequestMapping("spacePriceInsert.sp")
 	public String spacePriceInsert(int spaceId, int spaceAdd, String[] spacePrice) {
 		int result = sService.insertPrice(spaceId, spaceAdd, spacePrice);
 		return "redirect:spaceList.sp";
 	}
+  
+	// 공간 가격 수정
+	@RequestMapping("spacePriceUpdate.sp")
+	public String spacePriceUpdate(int spaceId, int spaceAdd, String[] spacePrice) {
+		int result = sService.updatePrice(spaceId, spaceAdd, spacePrice);
+		return "redirect:spaceList.sp";
+	}
+
 	// 찜하기
 	@ResponseBody
 	@RequestMapping("wishList.sp")

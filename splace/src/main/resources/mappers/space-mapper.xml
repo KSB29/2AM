@@ -23,7 +23,7 @@
 		<result property="statusId" column="STATUS_ID"/>
 		<result property="spaceEnroll" column="SPACE_ENROLL"/>
 		<result property="spaceUpdate" column="SPACE_UPDATE"/>
-		<result property="spaceAttChange" column="SPACE_Att_ChANGE"/>
+		<result property="spaceAttOrigin" column="SPACE_ATT_ORIGIN"/>
 		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
 		<result property="typeName" column="TYPE_NAME"/>
 		<result property="priceFlag" column="PRICE_FLAG"/>
@@ -63,11 +63,6 @@
 		<id property="optionId" column="OPTION_ID"/>
 		<result property="optionName" column="OPTION_NAME"/>
 		<result property="optionIcon" column="OPTION_ICON"/>
-	</resultMap>
-	
-	<resultMap type="WishList" id="wishListResultSet">
-		<id property="memberId" column="MEMBER_ID"/>
-		<result property="spaceId" column="SPACE_ID"/>
 	</resultMap>
 	
 	<!-- 공간 ID 조회 -->
@@ -114,7 +109,7 @@
 	</insert>
 	
 	<!-- 공간 가격 등록 -->
-	<insert id="insertPrice" parameterType = "Price">
+	<insert id="insertPrice" parameterType="Price">
 		INSERT INTO PRICE
 		VALUES (SEQ_SP_PR.NEXTVAL,
 				#{priceWeekend},
@@ -134,6 +129,7 @@
 	<select id="selectList" parameterType="string" resultMap="spaceResultSet">
 		SELECT S.*,
 			   (SELECT 'Y' FROM PRICE WHERE SPACE_ID = S.SPACE_ID AND ROWNUM = 1) PRICE_FLAG,
+			   A.SPACE_ATT_ORIGIN,
 			   A.SPACE_ATT_CHANGE
 		FROM   SPACE S,
 			   HOST H,
@@ -147,6 +143,7 @@
 	<!-- 공간 정보 조회 -->
 	<select id="selectSpace" parameterType="_int" resultMap="spaceResultSet">
 		SELECT S.*,
+			   A.SPACE_ATT_ORIGIN,
 			   A.SPACE_ATT_CHANGE,
 			   T.TYPE_NAME
 		FROM   SPACE S,
@@ -166,7 +163,6 @@
 			   SPACE_ID
 		FROM   SPACE_ATT
 		WHERE  SPACE_ID = #{spaceId}
-		AND    SPACE_ATT_STATUS = 'Y'
 		AND    SPACE_ATT_TYPE = '1'
 		ORDER BY SPACE_ATT_CHANGE
 	</select>
@@ -184,15 +180,23 @@
 			   SPACE_MAX_PER = #{spaceMaxPer},
 			   SPACE_OPEN_TIME = #{spaceOpenTime},
 			   SPACE_CLOSE_TIME = #{spaceCloseTime},
+			   <!-- 승인 이전에만 수정 가능 -->
+			   <if test="statusId != 2">
+			   SPACE_NAME = #{spaceName},
+			   SPACE_ADDRESS = #{spaceAddress},
+			   TYPE_ID = #{typeId},
+			   </if>
 			   SPACE_UPDATE = SYSDATE
 		WHERE  SPACE_ID = #{spaceId}
 	</update>
 	
+	<!-- 공간 파일 정보 수정 -->
 	<update id="updateFile" parameterType="SpaceAtt">
 		UPDATE SPACE_ATT
 		SET    SPACE_ATT_ORIGIN = #{spaceAttOrigin}
 		WHERE  SPACE_ID = #{spaceId}
 		AND    SPACE_ATT_TYPE = #{spaceAttType}
+		AND    SPACE_ATT_CHANGE = #{spaceAttChange}
 	</update>
 	
 	<!-- 공간 가격 조회 -->
@@ -208,6 +212,14 @@
 		FROM   SPACE S LEFT JOIN PRICE P ON (S.SPACE_ID = P.SPACE_ID)
 		WHERE  S.SPACE_ID = #{spaceId}
 	</select>
+	
+	<!-- 공간 가격 수정 -->
+	<update id="updatePrice" parameterType="Price">
+		UPDATE PRICE
+		SET    PRICE_TIME = #{priceTime}
+		WHERE  PRICE_ID = #{priceId}
+		AND    SPACE_ID = #{spaceId}
+	</update>
 	
 	<!-- 공간 타입 리스트 조회 -->
 	<select id="selectType" resultMap="typeResultSet">
@@ -259,7 +271,6 @@
 	<select id="selectOptionList" resultMap="optionResultSet">
 	SELECT * FROM "OPTION"
 	</select>
-	
 	
 	<insert id="wishList" parameterType="wishList">
 	INSERT INTO WISHLIST 

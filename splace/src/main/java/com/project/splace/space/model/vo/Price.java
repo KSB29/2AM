@@ -1,8 +1,5 @@
 package com.project.splace.space.model.vo;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Price {
 	
 	private int priceId;

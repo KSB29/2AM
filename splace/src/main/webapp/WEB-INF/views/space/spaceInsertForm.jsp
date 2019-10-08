@@ -76,7 +76,7 @@
 								<label>&nbsp;</label>
 								<input type="button" class="button primary small" id="addTagBtn" value="추가">
 							</div>
-							<div class="col-12 col-12-xsmall" id="tagList"></div>
+							<div class="col-12 col-12-xsmall noticeDiv" id="tagList"></div>
 							<input type="hidden" name="spaceTag" id="spaceTag" maxlength="150">
 							<!-- <input type="text" name="spaceTag" id="spaceTag" maxlength="150"> -->
 							<div class="col-12 col-12-xsmall">
@@ -107,7 +107,7 @@
 								<label>&nbsp;</label>
 								<input type="button" class="button primary small" id="addNoticeBtn" value="추가">
 							</div>
-							<div class="col-12 col-12-xsmall" id="noticeList"></div>
+							<div class="col-12 col-12-xsmall noticeDiv" id="noticeList"></div>
 							<input type="hidden" name="spaceNotice" id="spaceNotice" maxlength="1000">
 							<!-- <input type="text" name="spaceNotice" id="spaceNotice" maxlength="1000"> -->
 						</div>

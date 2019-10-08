@@ -2,9 +2,6 @@ package com.project.splace.space.model.vo;
 
 import java.sql.Date;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class SpaceAtt {
 	
 	private int spaceAttId;
