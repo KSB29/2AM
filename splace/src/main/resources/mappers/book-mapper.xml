@@ -127,16 +127,38 @@
 		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
 		WHERE MEMBER_ID = #{memberId}
 		<if test="_parameter.statusId != 0">
-			 AND B.STATUS_ID = #{statusId}
+			<if test="_parameter.statusId != 104">
+				<if test="_parameter.statusId != 103">
+					AND B.STATUS_ID = #{statusId}
+				</if>
+				<if test="_parameter.statusId == 103">
+					AND B.STATUS_ID = #{statusId} AND P.STATUS_ID = 103
+				</if>
+			</if>
+			<if test="_parameter.statusId == 104">
+				 AND P.STATUS_ID = #{statusId} AND B.STATUS_ID = 103
+			</if>
 		</if>
 		ORDER BY B.BOOK_ID DESC
 	</select>
 	
 	<!-- 전체 예약 수 조회 쿼리 -->
 	<select id="getbListCount" parameterType="Book" resultType="_int">
-		SELECT COUNT(*) FROM BOOK WHERE MEMBER_ID = #{memberId}
+		SELECT COUNT(*) FROM BOOK B
+		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID) 
+		WHERE MEMBER_ID = #{memberId}
 		<if test="_parameter.statusId != 0">
-			 AND STATUS_ID = #{statusId}
+			<if test="_parameter.statusId != 104">
+				<if test="_parameter.statusId != 103">
+					AND B.STATUS_ID = #{statusId}
+				</if>
+				<if test="_parameter.statusId == 103">
+					AND B.STATUS_ID = #{statusId} AND P.STATUS_ID = 103
+				</if>
+			</if>
+			<if test="_parameter.statusId == 104">
+				 AND P.STATUS_ID = #{statusId} AND B.STATUS_ID = 103
+			</if>
 		</if>
 	</select>
 	
@@ -184,8 +206,8 @@
 	</update>
 	
 	<!-- 결제취소 쿼리 -->
-	<update id="updatePaymentCancel" parameterType="string">
-		UPDATE PAYMENT SET STATUS_ID = 102, PAYMENT_CANCEL = SYSDATE WHERE BOOK_ID = #{bookId}
+	<update id="updatePaymentCancel" parameterType="Book">
+		UPDATE PAYMENT SET STATUS_ID = 102, PAYMENT_CANCEL = SYSDATE, PAYMENT_CANCEL_PRICE = #{paymentCancelPrice} WHERE BOOK_ID = #{bookId}
 	</update>
 	
 	<!-- 자동 이용완료 쿼리 -->

@@ -123,8 +123,8 @@ public class BookDao {
 	 * @param payment
 	 * @return result 
 	 */
-	public int updatePaymentCancel(String bookId) {
-		return sqlSession.update("bookMapper.updatePaymentCancel", bookId);
+	public int updatePaymentCancel(Book book) {
+		return sqlSession.update("bookMapper.updatePaymentCancel", book);
 	}
 
 	/**
