@@ -4,6 +4,7 @@
 function submit() {
 	if (confirm("승인하시겠습니까?")) {
 		var checkCnt = $("#bookArea .checkList input[type=checkbox]").not(":disabled").attr("checked");
+		updateStatus();
 		console.log(checkCnt);
 	};
 }
@@ -12,6 +13,32 @@ function reject() {
 		
 	};
 }
+
+function updateStatus() {
+	var list = "";
+	$(".checkList:checked").each(function(index, item){
+		list += $(".bookId").text() + ",";
+	});
+	console.log(list);
+	/*if (list != "") {
+		$.ajax ({
+			url : "spaceApply.sp",
+			data : {list:list},
+			type : "post",
+			success : function(result) {
+						alert(result + " 건 처리되었습니다");
+						location.reload();
+					},
+			error : function(e) {
+						console.log(e);
+					}
+		});
+	} else {
+		alert("승인 처리할 예약번호를 선택하세요");
+		return false;
+	}*/
+}
+
 $(document).ready(function(){
 	
 	//$("#bookArea .detail").css("display", "none");

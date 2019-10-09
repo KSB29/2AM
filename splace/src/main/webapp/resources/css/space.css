@@ -136,3 +136,13 @@ input[type="file"] {
 #priceArea .timeTable {
 	background-color: rgba(144, 144, 144, 0.075) !important;
 }
+
+/* 예약 리스트 -------------------------------------------------------------------------------- */
+#bookArea td {
+	font-size: 90%;
+}
+
+.filterContainer{width: 12%; float: right;}
+.filterContainer .current {font-size: 70%;}
+.filterContainer .option {font-size: 60% !important;}
+.filterContainer .nice-select .list{background-color: white !important; border: 1px solid #4c74b9 !important; border-radius: 5px !important;}
