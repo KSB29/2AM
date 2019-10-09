@@ -78,11 +78,12 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public int updatePaymentCancel(String bookId) {
-		// 예약취소
-		int result = bookDao.deleteBook(bookId);
-		
+	public int updatePaymentCancel(Book book) {
 		// 결제취소
-		return bookDao.updatePaymentCancel(bookId);
+		System.out.println(book);
+		int result = bookDao.updatePaymentCancel(book);
+		
+		// 예약취소
+		return bookDao.deleteBook(book.getBookId());
 	}
 }

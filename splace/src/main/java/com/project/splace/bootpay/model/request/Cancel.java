@@ -5,6 +5,7 @@ package com.project.splace.bootpay.model.request;
  */
 public class Cancel {
     public String receipt_id;
+    public int price;
     public String name;
     public String reason;
 }

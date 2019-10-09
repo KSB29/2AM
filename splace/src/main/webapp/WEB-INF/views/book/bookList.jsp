@@ -86,7 +86,9 @@
 										<c:url var="bookDetail" value="bookDetail.sp"/>
 										<div>
 											<button class="button fit primary" onclick="location.href='${bookDetail}?bookId=${book.bookId }'">상세보기</button>
-											<button class="button fit">후기작성</button>
+											<c:if test="${book.pStatusId == 104 && book.statusId == 103 }">
+												<button class="button fit">후기작성</button>										
+											</c:if>
 										</div>
 									</td>
 								</tr>

@@ -41,7 +41,7 @@ public interface BookService {
 	public abstract int insertPayment(Book payment);
 
 	// 결제 취소
-	public abstract int updatePaymentCancel(String bookId);
+	public abstract int updatePaymentCancel(Book book);
 
 
 }

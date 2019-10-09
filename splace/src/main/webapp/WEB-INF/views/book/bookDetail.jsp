@@ -434,13 +434,13 @@
 			btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#paymentCancel'>예약취소</button>");
 			modal.attr("id", "paymentCancel").attr("aria-labelledby", "paymentCancelTitle");
 			modalTitle.attr("id", "paymentCancelTitle");
-			modalForm.attr("action", "${paymentCancel}?bookId=${book.bookId}&receiptId=${book.receiptId}");
+			modalForm.attr("action", "${paymentCancel}?bookId=${book.bookId}&receiptId=${book.receiptId}&price=${book.paymentCancelPrice}");
 			modalBodyTitle.text("예약을 취소하시겠습니까?");
 			modalBody.html("");
 			modalBody.html(
 					"<tbody>"
 				+ "<tr><td>결제금액</td><td><fmt:formatNumber value='${book.bookPrice }' type='currency'/></td></tr>"
-				+ "<tr><td>환불금액</td><td class='refund'><fmt:formatNumber value='${book.bookPrice }' type='currency'/></td></tr>"
+				+ "<tr><td>환불금액</td><td class='refund'><fmt:formatNumber value='${book.paymentCancelPrice }' type='currency'/></td></tr>"
 				+ "</tbody>"
 			);
 			modalBtn.html("예약취소");
@@ -454,7 +454,7 @@
 			titleBox.html(
 					"<h2>환불 금액</h2>"
 				+"<div>"
-				+"<span><fmt:formatNumber value='${book.bookPrice }' type='currency'/></span>"
+				+"<span><fmt:formatNumber value='${book.paymentCancelPrice }' type='currency'/></span>"
 				+"</div>"
 			);
 			table.html("");

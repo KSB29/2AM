@@ -297,6 +297,20 @@ public class BookController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String paymentId = "p" + sdf.format(today) + "_" + new Date().getTime();
 		
+		Date bookDateEve = book.getBookDate();
+		bookDateEve.setDate(book.getBookDate().getDate()-1);
+		System.out.println("bookDateEve: "+sdf.format(bookDateEve));
+		System.out.println("today: "+sdf.format(today));
+		System.out.println(sdf.format(today).equals(sdf.format(bookDateEve)));
+		
+		// 예약완료&결제완료 상태이고, 오늘 == 예약전날 ? 결제취소금액설정(결제금액/2) : 결제취소금액설정(결제금액)
+		if(book.getpStatusId() == 103 && book.getpStatusId() == 103 && sdf.format(today).equals(sdf.format(bookDateEve))) {
+			book.setPaymentCancelPrice(book.getBookPrice() / 2);
+		} else if(book.getpStatusId() == 103 && book.getpStatusId() == 103 && !sdf.format(today).equals(sdf.format(bookDateEve))) {
+			book.setPaymentCancelPrice(book.getBookPrice());
+		}
+		System.out.println("취소금액: "+book.getPaymentCancelPrice());
+		
 		mv.addObject("book", book).addObject("deadline", deadline).addObject("paymentId", paymentId).setViewName("book/bookDetail");
 		
 		return mv;
@@ -350,7 +364,8 @@ public class BookController {
 	// 2. 결제취소
 	static BootpayApi api;
 	@RequestMapping("paymentCancel.sp")
-	public String paymentCancel(String receiptId, String bookId, RedirectAttributes rd, HttpServletRequest request) throws Exception {
+	public String paymentCancel(String receiptId, String bookId, int price, RedirectAttributes rd, HttpServletRequest request) throws Exception {
+		System.out.println("price: "+price);
 		 api = new BootpayApi(
 		        "5d7209d802f57e003591d59a",
 		        "nKnUBiaphtcJt3Y8fELMbowN3Di6PV+Kp6JxKLVyKVQ="
@@ -359,6 +374,7 @@ public class BookController {
 
 		Cancel cancel = new Cancel();
 		cancel.receipt_id = receiptId;
+		cancel.price = 500;
 		cancel.name = "관리자";
 		cancel.reason = "구매자 취소요청";
 
@@ -367,7 +383,7 @@ public class BookController {
 		    String str = IOUtils.toString(res.getEntity().getContent(), "UTF-8");
 		    System.out.println(str);
 		    if(str != null) {
-				int result = bookService.updatePaymentCancel(bookId);
+				int result = bookService.updatePaymentCancel(new Book(bookId, null, price));
 				if(result>0) {
 					rd.addFlashAttribute("msg", "결제가 취소되었습니다.");
 				} else {
