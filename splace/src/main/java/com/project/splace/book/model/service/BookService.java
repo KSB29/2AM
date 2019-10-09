@@ -25,14 +25,11 @@ public interface BookService {
 	public abstract ArrayList<Book> selectBlist(int currentPage, Book book);
 
 	// 예약 내역 조회
-	public abstract Book selectBook(String bookId);
+	public abstract Book selectBook(Book book);
 
 	// 예약 취소
 	public abstract int deleteBook(String bookId);
 	
-	// 자동 이용완료 처리
-	public abstract int updateBookCompleted(String bookId);
-
 	//------------------------------------------
 	//--결제-------------------------------------
 	//------------------------------------------
@@ -42,6 +39,9 @@ public interface BookService {
 
 	// 결제 취소
 	public abstract int updatePaymentCancel(Book book);
+
+	// 리뷰작성여부
+	public abstract int selectReviewCount(Book book);
 
 
 }
