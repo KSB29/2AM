@@ -80,11 +80,11 @@ public class BookDao {
 
 	/**
 	 * 6. 예약 내역 조회
-	 * @param bookId
+	 * @param book
 	 * @return book
 	 */
-	public Book selectBook(String bookId) {
-		return sqlSession.selectOne("bookMapper.selectBook", bookId);
+	public Book selectBook(Book book) {
+		return sqlSession.selectOne("bookMapper.selectBook", book);
 	}
 
 	/**
@@ -94,6 +94,15 @@ public class BookDao {
 	 */
 	public int deleteBook(String bookId) {
 		return sqlSession.update("bookMapper.deleteBook", bookId);
+	}
+
+	/**
+	 * 8. 리뷰작성여부
+	 * @param book
+	 * @return reviewCount
+	 */
+	public int selectReviewCount(Book book) {
+		return sqlSession.selectOne("bookMapper.selectReviewCount", book);
 	}
 
 	//------------------------------------------
@@ -127,12 +136,4 @@ public class BookDao {
 		return sqlSession.update("bookMapper.updatePaymentCancel", book);
 	}
 
-	/**
-	 * 자동 이용완료 처리
-	 * @param bookId
-	 * @return result
-	 */
-	public int updateBookCompleted(String bookId) {
-		return sqlSession.update("bookMapper.updateBookCompleted", bookId);
-	}
 }

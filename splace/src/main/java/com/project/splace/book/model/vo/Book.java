@@ -32,6 +32,12 @@ public class Book {
 
 	public Book() {}
 	
+	// 예약내역조회용
+	public Book(String bookId, String memberId) {
+		super();
+		this.bookId = bookId;
+		this.memberId = memberId;
+	}
 	// 예약목록조회용
 	public Book(String memberId, int statusId) {
 		this.memberId = memberId;
@@ -44,7 +50,14 @@ public class Book {
 		this.bookCancel = bookCancel;
 		this.paymentCancelPrice = paymentCancelPrice;
 	}
-	
+	// 리뷰작성여부
+	public Book(String bookId, int spaceId, String memberId) {
+		super();
+		this.bookId = bookId;
+		this.spaceId = spaceId;
+		this.memberId = memberId;
+	}
+
 	public Book(String bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
 			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
 			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String typeName,

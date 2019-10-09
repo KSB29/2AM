@@ -287,7 +287,10 @@ public class BookController {
 			return mv;
 		}
 		
-		Book book = bookService.selectBook(bookId);
+		// 회원아이디
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		
+		Book book = bookService.selectBook(new Book(bookId, memberId));
 //		System.out.println(book);
 		
 		// 승인기한
@@ -304,14 +307,21 @@ public class BookController {
 		System.out.println(sdf.format(today).equals(sdf.format(bookDateEve)));
 		
 		// 예약완료&결제완료 상태이고, 오늘 == 예약전날 ? 결제취소금액설정(결제금액/2) : 결제취소금액설정(결제금액)
-		if(book.getpStatusId() == 103 && book.getpStatusId() == 103 && sdf.format(today).equals(sdf.format(bookDateEve))) {
+		if(book.getStatusId() == 103 && book.getpStatusId() == 103 && sdf.format(today).equals(sdf.format(bookDateEve))) {
 			book.setPaymentCancelPrice(book.getBookPrice() / 2);
-		} else if(book.getpStatusId() == 103 && book.getpStatusId() == 103 && !sdf.format(today).equals(sdf.format(bookDateEve))) {
-			book.setPaymentCancelPrice(book.getBookPrice());
 		}
 		System.out.println("취소금액: "+book.getPaymentCancelPrice());
 		
-		mv.addObject("book", book).addObject("deadline", deadline).addObject("paymentId", paymentId).setViewName("book/bookDetail");
+		// 리뷰작성여부
+		int reviewCount = bookService.selectReviewCount(new Book(book.getBookId(), book.getSpaceId(), memberId));
+		boolean reviewStatus;
+		if(reviewCount>0) {
+			reviewStatus = true;
+		} else {
+			reviewStatus = false;
+		}
+				
+		mv.addObject("book", book).addObject("deadline", deadline).addObject("paymentId", paymentId).addObject("reviewStatus", reviewStatus).setViewName("book/bookDetail");
 		
 		return mv;
 	}
@@ -328,18 +338,6 @@ public class BookController {
 			rd.addFlashAttribute("msg", "예약이 취소되지 않았니다!");
 		}
 		return mv;
-	}
-	
-	// 5. 결제완료상태에서 예약일이 되면 자동으로 이용완료처리
-	@ResponseBody
-	@RequestMapping("bookCompleted.sp")
-	public String bookCompleted(String bookId) {
-		int result = bookService.updateBookCompleted(bookId);
-		if(result>0) {
-			return "success";			
-		} else {
-			return "xxx";						
-		}
 	}
 
 	//------------------------------------------

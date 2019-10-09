@@ -169,18 +169,30 @@
 		PAYMENT_DATE,
 		PAYMENT_TYPE,
 		PAYMENT_CANCEL,
+		PAYMENT_CANCEL_PRICE,
 		P.STATUS_ID P_STATUS_ID,
 		RECEIPT_ID FROM BOOK B
 		JOIN SPACE S ON (S.SPACE_ID = B.SPACE_ID)
 		JOIN TYPE T ON (S.TYPE_ID = T.TYPE_ID)
 		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
-		WHERE B.BOOK_ID = #{bookId}
+		WHERE B.BOOK_ID = #{bookId} AND B.MEMBER_ID = #{memberId}
 	</select>
 	
 	<!-- 예약 취소 쿼리 -->
 	<update id="deleteBook" parameterType="string">
 		UPDATE BOOK SET STATUS_ID = 102, BOOK_CANCEL = SYSDATE WHERE BOOK_ID = #{bookId}
 	</update>
+	
+	<!-- 리뷰작성여부 쿼리 -->
+	<select id="selectReviewCount" parameterType="Book" resultType="_int">
+		SELECT COUNT(*) FROM BOOK B
+		JOIN MEMBER M ON(M.MEMBER_ID = B.MEMBER_ID)
+		JOIN SPACE S ON(B.SPACE_ID = S.SPACE_ID)
+		JOIN REVIEW R ON(S.SPACE_ID = R.SPACE_ID)
+		WHERE B.MEMBER_ID = #{memberId} 
+		AND B.BOOK_ID = #{bookId} 
+		AND B.SPACE_ID = #{spaceId}
+	</select>
 	
 	<!-- ============================================ -->
 	<!-- ====결제===================================== -->
@@ -210,8 +222,4 @@
 		UPDATE PAYMENT SET STATUS_ID = 102, PAYMENT_CANCEL = SYSDATE, PAYMENT_CANCEL_PRICE = #{paymentCancelPrice} WHERE BOOK_ID = #{bookId}
 	</update>
 	
-	<!-- 자동 이용완료 쿼리 -->
-	<update id="updateBookCompleted" parameterType="string">
-		UPDATE PAYMENT SET STATUS_ID = 104 WHERE BOOK_ID = #{bookId}
-	</update>
 </mapper>
