@@ -20,6 +20,8 @@ public interface MemberService {
 	public abstract int updatePwd(MailVO vo);
 
 	public abstract int insertNaverId(Member mem);
+
+	public abstract Member naverLogin(String memberId);
 	
 	
 	

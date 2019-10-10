@@ -18,7 +18,6 @@
 	<link rel="stylesheet" href="${contextPath }/resources/css/gJoin.css" type="text/css">
 	<link rel="stylesheet" href="${contextPath }/resources/css/join.css" type="text/css">
 	
-	
 	<!-- 네이버 -->
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script> 
@@ -30,7 +29,6 @@
 			<jsp:include page="../common/top.jsp"/>
 			<!-- Wrapper -->
 			<div id="wrapper">
-
 				<!-- Header -->
 
 				<!-- Menu -->
@@ -53,16 +51,17 @@
 												</div>																						
 												<div class="join_Form_box row">
 													<div class="gjoin_box col-12">
-														<input type="text" id="memberName" name="memberName" placeholder="이름을 입력하세요." readonly>
+														<input type="text" id="memberName" name="memberName"  readonly>
 													</div>
+																				
 													<div class="gjoin_box col-12">
-														<input type="email" id="memberId" name="memberId" readonly>
+														<input type="email" id="memberId" name="memberId" value="선인장" readonly>
 														<input type="hidden" id="memberPwd" name="memberPwd" value="naver123" >
 														<input type="hidden" id="memberPwd" name="memberSocial" value="네이버" >
 							
 													</div>
 													<div class="gjoin_box col-12">
-														<input type="text" id="memberPhone" name="memberPhone">
+														<input type="text" id="memberPhone" name="memberPhone" required> 
 														<span class="guide"></span>
 													</div>
 												</div>													
@@ -72,16 +71,17 @@
 														<label for="policy2"> <a id="policy_modal" href="#exampleModalCenter" data-toggle="modal" >서비스 이용약관(필수)</a></label>
 													</div>
 													<div>
-														<input type="checkbox" class="policy_ck" id="memberAgree" name="memberAgree" required>
+														<input type="checkbox" class="policy_ck" id="memberAgree" name="memberAgree" value="N" >
 														<label for="memberAgree"> 이벤트 등 프로모션 알림 메일 수신 동의(선택)</label>
 													</div>
 												</div>
 												<div>
-													<button type="submit" class="button fit">회원가입</button>
+													<button type="submit" id="join_btn" class="button fit">회원가입</button>
 												</div> 
 											</article>
 										</form>									
 									</section>
+									
 								   <!-- Modal-->
 									<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 										<div class="modal-dialog modal-dialog-centered" role="document">
@@ -175,13 +175,19 @@
 
 				<!-- scirpt -->
 				<script src="${contextPath}/resources/js/joinForm.js" ></script>
+				<script>
+					var name = ${result}.response.name;
+					var memberId = ${result}.response.email;
+					$("#memberName").val(name);	
+					$("#memberId").val(memberId);				
+				</script>
 
 				<!-- Footer -->
 				<jsp:include page="../common/bottom.jsp"/>
 				
 				
 				<!-- 네이버 로그인 -->
- 				<script type="text/javascript">
+<!--  				<script type="text/javascript">
 				  var naver_id_login = new naver_id_login("6M93f_6j07ur8krVEjU9", "http://localhost:8080/splace/njoinForm.sp");
 				  
 				  // 접근 토큰 값 출력
@@ -195,7 +201,7 @@
 				    // alert(naver_id_login.getProfileData('password')); 
 				    /* alert(naver_id_login.getProfileData('age')); */
 				  }
-			  	</script>  
+			  	</script>  --> 
 
 
 
