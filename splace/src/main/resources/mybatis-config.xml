@@ -20,6 +20,7 @@
 		<typeAlias type="com.project.splace.space.model.vo.Price" alias="Price"/>
 		<typeAlias type="com.project.splace.space.model.vo.WishList" alias="WishList"/>
 		<typeAlias type="com.project.splace.host.model.vo.BookList" alias="BookList"/>
+		<typeAlias type="com.project.splace.host.model.vo.HostSearch" alias="HostSearch"/>
 	</typeAliases>
 	
   	<mappers>

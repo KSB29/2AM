@@ -11,6 +11,7 @@ public class Space {
 	private String spaceTag;
 	private String spaceOption;
 	private String spaceAddress;
+	private String spacePhone;
 	private String spaceNotice;
 	private String spaceOperStatus;
 	private int spaceTime;
@@ -33,7 +34,7 @@ public class Space {
 	public Space() {}
 
 	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
-			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, String spaceAttChange, int spaceTime,
+			String spaceOption, String spaceAddress, String spacePhone, String spaceNotice, String spaceOperStatus, String spaceAttChange, int spaceTime,
 			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
 			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate) {
 		super();
@@ -44,6 +45,7 @@ public class Space {
 		this.spaceTag = spaceTag;
 		this.spaceOption = spaceOption;
 		this.spaceAddress = spaceAddress;
+		this.spacePhone = spacePhone;
 		this.spaceNotice = spaceNotice;
 		this.spaceOperStatus = spaceOperStatus;
 		this.spaceAttChange = spaceAttChange;
@@ -61,7 +63,7 @@ public class Space {
 	}
 
 	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
-			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
+			String spaceOption, String spaceAddress, String spacePhone, String spaceNotice, String spaceOperStatus, int spaceTime,
 			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
 			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String spaceAttChange, String typeName) {
 		super();
@@ -72,6 +74,7 @@ public class Space {
 		this.spaceTag = spaceTag;
 		this.spaceOption = spaceOption;
 		this.spaceAddress = spaceAddress;
+		this.spacePhone = spacePhone;
 		this.spaceNotice = spaceNotice;
 		this.spaceOperStatus = spaceOperStatus;
 		this.spaceTime = spaceTime;
@@ -90,7 +93,7 @@ public class Space {
 	}
 	
 	public Space(int spaceId, String spaceName, String spaceComment, String spaceDetail, String spaceTag,
-			String spaceOption, String spaceAddress, String spaceNotice, String spaceOperStatus, int spaceTime,
+			String spaceOption, String spaceAddress, String spacePhone, String spaceNotice, String spaceOperStatus, int spaceTime,
 			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
 			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String memberId, String spaceAttOrigin,
 			String spaceAttChange, String typeName, String priceFlag) {
@@ -102,6 +105,7 @@ public class Space {
 		this.spaceTag = spaceTag;
 		this.spaceOption = spaceOption;
 		this.spaceAddress = spaceAddress;
+		this.spacePhone = spacePhone;
 		this.spaceNotice = spaceNotice;
 		this.spaceOperStatus = spaceOperStatus;
 		this.spaceTime = spaceTime;
@@ -320,6 +324,14 @@ public class Space {
 
 	public void setSpaceAttOrigin(String spaceAttOrigin) {
 		this.spaceAttOrigin = spaceAttOrigin;
+	}
+
+	public String getSpacePhone() {
+		return spacePhone;
+	}
+
+	public void setSpacePhone(String spacePhone) {
+		this.spacePhone = spacePhone;
 	}
 
 	@Override

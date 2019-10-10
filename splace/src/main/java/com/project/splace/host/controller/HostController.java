@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,8 +15,8 @@ import com.project.splace.common.Pagination;
 import com.project.splace.host.model.service.HostService;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
+import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.member.model.vo.Member;
-import com.project.splace.space.model.service.SpaceService;
 import com.project.splace.space.model.vo.Space;
 
 //session에 hostId 추가
@@ -26,9 +27,7 @@ public class HostController {
 	@Autowired
 	private HostService hService;
 	
-	@Autowired
-	private SpaceService sService;
-	
+	// 호스트 마이페이지 이동
 	@RequestMapping("hostApplyForm.sp")
 	public ModelAndView hostApplyForm(HttpSession session, ModelAndView mv) {
 		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
@@ -46,6 +45,7 @@ public class HostController {
 		return mv;
 	}
 	
+	// 호스트 정보 등록 처리 후 마이페이지 이동
 	@RequestMapping("hostInsert.sp")
 	public ModelAndView hostInsert(Host host, ModelAndView mv) {
 		Host hostInfo = hService.insertHost(host);
@@ -58,6 +58,7 @@ public class HostController {
 		return mv;
 	}
 	
+	// 호스트 정보 수정 처리 후 마이페이지 이동
 	@RequestMapping("hostUpdate.sp")
 	public ModelAndView hostUpdate(Host host, ModelAndView mv) {
 		Host hostInfo = hService.updateHost(host);
@@ -69,6 +70,7 @@ public class HostController {
 		return mv;
 	}
 	
+	// 호스트 승인 요청 처리 후 마이페이지 이동
 	@RequestMapping("hostApply.sp")
 	public ModelAndView hostApply(HttpSession session, ModelAndView mv) {
 		int hostId = (int)session.getAttribute("hostId");
@@ -81,19 +83,34 @@ public class HostController {
 		return mv;
 	}
 	
+	// 예약 리스트 페이지 이동
 	@RequestMapping("hostBookList.sp")
-	public ModelAndView bookList(HttpSession session, ModelAndView mv, Integer page) {
+	public ModelAndView hostBookList(HttpSession session, HostSearch search, ModelAndView mv, Integer page) {
 		int hostId = (int)session.getAttribute("hostId");
 		int currentPage = page == null? 1 : page;
-		ArrayList<BookList> bList = hService.selectBookList(hostId, currentPage);
+		search.setHostId(hostId);
+		
+		ArrayList<BookList> bList = hService.selectBookList(search, currentPage);
 		ArrayList<Space> sList = hService.selectSpaceList(hostId);
 		//ArrayList<Status> status = hService.selectStatus();
+		
 		if (bList != null) {
-			mv.addObject("bList", bList).addObject("sList", sList).addObject("pageInfo", Pagination.getPageInfo()).setViewName("host/hostBookList");
+			mv.addObject("search", search).addObject("bList", bList).addObject("sList", sList)
+			.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostBookList");
 		} else {
 			mv.addObject("msg", "예약리스트 조회 중 오류 발생").setViewName("common/errorPage");
 		}
 		return mv;
+	}
+	
+	// 예약 승인/취소 처리(Ajax)
+	@ResponseBody
+	@RequestMapping("hostApplyBook.sp")
+	public String bookApply(HttpSession session, String statusId, String list) {
+		int hostId = (int)session.getAttribute("hostId");
+		int result = hService.updateApplyBook(statusId, list);
+		if (result > 0) return result+"";
+		else return "0";
 	}
 	
 	@RequestMapping("hostAccount.sp")

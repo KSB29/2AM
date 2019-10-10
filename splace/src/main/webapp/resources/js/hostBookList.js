@@ -3,27 +3,26 @@
  */
 function submit() {
 	if (confirm("승인하시겠습니까?")) {
-		var checkCnt = $("#bookArea .checkList input[type=checkbox]").not(":disabled").attr("checked");
-		updateStatus();
-		console.log(checkCnt);
+		updateStatus("101"); // 승인
 	};
 }
 function reject() {
 	if (confirm("반려하시겠습니까?")) {
-		
+		updateStatus("102"); // 취소
 	};
 }
 
-function updateStatus() {
+function updateStatus(statusId) {
 	var list = "";
-	$(".checkList:checked").each(function(index, item){
-		list += $(".bookId").text() + ",";
+	$("#bookArea .checkList input:checked").not(":disabled").each(function(index, item){
+		var idIndex = $(this).attr("id").replace("check","");
+		list += "," + $("#bookId"+idIndex).text();
 	});
 	console.log(list);
-	/*if (list != "") {
+	if (list != "") {
 		$.ajax ({
-			url : "spaceApply.sp",
-			data : {list:list},
+			url : "hostApplyBook.sp",
+			data : {statusId:statusId, list:list},
 			type : "post",
 			success : function(result) {
 						alert(result + " 건 처리되었습니다");
@@ -34,14 +33,20 @@ function updateStatus() {
 					}
 		});
 	} else {
-		alert("승인 처리할 예약번호를 선택하세요");
+		alert("승인/취소 처리할 예약번호를 선택하세요");
 		return false;
-	}*/
+	}
 }
 
 $(document).ready(function(){
 	
-	//$("#bookArea .detail").css("display", "none");
+	$("#spaceId, #statusId").change(function(){
+		//var spaceId = $("#spaceId option:selected").val();
+		//var statusId = $("#statusId option:selected").val();
+		$("form").submit();
+	});
+	
+	/*$("#bookArea .detail").css("display", "none");
 	$("#bookArea .list td").not(".checkList").click(function(){
 		if($(this).parent().next("tr").css("display") == "none") {
 			//$(this).parent().siblings(".detail").slideUp();
@@ -49,7 +54,7 @@ $(document).ready(function(){
 		} else {
 			$(this).parent().next().slideUp();
 		}
-	});
+	});*/
 	
 	$("#checkAll").click(function(){
 		$("#bookArea .checkList input[type=checkbox]").not(":disabled").prop("checked", $(this).prop("checked"));
