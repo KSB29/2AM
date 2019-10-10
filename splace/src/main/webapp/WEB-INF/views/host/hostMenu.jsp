@@ -20,7 +20,7 @@
 				<h2><a href="spaceList.sp">공간관리</a></h2>
 			</div>
 			<div class="col-2 align-center">
-				<h2><a href="spaceBook.sp">예약관리</a></h2>
+				<h2><a href="hostBookList.sp">예약관리</a></h2>
 			</div>
 			<div class="col-2 align-center">
 				<h2><a href="spaceQna.sp">Q&A관리</a></h2>

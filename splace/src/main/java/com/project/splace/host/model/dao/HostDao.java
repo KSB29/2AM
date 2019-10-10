@@ -1,10 +1,16 @@
 package com.project.splace.host.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.splace.common.PageInfo;
+import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
+import com.project.splace.space.model.vo.Space;
 
 @Repository("hDao")
 public class HostDao {
@@ -45,8 +51,8 @@ public class HostDao {
 	 * @param memberId
 	 * @return result
 	 */
-	public int applyHost(int hostId) {
-		return sqlSession.update("hostMapper.applyHost", hostId);
+	public int updateApplyHost(int hostId) {
+		return sqlSession.update("hostMapper.updateApplyHost", hostId);
 	}
 
 	/**
@@ -57,4 +63,37 @@ public class HostDao {
 	public Host selectInfo(int hostId) {
 		return sqlSession.selectOne("hostMapper.selectInfo", hostId);
 	}
+	
+	/**
+	 * 예약리스트 수 조회 Dao
+	 * @param hostId
+	 * @return listCount
+	 */
+	public int getbListCount(int hostId) {
+		return sqlSession.selectOne("hostMapper.getbListCount", hostId);
+	}
+	
+	/**
+	 * 예약리스트 조회 Dao
+	 * @param hostId
+	 * @param pageInfo
+	 * @return bList
+	 */
+	public ArrayList<BookList> selectBookList(int hostId, PageInfo pageInfo) {
+		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
+		//return (ArrayList)sqlSession.selectList("hostMapper.selectBookList", hostId, rowBounds);
+		return (ArrayList)sqlSession.selectList("hostMapper.selectBookList", hostId);
+	}
+
+	/**
+	 * 호스트의 공간 리스트 Dao
+	 * @param hostId
+	 * @return sList
+	 */
+	public ArrayList<Space> selectSpaceList(int hostId) {
+		return (ArrayList)sqlSession.selectList("hostMapper.selectSpaceList", hostId);
+	}
+	
+	
 }

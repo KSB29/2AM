@@ -1,6 +1,10 @@
 package com.project.splace.host.model.service;
 
+import java.util.ArrayList;
+
+import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
+import com.project.splace.space.model.vo.Space;
 
 public interface HostService {
 	
@@ -31,6 +35,21 @@ public interface HostService {
 	 * @param memberId
 	 * @return hostInfo
 	 */
-	public abstract Host applyHost(int hostId);
+	public abstract Host updateApplyHost(int hostId);
+
+	/**
+	 * 예약리스트 조회 Service
+	 * @param hostId
+	 * @param currentPage
+	 * @return bList
+	 */
+	public abstract ArrayList<BookList> selectBookList(int hostId, int currentPage);
+
+	/**
+	 * 호스트의 공간 리스트 Service
+	 * @param hostId
+	 * @return sList
+	 */
+	public abstract ArrayList<Space> selectSpaceList(int hostId);
 	
 }

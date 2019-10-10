@@ -74,7 +74,7 @@
 								<label>공간이름</label><span>${ space.spaceName }</span>
 							</div>
 							<div class="col-12 col-12-xsmall">
-								<label>주소</label><span>${ space.spaceAddress }</span>
+								<label>주소</label><span>${ post } ${ space.spaceAddress } ${ address }</span>
 							</div>
 						</div>
 						</c:if>

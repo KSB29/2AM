@@ -19,6 +19,7 @@
 		<typeAlias type="com.project.splace.qna.model.vo.QnA" alias="QnA"/>
 		<typeAlias type="com.project.splace.space.model.vo.Price" alias="Price"/>
 		<typeAlias type="com.project.splace.space.model.vo.WishList" alias="WishList"/>
+		<typeAlias type="com.project.splace.host.model.vo.BookList" alias="BookList"/>
 	</typeAliases>
 	
   	<mappers>
