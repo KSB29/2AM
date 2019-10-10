@@ -89,8 +89,8 @@
 														<label for="policy2"> <a id="policy_modal" href="#exampleModalCenter" data-toggle="modal">서비스 이용약관(필수)</a></label>
 													</div>
 													<div>
-														<input type="checkbox" class="policy_ck" id="policy3" name="policy_ck" >
-														<label for="policy3"> 이벤트 등 프로모션 알림 메일 수신 동의(선택)</label>
+														<input type="checkbox" class="policy_ck" id="memberAgree" name="memberAgree"  >
+														<label for="memberAgree"> 이벤트 등 프로모션 알림 메일 수신 동의(선택)</label>
 													</div>
 												</article>
 												<article class="join_box_3 center">

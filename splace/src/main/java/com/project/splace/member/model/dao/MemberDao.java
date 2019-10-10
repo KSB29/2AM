@@ -59,7 +59,13 @@ public class MemberDao {
 
 
 	public int insertNaverId(Member mem) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert("memberMapper.naverJoin", mem);
+	}
+
+
+	public Member naverLogin(String memberId) {
+		
+		Member loginUser = sqlSession.selectOne("memberMapper.selectNaverId", memberId);
+		return loginUser;
 	}
 }
