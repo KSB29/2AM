@@ -14,6 +14,7 @@
 		<result property="memberStatus" column="MEMBER_STATUS"/>
 	</resultMap>
 	
+	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		SELECT * FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
@@ -34,7 +35,7 @@
 				#{memberPwd},
 				#{memberName},
 				#{memberPhone},
-				DEFAULT,
+				#{memberAgree},
 				DEFAULT,
 				DEFAULT,
 				DEFAULT,
@@ -47,6 +48,7 @@
 		FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
 	</select>
+
 	<select id="checkPwd" parameterType="Member" resultMap="memberResultSet">
 		SELECT MEMBER_PWD FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
@@ -67,5 +69,28 @@
 		MEMBER_UPDATE = SYSDATE
 		WHERE MEMBER_ID = #{to}
 	</update>
+	
+	<insert id="naverJoin" parameterType="Member" >
+			INSERT INTO MEMBER 
+		VALUES (#{memberId},
+				#{memberPwd},
+				#{memberName},
+				#{memberPhone},
+				#{memberAgree},
+				DEFAULT,
+				DEFAULT,
+				#{memberSocial},
+				DEFAULT,
+				'Y'			
+		)
+	</insert>
+	
+	
+	<select id="selectNaverId" parameterType="String" resultMap="memberResultSet">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND MEMBER_STATUS = 'Y'
+	</select>
+	
 </mapper>
 

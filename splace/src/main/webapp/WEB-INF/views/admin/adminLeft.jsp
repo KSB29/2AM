@@ -17,7 +17,7 @@
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${adminHome.sp }">
       <div class="sidebar-brand-text mx-3">SPLACE - Admin</div>
     </a>
 
@@ -28,95 +28,127 @@
     <li class="nav-item active">
       <a class="nav-link" href="${adminHome.sp }">
         <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a>
+        <span>Dashboard</span>
+      </a>
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-      Interface
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-        <i class="fas fa-fw fa-cog"></i>
-        <span>Components</span>
-      </a>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Custom Components:</h6>
-          <a class="collapse-item" href="buttons.html">Buttons</a>
-          <a class="collapse-item" href="cards.html">Cards</a>
-        </div>
-      </div>
-    </li>
-
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-        <i class="fas fa-fw fa-wrench"></i>
-        <span>Utilities</span>
-      </a>
-      <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Custom Utilities:</h6>
-          <a class="collapse-item" href="utilities-color.html">Colors</a>
-          <a class="collapse-item" href="utilities-border.html">Borders</a>
-          <a class="collapse-item" href="utilities-animation.html">Animations</a>
-          <a class="collapse-item" href="utilities-other.html">Other</a>
-        </div>
-      </div>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-      Addons
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Pages</span>
-      </a>
-      <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Login Screens:</h6>
-          <a class="collapse-item" href="login.html">Login</a>
-          <a class="collapse-item" href="register.html">Register</a>
-          <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-          <div class="collapse-divider"></div>
-          <h6 class="collapse-header">Other Pages:</h6>
-          <a class="collapse-item" href="404.html">404 Page</a>
-          <a class="collapse-item" href="blank.html">Blank Page</a>
-        </div>
-      </div>
-    </li>
-
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-      <a class="nav-link" href="charts.html">
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>Charts</span></a>
-    </li>
-
-    <!-- Nav Item - Tables -->
     <li class="nav-item">
       <a class="nav-link" href="tables.html">
-        <i class="fas fa-fw fa-table"></i>
-        <span>Tables</span></a>
+        <i class="fas fa-fw fa-cog"></i>
+        <span>회원관리</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>호스트관리</span>
+      </a>
+      <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="utilities-color.html">호스트 정보관리</a>
+          <a class="collapse-item" href="utilities-border.html">호스트 신청관리</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+        <i class="fas fa-fw fa-cog	"></i>
+        <span>공간관리</span>
+      </a>
+      <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="utilities-color.html">공간 정보관리</a>
+          <a class="collapse-item" href="utilities-border.html">공간 신청관리</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
+        <i class="fas fa-fw fa-cog	"></i>
+        <span>예약관리</span>
+      </a>
+      <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="utilities-color.html">승인대기</a>
+          <a class="collapse-item" href="utilities-border.html">결제대기</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+        <i class="fas fa-fw fa-cog	"></i>
+        <span>결제관리</span>
+      </a>
+      <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="utilities-color.html">결제완료</a>
+          <a class="collapse-item" href="utilities-border.html">결제취소</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
+        <i class="fas fa-fw fa-cog	"></i>
+        <span>매출관리</span>
+      </a>
+      <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="utilities-color.html">최근 3개월 매출</a>
+          <a class="collapse-item" href="utilities-border.html">호스트별 매출</a>
+          <a class="collapse-item" href="utilities-border.html">총 매출</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse6" aria-expanded="true" aria-controls="collapse6">
+        <i class="fas fa-fw fa-cog	"></i>
+        <span>정산관리</span>
+      </a>
+      <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="utilities-color.html">공간별 정산</a>
+        </div>
+      </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+      	관리자
+    </div>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseA1" aria-expanded="true" aria-controls="collapseA1">
+        <i class="fas fa-fw fa-cog	"></i>
+        <span>문의관리</span>
+      </a>
+      <div id="collapseA1" class="collapse" aria-labelledby="headingA1" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">호스트</h6>
+          <a class="collapse-item" href="login.html">내역관리</a>
+          <div class="collapse-divider"></div>
+          <h6 class="collapse-header">관리자</h6>
+          <a class="collapse-item" href="404.html">내역관리</a>
+          <a class="collapse-item" href="blank.html">답변관리</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="tables.html">
+        <i class="fas fa-fw fa-cog	"></i>
+        <span>공지사항</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="tables.html">
+        <i class="fas fa-fw fa-cog	"></i>
+        <span>FAQ</span></a>
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
-
-    <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
       <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
@@ -134,15 +166,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+          <a class="btn btn-primary" href="login.html">로그아웃</a>
         </div>
       </div>
     </div>

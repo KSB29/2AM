@@ -30,7 +30,7 @@
         <jsp:include page="adminTop.jsp"/>
         <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
+        <!-- 여기에 작성 시작! 다른 곳은 그대로 복사하시오! -->
         <div class="container-fluid">
 			
         </div>

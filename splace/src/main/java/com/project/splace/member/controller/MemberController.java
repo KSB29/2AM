@@ -2,10 +2,16 @@ package com.project.splace.member.controller;
 
 
 
+import java.io.IOException;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.util.TextUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +22,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.project.splace.member.NaverLoginBO;
 import com.project.splace.member.RandomNo;
 import com.project.splace.member.model.service.MemberService;
 import com.project.splace.member.model.vo.MailVO;
@@ -31,7 +39,6 @@ import com.project.splace.member.model.vo.Member;
 @Controller
 public class MemberController {	
 
-	
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	@Autowired
@@ -43,7 +50,15 @@ public class MemberController {
 	@Autowired
 	private RandomNo randomNo;
 	
+	private String apiResult = null;
 	
+	/* NaverLoginBO */	
+	private NaverLoginBO naverLoginBO;
+	
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+	this.naverLoginBO = naverLoginBO;
+	}
 	
 	/* 임시 비밀번호 메일 전송 컨트롤러 */ 
 	@RequestMapping(value="findPwMail.sp",method= RequestMethod.POST)
@@ -123,18 +138,52 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="nJoin.sp", method=RequestMethod.POST)
-	public String naverJoin(Member mem, ModelAndView mv ) {
+	public String naverJoin(Member mem, Model model ) {
+		if(TextUtils.isEmpty(mem.getMemberAgree())) {
+			mem.setMemberAgree("N");
+		}
 		
-		int result = mService.insertNaverId(mem);
+		int result  = mService.insertNaverId(mem);
+		Member loginUser = mService.naverLogin(mem.getMemberId());
 		
 		
-		return "redirect:index.jsp";
-	}
+		if(result>0) {
+			
+			if(loginUser!=null){
+				logger.info("회원가입 성공");
+				model.addAttribute("msg", "Splace에 오신걸 환영합니다 :)");
+				model.addAttribute("loginUser", loginUser);
+				return "redirect:index.jsp";
+				
+			}else{
+				boolean fail = true;
+				logger.info("login 실패");
+				model.addAttribute("fail", fail);
+				model.addAttribute("msg", "로그인에 실패했습니다. 다시 시도해 주세요 :*(");
+				model.addAttribute("loginUser", loginUser);
+				return "redirect:loginForm.sp";
+			}
+			
+		}else{
 
+			logger.info("회원가입 실패");
+			model.addAttribute("result", apiResult);
+			model.addAttribute("msg","회원가입에 실패했습니다 :*( 다시 시도해주세요!");
+			return "redirect:loginForm.sp";
+		}
+		
+		
+	}
 	
 	/* 로그인 폼으로 이동 */ 
 	@RequestMapping(value = "loginForm.sp",method= { RequestMethod.POST, RequestMethod.GET})
 	public String MemberLoginForm(Model model , HttpSession session) {
+		
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		
+		//네이버
+		model.addAttribute("url", naverAuthUrl);	
 		return "member/loginForm";
 	}
 	
@@ -147,8 +196,45 @@ public class MemberController {
 	
 	/* 네이버 로그인이동 */ 
 	@RequestMapping("njoinForm.sp")
-	public String naverJoinForm() {
-		return "member/njoinForm";
+	public String naverJoinForm(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException {
+		
+		logger.info("네이버 callback");
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBO.getAccessToken(session, code, state);
+		//1. 로그인 사용자 정보를 읽어온다.
+		apiResult = naverLoginBO.getUserProfile(oauthToken);
+
+		
+		/** apiResult json 구조
+		{"resultcode":"00",
+		"message":"success",
+		"response":{"id":"33666449","nickname":"hwang","age":"20-29","gender":"M","email":"tjdcksghkd12@naver.com","name":"\uc2e0\ubc94\ud638"}}
+		**/
+		
+		//2. String형식인 apiResult를 json형태로 바꿈
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(apiResult);
+		
+		JSONObject jsonObj = (JSONObject) obj;
+		
+		//3. 데이터 파싱
+		//Top레벨 단계 _response 파싱
+		JSONObject response_obj = (JSONObject)jsonObj.get("response");
+		
+		
+		String memberId = (String)response_obj.get("email");
+		logger.info(memberId);
+		Member loginUser = mService.naverLogin(memberId);
+		
+		if(loginUser == null) {
+			model.addAttribute("result", apiResult);
+			return "member/njoinForm";	
+		}else {
+			logger.info("login 성공");
+			model.addAttribute("loginUser",loginUser); 	
+			return "redirect:index.jsp";
+		}
+		
 	}
 	
 	/* 비밀번호 찾기 폼으로 이동 */ 
@@ -186,19 +272,19 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="login.sp", method=RequestMethod.POST)
-	public String MemberLogin(Member mem, Model model, RedirectAttributes rd) {
+	public String MemberLogin(Member mem, Model model, RedirectAttributes rd){
 		Member loginUser = mService.loginMember(mem);
-	
+		
 		if(loginUser==null) {
 			boolean fail = true;
 			logger.info("login 실패");
 			model.addAttribute("loginUser", loginUser);
-			model.addAttribute("fail", fail  );
+			model.addAttribute("fail", fail);
 			return "member/loginForm";
 		} else {
 			if(logger.isInfoEnabled()) {
 				model.addAttribute("loginUser", loginUser);				
-				logger.info(loginUser.getMemberId()+": login 성공");
+				logger.info(loginUser.getMemberId() + ": login 성공");
 			}
 			model.addAttribute("loginUser", loginUser);
 			return "redirect:index.jsp";
@@ -206,6 +292,52 @@ public class MemberController {
 
 	}
 	
+	
+	@RequestMapping(value="naverLogin.sp", method=RequestMethod.POST)
+	public String naverLogin( Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException{
+		
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBO.getAccessToken(session, code, state);
+		
+		//1. 로그인 사용자 정보를 읽어온다.
+		apiResult = naverLoginBO.getUserProfile(oauthToken);
+		logger.info("네이버 콜백성공");
+		
+		//2. String형식인 apiResult를 json형태로 바꿈
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(apiResult);
+		JSONObject jsonObj = (JSONObject) obj;
+		
+		//3. 데이터 파싱
+		//Top레벨 단계 _response 파싱
+		JSONObject response_obj = (JSONObject)jsonObj.get("response");
+		//response의 nickname값 파싱
+		String memberId = (String)response_obj.get("email");
+		
+		Member loginUser = mService.naverLogin(memberId);
+		
+		
+		if(loginUser == null) {
+			boolean fail = true;
+			logger.info("login 실패");
+			model.addAttribute("loginUser", loginUser);
+			model.addAttribute("fail", fail);
+			return "member/loginForm";	
+		}else {
+			logger.info("login 성공");
+			model.addAttribute("result", apiResult);
+			model.addAttribute("loginUser",loginUser); 	
+			return "redirect:index.jsp";
+		}
+		
+		
+
+		
+				
+		
+	}
+	
+
 	/* 로그아웃 컨트롤러 */ 
 
 	@RequestMapping("logout.sp")
@@ -262,7 +394,7 @@ public class MemberController {
 		
 		if(result>0) {
 			model.addAttribute("loginUser", mem);
-			rd.addFlashAttribute("msg", "비밀번호가 변경되었습니다. 다시 로그인해주세요 :) ");
+			rd.addFlashAttribute("비밀번호가 변경되었습니다. 다시 로그인해주세요 :) ");
 			status.setComplete();
 			return "redirect:loginForm.sp";
 		}else {
@@ -280,7 +412,7 @@ public class MemberController {
 		int result = mService.deleteMember(memberId);
 		if(result>0) {
 			logger.info("회원 탈퇴 성공");
-			rdAttr.addFlashAttribute("msg", "정상적으로 탈퇴되었습니다. 다음에 다시만나요 :)");
+			rdAttr.addFlashAttribute("정상적으로 탈퇴되었습니다. 다음에 다시만나요 :)");
 			status.setComplete(); // 세션 완료
 			return "redirect:loginForm.sp";
 		}else {
@@ -295,7 +427,10 @@ public class MemberController {
 	/* 회원 가입 컨트롤러 */ 
 	@RequestMapping(value="join.sp", method=RequestMethod.POST)
 	public String insertMember(Member mem, Model model, HttpServletRequest request){
-		
+		if(TextUtils.isEmpty(mem.getMemberAgree())) {
+			mem.setMemberAgree("N");
+		}
+		logger.info("이메일 발송 동의 여부 " + mem.getMemberAgree());
 		int result = mService.insertMember(mem);
 
 		if(result>1) {
