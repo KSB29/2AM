@@ -88,10 +88,10 @@
 													</div>																																			
 									
 													<div class="login_type col-12">
-														<a class="button fit primary" href="#"> 카카오 로그인 </a>	
+														<a class="button fit primary" href="${kakao_url}"> 카카오 로그인 </a>	
 													</div>									
 													<div class="login_type col-12">
-														<a class="button fit primary" href="#"> 구글 로그인</a>
+														<a class="button fit primary" href="${google_url}"> 구글 로그인</a>
 													</div>																	
 												</article>
 											</form>
@@ -103,9 +103,9 @@
 												<article class="right_form">
 													<div class="join_type">
 														<ul>
-															<li><a href="#"><span><img class="photo" src="${contextPath}/resources/img/google.png" alt="google"></span></a></li>
-															<li><a href="#"><span><img class="photo" src="${contextPath}/resources/img/kakao.png" alt="kakao"></span></a></li>
-															<li><a href="javascript:void(0)" onclick="${url}"><span><img class="photo" src="${contextPath}/resources/img/naver.png" alt="naver"></span></a></li>
+															<li><a href="${google_url}"><span><img class="photo" src="${contextPath}/resources/img/google.png" alt="google"></span></a></li>
+															<li><a href="${kakao_url}"><span><img class="photo" src="${contextPath}/resources/img/kakao.png" alt="kakao"></span></a></li>
+															<li><a href="${url}"><span><img class="photo" src="${contextPath}/resources/img/naver.png" alt="naver"></span></a></li>
 														</ul>
 													</div>
 													<div class="join_email col-12 center">

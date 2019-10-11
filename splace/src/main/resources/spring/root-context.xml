@@ -54,6 +54,27 @@
 		 <property name="maxInMemorySize" value="100000000"/>
 	</bean>
 	
+    <!-- Google 소셜 로그인 연결 설정 -->
+    <bean id="googleOAuth2Template"
+        class="org.springframework.social.google.connect.GoogleOAuth2Template">
+        <constructor-arg value="369504962002-3sk9ekh3tsdvh9i5t55csgooqk95mo5f.apps.googleusercontent.com" />
+        <constructor-arg value="bK-4Fj8_zIOWiXuXDFOv_Ian" />
+    </bean>
+ 
+    <bean id="googleOAuth2Parameters"
+        class="org.springframework.social.oauth2.OAuth2Parameters">
+        <property name="scope" value="email"></property>
+        <property name="redirectUri" value="http://localhost:8080/splace/gjoinForm.sp" />
+    </bean>
+
+ 
+ 	<!-- 클라이언트 ID 와 시크릿 key가 담길 VO 빈 등록 -->
+    <bean id="authInfo" class="com.project.splace.member.model.vo.AuthInfo">
+        <constructor-arg value="369504962002-3sk9ekh3tsdvh9i5t55csgooqk95mo5f.apps.googleusercontent.com" />
+        <constructor-arg value="bK-4Fj8_zIOWiXuXDFOv_Ian" />
+    </bean>
+	
+	
 	<!-- mail bean -->
  	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
