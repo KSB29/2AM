@@ -35,6 +35,11 @@ public class MemberServiceImpl implements MemberService{
 		 */
 		return loginUser;
 	}
+	
+	@Override
+	public Member loginSocialMember(String memberId) {
+		return mDao.loginSocialMember(memberId);
+	}
 
 	@Override
 	public int deleteMember(String memberId) {
@@ -77,20 +82,17 @@ public class MemberServiceImpl implements MemberService{
 	public int updatePwd(MailVO vo) {
 		String encPwd = bCryptPasswordEncoder.encode(vo.getTemp());
 		vo.setTemp(encPwd);
-		
 		return mDao.updatePwd(vo);
 
 	}
 
 	@Override
-	public int insertNaverId(Member mem) {
-
-		return mDao.insertNaverId(mem);
+	public int insertSocialMember(Member mem) {
+		return mDao.insertSocialMember(mem);
 	}
 
-	@Override
-	public Member naverLogin(String memberId) {
-		
-		return mDao.naverLogin(memberId);
-	}
+
+
+
+
 }

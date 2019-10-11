@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.project.splace.common.PageInfo;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
+import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.vo.Space;
 
 @Repository("hDao")
@@ -66,24 +67,24 @@ public class HostDao {
 	
 	/**
 	 * 예약리스트 수 조회 Dao
-	 * @param hostId
+	 * @param search
 	 * @return listCount
 	 */
-	public int getbListCount(int hostId) {
-		return sqlSession.selectOne("hostMapper.getbListCount", hostId);
+	public int getbListCount(HostSearch search) {
+		return sqlSession.selectOne("hostMapper.getbListCount", search);
 	}
 	
 	/**
 	 * 예약리스트 조회 Dao
-	 * @param hostId
+	 * @param search
 	 * @param pageInfo
 	 * @return bList
 	 */
-	public ArrayList<BookList> selectBookList(int hostId, PageInfo pageInfo) {
+	public ArrayList<BookList> selectBookList(HostSearch search, PageInfo pageInfo) {
 		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
 		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
-		//return (ArrayList)sqlSession.selectList("hostMapper.selectBookList", hostId, rowBounds);
-		return (ArrayList)sqlSession.selectList("hostMapper.selectBookList", hostId);
+		return (ArrayList)sqlSession.selectList("hostMapper.selectBookList", search, rowBounds);
+		//return (ArrayList)sqlSession.selectList("hostMapper.selectBookList", search);
 	}
 
 	/**
@@ -93,6 +94,24 @@ public class HostDao {
 	 */
 	public ArrayList<Space> selectSpaceList(int hostId) {
 		return (ArrayList)sqlSession.selectList("hostMapper.selectSpaceList", hostId);
+	}
+
+	/**
+	 * 공간 예약 승인 처리 Dao
+	 * @param string
+	 * @return result
+	 */
+	public int updateApproveBook(String bookId) {
+		return sqlSession.update("hostMapper.updateApproveBook", bookId);
+	}
+
+	/**
+	 * 공간 예약 취소 처리 Dao
+	 * @param bookId
+	 * @return
+	 */
+	public int updateCancelBook(String bookId) {
+		return sqlSession.update("hostMapper.updateCancelBook", bookId);
 	}
 	
 	
