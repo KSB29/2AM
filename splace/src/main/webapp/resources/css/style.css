@@ -3510,6 +3510,9 @@ input, select, textarea {
 		right: auto;
 		left: 1.7em;
 	}
+	.nice-select{padding: 0 !important;}
+	.default-select .nice-select .list .option{padding: 0 0.5em !important;}
+	.nice-select:after{left: -20px;}
 }
 
 /* scroll to top */
@@ -3757,6 +3760,7 @@ a.scrollup i:hover {
 	box-shadow: none;
 	width: 100%;
 	padding: 10px 0 10px 0px;
+	background-color: white !important; border: 1px solid #4c74b9 !important; border-radius: 5px !important;
 }
 .default-select .nice-select .list .option {
 	font-weight: 300;
@@ -3766,7 +3770,7 @@ a.scrollup i:hover {
 	transition: all 0.3s ease 0s;
 	line-height: 28px;
 	min-height: 28px;
-	font-size: 12px;
+	font-size: 80%;
 	padding-left: 20px;
 }
 	.default-select .nice-select .list .option.selected {

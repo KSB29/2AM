@@ -1,0 +1,51 @@
+package com.project.splace.admin.model.service;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.project.splace.admin.model.dao.AdminDao;
+import com.project.splace.admin.model.vo.Account;
+import com.project.splace.board.model.vo.Board;
+import com.project.splace.host.model.vo.Host;
+import com.project.splace.member.model.vo.Member;
+
+@Service("adminService")
+public class AdminServiceImpl implements AdminService{
+	
+	@Autowired
+	private AdminDao adminDao;
+
+	/* 1. 정산관리
+	 * return aList
+	 */
+	@Override
+	public ArrayList<Account> selectAccountList(int month) {
+		return adminDao.selectAccountList(month);
+	}
+
+	/* 2. 회원관리
+	 * return mList
+	 */
+	@Override
+	public ArrayList<Member> selectMemberList(String memberStatus) {
+		return adminDao.selectMemberList(memberStatus);
+	}
+
+	/* 3. 호스트관리
+	 * return hList
+	 */
+	@Override
+	public ArrayList<Host> selectHostList(int status) {
+		return adminDao.selectHostList(status);
+	}
+
+	/* 4. faq관리
+	 * return bList
+	 */
+	@Override
+	public ArrayList<Board> selectFaqList() {
+		return adminDao.selectFaqList();
+	}
+}

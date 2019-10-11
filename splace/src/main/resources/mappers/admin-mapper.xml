@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+	<resultMap type="Account" id="accountResultSet">
+		<id property="accountId" column="ACCOUNT_ID"/>
+		<result property="accountStart" column="ACCOUNT_START"/>
+		<result property="accountEnd" column="ACCOUNT_END"/>
+		<result property="accountTotal" column="ACCOUNT_TOTAL"/>
+		<result property="accountFee" column="ACCOUNT_FEE"/>
+		<result property="accountPrice" column="ACCOUNT_PRICE"/>
+		<result property="hoshId" column="HOSH_ID"/>
+	</resultMap>
+	<resultMap id="memberResultSet" type="Member">
+		<id property="memberId" column="MEMBER_ID"/>
+		<result property="memberPwd" column="MEMBER_PWD"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberPhone" column="MEMBER_PHONE"/>
+		<result property="memberAgree" column="MEMBER_AGREE"/>
+		<result property="memberEnroll" column="MEMBER_ENROLL"/>
+		<result property="memberUpdate" column="MEMBER_UPDATE"/>
+		<result property="memberSocial" column="MEMBER_SOCIAL"/>
+		<result property="grade" column="GRADE"/>
+		<result property="memberStatus" column="MEMBER_STATUS"/>
+	</resultMap>
+	<resultMap type="Host" id="hostResultSet">
+		<id property="hostId" column="HOST_ID"/>
+		<result property="hostPhone" column="HOST_PHONE"/>
+		<result property="hostEmail" column="HOST_EMAIL"/>
+		<result property="hostName" column="HOST_NAME"/>
+		<result property="storeName" column="STORE_NAME"/>
+		<result property="hostNo" column="HOST_NO"/>
+		<result property="hostBank" column="HOST_BANK"/>
+		<result property="hostAccount" column="HOST_ACCOUNT"/>
+		<result property="hostBname" column="HOST_BNAME"/>
+		<result property="hostEnroll" column="HOST_ENROLL"/>
+		<result property="hostUpdate" column="HOST_UPDATE"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="statusId" column="STATUS_ID"/>
+	</resultMap>
+	<resultMap type="Board" id="boardResultSet">
+		<id property="boardId" column="BOARD_ID"/>
+		<result property="boardType" column="BOARD_TYPE"/>
+		<result property="boardTitle" column="BOARD_TITLE"/>
+		<result property="boardContent" column="BOARD_CONTENT"/>
+		<result property="boardStatus" column="BOARD_STATUS"/>
+		<result property="boardEnroll" column="BOARD_ENROLL"/>
+		<result property="boardUpdate" column="BOARD_UPDATE"/>
+	</resultMap>
+
+	<!-- 1. 정산관리 -->
+	<select id="selectAccountList" parameterType="_int" resultMap="accountResultSet">
+		SELECT * 
+		FROM ACCOUNT
+		<if test="_parameter != 0">
+			WHERE EXTRACT(MONTH FROM ACCOUNT_START) = #{month}
+		</if>
+	</select>
+	
+	<!-- 2. 회원관리 -->
+	<select id="selectMemberList" parameterType="string" resultMap="memberResultSet">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_STATUS = #{memberStatus}
+	</select>
+	
+	<!-- 3. 호스트관리 -->
+	<select id="selectHostList" parameterType="_int" resultMap="hostResultSet">
+		SELECT * FROM HOST
+		<if test="_parameter != 4">
+			WHERE STATUS_ID = #{status}
+		</if>
+	</select>
+	
+	<!-- 4. faq관리 -->
+	<select id="selectFaqList" resultMap="boardResultSet">
+		SELECT * FROM BOARD 
+		WHERE BOARD_TYPE = 1
+	</select>
+	
+	<!-- 5. 공지사항관리 -->
+	<select id="selectNoticeList" resultMap="boardResultSet">
+		SELECT * FROM BOARD 
+		WHERE BOARD_TYPE = 0
+	</select>
+</mapper>
