@@ -335,12 +335,20 @@ public class SpaceServiceImpl implements SpaceService {
       return sDao.spaceAttImg(spaceId);
    }
 
-
+   // 호스트의 다른 공간 조회
    @Override
    public ArrayList<Space> hostSpace(int hostId) {
       return sDao.hostSpace(hostId);
    }
 
+
+   // 일치 요일의 가격 조회
+	@Override
+	public Price selectPriceList(Price price) {
+		return sDao.selectPriceList(price);
+	}
+
+	
 
 
 

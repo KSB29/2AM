@@ -67,7 +67,6 @@
 	 	OR SPACE_TAG LIKE #{sl}
 	 	OR TYPE_NAME LIKE #{sl}
 	 	OR SPACE_ADDRESS LIKE #{sl})
-	 	ORDER BY SPACE_ENROLL DESC
 	 <!-- 	<choose>
 	 	<when test="locationSelect !=null || typeSelect !=null || optionSelect !=null">
 	 	AND(-->
@@ -85,7 +84,7 @@
 	 	</if> -->
 	 		AND
 	 		<foreach collection="typeSelect" item="typeSelect"  index="index" separator="or" open="(" close=")">
-	 			TYPE_ID = #{typeSelect}
+	 			P.TYPE_ID = #{typeSelect}
 	 		</foreach>
 	 	</if>
 	 	<if test="optionSelect !=null">

@@ -64,11 +64,9 @@ padding: 0 0.7em 0 2em !important;
 
 .searchOption{
 width:25%;
-margin-right:4.9%;
 box-shadow: none;
 border: none;
 outline: none;
-margin-left:4.9%;
 }
 
  .searchOption:hover{
@@ -101,8 +99,9 @@ button:focus: {
 background-color: none!important;
 }
 
-.primary{
-margin-left: 14.8% !important;
+.searchBtn{
+width:10%;
+margin-left:13% !important;
 outline-style: none;
 
 }
@@ -123,6 +122,7 @@ letter-spacing: 0;
 #optionRow{
 border-bottom:3px solid #4c74b9;
 border-radius: 4px;
+width:100%;
 }
 #optionRow>*{
 margin: 1% 0 1% 0
@@ -187,7 +187,7 @@ text-align:left;
     z-index: -1;
 
 }
-input[type="checkbox"]:checked+ label{
+input[type="checkbox"]:checked+ label,input[type="radio"]:checked+ label{
     color:#4c74b9; 
 
 }
