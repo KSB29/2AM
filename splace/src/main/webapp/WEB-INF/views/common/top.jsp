@@ -65,7 +65,7 @@
 		<c:url var="logout" value="logout.sp"/>
 		<section>
 			<div class="row" id="alram">
-				<div class="col-9">
+				<div class="col-8">
 					<a href="${logout}">로그아웃</a>
 				</div>
 				<!-- 알림 벨  -->
