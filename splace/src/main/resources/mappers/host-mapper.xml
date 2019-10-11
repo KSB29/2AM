@@ -104,7 +104,10 @@
 	</update>
 	
 	<!-- 예약리스트 수 조회 -->
-	<select id="getbListCount" resultType="_int" parameterType="_int">
+	<select id="getbListCount" resultType="_int" parameterType="HostSearch">
+	<bind name="hostId" value="_parameter.getHostId()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+	<bind name="statusId" value="_parameter.getStatusId()" />
 		SELECT COUNT(*)
 		FROM   BOOK B,
 		       STATUS S,
@@ -113,10 +116,20 @@
 		WHERE  B.STATUS_ID = S.STATUS_ID
 		AND    B.MEMBER_ID = M.MEMBER_ID
 		AND    B.SPACE_ID = H.SPACE_ID
+		<if test="spaceId != null">
+		AND    B.SPACE_ID = nvl(#{spaceId}, B.SPACE_ID)
+		</if>
+		<if test="statusId != null">
+		AND    B.STATUS_ID = nvl(#{statusId}, B.STATUS_ID)
+		</if>
 		AND    H.HOST_ID = #{hostId}
 	</select>
 	
-	<select id="selectBookList" resultMap="bookResultSet" parameterType="_int">
+	<!-- 예약리스트 내역 조회 -->
+	<select id="selectBookList" resultMap="bookResultSet" parameterType="HostSearch">
+	<bind name="hostId" value="_parameter.getHostId()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+	<bind name="statusId" value="_parameter.getStatusId()" />
 		SELECT B.*,
 			   M.MEMBER_NAME,
 			   H.SPACE_NAME,
@@ -128,13 +141,38 @@
 		WHERE  B.STATUS_ID = S.STATUS_ID
 		AND    B.MEMBER_ID = M.MEMBER_ID
 		AND    B.SPACE_ID = H.SPACE_ID
+		<if test="spaceId != null">
+		AND    B.SPACE_ID = nvl(#{spaceId}, B.SPACE_ID)
+		</if>
+		<if test="statusId != null">
+		AND    B.STATUS_ID = nvl(#{statusId}, B.STATUS_ID)
+		</if>
 		AND    H.HOST_ID = #{hostId}
 	</select>
 	
+	<!-- 호스트의 공간 리스트 내역 -->
 	<select id="selectSpaceList" resultMap="hostSpaceResultSet" parameterType="_int">
 		SELECT SPACE_ID, SPACE_NAME
 		FROM   SPACE
 		WHERE  HOST_ID = #{hostId}
 	</select>
+	
+	<!-- 공간 예약 승인 처리 -->
+	<update id="updateApproveBook" parameterType="string">
+		UPDATE BOOK
+		SET    STATUS_ID = '101',
+			   APPROVAL_DATE = SYSDATE
+		WHERE  STATUS_ID = '100'
+		AND    BOOK_ID = #{bookId}
+	</update>
+	
+	<!-- 공간 예약 취소 처리 -->
+	<update id="updateCancelBook" parameterType="string">
+		UPDATE BOOK
+		SET    STATUS_ID = '102',
+			   BOOK_CANCEL = SYSDATE
+		WHERE  STATUS_ID = '100'
+		AND    BOOK_ID = #{bookId}
+	</update>
 	
 </mapper>

@@ -10,6 +10,7 @@
 		<result property="spaceTag" column="SPACE_TAG"/>
 		<result property="spaceOption" column="SPACE_OPTION"/>
 		<result property="spaceAddress" column="SPACE_ADDRESS"/>
+		<result property="spacePhone" column="SPACE_PHONE"/>
 		<result property="spaceNotice" column="SPACE_NOTICE"/>
 		<result property="spaceOperStatus" column="SPACE_OPER_STATUS"/>
 		<result property="spaceTime" column="SPACE_TIME"/>
@@ -92,7 +93,8 @@
 				#{typeId},
 				#{statusId},
 				DEFAULT,
-				DEFAULT)
+				DEFAULT,
+				#{spacePhone})
 	</insert>
 	
 	<!-- 공간 사진 등록 -->
@@ -186,6 +188,7 @@
 			   SPACE_ADDRESS = #{spaceAddress},
 			   TYPE_ID = #{typeId},
 			   </if>
+			   SPACE_PHONE = #{spacePhone},
 			   SPACE_UPDATE = SYSDATE
 		WHERE  SPACE_ID = #{spaceId}
 	</update>

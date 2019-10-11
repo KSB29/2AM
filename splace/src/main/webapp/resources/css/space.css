@@ -1,10 +1,6 @@
 @charset "UTF-8";
 
 /* 공간 등록 -------------------------------------------------------------------------------- */
-#bookArea .list:hover :not(:last-child) {
-	cursor: pointer;
-}
-
 .tagClear:hover, .noticeClear:hover {
 	cursor: pointer;
 }
@@ -141,8 +137,3 @@ input[type="file"] {
 #bookArea td {
 	font-size: 90%;
 }
-
-.filterContainer{width: 12%; float: right;}
-.filterContainer .current {font-size: 70%;}
-.filterContainer .option {font-size: 60% !important;}
-.filterContainer .nice-select .list{background-color: white !important; border: 1px solid #4c74b9 !important; border-radius: 5px !important;}

@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${contextPath}/resources/css/host.css" type="text/css">
 <link rel="stylesheet" href="${contextPath}/resources/css/space.css" type="text/css">
 <title>예약 리스트</title>
 </head>
@@ -20,92 +21,114 @@
 			<!-- Content -->
 				<section>
 					<h1 class="align-center">예약 리스트</h1>
-					<form action="">
-						<div class="row gtr-uniform">
+					<form action="hostBookList.sp" method="get">
+						<div class="row gtr-uniform" id="bookSearchArea">
 							<div class="col-6"></div>
 							<div class="col-3">
 									<select name="spaceId" id="spaceId">
 										<option value="">- 공간 -</option>
 										<c:forEach var="sList" items="${ sList }">
-										<option value="${ sList.spaceId }">${ sList.spaceName }</option>
+										<option value="${ sList.spaceId }" <c:if test="${ search.spaceId == sList.spaceId }">selected</c:if>>${ sList.spaceName }</option>
 										</c:forEach>
 									</select>
 							</div>
 							<div class="col-3">
 								<!-- <div class="default-select" id="default-select"> -->
-									<select name="spaceStatus" id="spaceStatus">
+									<select name="statusId" id="statusId">
 										<option value="">- 예약상태 -</option>
-										<option value="0">등록</option>
-										<option value="1">대기</option>
-										<option value="2">승인</option>
-										<option value="3">반려</option>
+										<option value="100" <c:if test="${ search.statusId == '100' }">selected</c:if>>대기</option>
+										<option value="101" <c:if test="${ search.statusId == '101' }">selected</c:if>>승인</option>
+										<option value="102" <c:if test="${ search.statusId == '102' }">selected</c:if>>취소</option>
 									</select>
 								<!-- </div> -->
 							</div>
 						</div>
 					</form>
 				</section>
-				<section>		
+				<section>
+					<h3 class="listCount">total: ${pi.listCount }</h3>
 					<div class="table-wrapper">
 						<table id="bookArea">
 							<thead>
 								<tr>
 									<th>공간</th>
-									<th>회원</th>
-									<th>예약신청일</th>
-									<th>이용날짜</th>
-									<th>이용시간</th>
-									<th>인원</th>
-									<th>금액</th>
-									<th>상태</th>
-									<th>예약취소일</th>
-									<th>호스트승인일</th>
+									<th>예약 내역</th>
+									<th>예약자 정보</th>
+									<th>예약 상태</th>
 									<th><input type="checkbox" id="checkAll"><label for="checkAll"></label></th>
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty bList}">
+								<tr><td colspan="5" class="align-center">예약 내역이 없습니다.</td></tr>
+								</c:if>
 								<c:forEach var="bList" items="${ bList }" varStatus="vs">
 								<tr class="list">
-									<td>${ bList.spaceName }</td>
-									<td>${ bList.memberName }</td>
-									<td>${ bList.bookEnroll }</td>
-									<td>${ bList.bookDate }</td>
-									<td>${ bList.bookStartTime } ~ ${ bList.bookEndTime } 시</td>
-									<td>${ bList.bookPer } 명</td>
-									<td class=".align-right"><fmt:formatNumber value="${ bList.bookPrice }" groupingUsed="true"/></td>
-									<td>${ bList.statusName }</td>
-									<td>${ bList.bookCancel }</td>
-									<td>${ bList.approvalDate }</td>
+									<td>
+										<div class="col-12 boldText">${ bList.spaceName }</div>
+										<div class="col-12"><span id="bookId${vs.index}">${ bList.bookId }</span></div>
+									</td>
+									<td>
+										
+										<div class="col-12"><fmt:formatDate value="${bList.bookEnroll }" pattern="yyyy.MM.dd(E)"/> ${ bList.memberName }</div>
+										<div class="col-12 boldText">
+											<span>
+												<fmt:formatDate value="${bList.bookDate }" pattern="yyyy.MM.dd(E)"/>
+												${bList.bookStartTime }시 ~ ${bList.bookEndTime }시, ${ bList.bookPer }명
+											</span>
+										</div>
+										<div class="col-12">
+											<p><fmt:formatNumber value="${bList.bookPrice }" type="currency"/></p>
+										</div>
+									</td>
+									<td>
+										<div class="col-12 boldText">${ bList.booker }</div>
+										<div class="col-12">${ bList.bookerPhone }, ${ bList.bookerEmail }</div>
+										<div class="col-12">${ bList.bookRequest }</div>
+									</td>
+									<td>
+										<c:choose>
+										<c:when test="${ bList.statusId == 101 }">
+										<div class="col-12 approval">${ bList.statusName }</div>
+										<div class="col-12">${ bList.bookCancel }</div>
+										</c:when>
+										<c:when test="${ bList.statusId == 102 }">
+										<div class="col-12 cancel">${ bList.statusName }</div>
+										<div class="col-12">${ bList.approvalDate }</div>
+										</c:when>
+										<c:otherwise>
+										<div class="col-12">${ bList.statusName }</div>
+										</c:otherwise>
+										</c:choose>
+									</td>
 									<th class="checkList">
-										<c:if test="${ bList.statusId == 100}"><input type="checkbox" id="check${vs.index}"></c:if>
+										<c:if test="${ bList.statusId == 100 }"><input type="checkbox" id="check${vs.index}"></c:if>
 										<c:if test="${ bList.statusId != 100 }"><input type="checkbox" id="check${vs.index}" disabled></c:if>
 										<label for="check${vs.index}"></label>
 									</th>
-								</tr>
-								<tr class="detail">
-									<td class="bookId">${ bList.bookId }</td>
-									<td colspan="10"> ${ bList.booker } / ${ bList.bookerPhone } / ${ bList.bookerEmail } / ${ bList.bookRequest }</td>
 								</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 					</div>
-					
+					<div class="row">
 					<nav class="pagination-container">
 						<div class="pagination">
 							<!-- [이전] -->
-							<c:url var="startPage" value="bookList.sp">
-								<c:param name="page" value="${ pageInfo.startPage }"/>
-								<c:param name="filter" value="${filter}"/>
+							<c:url var="startPage" value="hostBookList.sp">
+								<c:param name="page" value="${ pi.startPage }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>
+								<c:param name="statusId" value="${ search.statusId }"/>
 							</c:url>
 							<a class="pagination-newest" href="${startPage }"><<</a>
-							<c:if test="${ pageInfo.currentPage <= 1 }">
+							<c:if test="${ pi.currentPage <= 1 }">
 								<a class="pagination-newer" href="#"><</a>
 							</c:if>
-							<c:if test="${ pageInfo.currentPage > 1 }">
-								<c:url var="before" value="bookList.sp">
-									<c:param name="page" value="${ pageInfo.currentPage - 1 }"/>
-									<c:param name="filter" value="${filter}"/>
+							<c:if test="${ pi.currentPage > 1 }">
+								<c:url var="before" value="hostBookList.sp">
+									<c:param name="page" value="${ pi.currentPage - 1 }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>
+								<c:param name="statusId" value="${ search.statusId }"/>
 								</c:url>
 								<a class="pagination-newer" href="${ before }"><</a>
 							</c:if>					
@@ -114,39 +137,43 @@
 								<c:if test="${empty bList}">
 									<a class="pagination-active" href="#">1</a>
 								</c:if>
-								<c:forEach var="p" begin="${ pageInfo.startPage }" end="${ pi.endPage }">
-									<c:if test="${ p eq pageInfo.currentPage }">
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:if test="${ p eq pi.currentPage }">
 										<a class="pagination-active" href="#">${ p }</a>
 									</c:if>
 									
-									<c:if test="${ p ne pageInfo.currentPage }">
-										<c:url var="pagination" value="bookList.sp">
+									<c:if test="${ p ne pi.currentPage }">
+										<c:url var="pagination" value="hostBookList.sp">
 											<c:param name="page" value="${ p }"/>
-											<c:param name="filter" value="${filter}"/>
+											<c:param name="spaceId" value="${ search.spaceId }"/>
+											<c:param name="statusId" value="${ search.statusId }"/>
 										</c:url>
 										<a href="${ pagination }">${ p }</a>
 									</c:if>
 								</c:forEach>
 							</span>
 							<!-- [다음] -->
-							<c:if test="${ pageInfo.currentPage >= pageInfo.maxPage }">
+							<c:if test="${ pi.currentPage >= pi.maxPage }">
 								<a class="pagination-older" href="#">></a>
 							</c:if>
-							<c:if test="${ pageInfo.currentPage < pageInfo.maxPage }">
-								<c:url var="after" value="bookList.sp">
-									<c:param name="page" value="${ pageInfo.currentPage + 1 }"/>
-									<c:param name="filter" value="${filter}"/>
+							<c:if test="${ pi.currentPage < pi.maxPage }">
+								<c:url var="after" value="hostBookList.sp">
+									<c:param name="page" value="${ pi.currentPage + 1 }"/>
+									<c:param name="spaceId" value="${ search.spaceId }"/>
+									<c:param name="statusId" value="${ search.statusId }"/>
 								</c:url> 
 								<a class="pagination-older" href="${ after }">></a>
 							</c:if>
-							<c:url var="endPage" value="bookList.sp">
-								<c:param name="page" value="${ pageInfo.endPage }"/>
-								<c:param name="filter" value="${filter}"/>
+							<c:url var="endPage" value="hostBookList.sp">
+								<c:param name="page" value="${ pi.endPage }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>
+								<c:param name="statusId" value="${ search.statusId }"/>
 							</c:url>
 							<a class="pagination-oldest" href="${endPage }">>></a>
 						</div>
 					</nav>
-					
+					</div>
+					<br>
 					<div class="row">
 						<div class="col-3"></div>
 						<div class="col-3">

@@ -38,6 +38,15 @@
 									</c:forEach>
 								</div>
 							</div>
+							<div class="col-6 col-12-xsmall">
+								<label for="hostPhone">* 전화번호</label>
+								<input type="text" name="spacePhone" id="spacePhone" required>
+							</div>
+							<div class="col-6 col-12-xsmall">
+							</div>
+							<div class="col-12 col-12-xsmall noticeDiv" id="regCheck1">
+								<i class="fas fa-exclamation-circle warningColor"></i> <span class="warningColor"></span>
+							</div>
 							<div class="col-1 col-12-xsmall">
 								<label>* 주소</label>
 								<input type="button" id="addressBtn" class="button primary small" value="주소찾기">
