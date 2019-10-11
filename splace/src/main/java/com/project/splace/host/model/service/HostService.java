@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
+import com.project.splace.qna.model.vo.QnA;
 import com.project.splace.space.model.vo.Space;
 
 public interface HostService {
@@ -59,5 +60,13 @@ public interface HostService {
 	 * @return result
 	 */
 	public abstract int updateApplyBook(String statusId, String list);
+
+	/**
+	 * 공간 문의 리스트 Service
+	 * @param search
+	 * @param currentPage
+	 * @return qList
+	 */
+	public abstract ArrayList<QnA> selectQnaList(HostSearch search, int currentPage);
 	
 }

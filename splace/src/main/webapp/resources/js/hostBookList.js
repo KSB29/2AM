@@ -13,12 +13,14 @@ function reject() {
 }
 
 function updateStatus(statusId) {
+	
 	var list = "";
+	
 	$("#bookArea .checkList input:checked").not(":disabled").each(function(index, item){
 		var idIndex = $(this).attr("id").replace("check","");
 		list += "," + $("#bookId"+idIndex).text();
 	});
-	console.log(list);
+	
 	if (list != "") {
 		$.ajax ({
 			url : "hostApplyBook.sp",

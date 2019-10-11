@@ -46,6 +46,7 @@ $(document).ready(function(){
 	// 공간 수정 시 정보 표시
 	if ($("#spaceId").val() != null) {
 		
+		if ($("#statusId").val() == "0" || $("#statusId").val() == "3") maxLengthCheck("spaceName");
 		maxLengthCheck("spaceComment");
 		maxLengthCheck("spaceDetail");
 		
