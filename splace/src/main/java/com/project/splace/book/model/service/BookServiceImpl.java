@@ -52,8 +52,8 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public Book selectBook(String bookId) {
-		return bookDao.selectBook(bookId);
+	public Book selectBook(Book book) {
+		return bookDao.selectBook(book);
 	}
 
 	@Override
@@ -62,9 +62,10 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public int updateBookCompleted(String bookId) {
-		return bookDao.updateBookCompleted(bookId);
+	public int selectReviewCount(Book book) {
+		return bookDao.selectReviewCount(book);
 	}
+
 	
 	//------------------------------------------
 	//--결제-------------------------------------
@@ -72,17 +73,25 @@ public class BookServiceImpl implements BookService{
 	
 	@Override
 	public int insertPayment(Book payment) {
-		int result = bookDao.updateBookStatus(payment.getBookId());
+		int result = bookDao.insertPayment(payment);
 		
-		return bookDao.insertPayment(payment);
+		if(result>0) {
+			result = bookDao.updateBookStatus(payment.getBookId());
+		}
+		
+		return result;
 	}
 
 	@Override
-	public int updatePaymentCancel(String bookId) {
-		// 예약취소
-		int result = bookDao.deleteBook(bookId);
-		
+	public int updatePaymentCancel(Book book) {
 		// 결제취소
-		return bookDao.updatePaymentCancel(bookId);
+		int result = bookDao.updatePaymentCancel(book);
+		
+		if(result>0) {
+			// 예약취소
+			result = bookDao.deleteBook(book.getBookId());
+		}
+		
+		return result;
 	}
 }

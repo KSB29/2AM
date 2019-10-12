@@ -427,7 +427,27 @@ $(function(){
 		
 	});
 	
+	/*메일 수신동의 확인*/
+	$("#memberAgree").on("change", function(){
+		var $check = $("#memberAgree");
+		console.log($check.val());
+
+		if($check.is(":checked")){
+			$check.val("Y");
+			console.log($check.val());
+		}else{
+			$check.val("N");
+			console.log($check.val());
+		}
+		
+		
+	});
 	
+	$("#join_btn").on("click",function(){
+		
+
+		
+	});
 
 	
 	

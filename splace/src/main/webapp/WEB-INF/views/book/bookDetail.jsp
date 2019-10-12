@@ -30,7 +30,7 @@
 					<div class="row titleBox bookDetailTitleBox" id="titleBox1">
 						<h1 id="title">공간 예약내역</h1>
 						<span id="status"></span>
-						<a href="bookList.sp">목록으로</a>
+						<a href="javascript:history.back();">목록으로</a>
 					</div>
 					
 					<div class="row">
@@ -323,6 +323,7 @@
 		var modalBtn = $("#modalContainer .modal-footer button:last-child");
 
 		var result = "";
+		if("${book.paymentType}" == "card"){var pType = "카드결제"}
 		// 예약대기
 		if(bookStatus == 100){ 
 			$status.html("(승인대기)");
@@ -427,20 +428,19 @@
 				+"<span><fmt:formatNumber value='${book.bookPrice }' type='currency'/></span>"
 				+"</div>"
 			);
-			// 예약일 뺀 전날까지
 			$("#rightCol article table tr:first-child td:nth-child(3)").css("border","0");
 			$(".bookDetailRightCol table tbody tr:nth-child(3)").removeClass("borderBottom2");
-			$(".bookDetailRightCol table tbody tr:last-child").before("<tr class='borderBottom2'><td>결제정보</td><td>카드결제</td></tr>");
+			$(".bookDetailRightCol table tbody tr:last-child").before("<tr class='borderBottom2'><td>결제정보</td><td>"+pType+"</td></tr>");
 			btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#paymentCancel'>예약취소</button>");
 			modal.attr("id", "paymentCancel").attr("aria-labelledby", "paymentCancelTitle");
 			modalTitle.attr("id", "paymentCancelTitle");
-			modalForm.attr("action", "${paymentCancel}?bookId=${book.bookId}&receiptId=${book.receiptId}");
+			modalForm.attr("action", "${paymentCancel}?bookId=${book.bookId}&receiptId=${book.receiptId}&price=${book.paymentCancelPrice}");
 			modalBodyTitle.text("예약을 취소하시겠습니까?");
 			modalBody.html("");
 			modalBody.html(
 					"<tbody>"
 				+ "<tr><td>결제금액</td><td><fmt:formatNumber value='${book.bookPrice }' type='currency'/></td></tr>"
-				+ "<tr><td>환불금액</td><td class='refund'><fmt:formatNumber value='${book.bookPrice }' type='currency'/></td></tr>"
+				+ "<tr><td>환불금액</td><td class='refund'><fmt:formatNumber value='${book.paymentCancelPrice }' type='currency'/></td></tr>"
 				+ "</tbody>"
 			);
 			modalBtn.html("예약취소");
@@ -454,7 +454,7 @@
 			titleBox.html(
 					"<h2>환불 금액</h2>"
 				+"<div>"
-				+"<span><fmt:formatNumber value='${book.bookPrice }' type='currency'/></span>"
+				+"<span><fmt:formatNumber value='${book.paymentCancelPrice }' type='currency'/></span>"
 				+"</div>"
 			);
 			table.html("");
@@ -463,10 +463,10 @@
 				+ "<tr><td>취소날짜</td><td><fmt:formatDate value='${book.bookCancel}' pattern='yyyy.MM.dd (E)'/></td></tr>"
 				+ "<tr><td>결제금액</td>"
 				+ "<td><fmt:formatNumber value='${book.bookPrice }' type='currency'/></td></tr>"
-				+ "<tr><td>차감금액</td>"
-				+ "<td>0</td></tr>"
+				+ "<tr><td>환불금액</td>"
+				+ "<td><fmt:formatNumber value='${book.paymentCancelPrice }' type='currency'/></td></tr>"
 				+ "<tr class='borderBottom2'><td>결제정보</td>"
-				+ "<td>카드결제</td></tr>"
+				+ "<td>"+pType+"</td></tr>"
 				+ "<tr><td colspan='2' class='btnContainer'>"
 				+ "<div class='fit-100'>예약 취소가 완료되었습니다.</div>"
 				+ "</td></tr></tbody>"
@@ -488,13 +488,9 @@
 			$(".bookDetailRightCol table tbody tr:nth-child(3)").removeClass("borderBottom2");
 			table.find("tr:last-child").before(
 					"<tr class='borderBottom2'><td>결제정보</td>"
-				+"<td>카드결제</td></tr>"
+				+"<td>"+pType+"</td></tr>"
 			);
-			if(1){ // 리뷰 안썼으면
-				btnContainer.append("<button class='button primary fit-100'>이용후기 작성</button>");
-			} else{ // 리뷰 썼으면
-				btnContainer.append("<button class='button primary fit-100'>이용후기 보기</button>");
-			}
+			btnContainer.append("<div class='fit-100'>공간 이용이 완료되었습니다.</div>");
 			modalContainer.html("");
 		}
 		// 예약취소 
@@ -512,26 +508,6 @@
 			);
 			table.children("tr:last-child").css("border-top","2px solid #4c74b9");
 			modalContainer.html("");
-		} 
-		
-		// 날짜 계산
-		function completed() {
-			$.ajax({
-				url: "bookCompleted.sp",
-				data: {bookId:"${book.bookId}"},
-				success: function(check){
-					if(check == "success"){
-						console.log("ooo");
-					} else{
-						console.log("xxx");
-					} 
-					// 한번만 새로고침
-					if (self.name != 'reload') {
-				        self.name = 'reload';
-				        self.location.reload(true);
-				    } else self.name = ''; 
-				}
-			});
 		}
 	</script>
 	<!-- 결제 연동 -->

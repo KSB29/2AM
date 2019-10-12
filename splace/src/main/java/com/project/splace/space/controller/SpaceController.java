@@ -71,16 +71,6 @@ public class SpaceController {
 		return mv;
 	}
 	
-	@RequestMapping("spaceBook.sp")
-	public String spaceBookList() {
-		return "space/spaceBook";
-	}
-	
-	@RequestMapping("spaceQna.sp")
-	public String spaceQnaList() {
-		return "space/spaceQna";
-	}
-	
 	@RequestMapping("spaceDayoff.sp")
 	public String spaceDayoff() {
 		return "space/spaceDayoff";
@@ -131,10 +121,18 @@ public class SpaceController {
 			ArrayList<Type> tList = sService.selectType();
 			// 공간 옵션
 			ArrayList<Option> oList = sService.selectOption();
-			String[] addressArr = space.getSpaceAddress().split(",");
-			//String post = space.getSpaceAddress().substring(0,space.getSpaceAddress().indexOf(',')-1);
-			space.setSpaceAddress(addressArr[1]);
-			mv.addObject("post", addressArr[0]).addObject("address", addressArr[2]);
+			
+			// 우편번호
+			String post = space.getSpaceAddress().substring(0, 5);
+			// 주소(도로명주소+상세주소)
+			String add = space.getSpaceAddress().substring(6);
+			int index = add.indexOf(",");
+			String address1 = add.substring(0, index);
+			String address2 = add.substring(index +1);
+			// 도로명주소
+			space.setSpaceAddress(address1);
+			// 우편번호, 상세주소
+			mv.addObject("post", post).addObject("address", address2);
 			mv.addObject("space", space).addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceUpdateForm");
 		} else {
 			mv.addObject("msg", "공간 정보 조회 중 오류 발생").setViewName("common/errorPage");

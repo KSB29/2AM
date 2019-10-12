@@ -127,16 +127,38 @@
 		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
 		WHERE MEMBER_ID = #{memberId}
 		<if test="_parameter.statusId != 0">
-			 AND B.STATUS_ID = #{statusId}
+			<if test="_parameter.statusId != 104">
+				<if test="_parameter.statusId != 103">
+					AND B.STATUS_ID = #{statusId}
+				</if>
+				<if test="_parameter.statusId == 103">
+					AND B.STATUS_ID = #{statusId} AND P.STATUS_ID = 103
+				</if>
+			</if>
+			<if test="_parameter.statusId == 104">
+				 AND P.STATUS_ID = #{statusId} AND B.STATUS_ID = 103
+			</if>
 		</if>
 		ORDER BY B.BOOK_ID DESC
 	</select>
 	
 	<!-- 전체 예약 수 조회 쿼리 -->
 	<select id="getbListCount" parameterType="Book" resultType="_int">
-		SELECT COUNT(*) FROM BOOK WHERE MEMBER_ID = #{memberId}
+		SELECT COUNT(*) FROM BOOK B
+		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID) 
+		WHERE MEMBER_ID = #{memberId}
 		<if test="_parameter.statusId != 0">
-			 AND STATUS_ID = #{statusId}
+			<if test="_parameter.statusId != 104">
+				<if test="_parameter.statusId != 103">
+					AND B.STATUS_ID = #{statusId}
+				</if>
+				<if test="_parameter.statusId == 103">
+					AND B.STATUS_ID = #{statusId} AND P.STATUS_ID = 103
+				</if>
+			</if>
+			<if test="_parameter.statusId == 104">
+				 AND P.STATUS_ID = #{statusId} AND B.STATUS_ID = 103
+			</if>
 		</if>
 	</select>
 	
@@ -147,18 +169,30 @@
 		PAYMENT_DATE,
 		PAYMENT_TYPE,
 		PAYMENT_CANCEL,
+		PAYMENT_CANCEL_PRICE,
 		P.STATUS_ID P_STATUS_ID,
 		RECEIPT_ID FROM BOOK B
 		JOIN SPACE S ON (S.SPACE_ID = B.SPACE_ID)
 		JOIN TYPE T ON (S.TYPE_ID = T.TYPE_ID)
 		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
-		WHERE B.BOOK_ID = #{bookId}
+		WHERE B.BOOK_ID = #{bookId} AND B.MEMBER_ID = #{memberId}
 	</select>
 	
 	<!-- 예약 취소 쿼리 -->
 	<update id="deleteBook" parameterType="string">
 		UPDATE BOOK SET STATUS_ID = 102, BOOK_CANCEL = SYSDATE WHERE BOOK_ID = #{bookId}
 	</update>
+	
+	<!-- 리뷰작성여부 쿼리 -->
+	<select id="selectReviewCount" parameterType="Book" resultType="_int">
+		SELECT COUNT(*) FROM BOOK B
+		JOIN MEMBER M ON(M.MEMBER_ID = B.MEMBER_ID)
+		JOIN SPACE S ON(B.SPACE_ID = S.SPACE_ID)
+		JOIN REVIEW R ON(S.SPACE_ID = R.SPACE_ID)
+		WHERE B.MEMBER_ID = #{memberId} 
+		AND B.BOOK_ID = #{bookId} 
+		AND B.SPACE_ID = #{spaceId}
+	</select>
 	
 	<!-- ============================================ -->
 	<!-- ====결제===================================== -->
@@ -184,12 +218,8 @@
 	</update>
 	
 	<!-- 결제취소 쿼리 -->
-	<update id="updatePaymentCancel" parameterType="string">
-		UPDATE PAYMENT SET STATUS_ID = 102, PAYMENT_CANCEL = SYSDATE WHERE BOOK_ID = #{bookId}
+	<update id="updatePaymentCancel" parameterType="Book">
+		UPDATE PAYMENT SET STATUS_ID = 102, PAYMENT_CANCEL = SYSDATE, PAYMENT_CANCEL_PRICE = #{paymentCancelPrice} WHERE BOOK_ID = #{bookId}
 	</update>
 	
-	<!-- 자동 이용완료 쿼리 -->
-	<update id="updateBookCompleted" parameterType="string">
-		UPDATE PAYMENT SET STATUS_ID = 104 WHERE BOOK_ID = #{bookId}
-	</update>
 </mapper>

@@ -46,6 +46,7 @@ $(document).ready(function(){
 	// 공간 수정 시 정보 표시
 	if ($("#spaceId").val() != null) {
 		
+		if ($("#statusId").val() == "0" || $("#statusId").val() == "3") maxLengthCheck("spaceName");
 		maxLengthCheck("spaceComment");
 		maxLengthCheck("spaceDetail");
 		
@@ -88,6 +89,24 @@ $(document).ready(function(){
 			}
 		}
 	}
+	
+	// 정규식 체크 알림
+	$("#regCheck1").css("display", "none");
+	
+	// 전화번호 정규식
+	$("#spacePhone").on("input", function(){
+        var input = $("#spacePhone").val();
+        var regExp = /^[0-9]+$/;
+        if (regExp.test(input)){
+			$("#regCheck1").css("display", "none");
+			$("#regCheck1 span").text("");
+			regExpCheck = true;
+        } else {
+        	$("#regCheck1").css("display", "block");
+			$("#regCheck1 span").text("숫자만 입력해주세요!").css("color","#cc0000");
+            regExpCheck = false;
+        }
+    });
 	
 	$("#addressBtn").click(function(){
 		$("#addressBtn").postcodifyPopUp();

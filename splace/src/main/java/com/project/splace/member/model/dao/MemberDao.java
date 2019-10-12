@@ -58,8 +58,18 @@ public class MemberDao {
 	}
 
 
-	public int insertNaverId(Member mem) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertSocialMember(Member mem) {
+		return sqlSession.insert("memberMapper.insertSocialMember", mem);
 	}
+
+
+	public Member loginSocialMember(String memberId) {
+		
+		Member loginUser = sqlSession.selectOne("memberMapper.selectSocialId", memberId);
+		return loginUser;
+	}
+
+
+
+
 }
