@@ -1,0 +1,55 @@
+package com.project.splace.admin.model.dao;
+
+import java.util.ArrayList;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.project.splace.admin.model.vo.Account;
+import com.project.splace.board.model.vo.Board;
+import com.project.splace.host.model.vo.Host;
+import com.project.splace.member.model.vo.Member;
+
+@Repository("adminDao")
+public class AdminDao {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+
+	/**
+	 * 1. 정산관리
+	 * @param month
+	 * @return aList
+	 */
+	public ArrayList<Account> selectAccountList(int month) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectAccountList", month);
+	}
+
+	/**
+	 * 2. 회원관리
+	 * @param memberStatus
+	 * @return mList
+	 */
+	public ArrayList<Member> selectMemberList(String memberStatus) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", memberStatus);
+	}
+
+	/**
+	 * 3. 호스트관리
+	 * @param status
+	 * @return hList
+	 */
+	public ArrayList<Host> selectHostList(int status) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectHostList", status);
+	}
+
+	/**
+	 * 4. faq관리
+	 * @return bList
+	 */
+	public ArrayList<Board> selectFaqList() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectFaqList");
+	}
+
+}
