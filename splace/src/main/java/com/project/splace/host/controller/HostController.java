@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.splace.admin.model.vo.Account;
 import com.project.splace.common.Pagination;
 import com.project.splace.host.model.service.HostService;
 import com.project.splace.host.model.vo.BookList;
@@ -107,9 +112,14 @@ public class HostController {
 	// 예약 승인/취소 처리(Ajax)
 	@ResponseBody
 	@RequestMapping("hostApplyBook.sp")
-	public String bookApply(HttpSession session, String statusId, String list) {
+	public String bookApply(HttpSession session, String statusId, String list) throws ParseException {
+		
+		JSONParser parser = new JSONParser();
+		JSONObject jsonObj = (JSONObject) parser.parse(list);
+		JSONArray jsonArr = (JSONArray) jsonObj.get("bookId");
+		
 		int hostId = (int)session.getAttribute("hostId");
-		int result = hService.updateApplyBook(statusId, list);
+		int result = hService.updateApplyBook(statusId, jsonArr);
 		// 처리 건 수 리턴
 		if (result > 0) return result + "";
 		else return "0";
@@ -121,10 +131,7 @@ public class HostController {
 		int hostId = (int)session.getAttribute("hostId");
 		int currentPage = page == null? 1 : page;
 		search.setHostId(hostId);
-		
-		System.out.println(search.getSpaceId());
-		System.out.println(search.getStatusId());
-		
+		//System.out.println(search);
 		ArrayList<QnA> qList = hService.selectQnaList(search, currentPage);
 		ArrayList<Space> sList = hService.selectSpaceList(hostId);
 		if (qList != null) {
@@ -136,8 +143,32 @@ public class HostController {
 		return mv;
 	}
 	
+	// 정산 리스트 조회
 	@RequestMapping("hostAccount.sp")
-	public String hostAccount() {
-		return "host/hostAccount";
+	public ModelAndView hostAccount(HttpSession session, ModelAndView mv, Integer page) {
+		int hostId = (int)session.getAttribute("hostId");
+		int currentPage = page == null? 1 : page;
+		ArrayList<Account> aList = hService.selectAccountList(hostId, currentPage);
+		if (aList != null) {
+			mv.addObject("aList", aList).addObject("pi", Pagination.getPageInfo()).setViewName("host/hostAccount");
+		} else {
+			mv.addObject("msg", "정산 리스트 조회 중 오류 발생").setViewName("common/errorPage");
+		}
+		return mv;
 	}
+	
+	// 공간 문의 답변(Ajax)
+	@ResponseBody
+	@RequestMapping("hostAnswer.sp")
+	public String hostAnswer(HttpSession session, int qnaId, String aContent) {
+		int hostId = (int)session.getAttribute("hostId");
+		QnA qna = new QnA();
+		qna.setQnaId(qnaId);
+		qna.setaContent(aContent);
+		int result = hService.updateAnswer(qna);
+		// 처리 건 수 리턴
+		if (result > 0) return result + "";
+		else return "0";
+	}
+	
 }

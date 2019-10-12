@@ -2,6 +2,9 @@ package com.project.splace.host.model.service;
 
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+
+import com.project.splace.admin.model.vo.Account;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
@@ -59,7 +62,7 @@ public interface HostService {
 	 * @param bList
 	 * @return result
 	 */
-	public abstract int updateApplyBook(String statusId, String list);
+	public abstract int updateApplyBook(String statusId, JSONArray jsonArr);
 
 	/**
 	 * 공간 문의 리스트 Service
@@ -68,5 +71,20 @@ public interface HostService {
 	 * @return qList
 	 */
 	public abstract ArrayList<QnA> selectQnaList(HostSearch search, int currentPage);
+
+	/**
+	 * 정산 리스트 Service
+	 * @param hostId
+	 * @param currentPage
+	 * @return aList
+	 */
+	public abstract ArrayList<Account> selectAccountList(int hostId, int currentPage);
+
+	/**
+	 * 공간 문의 답변 Service
+	 * @param qna
+	 * @return result
+	 */
+	public abstract int updateAnswer(QnA qna);
 	
 }

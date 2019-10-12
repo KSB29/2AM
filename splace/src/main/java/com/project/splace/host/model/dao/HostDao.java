@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.splace.admin.model.vo.Account;
 import com.project.splace.common.PageInfo;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
@@ -133,6 +134,34 @@ public class HostDao {
 		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
 		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
 		return (ArrayList)sqlSession.selectList("hostMapper.selectQnaList", search, rowBounds);
+	}
+
+	/**
+	 * 정산 리스트 수 조회 Dao
+	 * @return listCount
+	 */
+	public int getaListCount(int hostId) {
+		return sqlSession.selectOne("hostMapper.getaListCount", hostId);
+	}
+
+	/**
+	 * 정산 리스트 조회 Dao
+	 * @param pageInfo
+	 * @return aList
+	 */
+	public ArrayList<Account> selectAccountList(int hostId, PageInfo pageInfo) {
+		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
+		return (ArrayList)sqlSession.selectList("hostMapper.selectAccountList", hostId, rowBounds);
+	}
+
+	/**
+	 * 공간 문의 답변 Dao
+	 * @param qna
+	 * @return
+	 */
+	public int updateAnswer(QnA qna) {
+		return sqlSession.update("hostMapper.updateAnswer", qna);
 	}
 	
 }

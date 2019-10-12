@@ -15,11 +15,19 @@ function reject() {
 function updateStatus(statusId) {
 	
 	var list = "";
+	var bookList = new Array();
 	
 	$("#bookArea .checkList input:checked").not(":disabled").each(function(index, item){
 		var idIndex = $(this).attr("id").replace("check","");
 		list += "," + $("#bookId"+idIndex).text();
+		//var bookInfo = new Object();
+		//bookInfo.bookId = $("#bookId"+idIndex).text();
+		//bookList.push(bookInfo);
+		bookList.push($("#bookId"+idIndex).text());
 	});
+	var bookInfo = new Object();
+	bookInfo.bookId = bookList;
+	var list = JSON.stringify(bookInfo);
 	
 	if (list != "") {
 		$.ajax ({

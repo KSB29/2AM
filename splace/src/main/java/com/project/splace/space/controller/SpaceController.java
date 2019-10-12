@@ -54,9 +54,12 @@ public class SpaceController {
 	
 	@RequestMapping("spaceList.sp")
 	public ModelAndView spaceInfoList(HttpSession session, ModelAndView mv) {
-		ArrayList<Space> sList = sService.selectList(((Member)session.getAttribute("loginUser")).getMemberId());
-		mv.addObject("sList", sList);
-		mv.setViewName("space/spaceList");
+		if (session.getAttribute("hostId") != null) {
+			ArrayList<Space> sList = sService.selectList(((Member)session.getAttribute("loginUser")).getMemberId());
+			mv.addObject("sList", sList).setViewName("space/spaceList");
+		} else {
+			mv.setViewName("redirect:hostApplyForm.sp");
+		}
 		return mv;
 	}
 	
@@ -111,17 +114,16 @@ public class SpaceController {
 			// 공간 옵션
 			ArrayList<Option> oList = sService.selectOption();
 			
-			// 우편번호
-			String post = space.getSpaceAddress().substring(0, 5);
-			// 주소(도로명주소+상세주소)
-			String add = space.getSpaceAddress().substring(6);
-			int index = add.indexOf(",");
-			String address1 = add.substring(0, index);
-			String address2 = add.substring(index +1);
+			String[] address = space.getSpaceAddress().split(",");
+			// 상세주소
+			String address2 = "";
+			for (int i = 2; i < address.length; i++) {
+				address2 += address[i];
+			}
 			// 도로명주소
-			space.setSpaceAddress(address1);
+			space.setSpaceAddress(address[1]);
 			// 우편번호, 상세주소
-			mv.addObject("post", post).addObject("address", address2);
+			mv.addObject("post", address[0]).addObject("address", address2);
 			mv.addObject("space", space).addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceUpdateForm");
 		} else {
 			mv.addObject("msg", "공간 정보 조회 중 오류 발생").setViewName("common/errorPage");

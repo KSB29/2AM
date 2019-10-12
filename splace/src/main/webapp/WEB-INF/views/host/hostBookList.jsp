@@ -90,11 +90,11 @@
 										<c:choose>
 										<c:when test="${ bList.statusId == 101 }">
 										<div class="col-12 approval">${ bList.statusName }</div>
-										<div class="col-12">${ bList.bookCancel }</div>
+										<div class="col-12">${ bList.approvalDate }</div>
 										</c:when>
 										<c:when test="${ bList.statusId == 102 }">
 										<div class="col-12 cancel">${ bList.statusName }</div>
-										<div class="col-12">${ bList.approvalDate }</div>
+										<div class="col-12">${ bList.bookCancel }</div>
 										</c:when>
 										<c:otherwise>
 										<div class="col-12">${ bList.statusName }</div>
@@ -120,13 +120,13 @@
 								<c:param name="spaceId" value="${ search.spaceId }"/>
 								<c:param name="statusId" value="${ search.statusId }"/>
 							</c:url>
-							<a class="pagination-newest" href="${startPage }"><<</a>
+							<a class="pagination-newest" href="${ startPage }"><<</a>
 							<c:if test="${ pi.currentPage <= 1 }">
 								<a class="pagination-newer" href="#"><</a>
 							</c:if>
 							<c:if test="${ pi.currentPage > 1 }">
 								<c:url var="before" value="hostBookList.sp">
-									<c:param name="page" value="${ pi.currentPage - 1 }"/>
+								<c:param name="page" value="${ pi.currentPage - 1 }"/>
 								<c:param name="spaceId" value="${ search.spaceId }"/>
 								<c:param name="statusId" value="${ search.statusId }"/>
 								</c:url>
@@ -134,9 +134,10 @@
 							</c:if>					
 							<span class="pagination-inner">
 								<!-- 페이지 -->
-								<c:if test="${empty bList}">
+								<c:if test="${ empty bList}">
 									<a class="pagination-active" href="#">1</a>
 								</c:if>
+								<c:if test="${ !empty bList}">
 								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 									<c:if test="${ p eq pi.currentPage }">
 										<a class="pagination-active" href="#">${ p }</a>
@@ -151,6 +152,7 @@
 										<a href="${ pagination }">${ p }</a>
 									</c:if>
 								</c:forEach>
+								</c:if>
 							</span>
 							<!-- [다음] -->
 							<c:if test="${ pi.currentPage >= pi.maxPage }">
@@ -185,8 +187,6 @@
 						<div class="col-3"></div>
 					</div>
 				</section>
-				
-
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/common/bottom.jsp"/>

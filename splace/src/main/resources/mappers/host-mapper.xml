@@ -59,6 +59,16 @@
 		<result property="spaceName" column="SPACE_NAME"/>
 	</resultMap>
 	
+	<resultMap type="Account" id="hostAccountResultSet">
+		<id property="accountId" column="ACCOUNT_ID"/>
+		<result property="accountStart" column="ACCOUNT_START"/>
+		<result property="accountEnd" column="ACCOUNT_END"/>
+		<result property="accountTotal" column="ACCOUNT_TOTAL"/>
+		<result property="accountFee" column="ACCOUNT_FEE"/>
+		<result property="accountPrice" column="ACCOUNT_PRICE"/>
+		<result property="hoshId" column="HOSH_ID"/>
+	</resultMap>
+	
 	<!-- 호스트 정보 조회 -->
 	<select id="selectOne" resultMap="hostResultSet" parameterType="string">
 		SELECT *
@@ -205,10 +215,10 @@
 		<if test="spaceId != null">
 		AND    S.SPACE_ID = NVL(#{spaceId}, S.SPACE_ID)
 		</if>
-		<if test="statusId == 'Y'">
+		<if test="statusId == 1">
 		AND    Q.A_CONTENT IS NOT NULL
 		</if>
-		<if test="statusId == 'N'">
+		<if test="statusId == 0">
 		AND    Q.A_CONTENT IS NULL
 		</if>
 		AND    Q.Q_TYPE = '0'
@@ -232,14 +242,40 @@
 		<if test="spaceId != null">
 		AND    S.SPACE_ID = NVL(#{spaceId}, S.SPACE_ID)
 		</if>
-		<if test="statusId == 'Y'">
+		<if test="statusId == 1">
 		AND    Q.A_CONTENT IS NOT NULL
 		</if>
-		<if test="statusId == 'N'">
+		<if test="statusId == 0">
 		AND    Q.A_CONTENT IS NULL
 		</if>
 		AND    Q.Q_TYPE = '0'
 		AND    Q.Q_STATUS = 'Y'
+		ORDER BY QNA_ID DESC
+	</select>
+	
+	<!-- 공간 문의 답변 -->
+	<update id="updateAnswer" parameterType="QnA">
+	<bind name="aContent" value="_parameter.getaContent()" />
+	<bind name="qnaId" value="_parameter.getQnaId()" />
+		UPDATE QNA
+		SET    A_CONTENT = #{aContent},
+			   A_DATE = SYSDATE
+		WHERE  QNA_ID = #{qnaId}
+	</update>
+	
+	<!-- 정산 내역 건 수 조회 -->
+	<select id="getaListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM   ACCOUNT
+		WHERE  HOSH_ID = #{hoshId}
+	</select>
+	
+	<!-- 정산 내역 조회 -->
+	<select id="selectAccountList" resultMap="hostAccountResultSet" >
+		SELECT *
+		FROM   ACCOUNT
+		WHERE  HOSH_ID = #{hoshId}
+		ORDER BY ACCOUNT_START
 	</select>
 	
 </mapper>
