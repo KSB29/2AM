@@ -27,6 +27,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.space.model.service.SpaceService;
+import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
@@ -216,8 +217,14 @@ public class SpaceController {
 	         ArrayList<SpaceAtt> spaceAttImg = sService.spaceAttImg(space.getSpaceId());
 	         
 	         // 호스트 다른 공간
-	         ArrayList<Space>hostSpace = sService.hostSpace(space.getHostId());
-	         System.out.println(hostSpace);
+	         ArrayList<Space> hostSpace = sService.hostSpace(space.getHostId());
+	         
+	         // 공간 휴무일 
+	         DayOff dayOff = new DayOff();
+	         ArrayList<DayOff> dayOffList = sService.dayOffList(space.getSpaceId());
+	         System.out.println("휴무일"+dayOffList);
+	         
+	         mv.addObject("dayOffList", dayOffList);
 	         mv.addObject("hostSpace", hostSpace);
 	         mv.addObject("spaceAttImg",spaceAttImg);
 	         mv.addObject("spaceNotice", spaceNotice);            

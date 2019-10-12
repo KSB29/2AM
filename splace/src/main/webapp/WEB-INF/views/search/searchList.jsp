@@ -106,11 +106,6 @@
 							</ul>
 						</div>
 					</section>
-					<script>
-					$(".locationSelect").change(function(){
-						$(".lBtn").text($('input:radio[name="locationSelect"]:checked').val());
-					});
-					</script>
 					<!-- 유형 창 구역 -->
 					 <section>
 	               <div class="row" id="typeField" style="border:1px solid black; display: none;">
@@ -386,6 +381,12 @@
 					x.style.display = "none";
 					y.style.display = "none";
 				}
+				
+				// 지역 옵션 선택 시 값 바꾸기 
+				$(".locationSelect").change(function(){
+					$(".lBtn").text($('input:radio[name="locationSelect"]:checked').val());
+				});
+
 			</script>
 </body>
 </html>

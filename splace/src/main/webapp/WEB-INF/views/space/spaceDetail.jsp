@@ -598,7 +598,6 @@
 	
 	<!--  ajax  -->
 	   <script>
-	   
 	   // 질문 등록 
 	    $("#submitQnA").on("click",function(){
 	       var qContent = $(".qContent").val();
@@ -704,6 +703,7 @@
 	    // 달력 아이콘 클릭 시 인풋박스 열리기 
 	    $("#calIcon").click(function(){
 			$("#date-input").css("display","block");
+
 		});
 	    
 	    
@@ -723,6 +723,7 @@
 						console.log(timeList);
 						var $body = $(".time_slot");
 						$body.html("");
+
 						if(timeList.length>0){
 							$.each(timeList, function(index, item) {
 								$.each(item, function(key, value){
@@ -735,10 +736,10 @@
 								    	   +'">'
 								    	   +'<input type="checkbox" id="'
 								    	   +key
-								    	   +'" class="timeClick">'
+								    	   +'" name="timeClick">'
 								    	   +'<label for="'
 								    	   +key
-								    	   +'" class="timeClick">'
+								    	   +'">'
 								    	   +key
 								    	   +'시 <br>'
 								    	   +value

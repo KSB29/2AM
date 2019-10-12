@@ -62,6 +62,12 @@
 		<result property="optionIcon" column="OPTION_ICON"/>
 	</resultMap>
 	
+	<resultMap type="DayOff" id="dayOffResultSet">
+		<id property="dayOffId" column="DAYOFF_ID"/>
+		<result property="dayOffStart" column="DAYOFF_START"/>
+		<result property="dayOffEnd" column="DAYOFF_END"/>
+		<result property="spaceId" column="SPACE_ID"/>
+	</resultMap>
 	<!-- 공간 ID 조회 -->
 	<select id="selectSpaceId" resultType="_int">
 		SELECT SEQ_SP.NEXTVAL FROM DUAL
@@ -322,5 +328,11 @@
 	AND space_id=#{spaceId}
 	</select>
 	
+	<!-- 해당 공간의 휴무일 조회 -->
+	<select id="dayOffList" parameterType="DayOff" resultType="string">
+	SELECT DAYOFF_START,DAYOFF_END
+    FROM DAYOFF
+    WHERE SPACE_ID=#{spaceId}
+	</select>
 	
 </mapper>
