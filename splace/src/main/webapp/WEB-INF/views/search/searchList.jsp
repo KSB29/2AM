@@ -40,7 +40,7 @@
             <input type="hidden" value="${search.searchBox}" name="searchBox">
 	       	 <section class="optionSection">
 	          <div class="row" id="optionRow">
-		               <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="locationOpen();">지역</button>
+		               <button type="button" class="searchOption buttonToggle lBtn" id="searchOption" onclick="locationOpen();">지역</button>
 		               <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="typeOpen();">유형</button>
 		               <button type="button" class="searchOption buttonToggle" id="searchOption" onclick="optionOpen();">옵션</button>
 		               <button id="searchOption" class="button primary searchBtn ">search</button>
@@ -106,7 +106,6 @@
 							</ul>
 						</div>
 					</section>
-					
 					<!-- 유형 창 구역 -->
 					 <section>
 	               <div class="row" id="typeField" style="border:1px solid black; display: none;">
@@ -382,6 +381,12 @@
 					x.style.display = "none";
 					y.style.display = "none";
 				}
+				
+				// 지역 옵션 선택 시 값 바꾸기 
+				$(".locationSelect").change(function(){
+					$(".lBtn").text($('input:radio[name="locationSelect"]:checked').val());
+				});
+
 			</script>
 </body>
 </html>

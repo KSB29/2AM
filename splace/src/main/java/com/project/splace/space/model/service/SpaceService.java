@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
@@ -175,4 +176,18 @@ public interface SpaceService {
     * @return
     */
    public abstract ArrayList<Space> hostSpace(int hostId);
+
+	/**
+	 * 일치 요일의 가격 조회
+	 * @param price
+	 * @return
+	 */
+	public abstract Price selectPriceList(Price price);
+
+	/**
+	 * 해당 공간의 휴무일 조회
+	 * @param spaceId
+	 * @return
+	 */
+	public abstract ArrayList<DayOff> dayOffList(int spaceId);
 }

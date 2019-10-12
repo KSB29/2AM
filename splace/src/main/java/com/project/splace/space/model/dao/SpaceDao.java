@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
@@ -243,4 +244,18 @@ public class SpaceDao {
    
       return (ArrayList)sqlSession.selectList("spaceMapper.hostSpace", hostId);
    }
+
+	/** 
+	 * 일치한 요일의 금액 조회
+	 * @param price
+	 * @return
+	 */
+	public Price selectPriceList(Price price) {
+		
+		return sqlSession.selectOne("spaceMapper.selectPriceList",price);
+	}
+
+	public ArrayList<DayOff> dayOffList(int spaceId) {
+		return (ArrayList)sqlSession.selectList("spaceMapper.dayOffList", spaceId);
+	}
 }

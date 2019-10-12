@@ -12,6 +12,12 @@ public class Price {
 	
 	public Price() {}
 
+	public Price(String priceWeekend, int spaceId) {
+		super();
+		this.priceWeekend = priceWeekend;
+		this.spaceId = spaceId;
+	}
+
 	public Price(int priceId, String priceWeekend, String priceTime, int spaceId) {
 		super();
 		this.priceId = priceId;
