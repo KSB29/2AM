@@ -11,6 +11,7 @@ import com.project.splace.host.model.dao.HostDao;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
+import com.project.splace.qna.model.vo.QnA;
 import com.project.splace.space.model.vo.Space;
 
 @Service("hService")
@@ -80,6 +81,16 @@ public class HostServiceImpl implements HostService {
 		// 처리 건 수 리턴
 		if (arr.length == result) return result;
 		else return 0;
+	}
+
+	@Override
+	public ArrayList<QnA> selectQnaList(HostSearch search, int currentPage) {
+		// 공간 문의 리스트 수 조회
+		int listCount = hDao.getqListCount(search);
+		
+		// 공간 문의 리스트 조회(페이징 처리 적용)
+		PageInfo pageInfo = Pagination.getPageInfo(currentPage, listCount);
+		return hDao.selectQnaList(search, pageInfo);
 	}
 	
 }

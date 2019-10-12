@@ -179,7 +179,7 @@
 			   SPACE_OPEN_TIME = #{spaceOpenTime},
 			   SPACE_CLOSE_TIME = #{spaceCloseTime},
 			   <!-- 승인 이전에만 수정 가능 -->
-			   <if test="statusId != 2">
+			   <if test="statusId == 0 or statusId == 3">
 			   SPACE_NAME = #{spaceName},
 			   SPACE_ADDRESS = #{spaceAddress},
 			   TYPE_ID = #{typeId},
@@ -231,13 +231,13 @@
 	</select>
 	
 	<!-- 공간 승인 요청 -->
-	<!-- 등록 상태일 경우에만 승인 요청 가능 -->
+	<!-- 등록, 반려 상태일 경우에만 승인 요청 가능 -->
 	<update id="updateApply" parameterType="_int">
 		UPDATE SPACE
-		SET    STATUS_ID = '1',
+		SET    STATUS_ID = 1,
 			   SPACE_UPDATE = SYSDATE
 		WHERE  SPACE_ID = #{spaceId}
-		AND    STATUS_ID = '0'
+		AND    STATUS_ID IN (0, 3)
 	</update>
 	
 	<!-- 공간 삭제 -->

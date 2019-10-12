@@ -19,12 +19,20 @@
 				<jsp:include page="/WEB-INF/views/host/hostMenu.jsp"/>
 			<!-- Content -->
 				<section>
-					<h1 class="align-center">공간 수정</h1>	
+					<c:set var="spaceStatus" value="${ space.statusId }"/>
+					<h1 class="align-center">공간 수정</h1>
+					<c:if test="${ spaceStatus == 1 }">
+					<div class="col-12 align-center"><h2 class="noticeColor">공간 신청 검토 중입니다.</h2></div>
+					</c:if>
+					<c:if test="${ spaceStatus == 3 }">
+					<div class="col-12 align-center"><h2 class="noticeColor">공간 신청이 반려되었습니다. 수정 후 재신청하세요.</h2></div>
+					</c:if>
 					<form method="post" action="spaceUpdate.sp" enctype="multipart/form-data">
 						<h2>1. 기본정보</h2>
 						<input type="hidden" name="spaceId" id="spaceId" value="${ space.spaceId }">
-						<c:if test="${ space.statusId == 0 || space.statusId == 3 }">
+						<input type="hidden" name="statusId" id="statusId" value="${ spaceStatus }">
 						<div class="row gtr-uniform borderTop">
+							<c:if test="${ spaceStatus == 0 || spaceStatus == 3 }">
 							<div class="col-12 col-12-xsmall">
 								<label for="spaceName">* 공간이름 <span id="nameLength"></span></label>
 								<input type="text" name="spaceName" id="spaceName" placeholder="공간이름" maxlength="100" required value="${ space.spaceName }">
@@ -45,6 +53,15 @@
 									</c:forEach>
 								</div>
 							</div>
+							<div class="col-6 col-12-xsmall">
+								<label for="hostPhone">* 전화번호</label>
+								<input type="text" name="spacePhone" id="spacePhone" value="${ space.spacePhone }" required>
+							</div>
+							<div class="col-6 col-12-xsmall">
+							</div>
+							<div class="col-12 col-12-xsmall noticeDiv" id="regCheck1">
+								<i class="fas fa-exclamation-circle warningColor"></i> <span class="warningColor"></span>
+							</div>
 							<div class="col-1 col-12-xsmall">
 								<label>* 주소</label>
 								<input type="button" id="addressBtn" class="button primary small" value="주소찾기">
@@ -63,21 +80,28 @@
 							<div class="col-12 col-12-xsmall noticeDiv">
 								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">관리자 승인 이후에는 공간이름, 공간유형, 주소 변경이 불가능합니다. 정확한 정보인지 확인해주세요.</span>
 							</div>
+							</c:if>
+							<c:if test="${ spaceStatus == 1 || spaceStatus == 2 }">
+								<div class="col-2 col-12-xsmall">
+									<label>* 공간유형</label><span>${ space.typeName }</span>
+								</div>
+								<div class="col-10 col-12-small">
+									<label>* 공간이름</label><span>${ space.spaceName }</span>
+								</div>
+								<div class="col-12 col-12-xsmall">
+									<label>* 주소</label><span>${ post } ${ space.spaceAddress } ${ address }</span>
+								</div>
+								<div class="col-6 col-12-xsmall">
+									<label for="hostPhone">* 전화번호</label>
+									<input type="text" name="spacePhone" id="spacePhone" value="${ space.spacePhone }" required>
+								</div>
+								<div class="col-6 col-12-xsmall">
+								</div>
+								<div class="col-12 col-12-xsmall noticeDiv" id="regCheck1">
+									<i class="fas fa-exclamation-circle warningColor"></i> <span class="warningColor"></span>
+								</div>
+							</c:if>
 						</div>
-						</c:if>
-						<c:if test="${ space.statusId == 1 || space.statusId == 2 }">
-						<div class="row gtr-uniform borderTop">
-							<div class="col-2 col-12-xsmall">
-								<label>공간유형</label><span>${ space.typeName }</span>
-							</div>
-							<div class="col-10 col-12-small">
-								<label>공간이름</label><span>${ space.spaceName }</span>
-							</div>
-							<div class="col-12 col-12-xsmall">
-								<label>주소</label><span>${ post } ${ space.spaceAddress } ${ address }</span>
-							</div>
-						</div>
-						</c:if>
 						<br><br>
 						<h2>2. 공간정보</h2>
 						<div class="row gtr-uniform borderTop">
@@ -194,7 +218,14 @@
 						<br><br>
 						<div class="row">
 							<div class="col-3"></div>
-							<div class="col-3"><input type="submit" class="button primary fit" value="수정"></div>
+							<div class="col-3">
+								<c:if test="${ spaceStatus == 1 }">
+								<input type="submit" class="button primary fit" value="수정" disabled>
+								</c:if>
+								<c:if test="${ spaceStatus != 1 }">
+								<input type="submit" class="button primary fit" value="수정">
+								</c:if>
+							</div>
 							<div class="col-3"><input type="button" class="button fit" value="취소" onclick="location.href='spaceList.sp'"></div>
 							<div class="col-3"></div>
 						</div>

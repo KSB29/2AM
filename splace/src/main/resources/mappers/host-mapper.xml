@@ -44,6 +44,21 @@
 		<result property="spaceName" column="SPACE_NAME"/>
 	</resultMap>
 	
+	<resultMap type="Qna" id="hostQnaResultSet">
+		<id property="qnaId" column="QNA_ID"/>
+		<result property="qContent" column="Q_CONTENT"/>
+		<result property="qDate" column="Q_DATE"/>
+		<result property="aContent" column="A_CONTENT"/>
+		<result property="aDate" column="A_DATE"/>
+		<result property="qType" column="Q_TYPE"/>
+		<result property="qStatus" column="Q_STATUS"/>
+		<result property="qMemberId" column="Q_MEMBER_ID"/>
+		<result property="aMemberId" column="A_MEMBER_ID"/>
+		<result property="spaceId" column="SPACE_ID"/>
+		<result property="qMemberName" column="MEMBER_NAME"/>
+		<result property="spaceName" column="SPACE_NAME"/>
+	</resultMap>
+	
 	<!-- 호스트 정보 조회 -->
 	<select id="selectOne" resultMap="hostResultSet" parameterType="string">
 		SELECT *
@@ -117,10 +132,10 @@
 		AND    B.MEMBER_ID = M.MEMBER_ID
 		AND    B.SPACE_ID = H.SPACE_ID
 		<if test="spaceId != null">
-		AND    B.SPACE_ID = nvl(#{spaceId}, B.SPACE_ID)
+		AND    B.SPACE_ID = NVL(#{spaceId}, B.SPACE_ID)
 		</if>
 		<if test="statusId != null">
-		AND    B.STATUS_ID = nvl(#{statusId}, B.STATUS_ID)
+		AND    B.STATUS_ID = NVL(#{statusId}, B.STATUS_ID)
 		</if>
 		AND    H.HOST_ID = #{hostId}
 	</select>
@@ -142,10 +157,10 @@
 		AND    B.MEMBER_ID = M.MEMBER_ID
 		AND    B.SPACE_ID = H.SPACE_ID
 		<if test="spaceId != null">
-		AND    B.SPACE_ID = nvl(#{spaceId}, B.SPACE_ID)
+		AND    B.SPACE_ID = NVL(#{spaceId}, B.SPACE_ID)
 		</if>
 		<if test="statusId != null">
-		AND    B.STATUS_ID = nvl(#{statusId}, B.STATUS_ID)
+		AND    B.STATUS_ID = NVL(#{statusId}, B.STATUS_ID)
 		</if>
 		AND    H.HOST_ID = #{hostId}
 	</select>
@@ -174,5 +189,57 @@
 		WHERE  STATUS_ID = '100'
 		AND    BOOK_ID = #{bookId}
 	</update>
+	
+	<!-- 공간 문의 리스트 수 조회 -->
+	<select id="getqListCount" resultType="_int" parameterType="HostSearch">
+	<bind name="hostId" value="_parameter.getHostId()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+	<bind name="statusId" value="_parameter.getStatusId()" />
+		SELECT COUNT(*)
+		FROM   QNA    Q,
+			   MEMBER M,
+			   SPACE  S
+		WHERE  Q.Q_MEMBER_ID = M.MEMBER_ID
+		AND    Q.SPACE_ID = S.SPACE_ID
+		AND    S.HOST_ID = #{hostId}
+		<if test="spaceId != null">
+		AND    S.SPACE_ID = NVL(#{spaceId}, S.SPACE_ID)
+		</if>
+		<if test="statusId == 'Y'">
+		AND    Q.A_CONTENT IS NOT NULL
+		</if>
+		<if test="statusId == 'N'">
+		AND    Q.A_CONTENT IS NULL
+		</if>
+		AND    Q.Q_TYPE = '0'
+		AND    Q.Q_STATUS = 'Y'
+	</select>
+	
+	<!-- 공간 문의 리스트 내역 조회 -->
+	<select id="selectQnaList" resultMap="hostQnaResultSet" parameterType="HostSearch">
+	<bind name="hostId" value="_parameter.getHostId()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+	<bind name="statusId" value="_parameter.getStatusId()" />
+		SELECT Q.*,
+			   S.SPACE_NAME,
+			   M.MEMBER_NAME
+		FROM   QNA    Q,
+			   MEMBER M,
+			   SPACE  S
+		WHERE  Q.Q_MEMBER_ID = M.MEMBER_ID
+		AND    Q.SPACE_ID = S.SPACE_ID
+		AND    S.HOST_ID = #{hostId}
+		<if test="spaceId != null">
+		AND    S.SPACE_ID = NVL(#{spaceId}, S.SPACE_ID)
+		</if>
+		<if test="statusId == 'Y'">
+		AND    Q.A_CONTENT IS NOT NULL
+		</if>
+		<if test="statusId == 'N'">
+		AND    Q.A_CONTENT IS NULL
+		</if>
+		AND    Q.Q_TYPE = '0'
+		AND    Q.Q_STATUS = 'Y'
+	</select>
 	
 </mapper>

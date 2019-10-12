@@ -11,6 +11,7 @@ import com.project.splace.common.PageInfo;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
+import com.project.splace.qna.model.vo.QnA;
 import com.project.splace.space.model.vo.Space;
 
 @Repository("hDao")
@@ -84,7 +85,6 @@ public class HostDao {
 		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
 		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
 		return (ArrayList)sqlSession.selectList("hostMapper.selectBookList", search, rowBounds);
-		//return (ArrayList)sqlSession.selectList("hostMapper.selectBookList", search);
 	}
 
 	/**
@@ -108,11 +108,31 @@ public class HostDao {
 	/**
 	 * 공간 예약 취소 처리 Dao
 	 * @param bookId
-	 * @return
+	 * @return result
 	 */
 	public int updateCancelBook(String bookId) {
 		return sqlSession.update("hostMapper.updateCancelBook", bookId);
 	}
-	
+
+	/**
+	 * 공간 문의 리스트 수 조회  Dao
+	 * @param search
+	 * @return listCount
+	 */
+	public int getqListCount(HostSearch search) {
+		return sqlSession.selectOne("hostMapper.getqListCount", search);
+	}
+
+	/**
+	 * 공간 문의 리스트 조회  Dao
+	 * @param search
+	 * @param pageInfo
+	 * @return qList
+	 */
+	public ArrayList<QnA> selectQnaList(HostSearch search, PageInfo pageInfo) {
+		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
+		return (ArrayList)sqlSession.selectList("hostMapper.selectQnaList", search, rowBounds);
+	}
 	
 }

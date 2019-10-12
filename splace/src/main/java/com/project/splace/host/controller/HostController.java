@@ -17,6 +17,7 @@ import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.qna.model.vo.QnA;
 import com.project.splace.space.model.vo.Space;
 
 //session에 hostId 추가
@@ -109,8 +110,30 @@ public class HostController {
 	public String bookApply(HttpSession session, String statusId, String list) {
 		int hostId = (int)session.getAttribute("hostId");
 		int result = hService.updateApplyBook(statusId, list);
-		if (result > 0) return result+"";
+		// 처리 건 수 리턴
+		if (result > 0) return result + "";
 		else return "0";
+	}
+	
+	// 공간 문의 리스트 조회
+	@RequestMapping("hostQna.sp")
+	public ModelAndView hostQna(HttpSession session, HostSearch search, ModelAndView mv, Integer page) {
+		int hostId = (int)session.getAttribute("hostId");
+		int currentPage = page == null? 1 : page;
+		search.setHostId(hostId);
+		
+		System.out.println(search.getSpaceId());
+		System.out.println(search.getStatusId());
+		
+		ArrayList<QnA> qList = hService.selectQnaList(search, currentPage);
+		ArrayList<Space> sList = hService.selectSpaceList(hostId);
+		if (qList != null) {
+			mv.addObject("search", search).addObject("qList", qList).addObject("sList", sList)
+			.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostQna");
+		} else {
+			mv.addObject("msg", "공간 문의 리스트 조회 중 오류 발생").setViewName("common/errorPage");
+		}
+		return mv;
 	}
 	
 	@RequestMapping("hostAccount.sp")

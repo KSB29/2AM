@@ -70,11 +70,6 @@ public class SpaceController {
 		return mv;
 	}
 	
-	@RequestMapping("spaceQna.sp")
-	public String spaceQnaList() {
-		return "space/spaceQna";
-	}
-	
 	@RequestMapping("spaceDayoff.sp")
 	public String spaceDayoff() {
 		return "space/spaceDayoff";
