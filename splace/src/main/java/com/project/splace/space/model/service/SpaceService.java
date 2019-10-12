@@ -175,4 +175,11 @@ public interface SpaceService {
     * @return
     */
    public abstract ArrayList<Space> hostSpace(int hostId);
+
+	/**
+	 * 일치 요일의 가격 조회
+	 * @param price
+	 * @return
+	 */
+	public abstract Price selectPriceList(Price price);
 }

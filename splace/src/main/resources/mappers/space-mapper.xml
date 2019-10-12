@@ -42,10 +42,6 @@
 	</resultMap>
 	
 	<resultMap type="Price" id="priceResultSet">
-		<!-- <id property="priceId" column="PRICE_ID"/>
-		<result property="priceWeekend" column="PRICE_WEEKEND"/>
-		<result property="priceTime" column="PRICE_TIME" jdbcType="CLOB" javaType="java.lang.String"/>
-		<result property="spaceId" column="SPACE_ID"/> -->
 		<id property="spaceId" column="SPACE_ID"/>
 		<result property="priceId" column="PRICE_ID"/>
 		<result property="priceWeekend" column="PRICE_WEEKEND"/>
@@ -317,6 +313,14 @@
 	FROM SPACE_ATT
 	WHERE SPACE_ID=#{spaceId}
 	</select> 
+	
+	<!-- 일치한 요일의 금액 조회  -->
+	<select id="selectPriceList" parameterType="Price" resultMap="priceResultSet">
+	SELECT PRICE_TIME
+	FROM PRICE
+	WHERE price_weekend=#{priceWeekend}
+	AND space_id=#{spaceId}
+	</select>
 	
 	
 </mapper>

@@ -1,7 +1,13 @@
 package com.project.splace.space.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,11 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.space.model.service.SpaceService;
 import com.project.splace.space.model.vo.Option;
@@ -229,18 +239,15 @@ public class SpaceController {
 	// 찜등록
 	@ResponseBody
 	@RequestMapping("wishList.sp")
-	public String wishList(WishList wishList, HttpSession session) {
-	      String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
-	      wishList.setMemberId(memberId);
-	      try {
-	         int result=sService.wishList(wishList);
+	public String wishList(WishList wishList, HttpSession session,RedirectAttributes rd) {
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+	    wishList.setMemberId(memberId);
+	     try {
+	       int result=sService.wishList(wishList);
 	         return "success";
-	      } catch (Exception e) {
-	
+	    }catch (Exception e) {
 	         return "fail";
-	         
 	      }
-	      
 	}
 	   
 	// 찜 여부 조회
@@ -267,14 +274,77 @@ public class SpaceController {
 	// 찜 삭제 
 	@ResponseBody
 	@RequestMapping("wishDelete.sp")
-	   public String wishDelete(WishList wishList, HttpSession session) {
-	      String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
-	      wishList.setMemberId(memberId);
-	      int result=sService.wishDelete(wishList);
-	      if(result>0) {
-	         return "success";
-	      }else {
-	         return "fail";
-	      }
+	public String wishDelete(WishList wishList, HttpSession session) {
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		wishList.setMemberId(memberId);
+		int result=sService.wishDelete(wishList);
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	
+	// 선택한 일자의 시간+가격 리스트 조회
+	@ResponseBody
+	@RequestMapping(value="timeList.sp", produces="application/json; charset=utf8")
+	public JsonArray timeList(String bookDate, int spaceId) throws ParseException {
+		Price price = new Price();
+		// 달력 요일 뽑기 
+		String inputDate= bookDate.replaceAll("/", "");
+		SimpleDateFormat original = new SimpleDateFormat("mmDDyyyy");
+		SimpleDateFormat newForm = new SimpleDateFormat("yyyy/mm/DD/E");
+		
+			Date originDate = original.parse(inputDate);
+			
+			String selectDate = newForm.format(originDate);
+			
+			String day=selectDate.substring(11,12);
+			
+			System.out.println(day);
+			
+			price.setPriceWeekend(day);
+			price.setSpaceId(spaceId);
+			
+			//일치 요일의 가격 조회
+			Price selectPrice = sService.selectPriceList(price);
+		
+			
+			JsonParser jp = new JsonParser();
+			
+			//System.out.println(jp.parse(selectPrice.getPriceTime()));
+			
+			JsonArray priceTime = (JsonArray)jp.parse(selectPrice.getPriceTime());
+			// JsonParser --> HttpURLConnection 대체하기
+			System.out.println(priceTime);
+			
+			Iterator<JsonElement> it = priceTime.iterator();
+			
+			JsonObject obj = null;
+			Map<String, Integer> pricePerTime = new LinkedHashMap<String, Integer>();
+			
+			JsonArray resultArr = new JsonArray();
+			
+			while(it.hasNext()) {
+				JsonObject obj2 = new JsonObject();
+				
+				obj = it.next().getAsJsonObject();
+				
+				String h = obj.get("hour").toString();
+				String p = obj.get("price").toString();
+				//pricePerTime.put(h.substring(1, h.lastIndexOf('~')), Integer.parseInt(p.replace('\"', ' ').trim()) );
+				
+				
+				obj2.addProperty(h.substring(1, h.lastIndexOf('~')), Integer.parseInt(p.replace('\"', ' ').trim()) );
+				
+				resultArr.add(obj2);
+				
+			}
+			
+			System.out.println(resultArr.toString());
+				
+			return resultArr;
+	
 	}
 }

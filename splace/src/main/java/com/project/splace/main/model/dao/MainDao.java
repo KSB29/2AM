@@ -15,9 +15,22 @@ public class MainDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	public ArrayList<Space> newSpaceList() {
+	/**
+	 * 새로 등록된 공간 리스트
+	 * @return
+	 */
+	public ArrayList<Space> newSpace() {
 		
-		return (ArrayList)sqlSession.selectList("mainMapper.newSelectList");
+		return (ArrayList)sqlSession.selectList("mainMapper.newSpace");
 	}
 
+	
+	/**
+	 * 추천 공간 리스트
+	 * @return
+	 */
+	public ArrayList<Space> bestSpace() {
+		
+		return (ArrayList)sqlSession.selectList("mainMapper.bestSpace");
+	}
 }

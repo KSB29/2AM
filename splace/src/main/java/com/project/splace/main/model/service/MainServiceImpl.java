@@ -15,11 +15,18 @@ public class MainServiceImpl implements MainService{
 	
 	@Autowired
 	private MainDao mainDao;
-
+	
+	// 새로 등록된 공간 리스트 
 	@Override
-	public ArrayList<Space> newSpaceList() {
+	public ArrayList<Space> newSpace() {
 		
-		return mainDao.newSpaceList();
+		return mainDao.newSpace();
+	}
+	// 추천 공간 리스트
+	@Override
+	public ArrayList<Space> bestSpace() {
+		
+		return mainDao.bestSpace();
 	}
 
 }

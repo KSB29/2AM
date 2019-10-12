@@ -114,8 +114,11 @@ margin-bottom: 1em !important;
 				<c:url var="bookDetail" value="bookDetail.sp" />
 				<c:url var="bookCancel" value="bookCancel.sp" />
 				<section class="tiles">
-					<div class="row">
-						<article>
+					<div class="row" id="bestSpace">
+					<c:url var="sDetail" value="spaceDetail.sp">
+			        <c:param name="spaceId" value="${bestSpace.spaceId}"></c:param>
+			        </c:url>
+				 		<article>
 							<span class="image"> <img src="resources/img/studio.jpg"
 								alt="" />
 							</span> 
@@ -200,82 +203,8 @@ margin-bottom: 1em !important;
 									</span>
 								</div>
 							</span>
-						</article>
-						<article>
-							<span class="image"> <img src="resources/img/studio.jpg"
-								alt="" />
-							</span> <a href="#"></a> <span>
-								<div class="locationName">
-									<h3>Kh정보교육원</h3>
-								</div>
-								<div class="location">
-									<span> <img src="resources/img/location.svg"> 서울시
-										중구
-									</span>
-								</div>
-								<div class="tags">
-									<span>#파티룸 #회의실 #중구</span>
-								</div>
-								<div class="price">
-									<strong>10,000</strong> <span>원/시간</span>
-								</div>
-								<div class="reviewHeart">
-									<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-									</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-									</span>
-								</div>
-							</span>
-						</article>
-						<article>
-							<span class="image"> <img src="resources/img/studio.jpg"
-								alt="" />
-							</span> <a href="#"></a> <span>
-								<div class="locationName">
-									<h3>Kh정보교육원</h3>
-								</div>
-								<div class="location">
-									<span> <img src="resources/img/location.svg"> 서울시
-										중구
-									</span>
-								</div>
-								<div class="tags">
-									<span>#파티룸 #회의실 #중구</span>
-								</div>
-								<div class="price">
-									<strong>10,000</strong> <span>원/시간</span>
-								</div>
-								<div class="reviewHeart">
-									<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-									</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-									</span>
-								</div>
-							</span>
-						</article>
-						<article>
-							<span class="image"> <img src="resources/img/studio.jpg"
-								alt="" />
-							</span> <a href="#"></a> <span>
-								<div class="locationName">
-									<h3>Kh정보교육원</h3>
-								</div>
-								<div class="location">
-									<span> <img src="resources/img/location.svg"> 서울시
-										중구
-									</span>
-								</div>
-								<div class="tags">
-									<span>#파티룸 #회의실 #중구</span>
-								</div>
-								<div class="price">
-									<strong>10,000</strong> <span>원/시간</span>
-								</div>
-								<div class="reviewHeart">
-									<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-									</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-									</span>
-								</div>
-							</span>
-						</article>
+						</article> 
+						
 					</div>
 				</section>
 				
@@ -289,39 +218,140 @@ margin-bottom: 1em !important;
 				
 				<!-- 목록  -->
 				<section class="tiles">
-					<div class="row">
-						<article>
-							<span class="image"> 
-								<img src="resources/img/studio.jpg" alt="" />
-							</span> 
-								<a href="#"></a> 
-								<span>
-								<div class="locationName">
-									<h3>Kh정보교육원</h3>
-								</div>
-								<div class="location">
-									<span> 
-									<img src="resources/img/location.svg">
-									서울시 중구
-									</span>
-								</div>
-								<div class="tags">
-									<span>#파티룸 #회의실 #중구</span>
-								</div>
-								<div class="price">
-									<strong>10,000</strong> <span>원/시간</span>
-								</div>
-							<!-- 	<div class="reviewHeart">
-									<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-									</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-									</span>
-								</div> -->
-							</span>
-						</article>
+					<div class="row" id="newSpace">
+					<c:url var="sDetail" value="spaceDetail.sp">
+			        <c:param name="spaceId" value="${newSpace.spaceId}"></c:param>
+			        </c:url>
+						
 					</div>
 				</section>
 			</div>
 		</div>
+		<script>
+		$(function(){
+			newSpaceList();
+			bestSpaceList();
+		});
+		// 새로운 공간 리스트 출력
+		function newSpaceList(){
+			$.ajax({
+				url:"newSpace.sp",
+				dataType:"JSON",
+				success:function(newSpace){
+					var $body=$("#newSpace");
+					
+					$body.html("");
+					console.log("newSpace");
+					if(newSpace.length>0){
+						$.each(newSpace,function(i){
+							var result ="";
+							var addr=newSpace[i].spaceAddress.split(",");
+							console.log(addr);
+							
+							result+='<article>'
+									+'<span class="image">' 
+									+'<img src="${contextPath}/resources/spaceImg/'
+									+newSpace[i].spaceAttChange
+									+'" alt="" />'
+									+'</span>' 
+									+'<a href="${sDetail}'
+									+newSpace[i].spaceId
+									+'"></a>'
+									+'<span>'
+									+'<div class="locationName">'
+									+'<h3>'
+									+newSpace[i].spaceName
+									+'</h3>'
+									+'</div>'
+									+'<div class="location">'
+									+'<span> '
+									+'<img src="resources/img/location.svg">'
+									+addr[1]
+									+'</span>'
+									+'</div>'
+									+'<div class="tags">'
+									+'<span>'
+									+newSpace[i].spaceTag
+									+'</span>'
+									+'</div>'
+									+'<div class="price">'
+									+'<strong>10,000</strong> <span>원/시간</span>'
+									+'</div>'
+									+'</span>'
+									+'</article>';
+									
+									$body.append(result);
+						});
+					}
+				},
+				error:function(){
+					console.log("error");
+				}
+			});
+			
+		}
+		
+		// 추천 공간 리스트 출력
+		function bestSpaceList(){
+			$.ajax({
+				url:"bestSpace.sp",
+				dataType:"JSON",
+				success:function(bestSpace){
+					var $body=$("#bestSpace");
+					
+					$body.html("");
+					console.log("bestSpace");
+					if(bestSpace.length>0){
+						$.each(bestSpace,function(i){
+							var result ="";
+							var addr=bestSpace[i].spaceAddress.split(",");
+							console.log(addr);
+							
+							result+='<article>'
+									+'<span class="image">' 
+									+'<img src="${contextPath}/resources/spaceImg/'
+									+bestSpace[i].spaceAttChange
+									+'" alt="" />'
+									+'</span>' 
+									+'<a href="${sDetail}'
+									+bestSpace[i].spaceId
+									+'"></a>'
+									+'<span>'
+									+'<div class="locationName">'
+									+'<h3>'
+									+bestSpace[i].spaceName
+									+'</h3>'
+									+'</div>'
+									+'<div class="location">'
+									+'<span> '
+									+'<img src="resources/img/location.svg">'
+									+addr[1]
+									+'</span>'
+									+'</div>'
+									+'<div class="tags">'
+									+'<span>'
+									+bestSpace[i].spaceTag
+									+'</span>'
+									+'</div>'
+									+'<div class="price">'
+									+'<strong>10,000</strong> <span>원/시간</span>'
+									+'</div>'
+									+'</span>'
+									+'</article>';
+									
+									$body.append(result);
+									
+						});
+					}
+				},
+				error:function(){
+					console.log("error");
+				}
+			});
+		}
+	
+	
+		</script>
 		<jsp:include page="WEB-INF/views/common/bottom.jsp"/>
 	</div>
 </body>
