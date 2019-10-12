@@ -29,10 +29,16 @@ public class MemberServiceImpl implements MemberService{
 		logger.info("입력 비밃번호 :"+mem.getMemberPwd());
 		logger.info("암호화된 비밀번호 :"+loginUser.getMemberPwd());
 		
-		if(!bCryptPasswordEncoder.matches(mem.getMemberPwd(), loginUser.getMemberPwd())) {
-			loginUser =null;
-		}
+		/*
+		 * if(!bCryptPasswordEncoder.matches(mem.getMemberPwd(),
+		 * loginUser.getMemberPwd())) { loginUser =null; }
+		 */
 		return loginUser;
+	}
+	
+	@Override
+	public Member loginSocialMember(String memberId) {
+		return mDao.loginSocialMember(memberId);
 	}
 
 	@Override
@@ -76,20 +82,17 @@ public class MemberServiceImpl implements MemberService{
 	public int updatePwd(MailVO vo) {
 		String encPwd = bCryptPasswordEncoder.encode(vo.getTemp());
 		vo.setTemp(encPwd);
-		
 		return mDao.updatePwd(vo);
 
 	}
 
 	@Override
-	public int insertNaverId(Member mem) {
-
-		return mDao.insertNaverId(mem);
+	public int insertSocialMember(Member mem) {
+		return mDao.insertSocialMember(mem);
 	}
 
-	@Override
-	public Member naverLogin(String memberId) {
-		
-		return mDao.naverLogin(memberId);
-	}
+
+
+
+
 }

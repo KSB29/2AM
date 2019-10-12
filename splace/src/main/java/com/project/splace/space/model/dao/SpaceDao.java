@@ -243,4 +243,14 @@ public class SpaceDao {
    
       return (ArrayList)sqlSession.selectList("spaceMapper.hostSpace", hostId);
    }
+
+	/** 
+	 * 일치한 요일의 금액 조회
+	 * @param price
+	 * @return
+	 */
+	public Price selectPriceList(Price price) {
+		
+		return sqlSession.selectOne("spaceMapper.selectPriceList",price);
+	}
 }

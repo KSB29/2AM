@@ -70,8 +70,21 @@
 		WHERE MEMBER_ID = #{to}
 	</update>
 	
-	<insert id="naverJoin" parameterType="Member" >
-			INSERT INTO MEMBER 
+
+	<select id="selectSocialId" parameterType="String" resultMap="memberResultSet">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND MEMBER_STATUS = 'Y'
+	</select>
+	
+	<select id="selectGoogleId" parameterType="String" resultMap="memberResultSet">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND MEMBER_STATUS = 'Y'
+	</select>
+		
+	<insert id="insertSocialMember" parameterType="Member" >
+		INSERT INTO MEMBER 
 		VALUES (#{memberId},
 				#{memberPwd},
 				#{memberName},
@@ -85,12 +98,4 @@
 		)
 	</insert>
 	
-	
-	<select id="selectNaverId" parameterType="String" resultMap="memberResultSet">
-		SELECT * FROM MEMBER
-		WHERE MEMBER_ID = #{memberId}
-		AND MEMBER_STATUS = 'Y'
-	</select>
-	
 </mapper>
-

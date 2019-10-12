@@ -58,14 +58,18 @@ public class MemberDao {
 	}
 
 
-	public int insertNaverId(Member mem) {
-		return sqlSession.insert("memberMapper.naverJoin", mem);
+	public int insertSocialMember(Member mem) {
+		return sqlSession.insert("memberMapper.insertSocialMember", mem);
 	}
 
 
-	public Member naverLogin(String memberId) {
+	public Member loginSocialMember(String memberId) {
 		
-		Member loginUser = sqlSession.selectOne("memberMapper.selectNaverId", memberId);
+		Member loginUser = sqlSession.selectOne("memberMapper.selectSocialId", memberId);
 		return loginUser;
 	}
+
+
+
+
 }

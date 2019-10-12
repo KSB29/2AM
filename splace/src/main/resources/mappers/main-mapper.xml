@@ -27,16 +27,32 @@
 	
 
 	
-	<!-- 공간 정보 조회 쿼리 -->
-	<select id="newSelectList" resultMap="spaceResultSet"  parameterType="Space">
-		SELECT ROWNUM, SPACE_NAME, SPACE_ADDRESS, SPACE_TAG, SPACE_ATT_CHANGE
+	<!-- 새로 등록된 공간 정보 조회 쿼리 -->
+	<select id="newSpace" resultMap="spaceResultSet"  parameterType="Space">
+		SELECT ROWNUM, SPACE_NAME, SPACE_ADDRESS, SPACE_TAG, SPACE_ID, SPACE_ATT_CHANGE
 		FROM SPACE
 		JOIN SPACE_ATT USING(SPACE_ID)
 		WHERE SPACE_ATT_TYPE=0
 		AND STATUS_ID = 2
 		AND SPACE_ATT_STATUS = 'Y'
-		AND <!--[CDATA[ROWNUM < 7 ]]-->
+		AND <![CDATA[ROWNUM < 7 ]]>
 		ORDER BY SPACE_ENROLL DESC
+	</select>
+	
+	<!-- 추천 공간 리스트 조회 -->
+		<select id="bestSpace" resultMap="spaceResultSet"  parameterType="Space">
+		SELECT ROWNUM,S.* , A.SPACE_ATT_CHANGE
+	    FROM(
+	    SELECT SPACE_ID, COUNT(*)
+	    FROM WISHLIST 
+	    GROUP BY SPACE_ID
+	    ORDER BY 2 DESC) W
+	    JOIN SPACE S ON( S.SPACE_ID=W.SPACE_ID)
+	    JOIN SPACE_ATT A ON (S.SPACE_ID=A.SPACE_ID)
+	    WHERE SPACE_ATT_TYPE=0
+	    AND STATUS_ID = 2
+	    AND SPACE_ATT_STATUS = 'Y' 
+	  	AND <![CDATA[ROWNUM<7 ]]>
 	</select>
 	
 </mapper>

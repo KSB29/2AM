@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -32,7 +33,7 @@
 
         <!-- 여기에 작성 시작! 다른 곳은 그대로 복사하시오! -->
         <div class="container-fluid">
-			
+			dd
         </div>
         <!-- /.container-fluid -->
 
