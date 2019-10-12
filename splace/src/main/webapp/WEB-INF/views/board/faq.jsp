@@ -41,13 +41,19 @@
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
-            <div class="card-body">
-              <jsp:include page="summernote.jsp"/>
-            </div>
-            <div class="card-header py-3">
-            	<button class="btn btn-danger btn-circle btn-lg" onclick="location.href='faqManagement.sp'"><i class="fas fa-trash"></i></button>
-            	<button class="btn btn-success btn-circle btn-lg" onclick="insertFaqForm.sp"><i class="fas fa-check"></i></button>
-            </div>
+          	<form action="insertFaqForm.sp">
+	            <div class="card-body">
+	              <div class="input-group border-left-primary mb-4">
+	              	  <label for="title" class="m-2">제목: </label>
+		              <input type="text" class="form-control bg-light small" name="title" id="title" required>	              
+	              </div>
+	              <jsp:include page="summernote.jsp"/>
+	            </div>
+	            <div class="card-header py-3">
+	            	<button type="button" class="btn btn-danger btn-circle btn-lg" onclick="location.href='faqManagement.sp'"><i class="fas fa-trash"></i></button>
+	            	<button type="submit" class="btn btn-success btn-circle btn-lg"><i class="fas fa-check"></i></button>
+	            </div>
+            </form>
           </div>
         </div>
         <!-- /.container-fluid -->
