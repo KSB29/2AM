@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.splace.space.model.dao.SpaceDao;
+import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Price;
 import com.project.splace.space.model.vo.Space;
@@ -346,6 +347,12 @@ public class SpaceServiceImpl implements SpaceService {
 	@Override
 	public Price selectPriceList(Price price) {
 		return sDao.selectPriceList(price);
+	}
+
+	// 해당 공간의 휴뮤일 조회
+	@Override
+	public ArrayList<DayOff> dayOffList(int spaceId) {
+		return sDao.dayOffList(spaceId);
 	}
 
 	

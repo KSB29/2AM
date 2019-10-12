@@ -19,6 +19,7 @@
 		<typeAlias type="com.project.splace.qna.model.vo.QnA" alias="QnA"/>
 		<typeAlias type="com.project.splace.space.model.vo.Price" alias="Price"/>
 		<typeAlias type="com.project.splace.space.model.vo.WishList" alias="WishList"/>
+		<typeAlias type="com.project.splace.space.model.vo.DayOff" alias="DayOff"/>
 	</typeAliases>
 	
   	<mappers>
@@ -28,5 +29,6 @@
 		<mapper resource="mappers/book-mapper.xml"/>
 		<mapper resource="mappers/space-mapper.xml"/>
 		<mapper resource="mappers/qna-mapper.xml"/>
+		<mapper resource="mappers/main-mapper.xml"/>
   	</mappers>
 </configuration>
