@@ -14,6 +14,10 @@
   <link href="${contextPath }/resources/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 <body id="page-top">
+	<c:if test="${!empty msg}">
+		<script>alert("${msg}")</script>
+		<c:remove var="msg"/>
+	</c:if>
 
   <!-- Sidebar -->
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">

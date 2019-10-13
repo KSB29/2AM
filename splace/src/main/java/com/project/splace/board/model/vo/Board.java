@@ -24,6 +24,17 @@ public class Board {
 		this.boardEnroll = boardEnroll;
 		this.boardUpdate = boardUpdate;
 	}
+	// 공지사항
+	public Board(int boardId, String boardTitle, String boardContent, String boardStatus, Date boardEnroll,
+			Date boardUpdate) {
+		super();
+		this.boardId = boardId;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardStatus = boardStatus;
+		this.boardEnroll = boardEnroll;
+		this.boardUpdate = boardUpdate;
+	}
 
 	public int getBoardId() {
 		return boardId;

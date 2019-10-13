@@ -39,12 +39,20 @@
 	</resultMap>
 	<resultMap type="Board" id="boardResultSet">
 		<id property="boardId" column="BOARD_ID"/>
-		<result property="boardType" column="BOARD_TYPE"/>
 		<result property="boardTitle" column="BOARD_TITLE"/>
 		<result property="boardContent" column="BOARD_CONTENT"/>
 		<result property="boardStatus" column="BOARD_STATUS"/>
 		<result property="boardEnroll" column="BOARD_ENROLL"/>
 		<result property="boardUpdate" column="BOARD_UPDATE"/>
+	</resultMap>
+	<resultMap type="Board" id="faqResultSet">
+		<id property="boardId" column="FAQ_ID"/>
+		<result property="boardType" column="FAQ_TYPE"/>
+		<result property="boardTitle" column="FAQ_TITLE"/>
+		<result property="boardContent" column="FAQ_CONTENT"/>
+		<result property="boardStatus" column="FAQ_STATUS"/>
+		<result property="boardEnroll" column="FAQ_ENROLL"/>
+		<result property="boardUpdate" column="FAQ_UPDATE"/>
 	</resultMap>
 
 	<!-- 1. 정산관리 -->
@@ -71,14 +79,15 @@
 	</select>
 	
 	<!-- 4. faq관리 -->
-	<select id="selectFaqList" resultMap="boardResultSet">
-		SELECT * FROM BOARD 
-		WHERE BOARD_TYPE = 1
+	<select id="selectFaqList" resultMap="faqResultSet" parameterType="_int">
+		SELECT * FROM FAQ 
+		<if test="_parameter != 100">
+			WHERE FAQ_TYPE = #{status}
+		</if>
 	</select>
 	
 	<!-- 5. 공지사항관리 -->
 	<select id="selectNoticeList" resultMap="boardResultSet">
-		SELECT * FROM BOARD 
-		WHERE BOARD_TYPE = 0
+		SELECT * FROM BOARD
 	</select>
 </mapper>
