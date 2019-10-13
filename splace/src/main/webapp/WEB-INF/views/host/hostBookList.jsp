@@ -36,9 +36,9 @@
 								<!-- <div class="default-select" id="default-select"> -->
 									<select name="statusId" id="statusId">
 										<option value="">- 예약상태 -</option>
-										<option value="100" <c:if test="${ search.statusId == '100' }">selected</c:if>>대기</option>
-										<option value="101" <c:if test="${ search.statusId == '101' }">selected</c:if>>승인</option>
-										<option value="102" <c:if test="${ search.statusId == '102' }">selected</c:if>>취소</option>
+										<c:forEach var="stList" items="${ stList }">
+										<option value="${ stList.statusId }" <c:if test="${ search.statusId == stList.statusId }">selected</c:if>>${ stList.statusName }</option>
+										</c:forEach>
 									</select>
 								<!-- </div> -->
 							</div>
@@ -70,16 +70,16 @@
 									</td>
 									<td>
 										
-										<div class="col-12"><fmt:formatDate value="${bList.bookEnroll }" pattern="yyyy.MM.dd(E)"/> ${ bList.memberName }</div>
 										<div class="col-12 boldText">
 											<span>
 												<fmt:formatDate value="${bList.bookDate }" pattern="yyyy.MM.dd(E)"/>
 												${bList.bookStartTime }시 ~ ${bList.bookEndTime }시, ${ bList.bookPer }명
 											</span>
 										</div>
-										<div class="col-12">
-											<p><fmt:formatNumber value="${bList.bookPrice }" type="currency"/></p>
+										<div class="col-12 boldText">
+											<fmt:formatNumber value="${bList.bookPrice }" type="currency"/>
 										</div>
+										<div class="col-12"><fmt:formatDate value="${bList.bookEnroll }" pattern="yyyy.MM.dd(E)"/> ${ bList.memberName }</div>
 									</td>
 									<td>
 										<div class="col-12 boldText">${ bList.booker }</div>

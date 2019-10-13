@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${contextPath}/resources/css/host.css" type="text/css">
 <title>정산 리스트</title>
 </head>
 <body>

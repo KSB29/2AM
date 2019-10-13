@@ -8,7 +8,9 @@ import com.project.splace.admin.model.vo.Account;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
+import com.project.splace.host.model.vo.Status;
 import com.project.splace.qna.model.vo.QnA;
+import com.project.splace.review.model.vo.Review;
 import com.project.splace.space.model.vo.Space;
 
 public interface HostService {
@@ -86,5 +88,20 @@ public interface HostService {
 	 * @return result
 	 */
 	public abstract int updateAnswer(QnA qna);
+
+	/**
+	 * 후기 리스트 Service
+	 * @param search
+	 * @param currentPage
+	 * @return rList
+	 */
+	public abstract ArrayList<Review> selectReviewList(HostSearch search, int currentPage);
+
+	/**
+	 * 상태 리스트 Service
+	 * @param string
+	 * @return status
+	 */
+	public abstract ArrayList<Status> selectStatus(String string);
 	
 }

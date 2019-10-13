@@ -49,27 +49,37 @@ public class SpaceController {
 		ArrayList<Type> tList = sService.selectType();
 		// 공간 옵션
 		ArrayList<Option> oList = sService.selectOption();
-		mv.addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceInsertForm");
+		if (tList != null && oList != null) {
+			mv.addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceInsertForm");
+		} else {
+			mv.addObject("msg", "공간 타입 및 옵션 조회 중 오류 발생").setViewName("common/errorPage");
+		}
 		return mv;
 	}
 	
 	@RequestMapping("spaceInsert.sp")
-	public String spaceInsert(Space space, String address, String post, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
+	public String spaceInsert(Space space, String address, String post, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model, RedirectAttributes rd) {
 		space.setMemberId(((Member)request.getSession().getAttribute("loginUser")).getMemberId());
 		// 주소 : 우편번호,도로명주소,상세주소
 		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
 		int result = sService.insertSpace(space, request, uploadFile, files);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간이 등록되었습니다");
+			return "redirect:spaceList.sp";
+		} else {
+			model.addAttribute("msg", "공간 등록 중 오류 발생");
+			return "common/errorPage";
+		}
 	}
 	
 	@RequestMapping("spaceList.sp")
-	public ModelAndView spaceInfoList(HttpSession session, ModelAndView mv) {
-		if (session.getAttribute("hostId") != null) {
-			ArrayList<Space> sList = sService.selectList(((Member)session.getAttribute("loginUser")).getMemberId());
+	public ModelAndView spaceInfoList(HttpSession session, ModelAndView mv, Integer page) {
+		int currentPage = page == null? 1 : page;
+		ArrayList<Space> sList = sService.selectList(((Member)session.getAttribute("loginUser")).getMemberId(), currentPage);
+		if (sList != null) {
 			mv.addObject("sList", sList).setViewName("space/spaceList");
 		} else {
-			mv.setViewName("redirect:hostApplyForm.sp");
+			mv.addObject("msg", "공간 조회 중 오류 발생").setViewName("common/errorPage");
 		}
 		return mv;
 	}
@@ -86,31 +96,21 @@ public class SpaceController {
 		int spaceCloseTime = 0;
 		int spaceAdd = 0;
 		
-		if (((Member)session.getAttribute("loginUser")).getMemberId() == null) {
-			mv.setViewName("redirect:loginForm.sp");
-		} else {
-			
-			ArrayList<Price> pList = sService.selectPrice(spaceId);
-			if (pList != null) {
-				for (int i = 0; i < pList.size(); i++) {
-					if (i == 0) {
-						spaceOpenTime = pList.get(i).getSpaceOpenTime();
-						spaceCloseTime = pList.get(i).getSpaceCloseTime();
-						spaceAdd = pList.get(i).getSpaceAdd();
-					}
+		ArrayList<Price> pList = sService.selectPrice(spaceId);
+		if (pList != null) {
+			for (int i = 0; i < pList.size(); i++) {
+				if (i == 0) {
+					spaceOpenTime = pList.get(i).getSpaceOpenTime();
+					spaceCloseTime = pList.get(i).getSpaceCloseTime();
+					spaceAdd = pList.get(i).getSpaceAdd();
 				}
-				//System.out.println(spaceOpenTime + " ~ " + spaceCloseTime + " : spaceAdd");
-				mv.addObject("pList", pList);
 			}
-			mv.addObject("spaceOpenTime", spaceOpenTime).addObject("spaceCloseTime", spaceCloseTime).addObject("spaceAdd", spaceAdd);
-			mv.addObject("spaceId", spaceId).addObject("priceFlag", priceFlag).setViewName("space/spacePrice");
+			mv.addObject("pList", pList);
 		}
+		mv.addObject("spaceOpenTime", spaceOpenTime).addObject("spaceCloseTime", spaceCloseTime).addObject("spaceAdd", spaceAdd);
+		mv.addObject("spaceId", spaceId).addObject("priceFlag", priceFlag).setViewName("space/spacePrice");
+
 		return mv;
-	}
-	
-	@RequestMapping("spaceReview.sp")
-	public String spaceReview() {
-		return "space/spaceReview";
 	}
 	
 	@RequestMapping("spaceUpdateForm.sp")
@@ -143,12 +143,17 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spaceUpdate.sp")
-	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
+	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model, RedirectAttributes rd) {
 		// 주소 : 우편번호,도로명주소,상세주소
 		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
 		int result = sService.updateSpace(space, filesIndex, request, uploadFile, files);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간 내역이 수정되었습니다");
+			return "redirect:spaceList.sp";
+		} else {
+			model.addAttribute("msg", "공간 내역 수정 중 오류 발생");
+			return "common/errorPage";
+		}
 	}
 	
 	// 공간 승인 요청
@@ -156,7 +161,7 @@ public class SpaceController {
 	public String spaceApply(int spaceId) {
 		int result = sService.updateApply(spaceId);
 		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		else return "common/errorPage";
 	}
 	
 	// 공간 삭제
@@ -164,21 +169,33 @@ public class SpaceController {
 	public String spaceDelete(int spaceId) {
 		int result = sService.deleteSpace(spaceId);
 		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		else return "common/errorPage";
 	}
 	
 	// 공간 가격 등록
 	@RequestMapping("spacePriceInsert.sp")
-	public String spacePriceInsert(int spaceId, int spaceAdd, String[] spacePrice) {
+	public String spacePriceInsert(int spaceId, int spaceAdd, String[] spacePrice, Model model, RedirectAttributes rd) {
 		int result = sService.insertPrice(spaceId, spaceAdd, spacePrice);
-		return "redirect:spaceList.sp";
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간 가격이 등록되었습니다");
+			return "redirect:spaceList.sp";
+		} else {
+			model.addAttribute("msg", "공간 가격 등록 중 오류 발생");
+			return "common/errorPage";
+		}
 	}
   
 	// 공간 가격 수정
 	@RequestMapping("spacePriceUpdate.sp")
-	public String spacePriceUpdate(int spaceId, int spaceAdd, String[] spacePrice) {
+	public String spacePriceUpdate(int spaceId, int spaceAdd, String[] spacePrice, Model model, RedirectAttributes rd) {
 		int result = sService.updatePrice(spaceId, spaceAdd, spacePrice);
-		return "redirect:spaceList.sp";
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간 가격이 수정되었습니다");
+			return "redirect:spaceList.sp";
+		} else {
+			model.addAttribute("msg", "공간 가격 수정 중 오류 발생");
+			return "common/errorPage";
+		}
 	}
 	
 	// 미리, 다운영역--------------------------------------------------------------------------------

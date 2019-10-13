@@ -1,5 +1,5 @@
 /**
- * QnA
+ * QnA 리스트
  */
 
 function answer() {

@@ -12,7 +12,9 @@ import com.project.splace.common.PageInfo;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
+import com.project.splace.host.model.vo.Status;
 import com.project.splace.qna.model.vo.QnA;
+import com.project.splace.review.model.vo.Review;
 import com.project.splace.space.model.vo.Space;
 
 @Repository("hDao")
@@ -162,6 +164,40 @@ public class HostDao {
 	 */
 	public int updateAnswer(QnA qna) {
 		return sqlSession.update("hostMapper.updateAnswer", qna);
+	}
+
+	/**
+	 * 후기 리스트 수 조회 Dao
+	 * @param search
+	 * @return listCount
+	 */
+	public int getrListCount(HostSearch search) {
+		return sqlSession.selectOne("hostMapper.getrListCount", search);
+	}
+
+	/**
+	 * 후기 리스트 조회 Dao
+	 * @param search
+	 * @param pageInfo
+	 * @return rList
+	 */
+	public ArrayList<Review> selectReview(HostSearch search, PageInfo pageInfo) {
+		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
+		return (ArrayList)sqlSession.selectList("hostMapper.selectReview", search, rowBounds);
+	}
+
+	/**
+	 * 상태 리스트 조회 Dao
+	 * @param status
+	 * @return status
+	 */
+	public ArrayList<Status> selectStatus(String status) {
+		return (ArrayList)sqlSession.selectList("hostMapper.selectStatus", status);
+	}
+
+	public ArrayList<String> selectReviewAtt(int reviewId) {
+		return (ArrayList)sqlSession.selectList("hostMapper.selectReviewAtt", reviewId);
 	}
 	
 }

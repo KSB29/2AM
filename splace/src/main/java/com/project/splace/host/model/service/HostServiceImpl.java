@@ -14,7 +14,9 @@ import com.project.splace.host.model.dao.HostDao;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
+import com.project.splace.host.model.vo.Status;
 import com.project.splace.qna.model.vo.QnA;
+import com.project.splace.review.model.vo.Review;
 import com.project.splace.space.model.vo.Space;
 
 @Service("hService")
@@ -122,6 +124,34 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public int updateAnswer(QnA qna) {
 		return hDao.updateAnswer(qna);
+	}
+
+	@Override
+	public ArrayList<Review> selectReviewList(HostSearch search, int currentPage) {
+		// 후기 리스트 수 조회
+		int listCount = hDao.getrListCount(search);
+		// 후기 리스트 조회(페이징 처리 적용)
+		PageInfo pageInfo = Pagination.getPageInfo(currentPage, listCount);
+		ArrayList<Review> rList = hDao.selectReview(search, pageInfo);
+		if (rList != null) {
+			ArrayList<String> reviewAtt;
+			for (int i = 0; i < rList.size(); i++) {
+				if (rList.get(i).getAttInfo() != null) {
+					reviewAtt = hDao.selectReviewAtt(rList.get(i).getReviewId());
+					if (reviewAtt.size() > 0) {
+						rList.get(i).setAttInfo(reviewAtt.toString().replace("[", "").replace("]", ""));
+					} else {
+						rList.get(i).setAttInfo("");
+					}
+				}
+			}
+		}
+		return rList;
+	}
+
+	@Override
+	public ArrayList<Status> selectStatus(String status) {
+		return hDao.selectStatus(status);
 	}
 	
 }

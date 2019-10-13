@@ -31,9 +31,10 @@ public interface SpaceService {
 	/**
 	 * 공간 리스트 조회 Service
 	 * @param memberId
+	 * @param currentPage 
 	 * @return sList
 	 */
-	public abstract ArrayList<Space> selectList(String memberId);
+	public abstract ArrayList<Space> selectList(String memberId, int currentPage);
 
 	/**
 	 * 공간 타입 리스트 조회 Service

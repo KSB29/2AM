@@ -44,7 +44,6 @@
 					<h3 class="listCount">total: ${pi.listCount }</h3>
 					<div class="row gtr-uniform" id="qnaArea">
 						<div class="col-5">
-							<!-- 문의내용 문의작성날짜 답변내용 답변작성날짜 상태(Y: 정상, N:삭제) 회원아이디 -->
 							<table id="qArea">
 								<thead>
 									<tr>
@@ -80,7 +79,7 @@
 								</div>
 								<div class="col-10 col-12-xsmall">
 									<label for="aContent">답변</label>
-									<textarea name="aContent" id="aContent" placeholder="답변" rows="3"></textarea>
+									<textarea name="aContent" id="aContent" rows="4"></textarea>
 								</div>
 								<div class="col-2 col-12-xsmall">
 									<label>&nbsp;</label>

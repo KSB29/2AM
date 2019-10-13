@@ -51,20 +51,8 @@ function updateStatus(statusId) {
 $(document).ready(function(){
 	
 	$("#spaceId, #statusId").change(function(){
-		//var spaceId = $("#spaceId option:selected").val();
-		//var statusId = $("#statusId option:selected").val();
 		$("form").submit();
 	});
-	
-	/*$("#bookArea .detail").css("display", "none");
-	$("#bookArea .list td").not(".checkList").click(function(){
-		if($(this).parent().next("tr").css("display") == "none") {
-			//$(this).parent().siblings(".detail").slideUp();
-			$(this).parent().next().slideDown();
-		} else {
-			$(this).parent().next().slideUp();
-		}
-	});*/
 	
 	$("#checkAll").click(function(){
 		$("#bookArea .checkList input[type=checkbox]").not(":disabled").prop("checked", $(this).prop("checked"));

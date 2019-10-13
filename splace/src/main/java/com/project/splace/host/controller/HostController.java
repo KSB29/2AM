@@ -21,8 +21,10 @@ import com.project.splace.host.model.service.HostService;
 import com.project.splace.host.model.vo.BookList;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
+import com.project.splace.host.model.vo.Status;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
+import com.project.splace.review.model.vo.Review;
 import com.project.splace.space.model.vo.Space;
 
 //session에 hostId 추가
@@ -98,10 +100,10 @@ public class HostController {
 		
 		ArrayList<BookList> bList = hService.selectBookList(search, currentPage);
 		ArrayList<Space> sList = hService.selectSpaceList(hostId);
-		//ArrayList<Status> status = hService.selectStatus();
+		ArrayList<Status> stList = hService.selectStatus("bStatus");
 		
 		if (bList != null) {
-			mv.addObject("search", search).addObject("bList", bList).addObject("sList", sList)
+			mv.addObject("search", search).addObject("bList", bList).addObject("sList", sList).addObject("stList", stList)
 			.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostBookList");
 		} else {
 			mv.addObject("msg", "예약리스트 조회 중 오류 발생").setViewName("common/errorPage");
@@ -131,7 +133,7 @@ public class HostController {
 		int hostId = (int)session.getAttribute("hostId");
 		int currentPage = page == null? 1 : page;
 		search.setHostId(hostId);
-		//System.out.println(search);
+		
 		ArrayList<QnA> qList = hService.selectQnaList(search, currentPage);
 		ArrayList<Space> sList = hService.selectSpaceList(hostId);
 		if (qList != null) {
@@ -148,6 +150,7 @@ public class HostController {
 	public ModelAndView hostAccount(HttpSession session, ModelAndView mv, Integer page) {
 		int hostId = (int)session.getAttribute("hostId");
 		int currentPage = page == null? 1 : page;
+		
 		ArrayList<Account> aList = hService.selectAccountList(hostId, currentPage);
 		if (aList != null) {
 			mv.addObject("aList", aList).addObject("pi", Pagination.getPageInfo()).setViewName("host/hostAccount");
@@ -162,13 +165,35 @@ public class HostController {
 	@RequestMapping("hostAnswer.sp")
 	public String hostAnswer(HttpSession session, int qnaId, String aContent) {
 		int hostId = (int)session.getAttribute("hostId");
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
 		QnA qna = new QnA();
 		qna.setQnaId(qnaId);
 		qna.setaContent(aContent);
+		qna.setaMemberId(memberId);
 		int result = hService.updateAnswer(qna);
 		// 처리 건 수 리턴
 		if (result > 0) return result + "";
 		else return "0";
+	}
+	
+	// 후기 리스트 조회
+	@RequestMapping("hostReview.sp")
+	public ModelAndView hostReview(HttpSession session, HostSearch search, ModelAndView mv, Integer page) {
+		int hostId = (int)session.getAttribute("hostId");
+		int currentPage = page == null? 1 : page;
+		search.setHostId(hostId);
+		
+		ArrayList<Review> rList = hService.selectReviewList(search, currentPage);
+		ArrayList<Space> sList = hService.selectSpaceList(hostId);
+		
+		if (rList != null) {
+			mv.addObject("search", search).addObject("rList", rList).addObject("sList", sList)
+			.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostReview");
+		} else {
+			mv.addObject("msg", "후기리스트 조회 중 오류 발생").setViewName("common/errorPage");
+		}
+		return mv;
+		
 	}
 	
 }
