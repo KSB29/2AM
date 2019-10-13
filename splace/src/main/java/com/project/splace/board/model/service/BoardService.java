@@ -33,6 +33,9 @@ public interface BoardService {
 	// 회원화면------------------------------------------------------------------------
 	
 	// 9. 공지사항목록 조회
-	public abstract ArrayList<Board> selectNoticeList();
+	public abstract ArrayList<Board> selectNoticeList(int currentPage);
+
+	// 10. FAQ목록 조회
+	public abstract ArrayList<Board> selectFAQList(int currentPage, int statusId);
 
 }

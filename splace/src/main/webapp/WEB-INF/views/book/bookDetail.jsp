@@ -47,7 +47,7 @@
 								<table class="table-wrapper bookDetailTable">
 									<tr class="waitingTime">
 										<td>승인대기기한</td>
-										<td><fmt:formatDate value="${book.bookEnroll}" pattern="yyyy.MM.dd (E)"/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
+										<td><fmt:formatDate value="${book.bookEnro ll}" pattern="yyyy.MM.dd (E)"/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
 									</tr>
 									<tr>
 										<td>신청일</td>
