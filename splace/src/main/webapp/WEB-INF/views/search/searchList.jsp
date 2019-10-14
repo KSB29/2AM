@@ -29,7 +29,7 @@
                </div> 
             </section>
             
-            <section>
+            <section> 
                <div class="row">
                   <span>상세검색</span> 
                </div>
