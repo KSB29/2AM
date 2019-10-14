@@ -102,17 +102,6 @@ margin-bottom: 1em !important;
 				</section>
 				
 				<!-- 목록 -->
-				<c:url var="bookForm" value="bookForm.sp">
-					<c:param name="spaceId" value="4"/>
-					<c:param name="bookDate" value="191009"/>
-					<c:param name="startTime" value="18"/>
-					<c:param name="endTime" value="22"/>
-					<c:param name="bookPer" value="3"/>
-					<c:param name="price" value="1000"/>
-				</c:url>
-				<c:url var="bookList" value="bookList.sp" />
-				<c:url var="bookDetail" value="bookDetail.sp" />
-				<c:url var="bookCancel" value="bookCancel.sp" />
 				<section class="tiles">
 					<div class="row" id="bestSpace">
 					<c:url var="sDetail" value="detailSpace.sp">
@@ -219,7 +208,7 @@ margin-bottom: 1em !important;
 				<!-- 목록  -->
 				<section class="tiles">
 					<div class="row" id="newSpace">
-					<c:url var="sDetail" value="spaceDetail.sp">
+					<c:url var="sDetail" value="detailSpace.sp">
 			        <c:param name="spaceId" value="${newSpace.spaceId}"></c:param>
 			        </c:url>
 						
