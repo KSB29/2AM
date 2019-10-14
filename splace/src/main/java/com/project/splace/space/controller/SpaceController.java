@@ -1,10 +1,7 @@
 package com.project.splace.space.controller;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,6 +25,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.project.splace.book.model.vo.Book;
+import com.project.splace.common.Pagination;
+import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.space.model.service.SpaceService;
 import com.project.splace.space.model.vo.DayOff;
@@ -46,20 +45,18 @@ public class SpaceController {
 	@Autowired
 	private WishList wishList;
 	
+	// 공간 등록 화면
 	@RequestMapping("spaceInsertForm.sp")
 	public ModelAndView spaceInsertForm(ModelAndView mv) {
 		// 공간 타입
 		ArrayList<Type> tList = sService.selectType();
 		// 공간 옵션
 		ArrayList<Option> oList = sService.selectOption();
-		if (tList != null && oList != null) {
-			mv.addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceInsertForm");
-		} else {
-			mv.addObject("msg", "공간 타입 및 옵션 조회 중 오류 발생").setViewName("common/errorPage");
-		}
+		mv.addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceInsertForm");
 		return mv;
 	}
 	
+	// 공간 등록 처리
 	@RequestMapping("spaceInsert.sp")
 	public String spaceInsert(Space space, String address, String post, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model, RedirectAttributes rd) {
 		space.setMemberId(((Member)request.getSession().getAttribute("loginUser")).getMemberId());
@@ -67,31 +64,38 @@ public class SpaceController {
 		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
 		int result = sService.insertSpace(space, request, uploadFile, files);
 		if (result > 0) {
-			rd.addFlashAttribute("msg", "공간이 등록되었습니다");
-			return "redirect:spaceList.sp";
+			rd.addFlashAttribute("msg", "공간이 등록되었습니다.");
 		} else {
-			model.addAttribute("msg", "공간 등록 중 오류 발생");
-			return "common/errorPage";
+			rd.addFlashAttribute("msg", "공간 등록 중 오류가 발생했습니다.");
 		}
+		return "redirect:spaceList.sp";
 	}
 	
+	// 공간 리스트 화면
 	@RequestMapping("spaceList.sp")
 	public ModelAndView spaceInfoList(HttpSession session, ModelAndView mv, Integer page) {
 		int currentPage = page == null? 1 : page;
 		ArrayList<Space> sList = sService.selectList(((Member)session.getAttribute("loginUser")).getMemberId(), currentPage);
-		if (sList != null) {
-			mv.addObject("sList", sList).setViewName("space/spaceList");
-		} else {
-			mv.addObject("msg", "공간 조회 중 오류 발생").setViewName("common/errorPage");
-		}
+		mv.addObject("sList", sList).setViewName("space/spaceList");
 		return mv;
 	}
 	
+	// 공간 휴일 등록 화면
 	@RequestMapping("spaceDayoff.sp")
-	public String spaceDayoff() {
-		return "space/spaceDayoff";
+	public ModelAndView spaceDayoff(HttpSession session, HostSearch search, ModelAndView mv, Integer page) {
+		int hostId = (int)session.getAttribute("hostId");
+		int currentPage = page == null? 1 : page;
+		search.setHostId(hostId);
+		
+		ArrayList<DayOff> dList = sService.selectDayoffList(search, currentPage);
+		ArrayList<Space> sList = sService.selectSpaceList(hostId);
+		
+		mv.addObject("search", search).addObject("dList", dList).addObject("sList", sList)
+		.addObject("pi", Pagination.getPageInfo()).setViewName("space/spaceDayoff");
+		return mv;
 	}
 	
+	// 공간 가격 화면
 	@RequestMapping("spacePrice.sp")
 	public ModelAndView spacePrice(int spaceId, String priceFlag, HttpSession session, ModelAndView mv) {
 		// 공간이용시간
@@ -116,89 +120,120 @@ public class SpaceController {
 		return mv;
 	}
 	
+	// 공간 수정 화면
 	@RequestMapping("spaceUpdateForm.sp")
 	public ModelAndView spaceUpdateForm(int spaceId, ModelAndView mv) {
 		Space space = sService.selectSpace(spaceId);
-		if (space != null) {
-			// 공간 사진 파일(슬라이드)
-			ArrayList<SpaceAtt> attList = sService.selectSpaceAtt(spaceId);
-			mv.addObject("attList", attList);
-			// 공간 타입
-			ArrayList<Type> tList = sService.selectType();
-			// 공간 옵션
-			ArrayList<Option> oList = sService.selectOption();
-			
-			String[] address = space.getSpaceAddress().split(",");
-			// 상세주소
-			String address2 = "";
-			for (int i = 2; i < address.length; i++) {
-				address2 += address[i];
-			}
-			// 도로명주소
-			space.setSpaceAddress(address[1]);
-			// 우편번호, 상세주소
-			mv.addObject("post", address[0]).addObject("address", address2);
-			mv.addObject("space", space).addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceUpdateForm");
-		} else {
-			mv.addObject("msg", "공간 정보 조회 중 오류 발생").setViewName("common/errorPage");
+		// 공간 사진 파일(슬라이드)
+		ArrayList<SpaceAtt> attList = sService.selectSpaceAtt(spaceId);
+		mv.addObject("attList", attList);
+		// 공간 타입
+		ArrayList<Type> tList = sService.selectType();
+		// 공간 옵션
+		ArrayList<Option> oList = sService.selectOption();
+		
+		String[] address = space.getSpaceAddress().split(",");
+		// 상세주소
+		String address2 = "";
+		for (int i = 2; i < address.length; i++) {
+			address2 += address[i];
 		}
+		// 도로명주소
+		space.setSpaceAddress(address[1]);
+		// 우편번호, 상세주소
+		mv.addObject("post", address[0]).addObject("address", address2);
+		mv.addObject("space", space).addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceUpdateForm");
 		return mv;
 	}
 	
+	// 공간 수정 처리
 	@RequestMapping("spaceUpdate.sp")
 	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model, RedirectAttributes rd) {
 		// 주소 : 우편번호,도로명주소,상세주소
 		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
 		int result = sService.updateSpace(space, filesIndex, request, uploadFile, files);
 		if (result > 0) {
-			rd.addFlashAttribute("msg", "공간 내역이 수정되었습니다");
-			return "redirect:spaceList.sp";
+			rd.addFlashAttribute("msg", "공간 내역이 수정되었습니다.");
 		} else {
-			model.addAttribute("msg", "공간 내역 수정 중 오류 발생");
-			return "common/errorPage";
+			rd.addFlashAttribute("msg", "공간 내역 수정 중 오류가 발생했습니다.");
 		}
+		return "redirect:spaceList.sp";
 	}
 	
 	// 공간 승인 요청
 	@RequestMapping("spaceApply.sp")
-	public String spaceApply(int spaceId) {
+	public String spaceApply(int spaceId, RedirectAttributes rd) {
 		int result = sService.updateApply(spaceId);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return "common/errorPage";
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간 승인 요청되었습니다.");
+		} else {
+			rd.addFlashAttribute("msg", "공간 승인 요청 중 오류가 발생했습니다.");
+		}
+		return "redirect:spaceList.sp";
 	}
 	
-	// 공간 삭제
+	// 공간 삭제 처리
 	@RequestMapping("spaceDelete.sp")
-	public String spaceDelete(int spaceId) {
+	public String spaceDelete(int spaceId, RedirectAttributes rd) {
 		int result = sService.deleteSpace(spaceId);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return "common/errorPage";
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간이 삭제되었습니다.");
+		} else {
+			rd.addFlashAttribute("msg", "공간 삭제 중 오류가 발생했습니다.");
+		}
+		return "redirect:spaceList.sp";
 	}
 	
-	// 공간 가격 등록
+	// 공간 가격 등록 처리
 	@RequestMapping("spacePriceInsert.sp")
 	public String spacePriceInsert(int spaceId, int spaceAdd, String[] spacePrice, Model model, RedirectAttributes rd) {
 		int result = sService.insertPrice(spaceId, spaceAdd, spacePrice);
 		if (result > 0) {
-			rd.addFlashAttribute("msg", "공간 가격이 등록되었습니다");
-			return "redirect:spaceList.sp";
+			rd.addFlashAttribute("msg", "공간 가격이 등록되었습니다.");
 		} else {
-			model.addAttribute("msg", "공간 가격 등록 중 오류 발생");
-			return "common/errorPage";
+			rd.addFlashAttribute("msg", "공간 가격 등록 중 오류가 발생했습니다.");
 		}
+		return "redirect:spaceList.sp";
 	}
   
-	// 공간 가격 수정
+	// 공간 가격 수정 처리
 	@RequestMapping("spacePriceUpdate.sp")
 	public String spacePriceUpdate(int spaceId, int spaceAdd, String[] spacePrice, Model model, RedirectAttributes rd) {
 		int result = sService.updatePrice(spaceId, spaceAdd, spacePrice);
 		if (result > 0) {
-			rd.addFlashAttribute("msg", "공간 가격이 수정되었습니다");
-			return "redirect:spaceList.sp";
+			rd.addFlashAttribute("msg", "공간 가격이 수정되었습니다.");
 		} else {
-			model.addAttribute("msg", "공간 가격 수정 중 오류 발생");
-			return "common/errorPage";
+			rd.addFlashAttribute("msg", "공간 가격 수정 중 오류가 발생했습니다.");
 		}
+		return "redirect:spaceList.sp";
+	}
+	
+	// 공간 운영여부 변경 처리(Ajax)
+	@ResponseBody
+	@RequestMapping("spaceUpdateStatus.sp")
+	public String spaceUpdateStatus(HostSearch search) {
+		return sService.updateOperStatus(search);
+	}
+	
+	// 공간 휴일 등록 전 예약 체크(Ajax)
+	@ResponseBody
+	@RequestMapping("spaceCheckDayoff.sp")
+	public String spaceCheckDayoff(DayOff dayoff) {
+		return sService.selectCheckDayoff(dayoff);
+	}
+	
+	// 공간 휴일 등록 처리(Ajax)
+	@ResponseBody
+	@RequestMapping("spaceInsertDayoff.sp")
+	public String spaceInsertDayoff(DayOff dayoff) {
+		return sService.insertDayoff(dayoff);
+	}
+	
+	// 공간 휴일 삭제 처리(Ajax)
+	@ResponseBody
+	@RequestMapping("spaceDeleteDayoff.sp")
+	public String spaceDeleteDayoff(String list) {
+		return sService.deleteDayoff(list);
 	}
 	
 	// 미리, 다운영역--------------------------------------------------------------------------------

@@ -5,29 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style>
-	#noticeList > span,
-	#offList > span {
-		display: block;
-		border-bottom: 1px solid #c9c9c9;
-	}
-</style>
-<script>
-/* $(document).ready(function(){
-	$("#addOffBtn").click(function(){
-		var offStart = $("#offStart").val();
-		var offEnd = $("#offEnd").val();
-		if (offStart + offEnd != "") {
-			var $offList = $("#offList");
-			var $span = $("<span>").text(offStart + " ~ " + offEnd);
-			$offList.append($span);
-			$("#offStart").val("");
-			$("#offEnd").val("");
-		}
-	});
-	
-}); */
-</script>
+<link rel="stylesheet" href="${contextPath}/resources/css/host.css" type="text/css">
+<link rel="stylesheet" href="${contextPath}/resources/css/space.css" type="text/css">
 <title>휴일 리스트</title>
 </head>
 <body>
@@ -40,63 +19,142 @@
 			<!-- Content -->
 				<section>
 					<h1 class="align-center">휴일 리스트</h1>
-					<form action="">
-						<div class="row gtr-uniform">
-							<div class="col-2">
-								<select name="demo-category" id="demo-category">
-									<option value="">- 공간 -</option>
-									<option value="1">공간1</option>
-								</select>
+					<form action="spaceDayoff.sp" id="dayoffSearchForm" method="get">
+						<div class="row gtr-uniform" id="dayoffSearchArea">
+							<div class="col-9"></div>
+							<div class="col-3">
+								<div class="default-select" id="default-select">
+									<select name="spaceId" id="spaceId">
+										<option value="">- 공간 -</option>
+										<c:forEach var="sList" items="${ sList }">
+										<option value="${ sList.spaceId }" <c:if test="${ search.spaceId == sList.spaceId }">selected</c:if>>${ sList.spaceName }</option>
+										</c:forEach>
+									</select>
+								</div>
 							</div>
-							<div class="col-10"></div>
 						</div>
 					</form>
+				</section>
+				<section>
+					<h3 class="listCount">total: ${pi.listCount }</h3>
 					<div class="row gtr-uniform">
-						<div class="col-7">
+						<div class="col-6">
 							<table id="offArea">
 								<thead>
 									<tr>
-										<th>번호</th>
-										<th>휴일시작</th>
-										<th>휴일종료</th>
-										<th><input type="checkbox" id="demo-human0" name="demo-human"><label for="demo-human0"></label></th>
+										<th>공간</th>
+										<th>휴일</th>
+										<th><input type="checkbox" id="checkAll"><label for="checkAll"></label></th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="i" begin="1" end="3">
-									<tr class="list">
-										<td>${i}</td>
-										<td>2019-09-22</td>
-										<td>2019-09-25</td>
-										<th><input type="checkbox" id="demo-human1" name="demo-human"><label for="demo-human1"></label></th>
+									<c:if test="${ empty dList }">
+									<tr><td colspan="5" class="align-center">휴일 내역이 없습니다</td></tr>
+									</c:if>
+									<c:forEach var="dList" items="${ dList }" varStatus="vs">
+									<tr class="checkList">
+										<input type="hidden" value="${ dList.dayOffId }">
+										<td>${ dList.spaceName }</td>
+										<td>${ dList.dayOffStart }</td>
+										<th><input type="checkbox" id="check${ vs.index }"><label for="check${ vs.index }"></label></th>
 									</tr>
 									</c:forEach>
 								</tbody>
 							</table>
 						</div>
-						<div class="col-5">
+						<div class="col-6">
 							<div class="row gtr-uniform">
 								<div class="col-5 col-2-xsmall">
+									<label for="offStart">시작일</label>
 									<input type="date" id="offStart">
 								</div>
 								<div class="col-5 col-2-xsmall">
+									<label for="offEnd">종료일</label>
 									<input type="date" id="offEnd">
 								</div>
 								<div class="col-2">
-									<input type="button" class="button primary small" id="addOffBtn" value="추가">
+									<label>&nbsp;</label>
+									<input type="button" class="button primary small" id="checkBtn" value="확인">
 								</div>
-								<div class="col-12 col-12-xsmall" id="offList"></div>
-								<input type="hidden" name="dayOff" id="dayOff">
+								<div class="col-12 col-12-xsmall noticeDiv" id="bookCheck">
+									<i class="fas fa-exclamation-circle warningColor"></i> <span class="warningColor"></span>
+								</div>
+								<div class="col-12 col-12-xsmall noticeDiv">
+									<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">기간 내에 이용 예정인 예약이 있을 경우 휴일 등록에서 제외됩니다.</span>
+								</div>
+								<div class="col-12 col-12-xsmall noticeDiv">
+									<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">목록에서 휴일 선택 후 삭제해주세요.</span>
+								</div>
+								<div class="col-3"></div>
+								<div class="col-3">
+									<input type="button" class="button primary fit" id="insertBtn" value="저장">
+								</div>
+								<div class="col-3">
+									<input type="button" class="button fit" id="deleteBtn" value="삭제">
+								</div>
+								<div class="col-3"></div>
 							</div>
 						</div>
 					</div>
-					<br><br>
+					<br>
 					<div class="row">
-						<div class="col-4"></div>
-						<div class="col-4">
-							<input type="button" class="button primary fit" value="저장" onclick="location.href='dayOffInsert.sp'">
+					<nav class="pagination-container">
+						<div class="pagination">
+							<!-- [이전] -->
+							<c:url var="startPage" value="spaceDayoff.sp">
+								<c:param name="page" value="${ pi.startPage }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>
+							</c:url>
+							<a class="pagination-newest" href="${startPage }"><<</a>
+							<c:if test="${ pi.currentPage <= 1 }">
+								<a class="pagination-newer" href="#"><</a>
+							</c:if>
+							<c:if test="${ pi.currentPage > 1 }">
+								<c:url var="before" value="spaceDayoff.sp">
+									<c:param name="page" value="${ pi.currentPage - 1 }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>
+								</c:url>
+								<a class="pagination-newer" href="${ before }"><</a>
+							</c:if>					
+							<span class="pagination-inner">
+								<!-- 페이지 -->
+								<c:if test="${ empty dList}">
+									<a class="pagination-active" href="#">1</a>
+								</c:if>
+								<c:if test="${ !empty dList}">
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:if test="${ p eq pi.currentPage }">
+										<a class="pagination-active" href="#">${ p }</a>
+									</c:if>
+									
+									<c:if test="${ p ne pi.currentPage }">
+										<c:url var="pagination" value="spaceDayoff.sp">
+											<c:param name="page" value="${ p }"/>
+											<c:param name="spaceId" value="${ search.spaceId }"/>
+										</c:url>
+										<a href="${ pagination }">${ p }</a>
+									</c:if>
+								</c:forEach>
+								</c:if>
+							</span>
+							<!-- [다음] -->
+							<c:if test="${ pi.currentPage >= pi.maxPage }">
+								<a class="pagination-older" href="#">></a>
+							</c:if>
+							<c:if test="${ pi.currentPage < pi.maxPage }">
+								<c:url var="after" value="spaceDayoff.sp">
+									<c:param name="page" value="${ pi.currentPage + 1 }"/>
+									<c:param name="spaceId" value="${ search.spaceId }"/>
+								</c:url> 
+								<a class="pagination-older" href="${ after }">></a>
+							</c:if>
+							<c:url var="endPage" value="spaceDayoff.sp">
+								<c:param name="page" value="${ pi.endPage }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>
+							</c:url>
+							<a class="pagination-oldest" href="${endPage }">>></a>
 						</div>
-						<div class="col-4"></div>
+					</nav>
 					</div>
 				</section>
 				
@@ -104,18 +162,6 @@
 		</div>
 		<jsp:include page="/WEB-INF/views/common/bottom.jsp"/>
 	</div>
-<script>
-	$(document).ready(function(){
-		$("#addOffBtn").click(function(){
-			var $table = $("#offArea tbody");
-			var $tr = $("<tr>");
-			$tr.append($("<td>"));
-			$tr.append($("<td><input type='date' value='" + $("#offStart").val() + "'>"));
-			$tr.append($("<td><input type='date' value='" + $("#offEnd").val() + "'>"));
-			$tr.append($("<td>"));
-			$table.append($tr);
-		});
-	});
-</script>
+	<script src="${contextPath}/resources/js/spaceDayoff.js"></script>
 </body>
 </html>

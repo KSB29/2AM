@@ -20,16 +20,18 @@
 			<!-- Content -->
 				<section>
 					<h1 class="align-center">후기 리스트</h1>
-					<form action="hostReview.sp" method="get">
+					<form action="hostReview.sp" id="reviewSearchForm" method="get">
 						<div class="row gtr-uniform" id="reviewSearchArea">
 							<div class="col-9"></div>
 							<div class="col-3">
-								<select name="spaceId" id="spaceId">
-									<option value="">- 공간 -</option>
-									<c:forEach var="sList" items="${ sList }">
-									<option value="${ sList.spaceId }" <c:if test="${ search.spaceId == sList.spaceId }">selected</c:if>>${ sList.spaceName }</option>
-									</c:forEach>
-								</select>
+								<div class="default-select" id="default-select">
+									<select name="spaceId" id="spaceId">
+										<option value="">- 공간 -</option>
+										<c:forEach var="sList" items="${ sList }">
+										<option value="${ sList.spaceId }" <c:if test="${ search.spaceId == sList.spaceId }">selected</c:if>>${ sList.spaceName }</option>
+										</c:forEach>
+									</select>
+								</div>
 							</div>
 						</div>
 					</form>

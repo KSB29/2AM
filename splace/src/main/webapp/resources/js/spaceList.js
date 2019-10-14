@@ -20,30 +20,39 @@ $(document).ready(function(){
     		
 	    	var operStatus = $(this).prop("checked");
 	    	var spaceId = $(this).attr("id").replace("space", "");
-	    	if (operStatus == true) {
-	        	$(this).attr("checked", true);
-	        	$(this).parent().next().html("운영").addClass("noticeColor").removeClass("warningColor");
-	        } else {
-	        	$(this).attr("checked", false);
-	        	$(this).parent().next().html("운영중지").addClass("warningColor").removeClass("noticeColor");
-	        };
+	    	var bookFlag = $(this).parent().prev().val();
+	    	
+	    	if (bookFlag == "Y") {
+	    		alert("이용 예정인 예약이 있어 상태 변경이 불가합니다");
+	    		return false;
+	    	}
 	        
-	        if (operStatus == false) {
+	    	if (operStatus == true) {
+        		$(this).attr("checked", true);
+        		$(this).parent().next().html("운영").addClass("noticeColor").removeClass("warningColor");
+        	} else {
+        		$(this).attr("checked", false);
+        		$(this).parent().next().html("운영중지").addClass("warningColor").removeClass("noticeColor");
+        	};
+        	
+	        var statusId = operStatus == true? "Y" : "N";
+	        
+        	$.ajax ({
+        		url : "spaceUpdateStatus.sp",
+        		data : {spaceId:spaceId, statusId:statusId},
+        		type : "post",
+        		success : function(result) {
+        					if (result == "Success") {
+        						alert("변경되었습니다");
+        					} else {
+        						alert("변경 중 오류가 발생했습니다");
+        					}
+        				},
+        		error : function(e) {
+        					console.log(e);
+        				}
+        	});
 	        	
-	        	$.ajax ({
-	        		url : "spaceOperCheck.sp",
-	        		data : {spaceId:spaceId},
-	        		type : "post",
-	        		success : function(result) {
-	        					alert("상태가 변경되었습니다");
-	        					location.reload();
-	        				},
-	        		error : function(e) {
-	        					console.log(e);
-	        				}
-	        	});
-	        	
-	        }
         } else {
         	return false;
         }

@@ -19,23 +19,27 @@
 			<!-- Content -->
 				<section>
 					<h1 class="align-center">Q&A 리스트</h1>
-					<form action="hostQna.sp" method="get">
+					<form action="hostQna.sp" id="qnaSearchForm" method="get">
 						<div class="row gtr-uniform">
-							<div class="col-8"></div>
-							<div class="col-2">
-								<select name="spaceId" id="spaceId">
-									<option value="">- 공간 -</option>
-									<c:forEach var="sList" items="${ sList }">
-									<option value="${ sList.spaceId }" <c:if test="${ search.spaceId == sList.spaceId }">selected</c:if>>${ sList.spaceName }</option>
-									</c:forEach>
-								</select>
+							<div class="col-6"></div>
+							<div class="col-3">
+								<div class="default-select" id="default-select">
+									<select name="spaceId" id="spaceId">
+										<option value="">- 공간 -</option>
+										<c:forEach var="sList" items="${ sList }">
+										<option value="${ sList.spaceId }" <c:if test="${ search.spaceId == sList.spaceId }">selected</c:if>>${ sList.spaceName }</option>
+										</c:forEach>
+									</select>
+								</div>
 							</div>
-							<div class="col-2">
-								<select name="statusId" id="statusId">
-									<option value="">- 답변상태 -</option>
-									<option value="0" <c:if test="${ search.statusId == '0' }">selected</c:if>>미등록</option>
-									<option value="1" <c:if test="${ search.statusId == '1' }">selected</c:if>>완료</option>
-								</select>
+							<div class="col-3">
+								<div class="default-select" id="default-select">
+									<select name="statusId" id="statusId">
+										<option value="">- 답변상태 -</option>
+										<option value="0" <c:if test="${ search.statusId == '0' }">selected</c:if>>미등록</option>
+										<option value="1" <c:if test="${ search.statusId == '1' }">selected</c:if>>완료</option>
+									</select>
+								</div>
 							</div>
 						</div>
 					</form>

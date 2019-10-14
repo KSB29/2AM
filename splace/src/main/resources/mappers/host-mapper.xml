@@ -220,6 +220,14 @@
 		AND    BOOK_ID = #{bookId}
 	</update>
 	
+	<!-- 예약 승인 처리 시 알림 등록 -->
+	<insert id="insertNoticeApprove" parameterType="string">
+		INSERT INTO NOTICE
+		SELECT SEQ_N.NEXTVAL, '공간 예약이 승인되었습니다.', SYSDATE, '0', MEMBER_ID
+		FROM   BOOK
+		WHERE  BOOK_ID = #{bookId}
+	</insert>
+	
 	<!-- 공간 예약 취소 처리 -->
 	<update id="updateCancelBook" parameterType="string">
 		UPDATE BOOK
@@ -228,6 +236,14 @@
 		WHERE  STATUS_ID = '100'
 		AND    BOOK_ID = #{bookId}
 	</update>
+	
+	<!-- 예약 취소 처리 시 알림 등록 -->
+	<insert id="insertNoticeCancel" parameterType="string">
+		INSERT INTO NOTICE
+		SELECT SEQ_N.NEXTVAL, '공간 예약이 취소되었습니다.', SYSDATE, '0', MEMBER_ID
+		FROM   BOOK
+		WHERE  BOOK_ID = #{bookId}
+	</insert>
 	
 	<!-- 공간 문의 리스트 수 조회 -->
 	<select id="getqListCount" resultType="_int" parameterType="HostSearch">
