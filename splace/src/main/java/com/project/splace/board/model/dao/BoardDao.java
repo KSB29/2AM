@@ -2,11 +2,13 @@ package com.project.splace.board.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.splace.board.model.vo.Board;
+import com.project.splace.common.PageInfo;
 
 /**
  * @author user1
@@ -95,7 +97,48 @@ public class BoardDao {
 
 	// 회원화면------------------------------------------------------------------------
 
-	public ArrayList<Board> selectNoticeList() {
-		return (ArrayList)sqlSession.selectList("boardMapper.selectNoticeList");
+
+	/**
+	 * 9. 전체 공지사항 수 조회 
+	 * @param statusId 
+	 * @return bListCount
+	 */
+	public int getNoticeListCount() {
+		return sqlSession.selectOne("boardMapper.getNoticeListCount");
+	}
+	/**
+	 * 10. 공지사항 목록 조회
+	 * @param pi
+	 * @return bLisst
+	 */
+	public ArrayList<Board> selectNoticeList(PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectNoticeList", rowBounds);
+	}
+
+	/**
+	 * 11. 전체 FAQ 수 조회
+	 * @param statusId 
+	 * @return bListCount
+	 */
+	public int getFAQListCount(int statusId) {
+		return sqlSession.selectOne("boardMapper.getFAQListCount",statusId);
+	}
+
+	/**
+	 * 12. FAQ 목록 조회
+	 * @param pi
+	 * @param statusId 
+	 * @return bList
+	 */
+	public ArrayList<Board> selectFAQList(PageInfo pi, int statusId) {
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectFAQList", statusId, rowBounds);
 	}
 }

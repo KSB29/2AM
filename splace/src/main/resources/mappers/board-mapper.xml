@@ -87,9 +87,31 @@
 		WHERE BOARD_ID = #{boardId}
 	</update>
 	
+	<!-- 9. 전체 공지사항 수 조회 쿼리 -->
+	<select id="getNoticeListCount" resultType="_int">
+		SELECT COUNT(*) FROM BOARD WHERE BOARD_STATUS = 'Y'
+	</select>
+	
 	<!-- 9. 공지사항목록 조회 쿼리 -->
 	<select id="selectNoticeList" resultMap="boardResultSet">
 		SELECT * FROM BOARD WHERE BOARD_STATUS = 'Y'
 	</select>
-
+	
+	<!-- 10. 전체 FAQ 수 조회 쿼리 -->
+	<select id="getFAQListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM FAQ 
+		WHERE FAQ_STATUS = 'Y' 
+		<if test="_parameter != 100">
+			AND FAQ_TYPE = #{statusId}
+		</if>
+	</select>
+	
+	<!-- 11. FAQ목록 조회 쿼리 -->
+	<select id="selectFAQList" resultMap="faqResultSet" parameterType="_int">
+		SELECT * FROM FAQ 
+		WHERE FAQ_STATUS = 'Y'
+		<if test="_parameter != 100">
+			AND FAQ_TYPE = #{statusId}
+		</if>
+	</select>
 </mapper>

@@ -2,6 +2,8 @@ package com.project.splace.board.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.splace.board.model.service.BoardService;
 import com.project.splace.board.model.vo.Board;
+import com.project.splace.book.model.vo.Book;
+import com.project.splace.common.Pagination;
+import com.project.splace.member.model.vo.Member;
 
 @Controller
 public class BoardController {
@@ -143,11 +148,35 @@ public class BoardController {
 	}
 
 	// 회원화면------------------------------------------------------------------------
+	
+	// 11. 공지사항 목록 조회
 	@RequestMapping("noticeList.sp")
-	public ModelAndView noticeList(ModelAndView mv) {
-		ArrayList<Board> bList = boardService.selectNoticeList();
+	public ModelAndView noticeList(ModelAndView mv, Integer page) {
 		
-		mv.addObject("bList", bList).setViewName("board/noticeList");
+		// 현재페이지
+		int currentPage = (page == null ? 1 : page);
+		
+		ArrayList<Board> bList = boardService.selectNoticeList(currentPage);
+		
+		mv.addObject("bList", bList).addObject("pi", Pagination.getPageInfo()).setViewName("board/noticeList");
+		return mv;
+	}
+	
+	// 12. FAQ 목록 조회
+	@RequestMapping("faqList.sp")
+	public ModelAndView faqList(HttpSession session, ModelAndView mv, Integer page, String filter) {
+		// filter
+		int statusId = 100;
+		if(filter != null) {
+			statusId = Integer.parseInt(filter);
+		}
+		
+		// 현재페이지
+		int currentPage = (page == null ? 1 : page);
+		
+		ArrayList<Board> bList = boardService.selectFAQList(currentPage, statusId);
+		
+		mv.addObject("bList", bList).addObject("filter", statusId).addObject("pi", Pagination.getPageInfo()).setViewName("board/faqList");
 		return mv;
 	}
 }
