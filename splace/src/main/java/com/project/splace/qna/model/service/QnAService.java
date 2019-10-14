@@ -11,7 +11,7 @@ public interface QnAService {
     public abstract int insertQnA(QnA qna);
 
    // 질문 조회
-   public abstract ArrayList<QnA> selectQnA(int spaceId);
+   public abstract ArrayList<QnA> selectQnA(int spaceId, int currentPage);
 
    // 질문 삭제 
    public abstract int deleteQnA(int qnaId);

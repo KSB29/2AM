@@ -68,6 +68,14 @@
 		<result property="dayOffEnd" column="DAYOFF_END"/>
 		<result property="spaceId" column="SPACE_ID"/>
 	</resultMap>
+	
+	<resultMap type="Book" id="bookResultSet">
+	<result property="bookDate" column="BOOK_DATE"/>
+	<result property="bookStartTime" column="BOOK_START_TIME"/>
+	<result property="bookEndTime" column="BOOK_END_TIME"/>
+	<result property="statusId" column="STATUS_ID"/>
+	</resultMap>
+	
 	<!-- 공간 ID 조회 -->
 	<select id="selectSpaceId" resultType="_int">
 		SELECT SEQ_SP.NEXTVAL FROM DUAL
@@ -330,9 +338,20 @@
 	
 	<!-- 해당 공간의 휴무일 조회 -->
 	<select id="dayOffList" parameterType="DayOff" resultType="string">
-	SELECT DAYOFF_START,DAYOFF_END
+	SELECT DAYOFF_START
     FROM DAYOFF
     WHERE SPACE_ID=#{spaceId}
+	</select>
+	
+	<!-- 해당 공간의 예약 조회 -->
+	<select id="bookTime" parameterType="book" resultMap="bookResultSet">
+	 SELECT BOOK_START_TIME, BOOK_END_TIME
+     FROM BOOK
+     WHERE SPACE_ID=#{spaceId}
+     AND BOOK_DATE=#{bookDate}
+     AND STATUS_ID!=102
+     AND BOOK_CANCEL IS NULL
+	
 	</select>
 	
 </mapper>

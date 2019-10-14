@@ -395,6 +395,17 @@ list-style: none !important;
 	border-bottom-style: none;
 }
 
+/* 페이징 */
+.QnA_QA{
+border-bottom: 1px solid #ebebeb;
+}
+.QnAPaging{
+   float: left;
+   margin:1em 0 0 8em;
+}
+.pagination .pagination-active{
+   color: #fff !important;
+}
 
 /* 달력 */
 .calender>h3{
@@ -458,5 +469,53 @@ list-style: none !important;
 	margin-top:20px
 }
 
+.phoneIcon{
+	padding:0px 9px 7px 0px;	
+}
+.totalPrice{
+	text-align: right;
+    color: #4c74b9;
+    width: 77%;
+    float: left;
+}
 
+.totalPrice2{
+	width: 23%;
+    float: right;
+    text-align: center;
+    color: #4c74b9 !important;
+}
 
+.warning{
+	padding-top:15px;
+	color:#ff3a48;
+	font-size:14px;
+}
+.start,.end,.timePer{
+	width:14% !important;
+	float:left !important;
+	text-align:center;
+}
+.bar,.bar4{
+	width:3% !important; 
+	float:left !important;
+	text-align:center;
+}
+
+.start4,.end4{
+	width:10% !important;
+	float:left !important;
+	text-align:center;
+}
+.end4{
+	margin-right:42% !important;
+}
+
+.BookingDate{
+	width: 31%;
+    float: left;
+}
+.BookingTime{
+	width:60%;
+	float:left;
+}
