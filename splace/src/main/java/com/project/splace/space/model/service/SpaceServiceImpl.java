@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.splace.book.model.vo.Book;
 import com.project.splace.common.PageInfo;
 import com.project.splace.common.Pagination;
 import com.project.splace.space.model.dao.SpaceDao;
@@ -361,6 +362,14 @@ public class SpaceServiceImpl implements SpaceService {
 	public ArrayList<DayOff> dayOffList(int spaceId) {
 		return sDao.dayOffList(spaceId);
 	}
+
+	// 해당 공간의 예약 조회
+	@Override
+	public ArrayList<Book> bookTime(Book book) {
+		return sDao.bookTime(book);
+	}
+
+
 
 	
 

@@ -142,4 +142,7 @@
 .ui-datepicker-current, .ui-priority-secondary{
 	display: none;
 }
-
+#datepicker{
+    width: 60%;
+    margin-bottom: -31px;
+}

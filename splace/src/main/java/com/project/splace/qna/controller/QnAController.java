@@ -13,6 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.project.splace.common.PageInfo;
+import com.project.splace.common.Pagination;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.service.QnAService;
 import com.project.splace.qna.model.vo.QnA;
@@ -45,15 +50,31 @@ public class QnAController {
    // 질문 출력
    @ResponseBody
    @RequestMapping(value="selectQnA.sp", produces="application/json; charset=utf8")
-   public String selectQnA(int spaceId) {
+   public String selectQnA(int spaceId,Integer page) {
       
-      ArrayList<QnA> qList = qService.selectQnA(spaceId);
+     int currentPage = (page == null ? 1 : page);
+      
+      ArrayList<QnA> qList = qService.selectQnA(spaceId,currentPage);
       
       Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-      
+
       return gson.toJson(qList);
       
    }
+   
+   
+   @ResponseBody
+   @RequestMapping("qnaPaging.sp")
+   public String pageInfo(int spaceId, Integer page) {
+      int currentPage = (page == null ? 1 : page);
+      ArrayList<QnA> qList = qService.selectQnA(spaceId,currentPage);
+
+      
+      return new Gson().toJson(Pagination.getPageInfo());
+      
+   }
+   
+   
    
    // 질문 삭제 
    @ResponseBody
@@ -69,7 +90,8 @@ public class QnAController {
       }
    }
    
-   // 페이징 처리
+   
+   
    
    
 }

@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.splace.book.model.vo.Book;
 import com.project.splace.common.PageInfo;
 import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
@@ -271,5 +272,14 @@ public class SpaceDao {
 
 	public ArrayList<DayOff> dayOffList(int spaceId) {
 		return (ArrayList)sqlSession.selectList("spaceMapper.dayOffList", spaceId);
+	}
+
+	/**
+	 * 해당 공간의 예약 조회
+	 * @param book
+	 * @return
+	 */
+	public ArrayList<Book> bookTime(Book book) {
+		return (ArrayList)sqlSession.selectList("spaceMapper.bookTime", book);
 	}
 }
