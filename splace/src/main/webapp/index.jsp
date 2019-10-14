@@ -115,7 +115,7 @@ margin-bottom: 1em !important;
 				<c:url var="bookCancel" value="bookCancel.sp" />
 				<section class="tiles">
 					<div class="row" id="bestSpace">
-					<c:url var="sDetail" value="spaceDetail.sp">
+					<c:url var="sDetail" value="detailSpace.sp">
 			        <c:param name="spaceId" value="${bestSpace.spaceId}"></c:param>
 			        </c:url>
 				 		<article>

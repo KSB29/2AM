@@ -35,7 +35,7 @@
                </div>
             </section>
             <!-- 상세 검색 리스트 구역 -->
-           <c:url var="searchDetail" value="searchDetail.sp"/>
+           <c:url var="searchDetail" value="detailSpace.sp"/>
             <form action="${searchDetail }" method="get">
             <input type="hidden" value="${search.searchBox}" name="searchBox">
 	       	 <section class="optionSection">
