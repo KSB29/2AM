@@ -267,7 +267,7 @@
 	           <section class="tiles">
 		       	<div class="row">
 		           	<c:forEach var="s" items="${searchList}">
-		           		<c:url var="sDetail" value="spaceDetail.sp">
+		           		<c:url var="sDetail" value="detailSpace.sp">
 		           			<c:param name="spaceId" value="${s.spaceId}"></c:param>
 		           		</c:url>
 						<article>
