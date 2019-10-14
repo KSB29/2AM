@@ -204,7 +204,7 @@ public class SpaceController {
 	// 미리, 다운영역--------------------------------------------------------------------------------
 
 	// 공간 상세보기 조회
-	@RequestMapping("spaceDetail.sp")
+	@RequestMapping("detailSpace.sp")
 	public ModelAndView spaceDatail(int spaceId, ModelAndView mv, HttpSession session) {
 	      Space space =sService.selectspaceDetail(spaceId);
 	      Book book = new Book();
