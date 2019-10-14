@@ -1,6 +1,6 @@
 package com.project.splace.admin.model.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Account {
 	private int accountId;

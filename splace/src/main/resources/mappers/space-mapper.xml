@@ -129,6 +129,18 @@
 		WHERE  SPACE_ID = #{spaceId}
 	</update>
 	
+	<!-- 공간 리스트 수 조회 -->
+	<select id="getsListCount" resultType="_int" parameterType="string">
+		SELECT COUNT(*)
+		FROM   SPACE S,
+			   HOST H,
+			   SPACE_ATT A
+		WHERE  S.HOST_ID = H.HOST_ID
+		AND    H.MEMBER_ID = #{memberId}
+		AND    S.SPACE_ID = A.SPACE_ID
+		AND    A.SPACE_ATT_TYPE = '0'
+	</select>
+	
 	<!-- 공간 리스트 조회 -->
 	<select id="selectList" parameterType="string" resultMap="spaceResultSet">
 		SELECT S.*,

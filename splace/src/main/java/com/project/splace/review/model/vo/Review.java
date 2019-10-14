@@ -12,11 +12,15 @@ public class Review {
 	private String reviewStatus;
 	private String memberId;
 	private int spaceId;
+	private String bookId;
+	private String memberName;
+	private String spaceName;
+	private String attInfo;
 	
 	public Review() {}
 
 	public Review(int reviewId, int reviewScore, String reviewContent, Date reviewEnroll, Date reviewUpdate,
-			String reviewStatus, String memberId, int spaceId) {
+			String reviewStatus, String memberId, int spaceId, String bookId) {
 		super();
 		this.reviewId = reviewId;
 		this.reviewScore = reviewScore;
@@ -26,6 +30,24 @@ public class Review {
 		this.reviewStatus = reviewStatus;
 		this.memberId = memberId;
 		this.spaceId = spaceId;
+		this.bookId = bookId;
+	}
+
+	public Review(int reviewId, int reviewScore, String reviewContent, Date reviewEnroll, Date reviewUpdate,
+			String reviewStatus, String memberId, int spaceId, String bookId, String memberName, String spaceName, String attInfo) {
+		super();
+		this.reviewId = reviewId;
+		this.reviewScore = reviewScore;
+		this.reviewContent = reviewContent;
+		this.reviewEnroll = reviewEnroll;
+		this.reviewUpdate = reviewUpdate;
+		this.reviewStatus = reviewStatus;
+		this.memberId = memberId;
+		this.spaceId = spaceId;
+		this.bookId = bookId;
+		this.memberName = memberName;
+		this.spaceName = spaceName;
+		this.attInfo = attInfo;
 	}
 
 	public int getReviewId() {
@@ -90,6 +112,38 @@ public class Review {
 
 	public void setSpaceId(int spaceId) {
 		this.spaceId = spaceId;
+	}
+
+	public String getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(String bookId) {
+		this.bookId = bookId;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public String getSpaceName() {
+		return spaceName;
+	}
+
+	public void setSpaceName(String spaceName) {
+		this.spaceName = spaceName;
+	}
+
+	public String getAttInfo() {
+		return attInfo;
+	}
+
+	public void setAttInfo(String attInfo) {
+		this.attInfo = attInfo;
 	}
 
 	@Override

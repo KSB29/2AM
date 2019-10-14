@@ -15,12 +15,37 @@ function spaceDelete(id) {
 
 $(document).ready(function(){
     $("input[type='checkbox']").click(function(){
-    	if ($(this).prop("checked") == true) {
-        	$(this).attr("checked", true);
-        	$(this).parent().next().html("운영").addClass("noticeColor").removeClass("warningColor");
+    	
+    	if (confirm("운영 상태를 변경하시겠습니까?")) {
+    		
+	    	var operStatus = $(this).prop("checked");
+	    	var spaceId = $(this).attr("id").replace("space", "");
+	    	if (operStatus == true) {
+	        	$(this).attr("checked", true);
+	        	$(this).parent().next().html("운영").addClass("noticeColor").removeClass("warningColor");
+	        } else {
+	        	$(this).attr("checked", false);
+	        	$(this).parent().next().html("운영중지").addClass("warningColor").removeClass("noticeColor");
+	        };
+	        
+	        if (operStatus == false) {
+	        	
+	        	$.ajax ({
+	        		url : "spaceOperCheck.sp",
+	        		data : {spaceId:spaceId},
+	        		type : "post",
+	        		success : function(result) {
+	        					alert("상태가 변경되었습니다");
+	        					location.reload();
+	        				},
+	        		error : function(e) {
+	        					console.log(e);
+	        				}
+	        	});
+	        	
+	        }
         } else {
-        	$(this).attr("checked", false);
-        	$(this).parent().next().html("운영중지").addClass("warningColor").removeClass("noticeColor");
-        };
+        	return false;
+        }
     });
 });

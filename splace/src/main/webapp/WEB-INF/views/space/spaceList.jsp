@@ -33,12 +33,12 @@
 							            <c:if test="${ list.spaceOperStatus == 'Y' }">
 							            <c:set var="operValue" value="운영"/>
 							            <c:set var="operColor" value="noticeColor"/>
-							            <input type="checkbox" class="operStatus" checked>
+							            <input type="checkbox" id="space${ list.spaceId }" class="operStatus" checked>
 							            </c:if>
 							            <c:if test="${ list.spaceOperStatus == 'N' }">
 							            <c:set var="operValue" value="운영중지"/>
 							            <c:set var="operColor" value="warningColor"/>
-							            <input type="checkbox" class="operStatus">
+							            <input type="checkbox" id="space${ list.spaceId }" class="operStatus">
 							            </c:if>
 							            <span class="slider round"></span>
 							        </label>
@@ -75,6 +75,60 @@
 								</div>
 							</div>
 						</c:forEach>
+					</div>
+					<div class="row">
+					<nav class="pagination-container">
+						<div class="pagination">
+							<!-- [이전] -->
+							<c:url var="startPage" value="spaceList.sp">
+								<c:param name="page" value="${ pi.startPage }"/>
+							</c:url>
+							<a class="pagination-newest" href="${startPage }"><<</a>
+							<c:if test="${ pi.currentPage <= 1 }">
+								<a class="pagination-newer" href="#"><</a>
+							</c:if>
+							<c:if test="${ pi.currentPage > 1 }">
+								<c:url var="before" value="spaceList.sp">
+									<c:param name="page" value="${ pi.currentPage - 1 }"/>
+								</c:url>
+								<a class="pagination-newer" href="${ before }"><</a>
+							</c:if>					
+							<span class="pagination-inner">
+								<!-- 페이지 -->
+								<c:if test="${ empty list}">
+									<a class="pagination-active" href="#">1</a>
+								</c:if>
+								<c:if test="${ !empty list}">
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:if test="${ p eq pi.currentPage }">
+										<a class="pagination-active" href="#">${ p }</a>
+									</c:if>
+									
+									<c:if test="${ p ne pi.currentPage }">
+										<c:url var="pagination" value="spaceList.sp">
+											<c:param name="page" value="${ p }"/>
+										</c:url>
+										<a href="${ pagination }">${ p }</a>
+									</c:if>
+								</c:forEach>
+								</c:if>
+							</span>
+							<!-- [다음] -->
+							<c:if test="${ pi.currentPage >= pi.maxPage }">
+								<a class="pagination-older" href="#">></a>
+							</c:if>
+							<c:if test="${ pi.currentPage < pi.maxPage }">
+								<c:url var="after" value="spaceList.sp">
+									<c:param name="page" value="${ pi.currentPage + 1 }"/>
+								</c:url> 
+								<a class="pagination-older" href="${ after }">></a>
+							</c:if>
+							<c:url var="endPage" value="spaceList.sp">
+								<c:param name="page" value="${ pi.endPage }"/>
+							</c:url>
+							<a class="pagination-oldest" href="${endPage }">>></a>
+						</div>
+					</nav>
 					</div>
 					<c:if test="${ loginUser.grade == '2' }">
 					<br><br>

@@ -3,10 +3,12 @@ package com.project.splace.space.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.splace.common.PageInfo;
 import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Price;
@@ -48,12 +50,24 @@ public class SpaceDao {
 	}
 
 	/**
+	 * 공간 리스트 수 조회 Dao
+	 * @param memberId
+	 * @return listCount
+	 */
+	public int getsListCount(String memberId) {
+		return sqlSession.selectOne("spaceMapper.getsListCount", memberId);
+	}
+
+	/**
 	 * 공간 리스트 조회 Dao
 	 * @param memberId
+	 * @param pageInfo 
 	 * @return sList
 	 */
-	public ArrayList<Space> selectList(String memberId) {
-		return (ArrayList)sqlSession.selectList("spaceMapper.selectList", memberId);
+	public ArrayList<Space> selectList(String memberId, PageInfo pageInfo) {
+		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectList", memberId, rowBounds);
 	}
 
 	/**
