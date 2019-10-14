@@ -31,7 +31,7 @@
             
             <section>
                <div class="row">
-                  <span>상세검색</span>
+                  <span>상세검색</span> 
                </div>
             </section>
             <!-- 상세 검색 리스트 구역 -->
