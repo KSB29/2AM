@@ -22,7 +22,8 @@
 		<result property="typeName" column="TYPE_NAME" />
 		<result property="spaceAttChange" column="SPACE_ATT_CHANGE" />
 		<result property="spaceAddress" column="SPACE_ADDRESS" />
-		<result property="spacePhone" column="SPACE_TEL" />
+		<result property="spacePhone" column="SPACE_PHONE"/>
+		<result property="reviewId" column="REVIEW_ID"/>
 		<!-- 결제 -->
 		<result property="pStatusId" column="P_STATUS_ID" />
 		<result property="paymentId" column="PAYMENT_ID"/>
@@ -35,13 +36,13 @@
 		<id property="spaceId" column="SPACE_ID"/>
 		<result property="spaceName" column="SPACE_NAME"/>
 		<result property="spaceComment" column="SPACE_COMMENT"/>
-		<result property="spaceDetail" column="SPACE_DETAIL"/>
+		<result property="spaceDetail" column="SPACE_DETAIL" jdbcType="CLOB" javaType="java.lang.String"/>
 		<result property="spaceTag" column="SPACE_TAG"/>
 		<result property="spaceOption" column="SPACE_OPTION"/>
 		<result property="spaceAddress" column="SPACE_ADDRESS"/>
+		<result property="spacePhone" column="SPACE_PHONE"/>
 		<result property="spaceNotice" column="SPACE_NOTICE"/>
 		<result property="spaceOperStatus" column="SPACE_OPER_STATUS"/>
-		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
 		<result property="spaceTime" column="SPACE_TIME"/>
 		<result property="spaceMinPer" column="SPACE_MIN_PER"/>
 		<result property="spaceMaxPer" column="SPACE_MAX_PER"/>
@@ -50,8 +51,13 @@
 		<result property="spaceCloseTime" column="SPACE_CLOSE_TIME"/>
 		<result property="hostId" column="HOST_ID"/>
 		<result property="typeId" column="TYPE_ID"/>
-		<result property="typeName" column="TYPE_NAME"/>
 		<result property="statusId" column="STATUS_ID"/>
+		<result property="spaceEnroll" column="SPACE_ENROLL"/>
+		<result property="spaceUpdate" column="SPACE_UPDATE"/>
+		<result property="spaceAttOrigin" column="SPACE_ATT_ORIGIN"/>
+		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
+		<result property="typeName" column="TYPE_NAME"/>
+		<result property="priceFlag" column="PRICE_FLAG"/>
 	</resultMap>
 	<resultMap type="Host" id="hostResultSet">
 		<id property="hostId" column="HOST_ID"/>
@@ -121,11 +127,12 @@
 	
 	<!-- 예약 목록 조회 쿼리 -->
 	<select id="selectBlist" resultMap="bookResultSet" parameterType="Book">
-		SELECT B.*, SPACE_NAME, SPACE_ATT_CHANGE, P.STATUS_ID P_STATUS_ID FROM BOOK B
+		SELECT B.*, SPACE_NAME, SPACE_ATT_CHANGE, P.STATUS_ID P_STATUS_ID, REVIEW_ID FROM BOOK B
 		JOIN SPACE S ON (S.SPACE_ID = B.SPACE_ID)
 		JOIN SPACE_ATT SA ON (S.SPACE_ID = SA.SPACE_ID)
 		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
-		WHERE MEMBER_ID = #{memberId}
+		LEFT JOIN REVIEW R ON(R.BOOK_ID=B.BOOK_ID)
+		WHERE B.MEMBER_ID = #{memberId}
 		<if test="_parameter.statusId != 0">
 			<if test="_parameter.statusId != 104">
 				<if test="_parameter.statusId != 103">
@@ -164,7 +171,7 @@
 	
 	<!-- 예약 내역 조회 쿼리 -->
 	<select id="selectBook" parameterType="string" resultMap="bookResultSet">
-		SELECT B.*, SPACE_NAME, SPACE_ADDRESS, TYPE_NAME,
+		SELECT B.*, SPACE_NAME, SPACE_ADDRESS, TYPE_NAME, SPACE_PHONE,
 		PAYMENT_ID,
 		PAYMENT_DATE,
 		PAYMENT_TYPE,
@@ -182,17 +189,6 @@
 	<update id="deleteBook" parameterType="string">
 		UPDATE BOOK SET STATUS_ID = 102, BOOK_CANCEL = SYSDATE WHERE BOOK_ID = #{bookId}
 	</update>
-	
-	<!-- 리뷰작성여부 쿼리 -->
-	<select id="selectReviewCount" parameterType="Book" resultType="_int">
-		SELECT COUNT(*) FROM BOOK B
-		JOIN MEMBER M ON(M.MEMBER_ID = B.MEMBER_ID)
-		JOIN SPACE S ON(B.SPACE_ID = S.SPACE_ID)
-		JOIN REVIEW R ON(S.SPACE_ID = R.SPACE_ID)
-		WHERE B.MEMBER_ID = #{memberId} 
-		AND B.BOOK_ID = #{bookId} 
-		AND B.SPACE_ID = #{spaceId}
-	</select>
 	
 	<!-- ============================================ -->
 	<!-- ====결제===================================== -->

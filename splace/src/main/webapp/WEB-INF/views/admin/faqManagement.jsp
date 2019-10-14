@@ -110,7 +110,9 @@
 	                      <td><fmt:formatDate value="${faq.boardEnroll}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
 	                      <td><fmt:formatDate value="${faq.boardUpdate}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
 	                      <td>
-	                      	<button class="btn btn-google btn-block" onclick="location.href='faqDelete.sp?faqId=${faq.boardId}'">삭제</button>
+	                      	<c:if test="${faq.boardStatus eq 'Y' }">
+	                      		<button class="btn btn-google btn-block" onclick="location.href='faqDelete.sp?faqId=${faq.boardId}'">삭제</button>
+	                      	</c:if>
 	                      	<button class="btn btn-facebook btn-block" onclick="location.href='faqUpdateForm.sp?faqId=${faq.boardId}'">수정</button>
 	                      </td>
 	                    </tr>

@@ -96,15 +96,6 @@ public class BookDao {
 		return sqlSession.update("bookMapper.deleteBook", bookId);
 	}
 
-	/**
-	 * 8. 리뷰작성여부
-	 * @param book
-	 * @return reviewCount
-	 */
-	public int selectReviewCount(Book book) {
-		return sqlSession.selectOne("bookMapper.selectReviewCount", book);
-	}
-
 	//------------------------------------------
 	//--결제-------------------------------------
 	//------------------------------------------

@@ -293,8 +293,13 @@ public class BookController {
 		Book book = bookService.selectBook(new Book(bookId, memberId));
 //		System.out.println(book);
 		
-		// 승인기한
-		Date deadline = new Date(book.getBookEnroll().getTime() + (60*60*24*1000)*2);
+		// 예약승인기한
+		Date deadline = new Date(book.getBookEnroll().getTime() + (6 * 60 * 60 * 1000));
+		// 결제대기기한
+		Date paydeadline = null;
+		if(book.getApprovalDate() != null) {
+			paydeadline = new Date(book.getApprovalDate().getTime() + (6 * 60 * 60 * 1000));			
+		}
 		// 결제번호생성
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -311,17 +316,8 @@ public class BookController {
 			book.setPaymentCancelPrice(book.getBookPrice() / 2);
 		}
 		System.out.println("취소금액: "+book.getPaymentCancelPrice());
-		
-		// 리뷰작성여부
-		int reviewCount = bookService.selectReviewCount(new Book(book.getBookId(), book.getSpaceId(), memberId));
-		boolean reviewStatus;
-		if(reviewCount>0) {
-			reviewStatus = true;
-		} else {
-			reviewStatus = false;
-		}
 				
-		mv.addObject("book", book).addObject("deadline", deadline).addObject("paymentId", paymentId).addObject("reviewStatus", reviewStatus).setViewName("book/bookDetail");
+		mv.addObject("book", book).addObject("deadline", deadline).addObject("paydeadline", paydeadline).addObject("paymentId", paymentId).setViewName("book/bookDetail");
 		
 		return mv;
 	}

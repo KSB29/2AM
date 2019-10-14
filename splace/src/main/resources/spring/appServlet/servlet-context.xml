@@ -39,6 +39,8 @@
 	        <mapping path="/host*.sp"/>
 	        <mapping path="/space*.sp"/>
 	        <mapping path="/admin*.sp"/>
+	        <mapping path="/hjoin*.sp"/>
+	        <mapping path="/*Management.sp"/>
 	        <beans:bean id="loginInterceptor" class="com.project.splace.common.interceptor.LoginInterceptor"/>
 	    </interceptor>
 	    <interceptor>
@@ -58,7 +60,7 @@
 	        <mapping path="/noticeUpdateForm.sp"/>
 	        <mapping path="/updateNotice.sp"/>
 	        <mapping path="/admin*.sp"/>
-	        <mapping path="/*management.sp"/>
+	        <mapping path="/*Management.sp"/>
 	        <beans:bean id="AdminInterceptor" class="com.project.splace.common.interceptor.AdminInterceptor"/>
 	    </interceptor>
 	</interceptors>

@@ -29,6 +29,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String grade = (loginUser).getGrade();
 		
+		String url = request.getRequestURL().toString();
+		url = url.substring(url.lastIndexOf('/'));
+		System.out.println(url);
+		
 		if(loginUser != null) {
 			if(!grade.equals("0")) {
 				logger.info("잘못된 주소로 [" + request.getRequestURI() + "] 접근");
@@ -36,12 +40,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 				session.setAttribute("msg", "잘못된 주소로 접근하셨습니다.");
 				response.sendRedirect("/splace");
 				//request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
-				return false;
+				return false;		
 			}
-		} else {
-			logger.info("비로그인 상태에서 [" + request.getRequestURI() + "] 접근");
-			session.setAttribute("msg", "로그인 후 이용하세요");
-			response.sendRedirect("loginForm.sp");
 		}
 		
 		// home.jsp로 가서 알람창 띄어주게 작성하고

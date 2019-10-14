@@ -10,6 +10,7 @@ import com.project.splace.admin.model.vo.Account;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.qna.model.vo.QnA;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -55,5 +56,21 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public ArrayList<Board> selectNoticeList() {
 		return adminDao.selectNoticeList();
+	}
+
+	/* 6. 호스트문의관리
+	 * return qList
+	 */
+	@Override
+	public ArrayList<QnA> selectQlist() {
+		return adminDao.selectQlist();
+	}
+
+	/* 7. 관리자문의관리
+	 * return qList
+	 */
+	@Override
+	public ArrayList<QnA> selectQAdminlist() {
+		return adminDao.selectQAdminlist();
 	}
 }

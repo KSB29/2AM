@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,6 +15,7 @@ import com.project.splace.admin.model.vo.Account;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.qna.model.vo.QnA;
 
 @Controller
 public class AdminController {
@@ -69,7 +69,7 @@ public class AdminController {
 	}
 	
 	// 4. 호스트관리
-	@RequestMapping("hostManagement.sp")
+	@RequestMapping("hhostManagement.sp")
 	public ModelAndView goHostManagement(ModelAndView mv, String hostStatus) {
 		
 		// 상태
@@ -107,6 +107,24 @@ public class AdminController {
 	public ModelAndView goNoticeManagement(ModelAndView mv) {
 		ArrayList<Board> bList = adminService.selectNoticeList();
 		mv.addObject("bList", bList).setViewName("admin/noticeManagement");
+		return mv;
+	}
+	
+	// 7. 호스트문의관리
+	@RequestMapping("qnaHostManagement.sp")
+	public ModelAndView goQnaHostManagement(ModelAndView mv) {
+		ArrayList<QnA> qList = adminService.selectQlist();
+		mv.addObject("qList", qList).setViewName("admin/qnaHostManagement");
+		
+		return mv;
+	}
+	
+	// 8. 관리자문의관리
+	@RequestMapping("qnaAdminManagement.sp")
+	public ModelAndView goQnaAdminManagement(ModelAndView mv) {
+		ArrayList<QnA> qList = adminService.selectQAdminlist();
+		mv.addObject("qList", qList).setViewName("admin/qnaAdminManagement");
+		
 		return mv;
 	}
 }

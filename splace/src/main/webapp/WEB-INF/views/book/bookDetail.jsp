@@ -30,7 +30,7 @@
 					<div class="row titleBox bookDetailTitleBox" id="titleBox1">
 						<h1 id="title">공간 예약내역</h1>
 						<span id="status"></span>
-						<a href="javascript:history.back();">목록으로</a>
+						<a href="bookList.sp">목록으로</a>
 					</div>
 					
 					<div class="row">
@@ -47,7 +47,7 @@
 								<table class="table-wrapper bookDetailTable">
 									<tr class="waitingTime">
 										<td>승인대기기한</td>
-										<td><fmt:formatDate value="${book.bookEnro ll}" pattern="yyyy.MM.dd (E)"/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
+										<td><fmt:formatDate value="${book.bookEnroll}" pattern="yyyy.MM.dd (E)"/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>
 									</tr>
 									<tr>
 										<td>신청일</td>
@@ -132,7 +132,7 @@
 											<p>주소: ${addr}</p>										
 										</c:if>
 										</c:forTokens>
-										<p>번호: 010-0000-3333</p>
+										<p>번호: ${book.spacePhone }</p>
 									</div>
 									<button id="directions" class="button fit">길찾기</button>
 								</div>
@@ -330,7 +330,7 @@
 			$waitingTime.html("");
 			
 			result = "<td>승인대기기한</td>"
-					+ "<td><fmt:formatDate value='${deadline}' type='date' pattern='yyyy.MM.dd (E)'/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>";
+					+ "<td><fmt:formatDate value='${deadline}' type='date' pattern='yyyy.MM.dd HH:mm:ss (E)'/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>";
 			$waitingTime.append(result);
 			btnContainer.html("<button class='button primary fit-100' data-toggle='modal' data-target='#bookCancel'>예약취소</button>");
 			modalTitle.attr("id", "bookCancelTitle");
@@ -344,7 +344,7 @@
 			$status.html("(결제대기)");
 			$waitingTime.html("");
 			result = "<td>결제대기기한</td>"
-					+ "<td><fmt:formatDate value='${deadline}' type='date' pattern='yyyy.MM.dd (E)'/>까지 (기간 내 호스트가 미승인시 예약은 자동 취소됩니다.)</td>";
+					+ "<td><fmt:formatDate value='${paydeadline}' type='date' pattern='yyyy.MM.dd HH:mm:ss (E)'/>까지 (기간 내 결제가 안되면 예약은 자동 취소됩니다.)</td>";
 			$waitingTime.append(result);
 			titleBox.html("");
 			titleBox.html(
