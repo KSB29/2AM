@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+/* #main>.inner article{border: 1px solid black;} */
+#main>.inner div, #main>.inner ul{
+    /* border: 1px solid grey; */
+}
+/* #main>.inner div.row{border: 1px solid coral} */
+
+/* 제목 */
+section h1,section h2,section h3,section h4,section h5{
+    margin: 0; 
+    letter-spacing: 0px;
+}
+.titleBox{border-bottom: 3px solid #4C74B9;}
+.titleBox h2{float: left;}
+.titleBox div{text-align: right}
+.titleBox div span label{margin: 0;font-size: 80%; padding-right: 0;}
+#title{padding: 0; font-size: 2em;}
+/* article form table tr{border: 0;} */
+article table tr td .col-3{display: inline-block; padding: 0;}
+#titleBox1 span{
+	position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #4c74b9;
+}
+
+.buttonToggle{float: right;}
+.noticeDate{text-align: right}
+.noticeContent{font-size: 0.8em;}
+
+.bookDetailTitleBox{position: relative;}
+.bookDetailTitleBox a{
+    position: absolute; 
+    right: 0; bottom: 0; 
+    color: #4C74B9;
+    font-weight: bold;
+    border: 0;
+    letter-spacing: -2px;
+}
+.collapse .card.card-body{margin-bottom: 0 !important; border-color: #4c74b9; }
+.card-header{
+	border: 0 !important;
+	background: none !important;
+}
+.card-header span{
+	font-weight: bold;
+	letter-spacing: -0.5px;
+	padding: 0 !important;
+	text-align: left;
+}
+#accordionExample{border: 0;}
+
+#titleBox2{
+	margin-bottom: 2.5em; 
+	border-width: 5px; 
+	width: 100%; 
+	padding: 0;
+}
+#titleBox1{
+	margin-bottom: 1em; 
+	border-width: 5px; 
+	padding: 0;
+}
+.bookListTop{padding: 0 !important;}
+/* listCount--------------------------------- */
+.listCount{
+	color: #4c74b9;
+	position: absolute;
+    right: 0;
+    bottom: 0;
+}
+/* selectBox--------------------------------- */
+.filterContainer{width: 14%; float: right;}
+.filterContainer .current {font-size: 70%;}
+.filterContainer .option {font-size: 60% !important;}
+.filterContainer .nice-select .list{background-color: white !important; border: 1px solid #4c74b9 !important; border-radius: 5px !important;}
+
+.type{
+	border-right: 1px solid rgba(0,0,0,.125);
+	width: 15%;
+	font-size: 80%;
+	display: inline-block;
+}
+.boardTitle{
+	font-weight: bold;
+	letter-spacing: -0.5px;
+	padding-left: 2% !important;
+	text-align: left;
+	display: inline-block;
+}
+td.card{border: 1px solid rgba(0,0,0,.125) !important;}

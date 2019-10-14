@@ -39,6 +39,19 @@
 		<appender-ref ref="myDailyRollingFile"/>
 	</logger>
 	
+	<logger name="com.project.splace.common.interceptor.LoginInterceptor" additivity="false">
+	    <level value="info"/>
+	    <appender-ref ref="myConsole"/>
+	</logger>
+	<logger name="com.project.splace.common.interceptor.HostInterceptor" additivity="false">
+	    <level value="info"/>
+	    <appender-ref ref="myConsole"/>
+	</logger>
+	<logger name="com.project.splace.common.interceptor.AdminInterceptor" additivity="false">
+	    <level value="info"/>
+	    <appender-ref ref="myConsole"/>
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	
 	<!-- <logger name="org.springframework.core">

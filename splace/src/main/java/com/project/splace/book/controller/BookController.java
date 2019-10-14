@@ -255,10 +255,10 @@ public class BookController {
 	@RequestMapping("bookList.sp")
 	public ModelAndView bookList(ModelAndView mv, HttpSession session, Integer page, String filter) {
 		
-		if(session.getAttribute("loginUser") == null) {
-			mv.addObject("msg","로그인 해주세요!").setViewName("member/loginForm");
-			return mv;
-		}
+		/*
+		 * if(session.getAttribute("loginUser") == null) {
+		 * mv.addObject("msg","로그인 해주세요!").setViewName("member/loginForm"); return mv; }
+		 */
 		
 		// filter
 		int statusId = 0;

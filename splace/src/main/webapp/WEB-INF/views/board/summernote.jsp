@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
 </head>
 <body>
-  <textarea id="summernote"></textarea>
+  <textarea id="summernote" name="boardContent">${faq.boardContent }</textarea>
   <script>
     $(document).ready(function() {
         $('#summernote').summernote({

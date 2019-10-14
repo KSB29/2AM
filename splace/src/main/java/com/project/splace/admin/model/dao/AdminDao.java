@@ -46,10 +46,19 @@ public class AdminDao {
 
 	/**
 	 * 4. faq관리
+	 * @param status 
 	 * @return bList
 	 */
-	public ArrayList<Board> selectFaqList() {
-		return (ArrayList)sqlSession.selectList("adminMapper.selectFaqList");
+	public ArrayList<Board> selectFaqList(int status) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectFaqList", status);
+	}
+
+	/**
+	 * 5. 공지사항 관리
+	 * @return bList
+	 */
+	public ArrayList<Board> selectNoticeList() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectNoticeList");
 	}
 
 }

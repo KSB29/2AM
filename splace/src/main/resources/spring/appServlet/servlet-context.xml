@@ -32,6 +32,36 @@
 
 	<aop:aspectj-autoproxy />
 	<task:annotation-driven />
+	
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/book*.sp"/>
+	        <mapping path="/host*.sp"/>
+	        <mapping path="/space*.sp"/>
+	        <mapping path="/admin*.sp"/>
+	        <beans:bean id="loginInterceptor" class="com.project.splace.common.interceptor.LoginInterceptor"/>
+	    </interceptor>
+	    <interceptor>
+	        <mapping path="/host*.sp"/>
+	        <mapping path="/space*.sp"/>
+	        <beans:bean id="HostInterceptor" class="com.project.splace.common.interceptor.HostInterceptor"/>
+	    </interceptor>
+	    <interceptor>
+	        <mapping path="/insertFaqForm.sp"/>
+	        <mapping path="/insertFaq.sp"/>
+	        <mapping path="/faqDelete.sp"/>
+	        <mapping path="/faqUpdateForm.sp"/>
+	        <mapping path="/pdateFaq.sp"/>
+	        <mapping path="/insertNoticeForm.sp"/>
+	        <mapping path="/insertNotice.sp"/>
+	        <mapping path="/noticeDelete.sp"/>
+	        <mapping path="/noticeUpdateForm.sp"/>
+	        <mapping path="/updateNotice.sp"/>
+	        <mapping path="/admin*.sp"/>
+	        <mapping path="/*management.sp"/>
+	        <beans:bean id="AdminInterceptor" class="com.project.splace.common.interceptor.AdminInterceptor"/>
+	    </interceptor>
+	</interceptors>
 
 </beans:beans>
 

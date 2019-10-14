@@ -33,8 +33,8 @@
 							<div class="col-2">
 								<select name="statusId" id="statusId">
 									<option value="">- 답변상태 -</option>
-									<option value="N" <c:if test="${ search.statusId == 'N' }">selected</c:if>>미등록</option>
-									<option value="Y" <c:if test="${ search.statusId == 'Y' }">selected</c:if>>완료</option>
+									<option value="0" <c:if test="${ search.statusId == '0' }">selected</c:if>>미등록</option>
+									<option value="1" <c:if test="${ search.statusId == '1' }">selected</c:if>>완료</option>
 								</select>
 							</div>
 						</div>
@@ -42,9 +42,8 @@
 				</section>
 				<section>
 					<h3 class="listCount">total: ${pi.listCount }</h3>
-					<div class="row gtr-uniform">
-						<div class="col-6">
-							<!-- 문의내용 문의작성날짜 답변내용 답변작성날짜 상태(Y: 정상, N:삭제) 회원아이디 -->
+					<div class="row gtr-uniform" id="qnaArea">
+						<div class="col-5">
 							<table id="qArea">
 								<thead>
 									<tr>
@@ -55,64 +54,104 @@
 									</tr>
 								</thead>
 								<tbody>
+									<c:if test="${empty qList}">
+									<tr><td colspan="4" class="align-center">문의 내역이 없습니다.</td></tr>
+									</c:if>
 									<c:forEach var="qList" items="${ qList }">
 									<tr>
 										<td>${ qList.spaceName }</td>
 										<td>${ qList.qMemberName }</td>
 										<td>${ qList.qDate }</td>
-										<td>${ qList.qDate }</td>
+										<td>${ qList.aDate }</td>
+										<input type="hidden" class="qContent" value="${ qList.qContent }">
+										<input type="hidden" class="aContent" value="${ qList.aContent }">
+										<input type="hidden" class="qnaId" value="${ qList.qnaId }">
 									</tr>
 									</c:forEach>
 								</tbody>
 							</table>
 						</div>
-						<div class="col-6">
-							<form method="post" action="#">
-								<div class="row gtr-uniform" id="aArea">
-									<div class="col-12 col-12-xsmall">
-										<label for="qContent">문의</label>
-										<textarea name="qContent" id="qContent" rows="5" readonly>문의내역</textarea>
-									</div>
-									<div class="col-12 col-12-xsmall">
-										<label for="aContent">답변</label>
-										<textarea name="aContent" id="aContent" placeholder="답변" rows="5"></textarea>
-									</div>
+						<div class="col-7">
+							<div class="row gtr-uniform" id="aArea">
+								<div class="col-12 col-12-xsmall">
+									<label for="qContent">문의</label>
+									<textarea name="qContent" id="qContent" rows="3" readonly></textarea>
 								</div>
-								<br><br>
-								<div class="row">
-									<div class="col-3"></div>
-									<div class="col-3">
-										<input type="submit" class="button primary fit" value="등록">
-									</div>
-									<div class="col-3">
-										<input type="reset" class="button fit" value="취소">
-									</div>
-									<div class="col-3"></div>
+								<div class="col-10 col-12-xsmall">
+									<label for="aContent">답변</label>
+									<textarea name="aContent" id="aContent" rows="4"></textarea>
 								</div>
-							</form>
+								<div class="col-2 col-12-xsmall">
+									<label>&nbsp;</label>
+									<input type="hidden" name="qnaId" id="qnaId">
+									<input type="button" class="button primary fit" value="등록" onclick="answer();">
+								</div>
+							</div>
+							<br><br>
 						</div>
 					</div>
-					<br><br>
-					<div class="row gtr-uniform">
-						<div class="col-12">
-							<ul class="pagination justify-content-center">
-								<li class="page-item">
-									<a class="page-link" href="#" aria-label="Previous">
-									<span aria-hidden="true">&laquo;</span>
-									<span class="sr-only">Previous</span>
-									</a>
-								</li>
-								<li class="page-item"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item">
-									<a class="page-link" href="#" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
-									<span class="sr-only">Next</span>
-									</a>
-								</li>
-							</ul>
+					<div class="row">
+					<nav class="pagination-container">
+						<div class="pagination">
+							<!-- [이전] -->
+							<c:url var="startPage" value="hostQna.sp">
+								<c:param name="page" value="${ pi.startPage }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>
+								<c:param name="statusId" value="${ search.statusId }"/>
+							</c:url>
+							<a class="pagination-newest" href="${ startPage }"><<</a>
+							<c:if test="${ pi.currentPage <= 1 }">
+								<a class="pagination-newer" href="#"><</a>
+							</c:if>
+							<c:if test="${ pi.currentPage > 1 }">
+								<c:url var="before" value="hostQna.sp">
+								<c:param name="page" value="${ pi.currentPage - 1 }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>
+								<c:param name="statusId" value="${ search.statusId }"/>
+								</c:url>
+								<a class="pagination-newer" href="${ before }"><</a>
+							</c:if>					
+							<span class="pagination-inner">
+								<!-- 페이지 -->
+								<c:if test="${ empty qList}">
+									<a class="pagination-active" href="#">1</a>
+								</c:if>
+								<c:if test="${ !empty qList}">
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:if test="${ p eq pi.currentPage }">
+										<a class="pagination-active" href="#">${ p }</a>
+									</c:if>
+									<c:if test="${ p ne pi.currentPage }">
+										<c:url var="pagination" value="hostQna.sp">
+											<c:param name="page" value="${ p }"/>
+											<c:param name="spaceId" value="${ search.spaceId }"/>
+											<c:param name="statusId" value="${ search.statusId }"/>
+										</c:url>
+										<a href="${ pagination }">${ p }</a>
+									</c:if>
+								</c:forEach>
+								</c:if>
+							</span>
+							<!-- [다음] -->
+							<c:if test="${ pi.currentPage >= pi.maxPage }">
+								<a class="pagination-older" href="#">></a>
+							</c:if>
+							<c:if test="${ pi.currentPage < pi.maxPage }">
+								<c:url var="after" value="hostQna.sp">
+									<c:param name="page" value="${ pi.currentPage + 1 }"/>
+									<c:param name="spaceId" value="${ search.spaceId }"/>
+									<c:param name="statusId" value="${ search.statusId }"/>
+								</c:url> 
+								<a class="pagination-older" href="${ after }">></a>
+							</c:if>
+							<c:url var="endPage" value="hostQna.sp">
+								<c:param name="page" value="${ pi.endPage }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>
+								<c:param name="statusId" value="${ search.statusId }"/>
+							</c:url>
+							<a class="pagination-oldest" href="${ endPage }">>></a>
 						</div>
+					</nav>
 					</div>
 				</section>
 			</div>
