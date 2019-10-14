@@ -45,7 +45,15 @@ public class AdminServiceImpl implements AdminService{
 	 * return bList
 	 */
 	@Override
-	public ArrayList<Board> selectFaqList() {
-		return adminDao.selectFaqList();
+	public ArrayList<Board> selectFaqList(int status) {
+		return adminDao.selectFaqList(status);
+	}
+
+	/* 5. 공지사항관리
+	 * return bList
+	 */
+	@Override
+	public ArrayList<Board> selectNoticeList() {
+		return adminDao.selectNoticeList();
 	}
 }

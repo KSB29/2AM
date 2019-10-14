@@ -36,28 +36,21 @@
         <div class="container-fluid">
 			
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">FAQ 작성</h1>
+          <h1 class="h3 mb-2 text-gray-800">공지사항 수정</h1>
           <p class="mb-4"></p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
-          	<form action="insertFaq.sp" method="post">
+          	<form action="updateNotice.sp?boardId=${faq.boardId }" method="post">
 	            <div class="card-body">
 	              <div class="input-group border-left-primary mb-4">
 	              	  <label for="title" class="m-2">제목: </label>
-		              <input type="text" class="form-control bg-light small" name="boardTitle" id="title" required>
-		              <select class="custom-select col-2" name="boardType" id="boardType" name="boardType">
-		                <option value="0" <c:if test="${status==0 }">selected</c:if>>회원</option>
-		                <option value="1" <c:if test="${status==1 }">selected</c:if>>예약 및 결제</option>
-		                <option value="2" <c:if test="${status==2 }">selected</c:if>>취소 및 환불</option>
-		                <option value="3" <c:if test="${status==3 }">selected</c:if>>공간이용 및 후기</option>
-		                <option value="4" <c:if test="${status==4 }">selected</c:if>>기타</option>
-		              </select>              
+		              <input type="text" class="form-control bg-light small" name="boardTitle" id="title" value="${faq.boardTitle }" required>
 	              </div>
 	              <jsp:include page="summernote.jsp"/>
 	            </div>
 	            <div class="card-header py-3">
-	            	<button type="button" class="btn btn-danger btn-circle btn-lg" onclick="location.href='faqManagement.sp'"><i class="fas fa-trash"></i></button>
+	            	<button type="button" class="btn btn-danger btn-circle btn-lg" onclick="location.href='noticeManagement.sp'"><i class="fas fa-trash"></i></button>
 	            	<button type="submit" class="btn btn-success btn-circle btn-lg"><i class="fas fa-check"></i></button>
 	            </div>
             </form>

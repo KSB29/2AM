@@ -3826,6 +3826,7 @@ a.scrollup i:hover {
     transition: all 0.15s ease-in-out;
     width: 10px;
 }
+.collapse .card.card-body{margin-bottom: 0.75em}
 
 /* input type이 number, date 일 경우 spin 아이콘 제거 */
 input[type=number]::-webkit-inner-spin-button, 
