@@ -29,13 +29,13 @@
                </div> 
             </section>
             
-            <section>
+            <section> 
                <div class="row">
-                  <span>상세검색</span>
+                  <span>상세검색</span> 
                </div>
             </section>
             <!-- 상세 검색 리스트 구역 -->
-           <c:url var="searchDetail" value="searchDetail.sp"/>
+           <c:url var="searchDetail" value="detailSpace.sp"/>
             <form action="${searchDetail }" method="get">
             <input type="hidden" value="${search.searchBox}" name="searchBox">
 	       	 <section class="optionSection">
@@ -267,7 +267,7 @@
 	           <section class="tiles">
 		       	<div class="row">
 		           	<c:forEach var="s" items="${searchList}">
-		           		<c:url var="sDetail" value="spaceDetail.sp">
+		           		<c:url var="sDetail" value="detailSpace.sp">
 		           			<c:param name="spaceId" value="${s.spaceId}"></c:param>
 		           		</c:url>
 						<article>

@@ -48,7 +48,7 @@ $(document).ready(function(){
 	});
 
 	$("input[data-type='date']").datepicker({
-		showButtonPanel: true,
+		
 		minDate: 1,
 		closeText: 'OK',
 		beforeShowDay: disableAllTheseDays,

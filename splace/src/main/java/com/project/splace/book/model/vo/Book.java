@@ -57,6 +57,12 @@ public class Book {
 		this.spaceId = spaceId;
 		this.memberId = memberId;
 	}
+	// 공간 상세 예약된 시간 조회
+	public Book(int bookStartTime, int bookEndTime) {
+		super();
+		this.bookStartTime = bookStartTime;
+		this.bookEndTime = bookEndTime;
+	}
 
 	public Book(String bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
 			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,

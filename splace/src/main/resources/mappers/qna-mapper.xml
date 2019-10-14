@@ -48,4 +48,12 @@
       WHERE QNA_ID=#{qnaId}
    </update>
    
+   <select id="qnaListCount" parameterType="_int" resultType="_int">
+   SELECT COUNT(*)
+   FROM QNA
+   WHERE SPACE_ID=#{spaceId}
+   AND Q_STATUS='Y'
+   
+   </select>
+   
 </mapper>

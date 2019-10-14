@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.project.splace.board.model.dao.BoardDao;
 import com.project.splace.board.model.vo.Board;
+import com.project.splace.common.PageInfo;
+import com.project.splace.common.Pagination;
 
 import oracle.net.aso.f;
 
@@ -67,7 +69,25 @@ public class BoardServiceImpl implements BoardService{
 
 	// 9. 공지사항목록 조회
 	@Override
-	public ArrayList<Board> selectNoticeList() {
-		return boardDao.selectNoticeList();
+	public ArrayList<Board> selectNoticeList(int currentPage) {
+		// 전체 공지사항 수 조회
+		int bListCount = boardDao.getNoticeListCount();
+		
+		// 페이지 정보 저장
+		PageInfo pi = Pagination.getPageInfo(currentPage, bListCount);
+		
+		return boardDao.selectNoticeList(pi);
+	}
+
+	// 10. FAQ목록 조회
+	@Override
+	public ArrayList<Board> selectFAQList(int currentPage, int statusId) {
+		// 전체 공지사항 수 조회
+		int bListCount = boardDao.getFAQListCount(statusId);
+		
+		// 페이지 정보 저장
+		PageInfo pi = Pagination.getPageInfo(currentPage, bListCount);
+		
+		return boardDao.selectFAQList(pi, statusId);
 	}
 }
