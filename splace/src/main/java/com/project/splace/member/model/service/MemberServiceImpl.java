@@ -1,5 +1,7 @@
 package com.project.splace.member.model.service;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import com.project.splace.member.controller.MemberController;
 import com.project.splace.member.model.dao.MemberDao;
 import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.member.model.vo.WishListVO;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService{
@@ -26,14 +29,20 @@ public class MemberServiceImpl implements MemberService{
 	public Member loginMember(Member mem) {
 		
 		Member loginUser =mDao.selectMember(mem);
-		logger.info("입력 비밃번호 :"+mem.getMemberPwd());
-		logger.info("암호화된 비밀번호 :"+loginUser.getMemberPwd());
+		logger.info("입력 비밀번호 :"+mem.getMemberPwd());
 		
+		// ID가 등록되어있지 않은 경우
 		/*
-		 * if(!bCryptPasswordEncoder.matches(mem.getMemberPwd(),
-		 * loginUser.getMemberPwd())) { loginUser =null; }
-		 */
+		if(loginUser==null) {
+			return loginUser;
+			
+		}else if(!bCryptPasswordEncoder.matches(mem.getMemberPwd(), loginUser.getMemberPwd())) {
+			logger.info("암호화된 비밀번호 :"+loginUser.getMemberPwd());
+			loginUser=null;
+		}*/
+		
 		return loginUser;
+		
 	}
 	
 	@Override
@@ -89,6 +98,18 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int insertSocialMember(Member mem) {
 		return mDao.insertSocialMember(mem);
+	}
+
+
+
+	@Override
+	public ArrayList<WishListVO> selectWishList(String memberId) {
+		return mDao.selectWishList(memberId);
+	}
+
+	@Override
+	public int updatePhone(Member mem) {
+		return mDao.updatePhone(mem);
 	}
 
 

@@ -9,6 +9,7 @@
 	<typeAliases>
 		<typeAlias type="com.project.splace.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.project.splace.member.model.vo.MailVO" alias="MailVO"/>
+		<typeAlias type="com.project.splace.member.model.vo.WishListVO" alias="WishListVO"/>
 		<typeAlias type="com.project.splace.host.model.vo.Host" alias="Host"/>
 		<typeAlias type="com.project.splace.space.model.vo.Space" alias="Space"/>
 		<typeAlias type="com.project.splace.space.model.vo.SpaceAtt" alias="SpaceAtt"/>

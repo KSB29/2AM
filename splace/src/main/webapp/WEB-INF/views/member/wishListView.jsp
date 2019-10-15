@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -35,39 +36,55 @@
 						<div class="inner">
 						<jsp:include page="memberMenu.jsp"/>
 							<header>
-								<h1>위시 리스트</h1>
+								<h1 class="center">위시 리스트</h1>
 							</header>
-							<body>
-								<div class="border">
-									<section class="photoframe">
-										<article class="row">
-												<div class="image info">
-													<img src="${contextPath}/resources/img/pic01.jpg" alt="" />
-												</div>																		
-												<div class="contents col-4">
-													<h3 id="location" class="line_height">kh 정보교육원</h3>
-													<div class="content_box row">
-														<ul class="content col-12">
-															<li>#JAVA #보안 #국비지원</li>
-															<li>서울시 종로구 대일빌딩</li>
-															<li>운영시간:&nbsp; 09:00 ~ 23:00</li>
-															<li>비용:&nbsp; 5000원/시간</li>
-															<li>최대인원:&nbsp; 10명 </li>
-														</ul>
-														<div class="wish_btn_box col-12 ">
-																<div class="wish_btn"> <a class="button fit" href="">예약 하기</a> </div>
-																<div class="wish_btn"> <a class="button fit primary" href="">삭제</a> </div>
-														</div>
-													</div>
-												</div>
-												<div class="col-4" >
-													<div id="map">
-													</div>
-													<input id="address" type="hidden" value="서울특별시 중구 남대문로 120 대일빌딩"/>						
-												</div>
-										</article>
-									</section>
+						<c:choose>
+							<c:when test="${empty wishList }">
+							<div class="wish_wrapper" >
+								<div class="wish_container">
+									<h1>찜한 내역이 없습니다.</h1>	
 								</div>
+							</div>
+							</c:when>
+							<c:otherwise>
+								<div class="wishList_wrapper">
+								<section class="wishList_border row">
+									<article class="contents_box">
+									<c:forEach var="n" items="${wishList}">
+										<div class="contents">
+											<div id="img_box" class="con">
+												<span><img src="/splace/resources/spaceImg/${n.spaceAttChange}"></span>
+											</div>
+											<div id="wish_info" class="con">
+												<ul>
+													<li><h3>${n.spaceName}</h3></li>
+													<li><span id="location"><img id="location_img" src="resources/img/location.svg">${n.spaceAddress}</span></li>
+													<li><span>${n.spaceTag }</span></li>
+													<li><strong>5000원</strong>/시간</li>
+													<li>
+														<span>최대 인원 : </span><strong>${n.spaceMaxPer}</strong><span>명</span>
+													</li>
+													<li>
+														<div class="reserver_btn">
+															<a class="button primary small fit">예약</a>
+														</div>
+														<div class="reserver_btn">
+															<a class="button small fit">삭제</a>
+														</div>											
+													</li>
+												</ul>
+											</div>
+										</div>
+										<input id="address" class="address" type="hidden" value="${n.spaceAddress}"/>										
+									</c:forEach>		
+									</article>
+									<div class="contents_box" id="map">
+									</div>
+								</section>							
+								</div>
+							</c:otherwise>											
+						</c:choose>
+								
 								<script>
 										// Initialize and add the map
 										function initMap() {
@@ -75,23 +92,21 @@
 										  var map = new google.maps.Map(
 											  document.getElementById('map'), {zoom: 12.5, center: {lat: -34.397, lng: 150.644}});
 										
-										
 										  /* Google Geocoding. Google Map API에 포함되어 있다.*/
 										  var geocoder = new google.maps.Geocoder();
 										
 										  // 검색횟수 재한 때문에 주석처리 
-										  geocodeAddress(geocoder, map);
+										  //geocodeAddress(geocoder, map);
 										
 										  // submit 버튼 클릭 이벤트 실행
 										  document.getElementById('location').addEventListener('click', function() {
 										  console.log('submit 버튼 클릭 이벤트 실행');
-
 										  // 여기서 실행
 										   geocodeAddress(geocoder, map);
 										});
 
 
-																			/**
+										/**
 										 * geocodeAddress
 										 * 
 										 * 입력한 주소로 맵의 좌표를 바꾼다.
@@ -99,9 +114,17 @@
 										function geocodeAddress(geocoder, resultMap) {
 											console.log('geocodeAddress 함수 실행');
 							
-											// 주소 설정
 											var address = document.getElementById('address').value;
-							
+											// 주소 설정
+											/*
+											var address = document.getElementsByClassName('address').value;
+											console.log(address[0].value)
+											var i;
+											var addr;
+												for(i = 0; i < address.length; i++ ){
+													addr = address[i].value ;
+												}
+											*/
 											/**
 											 * 입력받은 주소로 좌표에 맵 마커를 찍는다.
 											 * 1번째 파라미터 : 주소 등 여러가지. 
@@ -111,6 +134,7 @@
 											 *      ㄴ result : 결과값
 											 *      ㄴ status : 상태. OK가 나오면 정상.
 											 */
+											 
 											geocoder.geocode({'address': address}, function(result, status) {
 												console.log(result);
 												console.log(status);
@@ -124,8 +148,7 @@
 													var marker = new google.maps.Marker({
 														map: resultMap,
 														position: result[0].geometry.location
-													});
-							
+													});					
 													// 위도
 													console.log('위도(latitude) : ' + marker.position.lat());
 													// 경도
@@ -135,27 +158,20 @@
 												}
 											});
 										}
-
-										}
+									}
 								</script>
-								 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ao9ONZbr-zIC6_fa1CcI3YBWrzvGmKI&callback=initMap"
-								 async defer></script>
-							</body>		
+									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ao9ONZbr-zIC6_fa1CcI3YBWrzvGmKI&callback=initMap" async defer></script>
 
 						</div>
 					</div>
 				</div>
-
 				
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
 	</body>
-				<!-- Footer -->
-				<jsp:include page="../common/bottom.jsp"/>
+	
+		<!-- Footer -->
+		<jsp:include page="../common/bottom.jsp"/>
+		
+		
 				
 </html>

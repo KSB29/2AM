@@ -7,30 +7,35 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<link rel="stylesheet" href="${contextPath}/resources/css/memberMenu.css" type="text/css">
 <body>
 	<section>
 		<div class="row gtr-uniform">
-			<div class="col-2 align-center">
+			<div class="menu_col align-center">
+				<c:url var="wishListView" value="wishListView.sp"/>
+				<c:url var="usageView" value="usageView.sp"/>
+				<c:url var="bookList" value="bookList.sp" />	
+				<c:url var="userReviewList" value="userReviewList.sp"/>
 				<c:url var="profileView" value="profileView.sp">
 					<c:param name="memberId" value="${ loginUser.memberId }"/>
 				</c:url>
 				<h2><a href="${profileView}">마이페이지</a></h2>
 			</div>
-			
-			<c:url var="wishListView" value="wishListView.sp"/>
-			<c:url var="usageView" value="usageView.sp"/>
-			<div class="col-2 align-center">
+
+			<div class="menu_col align-center">
 				<h2><a href="${wishListView}">위시리스트</a></h2>
 			</div>
-			<div class="col-2 align-center">
-				<h2><a href="spaceBookList.sp">예약관리</a></h2>
+			<div class="menu_col align-center">
+				<h2><a href="${bookList}">예약관리</a></h2>
 			</div>
-			<div class="col-2 align-center">
-				<h2><a href="spaceReviewList.sp">후기관리</a></h2>
+			<div class="menu_col align-center">
+				<h2><a href="${userReviewList}">후기관리</a></h2>
 			</div>
-			<div class="col-2 align-center">
-				<h2><a href="${usageView}">이용내역</a></h2>
+			<div class="menu_col align-center">
+				<h2><a href="spaceReviewList.sp">1:1문의</a></h2>
 			</div>
+			
+
 		</div>
 		<hr>
 	</section>
