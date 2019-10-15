@@ -181,6 +181,7 @@ public class SpaceDao {
 		return sqlSession.update("spaceMapper.updatePrice", price);
 	}
 
+
 	// 미리, 다운영역--------------------------------------------------------------------------------
 
    /**

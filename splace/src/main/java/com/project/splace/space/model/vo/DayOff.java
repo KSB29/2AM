@@ -12,10 +12,9 @@ public class DayOff {
 	public DayOff() {
 	}
 	
-	public DayOff(Date dayOffStart, Date dayOffEnd) {
+	public DayOff(Date dayOffStart) {
 		super();
 		this.dayOffStart = dayOffStart;
-		this.dayOffEnd = dayOffEnd;
 	}
 
 	public DayOff(int dayOffId, Date dayOffStart, Date dayOffEnd, int spaceId) {

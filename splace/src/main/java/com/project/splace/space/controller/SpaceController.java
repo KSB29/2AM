@@ -2,6 +2,9 @@ package com.project.splace.space.controller;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -240,7 +243,7 @@ public class SpaceController {
 
 	// 공간 상세보기 조회
 	@RequestMapping("detailSpace.sp")
-	public ModelAndView spaceDatail(int spaceId, ModelAndView mv, HttpSession session) {
+	public ModelAndView spaceDetail(int spaceId, ModelAndView mv, HttpSession session) {
 	      Space space =sService.selectspaceDetail(spaceId);
 	      Book book = new Book();
 	      if(space !=null) {
@@ -262,7 +265,7 @@ public class SpaceController {
 	                  
 	               }
 	            }
-	         }
+	         } 
 	         
 	         // 주의사항
 	         String spaceNotice[] = space.getSpaceNotice().substring(1).split("#");
@@ -276,15 +279,15 @@ public class SpaceController {
 	         // 공간 휴무일 
 	         DayOff dayOff = new DayOff();
 	         ArrayList<DayOff> dayOffList = sService.dayOffList(space.getSpaceId());
-	         System.out.println("휴무일"+dayOffList);
-	         book.setSpaceId(spaceId);
-	         
-	         //예약 조회 
-			/*
-			 * ArrayList<Book> bookTime = sService.bookTime(space.getSpaceId());
-			 * System.out.println("예약시간"+bookTime);
-			 */
-	         
+	         String dayArr[]= new String[dayOffList.size()];
+	         DayOff dddddddddd = dayOffList.get(1);
+	       
+	         SimpleDateFormat newForm = new SimpleDateFormat("yyyy-MM-dd");
+	         for(int i=0; i<dayOffList.size(); i++) {
+	        	 String dfdf = newForm.format((dayOffList.get(i)).getDayOffStart());
+	        	 dayArr[i]=dfdf;
+	         }
+	         mv.addObject("dayArr", Arrays.toString(dayArr).substring(1,Arrays.toString(dayArr).lastIndexOf("]")));
 	         mv.addObject("dayOffList", dayOffList);
 	         mv.addObject("hostSpace", hostSpace);
 	         mv.addObject("spaceAttImg",spaceAttImg);
@@ -352,77 +355,81 @@ public class SpaceController {
 	// 선택한 일자의 시간+가격 리스트 조회
 		@ResponseBody
 		@RequestMapping(value="timeList.sp", produces="application/json; charset=utf8")
-		public String timeList(String bookDate, int spaceId, ModelAndView mv) throws ParseException {
+		public String timeList(String bookDate, int spaceId) throws ParseException {
 			Price price = new Price();
 			Book book = new Book();
-			
 			// 달력 요일 뽑기 
 			String day= bookDate.substring(11,12);
 			System.out.println(bookDate);
 			System.out.println(day);
-		/*
-		 * SimpleDateFormat original = new SimpleDateFormat("yy-mm-dd E");
-		 * SimpleDateFormat newForm = new SimpleDateFormat("yyyy/mm/DD/E");
-		 * 
-		 * Date originDate = (Date) original.parse(inputDate);
-		 * 
-		 * String selectDate = newForm.format(originDate);
-		 * 
-		 * String day=selectDate.substring(11,12);
-		 * 
-		 */ 
-		  price.setPriceWeekend(day); price.setSpaceId(spaceId);
+		
+		  SimpleDateFormat original = new SimpleDateFormat("yy-mm-dd E");
+		  SimpleDateFormat newForm = new SimpleDateFormat("yyyy/mm/DD/E");
 		  
-		  //해당 일의 예약 조회 DateFormat sdFormat = new SimpleDateFormat("yy-MM-dd E"); Date
-		/*
-		 * tempDate = (Date) sdFormat.parse(bookDate);
-		 * 
-		 * book.setSpaceId(spaceId); book.setBookDate(tempDate);
-		 * 
-		 * System.out.println(book.getBookDate());
-		 * 
-		 * ArrayList<Book> bookTime = sService.bookTime(book);
-		 * 
-		 * System.out.println("예약시간"+bookTime);
-		 */
-		
-				 
-				
-				//일치 요일의 가격 조회
-				Price selectPrice = sService.selectPriceList(price);
-			
-				
-				JsonParser jp = new JsonParser();
-				
-				JsonArray priceTime = (JsonArray)jp.parse(selectPrice.getPriceTime());
-				// JsonParser --> HttpURLConnection 대체하기
-				
-				Iterator<JsonElement> it = priceTime.iterator();
-				
-				JsonObject obj = null;
-				Map<String, Integer> pricePerTime = new LinkedHashMap<String, Integer>();
-				
-				JsonArray resultArr = new JsonArray();
-				
-				while(it.hasNext()) {
-					JsonObject obj2 = new JsonObject();
-					
-					obj = it.next().getAsJsonObject();
-					
-					String h = obj.get("hour").toString();
-					String p = obj.get("price").toString();
-					
-					
-					obj2.addProperty(h.substring(1, h.lastIndexOf('~')), Integer.parseInt(p.replace('\"', ' ').trim()) );
-					
-					resultArr.add(obj2);
-					
-				}
-				
-				
-					
-				return new Gson().toJson(resultArr);
-		
-		
+		  price.setPriceWeekend(day); 
+		  price.setSpaceId(spaceId);
+
+		  //일치 요일의 가격 조회
+		  Price selectPrice = sService.selectPriceList(price);
+
+
+		  JsonParser jp = new JsonParser();
+
+		  JsonArray priceTime = (JsonArray)jp.parse(selectPrice.getPriceTime());
+		  // JsonParser --> HttpURLConnection 대체하기
+
+		  Iterator<JsonElement> it = priceTime.iterator();
+
+		  JsonObject obj = null;
+		  Map<String, Integer> pricePerTime = new LinkedHashMap<String, Integer>();
+
+		  JsonArray resultArr = new JsonArray();
+
+		  while(it.hasNext()) {
+			  JsonObject obj2 = new JsonObject();
+
+			  obj = it.next().getAsJsonObject();
+
+			  String h = obj.get("hour").toString();
+			  String p = obj.get("price").toString();
+
+
+			  obj2.addProperty(h.substring(1, h.lastIndexOf('~')), Integer.parseInt(p.replace('\"', ' ').trim()) );
+
+			  resultArr.add(obj2);
+
+		  }
+
+		  return new Gson().toJson(resultArr);
+
+
 	}
+		
+		
+		@ResponseBody
+		@RequestMapping(value="timeListBook.sp")
+		public ArrayList<Book> bookTimeArr(String bookDate, int spaceId) throws ParseException{
+			//해당 일의 예약 조회 
+		 Book book = new Book();
+		 
+		 System.out.println("되니"+bookDate);
+		
+		 Date date = new SimpleDateFormat("yyyy-MM-dd").parse(bookDate);
+		
+
+
+		 System.out.println(date);
+		 
+		 book.setSpaceId(spaceId);
+		 book.setBookDate(date);
+		 
+		 ArrayList<Book> bookTimeArrr= sService.bookTime(book);
+		 System.out.println(bookTimeArrr);
+		
+		 
+			
+			return bookTimeArrr;
+			
+			 
+		}
 }

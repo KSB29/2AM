@@ -29,7 +29,7 @@ import com.project.splace.space.model.vo.WishList;
 @Service("sService")
 public class SpaceServiceImpl implements SpaceService {
 	
-	@Autowired
+  @Autowired
 	private SpaceDao sDao;
 	
 	@Override
@@ -294,7 +294,6 @@ public class SpaceServiceImpl implements SpaceService {
 			return result;
 		}
 	}
-	
 
 
 	// 미리, 다운영역--------------------------------------------------------------------------------

@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.splace.main.model.vo.Notice;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.space.model.vo.Space;
 
@@ -32,5 +33,10 @@ public class MainDao {
 	public ArrayList<Space> bestSpace() {
 		
 		return (ArrayList)sqlSession.selectList("mainMapper.bestSpace");
+	}
+
+
+	public ArrayList<Notice> noticeSelect(String userId) {
+		return (ArrayList)sqlSession.selectList("mainMapper.noticeSelect", userId);
 	}
 }

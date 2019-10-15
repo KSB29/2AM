@@ -430,7 +430,7 @@
 	</select>
 	
 	<!-- 해당 공간의 휴무일 조회 -->
-	<select id="dayOffList" parameterType="DayOff" resultType="string">
+	<select id="dayOffList" parameterType="DayOff" resultMap="dayOffResultSet">
 	SELECT DAYOFF_START
     FROM DAYOFF
     WHERE SPACE_ID=#{spaceId}
@@ -446,5 +446,7 @@
      AND BOOK_CANCEL IS NULL
 	
 	</select>
+
+
 	
 </mapper>

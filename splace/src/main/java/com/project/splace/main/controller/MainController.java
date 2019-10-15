@@ -2,6 +2,8 @@ package com.project.splace.main.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.project.splace.main.model.service.MainService;
+import com.project.splace.main.model.vo.Notice;
+import com.project.splace.member.model.vo.Member;
 import com.project.splace.space.model.vo.Space;
 
 @Controller
@@ -50,4 +54,22 @@ public class MainController {
 		return gson.toJson(bestSpace);
 		
 	}
+	
+	//알림 조회
+	@ResponseBody
+	@RequestMapping(value="noticeList.sp", produces="application/json; charset=utf8")
+	public String noticeSelectList(String memberId,HttpSession session) {
+		String userId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		System.out.println("유저 아이디"+userId);
+		
+		ArrayList<Notice> NoticeArr = mainService.noticeSelect(userId);
+		
+		System.out.println(NoticeArr);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd hh:mm:ss").create();
+
+	    return gson.toJson(NoticeArr);
+		
+	}
+	
 }
