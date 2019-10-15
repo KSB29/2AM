@@ -137,4 +137,30 @@ public class AdminController {
 		
 		return mv; 
 	}
+	
+	// 10. 관리자답변관리
+	@RequestMapping("answerAdminManagement.sp")
+	public ModelAndView goAnswerManagement(ModelAndView mv) {
+		ArrayList<QnA> aList = adminService.selectAadminList();
+		mv.addObject("aList", aList).setViewName("admin/answerAdminManagement");
+		
+		return mv;
+	}
+	
+	// 11. 관리자답변작성
+	@RequestMapping("answerAdmin.sp")
+	public String answerAdmin(QnA qna, RedirectAttributes rd, HttpSession session) {
+		qna.setaMemberId(((Member)session.getAttribute("loginUser")).getMemberId());
+		System.out.println(qna);
+		
+		int result = adminService.insertAnswerAdmin(qna);
+		
+		if(result>0) {
+			rd.addFlashAttribute("msg", "답변이 작성되었습니다!");
+		} else {
+			rd.addFlashAttribute("msg", "답변이 작성되지않았습니다ㅜㅜㅜ");
+		}
+		return "redirect:qnaAdminManagement.sp";
+	}
+	
 }

@@ -78,4 +78,21 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectQAdminlist");
 	}
 
+	/**
+	 * 8. 관리자답변관리
+	 * @return aList
+	 */
+	public ArrayList<QnA> selectAadminList() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectAdminlist");
+	}
+
+	/**
+	 * 9. 관리자답변작성
+	 * @param qna
+	 * @return result
+	 */
+	public int insertAnswerAdmin(QnA qna) {
+		return sqlSession.update("adminMapper.insertAnswerAdmin", qna);
+	}
+
 }

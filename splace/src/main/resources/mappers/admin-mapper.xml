@@ -116,4 +116,17 @@
 		FROM QNA
 		WHERE Q_TYPE = 1
 	</select>
+	
+	<!-- 8. 관리자답변관리 -->
+	<select id="selectAdminlist" resultMap="QnAResultSet">
+		SELECT QNA_ID, Q_CONTENT, Q_DATE, A_CONTENT, A_DATE, Q_STATUS, Q_MEMBER_ID, A_MEMBER_ID
+		FROM QNA
+		WHERE Q_TYPE = 1 AND A_DATE IS NULL
+	</select>
+	
+	<!-- 9. 관리자답변작성 -->
+	<update id="insertAnswerAdmin" parameterType="QnA">
+		UPDATE QNA SET A_CONTENT = #{aContent}, A_DATE = SYSDATE, A_MEMBER_ID = #{aMemberId} WHERE QNA_ID = #{qnaId}
+	</update>
+	
 </mapper>
