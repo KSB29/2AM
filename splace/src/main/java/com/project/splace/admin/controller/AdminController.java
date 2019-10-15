@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -87,9 +88,35 @@ public class AdminController {
 	
 	// 5. faq관리
 	@RequestMapping("faqManagement.sp")
-	public ModelAndView goFaqManagement(ModelAndView mv) {
-		ArrayList<Board> bList = adminService.selectFaqList();
-		mv.addObject("bList", bList).setViewName("admin/faqManagement");
+	public ModelAndView goFaqManagement(ModelAndView mv, String boardType) {
+		// 상태
+		int status = 0;
+		if(boardType == null) {
+			status = 100;
+		} else{
+			status = Integer.parseInt(boardType);
+		}
+		
+		ArrayList<Board> bList = adminService.selectFaqList(status);
+		mv.addObject("bList", bList).addObject("status", status).setViewName("admin/faqManagement");
 		return mv;
+	}
+	
+	// 6. 공지사항관리
+	@RequestMapping("noticeManagement.sp")
+	public ModelAndView goNoticeManagement(ModelAndView mv) {
+		ArrayList<Board> bList = adminService.selectNoticeList();
+		mv.addObject("bList", bList).setViewName("admin/noticeManagement");
+		return mv;
+	}
+	
+	// 7. 호스트 신청 관리
+	@RequestMapping("hApplyManagement.sp")
+	public ModelAndView hApplyManagement(ModelAndView mv) {
+		
+		ArrayList<Host> hList = adminService.selectHostList(1);
+		mv.addObject("hList", hList).setViewName("admin/hostManagement");
+		
+		return mv; 
 	}
 }

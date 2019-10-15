@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.splace.book.model.vo.Book;
 import com.project.splace.common.PageInfo;
+import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Price;
@@ -66,9 +67,10 @@ public class SpaceDao {
 	 * @return sList
 	 */
 	public ArrayList<Space> selectList(String memberId, PageInfo pageInfo) {
-		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
-		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
-		return (ArrayList)sqlSession.selectList("spaceMapper.selectList", memberId, rowBounds);
+		//int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
+		//RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
+		//return (ArrayList)sqlSession.selectList("spaceMapper.selectList", memberId, rowBounds);
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectList", memberId);
 	}
 
 	/**
@@ -179,6 +181,7 @@ public class SpaceDao {
 		return sqlSession.update("spaceMapper.updatePrice", price);
 	}
 
+
 	// 미리, 다운영역--------------------------------------------------------------------------------
 
    /**
@@ -281,5 +284,71 @@ public class SpaceDao {
 	 */
 	public ArrayList<Book> bookTime(Book book) {
 		return (ArrayList)sqlSession.selectList("spaceMapper.bookTime", book);
+	}
+
+	/**
+	 * 휴일 리스트 수 조회 Dao
+	 * @param search
+	 * @return result
+	 */
+	public int getdListCount(HostSearch search) {
+		return sqlSession.selectOne("spaceMapper.getdListCount", search);
+	}
+
+	/**
+	 * 휴일 리스트 조회 Dao
+	 * @param search
+	 * @param pageInfo
+	 * @return dList
+	 */
+	public ArrayList<DayOff> selectDayoffList(HostSearch search, PageInfo pageInfo) {
+		int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectDayoffList", search, rowBounds);
+	}
+
+	/**
+	 * 공간 운영여부 변경 Dao
+	 * @param search
+	 * @return result
+	 */
+	public int updateOperStatus(HostSearch search) {
+		return sqlSession.update("spaceMapper.updateOperStatus", search);
+	}
+
+	/**
+	 * 공간 휴일 등록 Dao
+	 * @param dayoff
+	 * @return result
+	 */
+	public int insertDayoff(DayOff dayoff) {
+		return sqlSession.insert("spaceMapper.insertDayoff", dayoff);
+	}
+
+	/**
+	 * 호스트의 공간 리스트 Dao
+	 * @param hostId
+	 * @return sList
+	 */
+	public ArrayList<Space> selectSpaceList(int hostId) {
+		return (ArrayList)sqlSession.selectList("hostMapper.selectSpaceList", hostId);
+	}
+
+	/**
+	 * 공간 휴일 등록 전 예약 체크 Dao
+	 * @param dayoff
+	 * @return result
+	 */
+	public int selectCheckDayoff(DayOff dayoff) {
+		return sqlSession.selectOne("spaceMapper.selectCheckDayoff", dayoff);
+	}
+
+	/**
+	 * 공간 휴일 삭제 Dao
+	 * @param string
+	 * @return
+	 */
+	public int deleteDayoff(int dayoffId) {
+		return sqlSession.delete("spaceMapper.deleteDayoff", dayoffId);
 	}
 }

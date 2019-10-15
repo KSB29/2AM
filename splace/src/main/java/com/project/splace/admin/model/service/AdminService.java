@@ -10,15 +10,18 @@ import com.project.splace.member.model.vo.Member;
 public interface AdminService {
 
 	// 정산관리
-	ArrayList<Account> selectAccountList(int month);
+	public abstract ArrayList<Account> selectAccountList(int month);
 
 	// 회원관리
-	ArrayList<Member> selectMemberList(String memberStatus);
+	public abstract ArrayList<Member> selectMemberList(String memberStatus);
 
 	// 호스트관리
-	ArrayList<Host> selectHostList(int status);
+	public abstract ArrayList<Host> selectHostList(int status);
 
 	// faq관리
-	ArrayList<Board> selectFaqList();
+	public abstract ArrayList<Board> selectFaqList(int status);
+
+	// 공지사항관리
+	public abstract ArrayList<Board> selectNoticeList();
 
 }

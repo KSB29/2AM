@@ -14,6 +14,10 @@
   <link href="${contextPath }/resources/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 <body id="page-top">
+	<c:if test="${!empty msg}">
+		<script>alert("${msg}")</script>
+		<c:remove var="msg"/>
+	</c:if>
 
   <!-- Sidebar -->
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -50,7 +54,7 @@
       <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="hostManagement.sp">호스트 정보관리</a>
-          <a class="collapse-item" href="noticeManagement.sp">호스트 신청관리</a>
+          <a class="collapse-item" href="hApplyManagement.sp">호스트 신청관리</a>
         </div>
       </div>
     </li>

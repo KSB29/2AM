@@ -15,11 +15,19 @@ function reject() {
 function updateStatus(statusId) {
 	
 	var list = "";
+	var bookList = new Array();
 	
 	$("#bookArea .checkList input:checked").not(":disabled").each(function(index, item){
 		var idIndex = $(this).attr("id").replace("check","");
 		list += "," + $("#bookId"+idIndex).text();
+		//var bookInfo = new Object();
+		//bookInfo.bookId = $("#bookId"+idIndex).text();
+		//bookList.push(bookInfo);
+		bookList.push($("#bookId"+idIndex).text());
 	});
+	var bookInfo = new Object();
+	bookInfo.bookId = bookList;
+	var list = JSON.stringify(bookInfo);
 	
 	if (list != "") {
 		$.ajax ({
@@ -43,20 +51,8 @@ function updateStatus(statusId) {
 $(document).ready(function(){
 	
 	$("#spaceId, #statusId").change(function(){
-		//var spaceId = $("#spaceId option:selected").val();
-		//var statusId = $("#statusId option:selected").val();
 		$("form").submit();
 	});
-	
-	/*$("#bookArea .detail").css("display", "none");
-	$("#bookArea .list td").not(".checkList").click(function(){
-		if($(this).parent().next("tr").css("display") == "none") {
-			//$(this).parent().siblings(".detail").slideUp();
-			$(this).parent().next().slideDown();
-		} else {
-			$(this).parent().next().slideUp();
-		}
-	});*/
 	
 	$("#checkAll").click(function(){
 		$("#bookArea .checkList input[type=checkbox]").not(":disabled").prop("checked", $(this).prop("checked"));

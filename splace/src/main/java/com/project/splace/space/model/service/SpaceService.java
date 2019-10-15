@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.splace.book.model.vo.Book;
+import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
 import com.project.splace.space.model.vo.Price;
@@ -199,4 +200,47 @@ public interface SpaceService {
 	 * @return
 	 */
 	public abstract ArrayList<Book> bookTime(Book book);
+
+	/**
+	 * 공간 휴일 리스트 조회
+	 * @param search
+	 * @param currentPage
+	 * @return dList
+	 */
+	public abstract ArrayList<DayOff> selectDayoffList(HostSearch search, int currentPage);
+
+	/**
+	 * 공간 운영 여부 변경 처리
+	 * @param search
+	 * @return result
+	 */
+	public abstract String updateOperStatus(HostSearch search);
+
+	/**
+	 * 공간 휴일 등록 처리
+	 * @param dayoff
+	 * @return result
+	 */
+	public abstract String insertDayoff(DayOff dayoff);
+
+	/**
+	 * 호스트 공간 리스트
+	 * @param hostId
+	 * @return sList
+	 */
+	public abstract ArrayList<Space> selectSpaceList(int hostId);
+
+	/**
+	 * 공간 휴일 등록 전 예약 체크
+	 * @param dayoff
+	 * @return result
+	 */
+	public abstract String selectCheckDayoff(DayOff dayoff);
+
+	/**
+	 * 공간 휴일 삭제 처리
+	 * @param list
+	 * @return result
+	 */
+	public abstract String deleteDayoff(String list);
 }

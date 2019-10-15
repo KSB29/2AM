@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.splace.book.model.vo.Book;
 import com.project.splace.common.PageInfo;
 import com.project.splace.common.Pagination;
+import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.dao.SpaceDao;
 import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
@@ -28,7 +29,7 @@ import com.project.splace.space.model.vo.WishList;
 @Service("sService")
 public class SpaceServiceImpl implements SpaceService {
 	
-	@Autowired
+  @Autowired
 	private SpaceDao sDao;
 	
 	@Override
@@ -293,7 +294,6 @@ public class SpaceServiceImpl implements SpaceService {
 			return result;
 		}
 	}
-	
 
 
 	// 미리, 다운영역--------------------------------------------------------------------------------
@@ -367,6 +367,59 @@ public class SpaceServiceImpl implements SpaceService {
 	@Override
 	public ArrayList<Book> bookTime(Book book) {
 		return sDao.bookTime(book);
+	}
+
+
+	@Override
+	public ArrayList<DayOff> selectDayoffList(HostSearch search, int currentPage) {
+		// 휴일리스트 수 조회
+		int listCount = sDao.getdListCount(search);
+		
+		// 휴일리스트 조회(페이징 처리 적용)
+		PageInfo pageInfo = Pagination.getPageInfo(currentPage, listCount);
+		return sDao.selectDayoffList(search, pageInfo);
+	}
+
+
+	@Override
+	public String updateOperStatus(HostSearch search) {
+		int result = sDao.updateOperStatus(search);
+		if (result > 0) return "Success";
+		else return "Fail";
+	}
+
+
+	@Override
+	public String insertDayoff(DayOff dayoff) {
+		int result = sDao.insertDayoff(dayoff);
+		if (result > 0) return result + "";
+		else return "0";
+	}
+
+
+	@Override
+	public ArrayList<Space> selectSpaceList(int hostId) {
+		return sDao.selectSpaceList(hostId);
+	}
+
+
+	@Override
+	public String selectCheckDayoff(DayOff dayoff) {
+		int result = sDao.selectCheckDayoff(dayoff);
+		if (result > 0) return "Y";
+		else return "N";
+	}
+
+
+	@Override
+	public String deleteDayoff(String list) {
+		String idList[] = list.substring(1).split(",");
+		int result = 0;
+		for (int i = 0; i < idList.length; i++) {
+			result += sDao.deleteDayoff(Integer.parseInt(idList[i]));
+		}
+		if (result == idList.length) return result + "";
+		return "0";
 	}
 
 

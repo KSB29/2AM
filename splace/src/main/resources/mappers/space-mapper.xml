@@ -28,6 +28,7 @@
 		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
 		<result property="typeName" column="TYPE_NAME"/>
 		<result property="priceFlag" column="PRICE_FLAG"/>
+		<result property="bookFlag" column="BOOK_FLAG"/>
 	</resultMap>
 	
 	<resultMap type="SpaceAtt" id="spaceAttResultSet">
@@ -67,6 +68,7 @@
 		<result property="dayOffStart" column="DAYOFF_START"/>
 		<result property="dayOffEnd" column="DAYOFF_END"/>
 		<result property="spaceId" column="SPACE_ID"/>
+		<result property="spaceName" column="SPACE_NAME"/>
 	</resultMap>
 	
 	<resultMap type="Book" id="bookResultSet">
@@ -137,10 +139,23 @@
 		WHERE  SPACE_ID = #{spaceId}
 	</update>
 	
+	<!-- 공간 리스트 수 조회 -->
+	<select id="getsListCount" resultType="_int" parameterType="string">
+		SELECT COUNT(*)
+		FROM   SPACE S,
+			   HOST H,
+			   SPACE_ATT A
+		WHERE  S.HOST_ID = H.HOST_ID
+		AND    H.MEMBER_ID = #{memberId}
+		AND    S.SPACE_ID = A.SPACE_ID
+		AND    A.SPACE_ATT_TYPE = '0'
+	</select>
+	
 	<!-- 공간 리스트 조회 -->
 	<select id="selectList" parameterType="string" resultMap="spaceResultSet">
 		SELECT S.*,
 			   (SELECT 'Y' FROM PRICE WHERE SPACE_ID = S.SPACE_ID AND ROWNUM = 1) PRICE_FLAG,
+			   (SELECT 'Y' FROM BOOK WHERE SPACE_ID = S.SPACE_ID AND STATUS_ID IN (100, 101, 103) AND ROWNUM = 1) BOOK_FLAG,
 			   A.SPACE_ATT_ORIGIN,
 			   A.SPACE_ATT_CHANGE
 		FROM   SPACE S,
@@ -262,7 +277,85 @@
 		AND    STATUS_ID ^= 2
 	</delete>
 	
+	<!-- 공간 운영여부 변경 -->
+	<update id="updateOperStatus" parameterType="HostSearch">
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+	<bind name="statusId" value="_parameter.getStatusId()" />
+		UPDATE SPACE
+		SET    SPACE_OPER_STATUS = #{statusId},
+			   SPACE_UPDATE = SYSDATE
+		WHERE  SPACE_ID = #{spaceId}
+	</update>
 	
+	<!-- 휴일 리스트 수 조회 -->
+	<select id="getdListCount" parameterType="HostSearch" resultType="_int">
+	<bind name="hostId" value="_parameter.getHostId()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+		SELECT COUNT(*)
+		FROM   DAYOFF D,
+			   SPACE S
+		WHERE  D.SPACE_ID = S.SPACE_ID
+		AND    S.HOST_ID = #{hostId}
+		<if test="spaceId != null">
+		AND    D.SPACE_ID = NVL(#{spaceId}, D.SPACE_ID)
+		</if>
+	</select>
+	
+	<!-- 휴일 리스트 조회 -->
+	<select id="selectDayoffList" parameterType="HostSearch" resultMap="dayOffResultSet">
+	<bind name="hostId" value="_parameter.getHostId()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+		SELECT D.*,
+			   S.SPACE_NAME
+		FROM   DAYOFF D,
+			   SPACE S
+		WHERE  D.SPACE_ID = S.SPACE_ID
+		AND    S.HOST_ID = #{hostId}
+		<if test="spaceId != null">
+		AND    D.SPACE_ID = NVL(#{spaceId}, D.SPACE_ID)
+		ORDER BY DAYOFF_START DESC
+		</if>
+	</select>
+	
+	<!-- 휴일 등록 -->
+	<insert id="insertDayoff" parameterType="DayOff">
+	<bind name="dayOffStart" value="_parameter.getDayOffStart()" />
+	<bind name="dayOffEnd" value="_parameter.getDayOffEnd()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+		INSERT INTO DAYOFF
+		SELECT SEQ_D.NEXTVAL, DAYS, DAYS, #{spaceId}
+		FROM  (SELECT #{dayOffStart} + LEVEL - 1 DAYS
+			   FROM   DUAL
+			   CONNECT BY LEVEL BETWEEN 1 AND #{dayOffEnd} - #{dayOffStart} + 1) I
+		WHERE  NOT EXISTS (SELECT NULL FROM DAYOFF D WHERE D.DAYOFF_START = I.DAYS)
+		AND    NOT EXISTS (SELECT NULL
+						   FROM   BOOK B
+						   WHERE  B.SPACE_ID = #{spaceId}
+						   AND    B.BOOK_DATE = I.DAYS
+						   AND    B.STATUS_ID IN (100, 101, 103))
+	</insert>
+	
+	<!-- 등록하려는 휴일 기간 내에 이용 예정인 예약 내역 체크 (대기, 승인, 완료) -->
+	<select id="selectCheckDayoff" parameterType="DayOff" resultType="_int">
+	<bind name="dayOffStart" value="_parameter.getDayOffStart()" />
+	<bind name="dayOffEnd" value="_parameter.getDayOffEnd()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+		SELECT COUNT(*)
+		FROM  (SELECT #{dayOffStart} + LEVEL - 1 DAYS
+			   FROM   DUAL
+			   CONNECT BY LEVEL BETWEEN 1 AND #{dayOffEnd} - #{dayOffStart} + 1) I
+		WHERE  EXISTS (SELECT NULL
+					   FROM   BOOK B
+					   WHERE  B.SPACE_ID = #{spaceId}
+					   AND    B.BOOK_DATE = I.DAYS
+					   AND    B.STATUS_ID IN (100, 101, 103))
+	</select>
+	
+	<!-- 공간 휴일 삭제 처리 -->
+	<delete id="deleteDayoff" parameterType="_int">
+		DELETE FROM DAYOFF 
+		WHERE  DAYOFF_ID = #{dayoffId}
+	</delete>
 	
 	
 	<!--10/04 강미리 추가 -->

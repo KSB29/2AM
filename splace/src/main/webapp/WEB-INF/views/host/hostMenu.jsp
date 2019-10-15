@@ -26,7 +26,7 @@
 				<h2><a href="hostQna.sp">Q&A관리</a></h2>
 			</div>
 			<div class="col-2 align-center">
-				<h2><a href="spaceReview.sp">후기관리</a></h2>
+				<h2><a href="hostReview.sp">후기관리</a></h2>
 			</div>
 			<div class="col-2 align-center">
 				<h2><a href="hostAccount.sp">정산내역</a></h2>

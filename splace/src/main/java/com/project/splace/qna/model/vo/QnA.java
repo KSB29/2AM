@@ -13,6 +13,8 @@ public class QnA {
    private String qMemberId;
    private String aMemberId;
    private int spaceId;
+   private String spaceName;
+   private String qMemberName;
    
    public QnA() {}
 
@@ -31,7 +33,24 @@ public class QnA {
       this.spaceId = spaceId;
    }
 
-   public int getQnaId() {
+   public QnA(int qnaId, String qContent, Date qDate, String aContent, Date aDate, String qType, String qStatus,
+		String qMemberId, String aMemberId, int spaceId, String spaceName, String qMemberName) {
+	super();
+	this.qnaId = qnaId;
+	this.qContent = qContent;
+	this.qDate = qDate;
+	this.aContent = aContent;
+	this.aDate = aDate;
+	this.qType = qType;
+	this.qStatus = qStatus;
+	this.qMemberId = qMemberId;
+	this.aMemberId = aMemberId;
+	this.spaceId = spaceId;
+	this.spaceName = spaceName;
+	this.qMemberName = qMemberName;
+}
+
+public int getQnaId() {
       return qnaId;
    }
 
@@ -111,7 +130,23 @@ public class QnA {
       this.spaceId = spaceId;
    }
 
-   @Override
+   public String getSpaceName() {
+	return spaceName;
+}
+
+public void setSpaceName(String spaceName) {
+	this.spaceName = spaceName;
+}
+
+public String getqMemberName() {
+	return qMemberName;
+}
+
+public void setqMemberName(String qMemberName) {
+	this.qMemberName = qMemberName;
+}
+
+@Override
    public String toString() {
       return "QnA [qnaId=" + qnaId + ", qContent=" + qContent + ", qDate=" + qDate + ", aContent=" + aContent
             + ", aDate=" + aDate + ", qType=" + qType + ", qStatus=" + qStatus + ", qMemberId=" + qMemberId

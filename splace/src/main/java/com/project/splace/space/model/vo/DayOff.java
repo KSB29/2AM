@@ -7,6 +7,7 @@ public class DayOff {
 	private Date dayOffStart;
 	private Date dayOffEnd;
 	private int spaceId;
+	private String spaceName;
 	
 	public DayOff() {
 	}
@@ -22,6 +23,15 @@ public class DayOff {
 		this.dayOffStart = dayOffStart;
 		this.dayOffEnd = dayOffEnd;
 		this.spaceId = spaceId;
+	}
+
+	public DayOff(int dayOffId, Date dayOffStart, Date dayOffEnd, int spaceId, String spaceName) {
+		super();
+		this.dayOffId = dayOffId;
+		this.dayOffStart = dayOffStart;
+		this.dayOffEnd = dayOffEnd;
+		this.spaceId = spaceId;
+		this.spaceName = spaceName;
 	}
 
 	public int getDayOffId() {
@@ -54,6 +64,14 @@ public class DayOff {
 
 	public void setSpaceId(int spaceId) {
 		this.spaceId = spaceId;
+	}
+
+	public String getSpaceName() {
+		return spaceName;
+	}
+
+	public void setSpaceName(String spaceName) {
+		this.spaceName = spaceName;
 	}
 
 	@Override

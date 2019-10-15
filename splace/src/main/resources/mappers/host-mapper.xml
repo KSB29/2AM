@@ -44,6 +44,11 @@
 		<result property="spaceName" column="SPACE_NAME"/>
 	</resultMap>
 	
+	<resultMap type="Status" id="statusResultSet">
+		<id property="statusId" column="STATUS_ID"/>
+		<result property="statusName" column="STATUS_NAME"/>
+	</resultMap>
+	
 	<resultMap type="Qna" id="hostQnaResultSet">
 		<id property="qnaId" column="QNA_ID"/>
 		<result property="qContent" column="Q_CONTENT"/>
@@ -57,6 +62,31 @@
 		<result property="spaceId" column="SPACE_ID"/>
 		<result property="qMemberName" column="MEMBER_NAME"/>
 		<result property="spaceName" column="SPACE_NAME"/>
+	</resultMap>
+	
+	<resultMap type="Account" id="hostAccountResultSet">
+		<id property="accountId" column="ACCOUNT_ID"/>
+		<result property="accountStart" column="ACCOUNT_START"/>
+		<result property="accountEnd" column="ACCOUNT_END"/>
+		<result property="accountTotal" column="ACCOUNT_TOTAL"/>
+		<result property="accountFee" column="ACCOUNT_FEE"/>
+		<result property="accountPrice" column="ACCOUNT_PRICE"/>
+		<result property="hoshId" column="HOSH_ID"/>
+	</resultMap>
+	
+	<resultMap type="Review" id="hostReviewResult">
+		<id property="reviewId" column="REVIEW_ID"/>
+		<result property="reviewScore" column="REVIEW_SCORE"/>
+		<result property="reviewContent" column="REVIEW_CONTENT"/>
+		<result property="reviewEnroll" column="REVIEW_ENROLL"/>
+		<result property="reviewUpdate" column="REVIEW_UPDATE"/>
+		<result property="reviewStatus" column="REVIEW_STATUS"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="spaceId" column="SPACE_ID"/>
+		<result property="bookId" column="BOOK_ID"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="spaceName" column="SPACE_NAME"/>
+		<result property="attInfo" column="ATT_INFO"/>
 	</resultMap>
 	
 	<!-- 호스트 정보 조회 -->
@@ -170,6 +200,15 @@
 		SELECT SPACE_ID, SPACE_NAME
 		FROM   SPACE
 		WHERE  HOST_ID = #{hostId}
+		ORDER BY SPACE_ID DESC
+	</select>
+	
+	<!-- 상태 리스트 내역 -->
+	<select id="selectStatus" resultMap="statusResultSet" parameterType="string">
+		SELECT *
+		FROM   STATUS
+		WHERE  STATUS_ID BETWEEN DECODE(#{status}, 'bStatus', 100, 0) AND DECODE(#{status}, 'bStatus', 100, 0) + 3
+		ORDER BY STATUS_ID
 	</select>
 	
 	<!-- 공간 예약 승인 처리 -->
@@ -181,6 +220,14 @@
 		AND    BOOK_ID = #{bookId}
 	</update>
 	
+	<!-- 예약 승인 처리 시 알림 등록 -->
+	<insert id="insertNoticeApprove" parameterType="string">
+		INSERT INTO NOTICE
+		SELECT SEQ_N.NEXTVAL, '공간 예약이 승인되었습니다.', SYSDATE, '0', MEMBER_ID
+		FROM   BOOK
+		WHERE  BOOK_ID = #{bookId}
+	</insert>
+	
 	<!-- 공간 예약 취소 처리 -->
 	<update id="updateCancelBook" parameterType="string">
 		UPDATE BOOK
@@ -189,6 +236,14 @@
 		WHERE  STATUS_ID = '100'
 		AND    BOOK_ID = #{bookId}
 	</update>
+	
+	<!-- 예약 취소 처리 시 알림 등록 -->
+	<insert id="insertNoticeCancel" parameterType="string">
+		INSERT INTO NOTICE
+		SELECT SEQ_N.NEXTVAL, '공간 예약이 취소되었습니다.', SYSDATE, '0', MEMBER_ID
+		FROM   BOOK
+		WHERE  BOOK_ID = #{bookId}
+	</insert>
 	
 	<!-- 공간 문의 리스트 수 조회 -->
 	<select id="getqListCount" resultType="_int" parameterType="HostSearch">
@@ -205,11 +260,9 @@
 		<if test="spaceId != null">
 		AND    S.SPACE_ID = NVL(#{spaceId}, S.SPACE_ID)
 		</if>
-		<if test="statusId == 'Y'">
-		AND    Q.A_CONTENT IS NOT NULL
-		</if>
-		<if test="statusId == 'N'">
-		AND    Q.A_CONTENT IS NULL
+		<if test="statusId != null">
+		AND    ((NVL(#{statusId}, '1') = '1' AND Q.A_CONTENT IS NOT NULL) OR
+			    (NVL(#{statusId}, '0') = '0' AND Q.A_CONTENT IS NULL))
 		</if>
 		AND    Q.Q_TYPE = '0'
 		AND    Q.Q_STATUS = 'Y'
@@ -232,14 +285,80 @@
 		<if test="spaceId != null">
 		AND    S.SPACE_ID = NVL(#{spaceId}, S.SPACE_ID)
 		</if>
-		<if test="statusId == 'Y'">
-		AND    Q.A_CONTENT IS NOT NULL
-		</if>
-		<if test="statusId == 'N'">
-		AND    Q.A_CONTENT IS NULL
+		<if test="statusId != null">
+		AND    ((NVL(#{statusId}, '1') = '1' AND Q.A_CONTENT IS NOT NULL) OR
+			    (NVL(#{statusId}, '0') = '0' AND Q.A_CONTENT IS NULL))
 		</if>
 		AND    Q.Q_TYPE = '0'
 		AND    Q.Q_STATUS = 'Y'
+		ORDER BY QNA_ID DESC
+	</select>
+	
+	<!-- 공간 문의 답변 -->
+	<update id="updateAnswer" parameterType="QnA">
+	<bind name="aContent" value="_parameter.getaContent()" />
+	<bind name="qnaId" value="_parameter.getQnaId()" />
+	<bind name="aMemberId" value="_parameter.getaMemberId()" />
+		UPDATE QNA
+		SET    A_CONTENT = #{aContent},
+			   A_MEMBER_ID = #{aMemberId},
+			   A_DATE = SYSDATE
+		WHERE  QNA_ID = #{qnaId}
+	</update>
+	
+	<!-- 정산 내역 건 수 조회 -->
+	<select id="getaListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM   ACCOUNT
+		WHERE  HOSH_ID = #{hoshId}
+	</select>
+	
+	<!-- 정산 내역 조회 -->
+	<select id="selectAccountList" resultMap="hostAccountResultSet" >
+		SELECT *
+		FROM   ACCOUNT
+		WHERE  HOSH_ID = #{hoshId}
+		ORDER BY ACCOUNT_ID DESC
+	</select>
+	
+	<!-- 후기 내역 전 수 조회 -->
+	<select id="getrListCount" resultType="_int" parameterType="HostSearch">
+	<bind name="hostId" value="_parameter.getHostId()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+		SELECT COUNT(*)
+		FROM   REVIEW R,
+			   SPACE  S
+		WHERE  R.SPACE_ID = S.SPACE_ID
+		<if test="spaceId != null">
+		AND    S.SPACE_ID = NVL(#{spaceId}, S.SPACE_ID)
+		</if>
+		AND    S.HOST_ID = #{hostId}
+	</select>
+	
+	<!-- 후기 내역 조회 -->
+	<select id="selectReview" resultMap="hostReviewResult" parameterType="HostSearch">
+	<bind name="hostId" value="_parameter.getHostId()" />
+	<bind name="spaceId" value="_parameter.getSpaceId()" />
+		SELECT R.*,
+			   S.SPACE_NAME,
+			   M.MEMBER_NAME,
+			   (SELECT 'Y' FROM REVIEW_ATT A WHERE A.REVIEW_ID = R.REVIEW_ID AND ROWNUM = 1) ATT_INFO
+		FROM   REVIEW R,
+			   SPACE  S,
+			   MEMBER M
+		WHERE  R.SPACE_ID = S.SPACE_ID
+		<if test="spaceId != null">
+		AND    S.SPACE_ID = NVL(#{spaceId}, S.SPACE_ID)
+		</if>
+		AND    S.HOST_ID = #{hostId}
+		AND    R.MEMBER_ID = M.MEMBER_ID
+		ORDER BY REVIEW_ID DESC
+	</select>
+	
+	<select id="selectReviewAtt" resultType="string" parameterType="_int">
+		SELECT REVIEW_ATT_CHANGE
+		FROM   REVIEW_ATT
+		WHERE  REVIEW_ID = #{reviewId}
 	</select>
 	
 </mapper>
