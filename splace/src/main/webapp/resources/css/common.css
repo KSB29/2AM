@@ -1,5 +1,8 @@
+@charset "UTF-8";
+
+
 .center{
-	text-align: center;
+	text-align: center !important;
 }
 .common_wrapper{
     padding: 2em 2em 2em 2em;
@@ -8,7 +11,7 @@
 
  .wrapper_left{
     /* margin: 0 2em 0 0em;  */
-   padding: 0 2em 0 2em !important;
+   padding: 0 2em 0 2em ;
 }
  .wrapper_right{
     padding-right: 2em;
@@ -21,3 +24,4 @@ hr{
 .gjoin_box_2{
     margin: 3em 0 0 0;
 }
+

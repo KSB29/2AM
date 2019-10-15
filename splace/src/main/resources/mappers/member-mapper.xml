@@ -27,6 +27,30 @@
 		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
 	</resultMap>
 	
+	<resultMap id="memberReviewResultSet" type="MemberReviewVO">
+		<id property="reviewId" column="REVIEW_ID"/>
+		<result property="spaceName" column="SPACE_NAME"/>
+		<result property="reviewScore" column="REVIEW_SCORE"/>
+		<result property="reviewContent" column="REVIEW_CONTENT"/>
+		<result property="reviewEnroll" column="REVIEW_ENROLL"/>
+		<result property="reviewStatus" column="REVIEW_STATUS"/>
+		<result property="reviewAttChange" column="REVIEW_ATT_CHANGE"/>
+	</resultMap>
+	
+	
+	<resultMap id="memberReviewResultSet" type="MemberReviewVO">
+		<id property="qnaId" column="QNA_ID"/>
+		<result property="qContent" column="Q_CONTENT"/>
+		<result property="qDate" column="Q_DATE"/>
+		<result property="aContent" column="A_CONTENT"/>
+		<result property="aDate" column="A_DATE"/>
+		<result property="qType" column="Q_TYPE"/>
+		<result property="qStatus" column="Q_STAUTS"/>
+		<result property="qMemberId" column="Q_MEMBER_ID"/>
+		<result property="aMemberId" column="A_MEMBER_ID"/>
+		<result property="spaceId" column="SPACE_ID"/>
+	</resultMap>
+	
 	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		SELECT * FROM MEMBER
@@ -103,26 +127,66 @@
 		WHERE MEMBER_ID = #{memberId}
 		AND MEMBER_STATUS = 'Y'
 	</select>
-	
-
-	
-	<select id="selectWishList"  parameterType="String" resultMap="wishListResultSet" >
-		SELECT SPACE_ID, 
-		SPACE_TAG, 
-		SPACE_NAME, 
-		SPACE_OPEN_TIME, 
-		SPACE_CLOSE_TIME, SPACE_ADDRESS,
-		SPACE_MAX_PER, SPACE_TIME, SPACE_ATT_CHANGE
-		FROM WISHLIST
-		JOIN SPACE USING(SPACE_ID)
-		JOIN SPACE_ATT USING(SPACE_ID)
-		WHERE MEMBER_ID = #{memberId} AND SPACE_ATT_TYPE='0'
-      </select>
-      
+    
       <update id="updatePhone" parameterType="Member">
       	UPDATE MEMBER SET
       	MEMBER_PHONE = #{memberPhone},
       	MEMBER_UPDATE = SYSDATE
 		WHERE MEMBER_ID = #{memberId}  	
       </update>
+      
+ 	<select id="selectWishList"  parameterType="String" resultMap="wishListResultSet" >
+		SELECT SPACE_ID, 
+			SPACE_TAG, 
+			SPACE_NAME, 
+			SPACE_OPEN_TIME, 
+			SPACE_CLOSE_TIME, SPACE_ADDRESS,
+			SPACE_MAX_PER, SPACE_TIME, SPACE_ATT_CHANGE
+		FROM WISHLIST
+		JOIN SPACE USING(SPACE_ID)
+		JOIN SPACE_ATT USING(SPACE_ID)
+		WHERE MEMBER_ID = #{memberId} AND SPACE_ATT_TYPE='0'
+      </select>    
+      
+      <select id="selectReviewList" parameterType="String" resultMap="memberReviewResultSet"> 
+      	SELECT 
+      		REVIEW_ID,
+      		SPACE_NAME,
+	      	REVIEW_SCORE,
+	      	REVIEW_CONTENT,
+	      	REVIEW_ENROLL,
+	      	REVIEW_STATUS,
+	      	SPACE_ATT_CHANGE
+	    FROM REVIEW
+	    JOIN SPACE USING(SPACE_ID)
+	    JOIN SPACE_ATT USING(SPACE_ID)
+	    WHERE MEMBER_ID= #{member} AND SPACE_ATT_TYPE='0'
+	    ORDER BY REVIEW_ID DESC
+      </select>
+   
+      <select id="memberListCount" parameterType="String" resultType="_int">
+      	SELECT COUNT(*)
+ 		FROM REVIEW
+ 		JOIN SPACE USING(SPACE_ID)
+	    JOIN SPACE_ATT USING(SPACE_ID)
+	    WHERE MEMBER_ID= #{memberId} AND SPACE_ATT_TYPE='0'
+	  </select>
+	  
+	  <delete id="delteWishList" parameterType="WishListVO">
+	  <bind name="memberId" value="_parameter.getMemberId()"/>
+	  	DELETE
+	  	 FROM WISHLIST 
+	  	 WHERE SPACE_ID = #{spaceId} AND MEMBER_ID= #{memberId}
+	  </delete>
+	  
+	  <select id="memberQListCount" parameterType="String" >
+	    SELECT COUNT(*)
+ 		FROM QNA
+	    WHERE Q_MEMBER_ID = #{memberId} AND Q_STATUS='Y'
+	  </select>
+	  
+	  	
+      
+      
+      
 </mapper>

@@ -1,0 +1,7 @@
+
+.table_center>thead>tr>th, .table_center>td>div{
+	text-align:center !important;
+}
+.table_center>*{
+	text-align:center !important;
+}

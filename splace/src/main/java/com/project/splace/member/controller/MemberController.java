@@ -50,7 +50,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.project.splace.common.Pagination;
-import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.member.KakaoLoginBO;
 import com.project.splace.member.NaverLoginBO;
 import com.project.splace.member.RandomNo;
@@ -58,9 +57,9 @@ import com.project.splace.member.model.service.MemberService;
 import com.project.splace.member.model.vo.AuthInfo;
 import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.member.model.vo.MemberQnaVO;
+import com.project.splace.member.model.vo.MemberReviewVO;
 import com.project.splace.member.model.vo.WishListVO;
-import com.project.splace.review.model.vo.Review;
-import com.project.splace.space.model.vo.Space;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -257,10 +256,7 @@ public class MemberController {
 	 public String KakaoLogIn(ModelMap model,@RequestParam("code") String code, HttpSession session) throws Exception {
 
 		  JsonNode userInfo = kakaoLoginBO.getKakaoUserInfo(code);
-
 		  logger.info("유저 정보" + userInfo);
-		  
-
 		  //String id = userInfo.get("id").toString();
 		  String memberId = userInfo.get("kaccount_email").toString().replaceAll("(^\\p{Z}+|\\p{Z}+$)", "");
 		  //String image = userInfo.get("properties").get("profile_image").toString();
@@ -487,30 +483,26 @@ public class MemberController {
 		
 		return "member/deleteForm";
 	}
+	
+
+	
 	@RequestMapping("userReviewList.sp")
-	public String userReviewList() {
-		
-		return "member/userReview";
-	}
-	/*
-	@RequestMapping("userReviewList.sp")
-	public ModelAndView hostReview(HttpSession session, ModelAndView mv, Integer page) {
-		String memberId = (String)session.getAttribute("loginUser");
+	public ModelAndView memberReview(HttpServletRequest request,HttpSession session, ModelAndView mv, Integer page) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String memberId = member.getMemberId();
 		int currentPage = page == null? 1 : page;
-		//search.setHostId(memberId);
-		
+		ArrayList<MemberReviewVO> reviewList = mService.selectReviewList(memberId, currentPage);	
 		//ArrayList<Review> rList = mService.selectReviewList(search, currentPage);
-		//ArrayList<Space> sList = mService.selectSpaceList(memberId);
 		
-		//if (rList != null) {
-		//	mv.addObject("rList", rList).addObject("sList", sList)
-			mv.addObject("pi", Pagination.getPageInfo()).setViewName("member/uReview");
-		//} else {
-		//	mv.addObject("msg", "후기리스트 조회 중 오류 발생").setViewName("common/errorPage");
-		//}
+		if (reviewList != null) {
+			mv.addObject("reviewList", reviewList);
+			mv.addObject("pi", Pagination.getPageInfo()).setViewName("member/userReview");
+		} else {
+			mv.addObject("msg", "후기리스트 조회 중 오류 발생");
+		}
 		return mv;
 	}
-	*/
+	
 	
 	@RequestMapping(value="login.sp", method=RequestMethod.POST)
 	public String MemberLogin(Member mem, Model model, RedirectAttributes rd){
@@ -649,14 +641,16 @@ public class MemberController {
 		}
 	}
 
-	/* wishList 관련 controller*/
+	/*-------------------------------------wishList 관련 controller-----------------------------------*/ 
 	@RequestMapping(value = "wishListView.sp" , method=RequestMethod.GET)
 	public ModelAndView wishListView(ModelAndView mv, Member mem, HttpServletRequest request) {
+		
 		HttpSession session = request.getSession();
 		Member member = (Member) session.getAttribute("loginUser");
 		String memberId = member.getMemberId();
 		logger.info("회원ID : "+memberId);
 		ArrayList<WishListVO> wishList = mService.selectWishList(memberId);
+		
 		
 		if(wishList != null) {
 			mv.addObject("wishList", wishList);
@@ -668,4 +662,52 @@ public class MemberController {
 				
 		return mv;
 	}
+	
+	
+	// 위시리스트 삭제 
+	@RequestMapping(value = "deleteWishList.sp" , method=RequestMethod.GET)
+	@ResponseBody
+	public boolean deleteWishList(Model model, WishListVO wish, HttpServletRequest request) {
+		boolean result;
+		logger.info("memberId : "+ wish.getMemberId());
+		try {		
+			// 성공시 boolean type 반환
+			result = mService.deleteWishList(wish) > 0 ? true: false;
+			logger.info("result 값"+result);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+			return result;
+		}
+	
+	
+	}
+	
+	
+	/*-------------------------------------1:1 문의 view---------------------------------------------*/ 
+	
+	@RequestMapping(value = "memberQna.sp", method=RequestMethod.GET)
+	public String memberQnaView(HttpServletRequest request,  ModelAndView mv, Integer page) {
+		HttpSession session = request.getSession();
+		String memberId =  (String) session.getAttribute("loginUser");
+		int currentPage = page == null? 1 : page;
+		logger.info("회원ID : "+memberId);
+		ArrayList<MemberQnaVO> qnaList = mService.selectQnaList(memberId,currentPage);
+	
+		
+		//ArrayList<Review> rList = mService.selectReviewList(search, currentPage);
+		
+		if (qnaList != null) {
+			mv.addObject("reviewList", qnaList);
+			mv.addObject("pi", Pagination.getPageInfo()).setViewName("member/userReview");
+		} else {
+			mv.addObject("msg", "후기리스트 조회 중 오류 발생");
+		}
+		
+		
+		return "member/memberQnaView";
+		
+	}
+	
 }
