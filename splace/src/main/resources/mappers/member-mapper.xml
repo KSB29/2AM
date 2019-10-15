@@ -14,6 +14,19 @@
 		<result property="memberStatus" column="MEMBER_STATUS"/>
 	</resultMap>
 	
+	<resultMap id="wishListResultSet" type="WishListVO">
+		<id property="spaceId" column="SPACE_ID"/>
+		<result property="spaceTag" column="SPACE_TAG"/>
+		<result property="spaceName" column="SPACE_NAME"/>
+		<result property="spaceOpenTime" column="SPACE_OPEN_TIME"/>
+		<result property="spaceCloseTime" column="SPACE_CLOSE_TIME"/>
+		<result property="spaceAddress" column="SPACE_ADDRESS"/>
+		<result property="spaceMaxPer" column="SPACE_MAX_PER"/>
+		<result property="spaceTime" column="SPACE_TIME"/>
+		<result property="priceTime" column="PRICE_TIME"/>
+		<result property="spaceAttChange" column="SPACE_ATT_CHANGE"/>
+	</resultMap>
+	
 	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		SELECT * FROM MEMBER
@@ -70,19 +83,6 @@
 		WHERE MEMBER_ID = #{to}
 	</update>
 	
-
-	<select id="selectSocialId" parameterType="String" resultMap="memberResultSet">
-		SELECT * FROM MEMBER
-		WHERE MEMBER_ID = #{memberId}
-		AND MEMBER_STATUS = 'Y'
-	</select>
-	
-	<select id="selectGoogleId" parameterType="String" resultMap="memberResultSet">
-		SELECT * FROM MEMBER
-		WHERE MEMBER_ID = #{memberId}
-		AND MEMBER_STATUS = 'Y'
-	</select>
-		
 	<insert id="insertSocialMember" parameterType="Member" >
 		INSERT INTO MEMBER 
 		VALUES (#{memberId},
@@ -98,4 +98,31 @@
 		)
 	</insert>
 	
+	<select id="selectSocialId" parameterType="String" resultMap="memberResultSet">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND MEMBER_STATUS = 'Y'
+	</select>
+	
+
+	
+	<select id="selectWishList"  parameterType="String" resultMap="wishListResultSet" >
+		SELECT SPACE_ID, 
+		SPACE_TAG, 
+		SPACE_NAME, 
+		SPACE_OPEN_TIME, 
+		SPACE_CLOSE_TIME, SPACE_ADDRESS,
+		SPACE_MAX_PER, SPACE_TIME, SPACE_ATT_CHANGE
+		FROM WISHLIST
+		JOIN SPACE USING(SPACE_ID)
+		JOIN SPACE_ATT USING(SPACE_ID)
+		WHERE MEMBER_ID = #{memberId} AND SPACE_ATT_TYPE='0'
+      </select>
+      
+      <update id="updatePhone" parameterType="Member">
+      	UPDATE MEMBER SET
+      	MEMBER_PHONE = #{memberPhone},
+      	MEMBER_UPDATE = SYSDATE
+		WHERE MEMBER_ID = #{memberId}  	
+      </update>
 </mapper>

@@ -3,6 +3,7 @@ package com.project.splace.member.controller;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -42,11 +43,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.project.splace.common.Pagination;
+import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.member.KakaoLoginBO;
 import com.project.splace.member.NaverLoginBO;
 import com.project.splace.member.RandomNo;
@@ -54,6 +58,9 @@ import com.project.splace.member.model.service.MemberService;
 import com.project.splace.member.model.vo.AuthInfo;
 import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.member.model.vo.WishListVO;
+import com.project.splace.review.model.vo.Review;
+import com.project.splace.space.model.vo.Space;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -85,7 +92,6 @@ public class MemberController {
 	/* kakaoLoginBO */	
 	@Autowired
 	private KakaoLoginBO kakaoLoginBO;
-	
 	
 	/* GoogleLogin */	
     @Inject
@@ -311,14 +317,9 @@ public class MemberController {
 	 			logger.info("회원가입 실패");
 	 			model.addAttribute("msg","회원가입에 실패했습니다 :*( 다시 시도해 주세요." );
 	 			return "redirect:loginForm.sp";
-	 		}
-	 		
-	 		
+	 		}	
 	 	}
 
-
-	
-	
 	 	@RequestMapping(value = "gjoinForm.sp")
 	    public String googleLogin(HttpServletRequest request, Model model) throws Exception {
 	 
@@ -470,19 +471,13 @@ public class MemberController {
 	
 	@RequestMapping("profileView.sp")
 	public String selectProfile() {
-
-		
 		return "member/profileView";
 	}
 	@RequestMapping("changePwForm.sp")
 	public String changePwForm() {
 		return "member/changePwForm";
 	}
-	
-	@RequestMapping("wishListView.sp")
-	public String wishListView() {
-		return "member/wishListView";
-	}
+
 	@RequestMapping("usageView.sp")
 	public String usageView() {
 		return "member/usageView";
@@ -492,9 +487,30 @@ public class MemberController {
 		
 		return "member/deleteForm";
 	}
-	
-	
-	
+	@RequestMapping("userReviewList.sp")
+	public String userReviewList() {
+		
+		return "member/userReview";
+	}
+	/*
+	@RequestMapping("userReviewList.sp")
+	public ModelAndView hostReview(HttpSession session, ModelAndView mv, Integer page) {
+		String memberId = (String)session.getAttribute("loginUser");
+		int currentPage = page == null? 1 : page;
+		//search.setHostId(memberId);
+		
+		//ArrayList<Review> rList = mService.selectReviewList(search, currentPage);
+		//ArrayList<Space> sList = mService.selectSpaceList(memberId);
+		
+		//if (rList != null) {
+		//	mv.addObject("rList", rList).addObject("sList", sList)
+			mv.addObject("pi", Pagination.getPageInfo()).setViewName("member/uReview");
+		//} else {
+		//	mv.addObject("msg", "후기리스트 조회 중 오류 발생").setViewName("common/errorPage");
+		//}
+		return mv;
+	}
+	*/
 	
 	@RequestMapping(value="login.sp", method=RequestMethod.POST)
 	public String MemberLogin(Member mem, Model model, RedirectAttributes rd){
@@ -583,6 +599,20 @@ public class MemberController {
 
 	}
 	
+	// 전화번호 수정 컨트롤러  
+	@RequestMapping(value ="updatePhoneNo.sp", method=RequestMethod.POST)
+	@ResponseBody
+	public boolean updatePhone(RedirectAttributes rd, Model model , Member mem) {
+		boolean result = mService.updatePhone(mem) == 0? false : true ;
+		if(result) {
+			model.addAttribute("memberPhone" ,mem.getMemberPhone());
+			rd.addFlashAttribute("성공적으로 변경되었습니다 :)");
+			return result;
+		}else {
+			return result;	
+		}
+
+	}
 	/* 회원 탈퇴 컨트롤러 */ 
 	@RequestMapping("delete.sp")
 	public String deleteUser(String memberId, SessionStatus status, 
@@ -596,9 +626,8 @@ public class MemberController {
 			return "redirect:loginForm.sp";
 		}else {
 			logger.info("회원 탈퇴 실패");
-			rdAttr.addAttribute("msg", "회원 탈퇴에 실패했습니다. 다시 시도해주세요!");
+			rdAttr.addAttribute("회원 탈퇴에 실패했습니다. 다시 시도해주세요!");
 			return "member/deleteForm";
-			
 		}
 
 	}
@@ -618,9 +647,25 @@ public class MemberController {
 			
 			return "redirect:loginForm.sp";
 		}
-		
-		
 	}
 
-
+	/* wishList 관련 controller*/
+	@RequestMapping(value = "wishListView.sp" , method=RequestMethod.GET)
+	public ModelAndView wishListView(ModelAndView mv, Member mem, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Member member = (Member) session.getAttribute("loginUser");
+		String memberId = member.getMemberId();
+		logger.info("회원ID : "+memberId);
+		ArrayList<WishListVO> wishList = mService.selectWishList(memberId);
+		
+		if(wishList != null) {
+			mv.addObject("wishList", wishList);
+			mv.setViewName("member/wishListView");	
+		}else {
+			mv.addObject("wishList", wishList);
+			mv.setViewName("member/wishListView");	
+		}
+				
+		return mv;
+	}
 }
