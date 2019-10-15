@@ -3683,9 +3683,9 @@ a.scrollup i:hover {
 	font-size: 0;
 	border: none;
   }
-  #bellList input.checkbox[type='checkbox']:not(:checked) {
+ /*  #bellList input.checkbox[type='checkbox']:not(:checked) {
 	display: none;
-  }
+  } */
   #bellList input.checkbox[type='checkbox']:checked + label {
 	height: 6rem;
 	padding: 1.125rem 1.75rem 0.75rem 2rem;

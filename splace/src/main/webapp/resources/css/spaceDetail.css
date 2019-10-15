@@ -434,7 +434,7 @@ border-bottom: 1px solid #ebebeb;
 	.time_select_wrap .time_slot{overflow-x:scroll;font-size:0;white-space:nowrap;padding:0 24px 15px}
 	.time_select_wrap .time_slot li{display:inline-block;margin-left:16px;position:relative;}
 	.time_select_wrap .time_slot li label{/* display:block;width:112px;height:71px;line-height:36px;background: #4c74b9;border-radius:35px;color:white;font-size:14px; */
-	    border: 1px solid #585858;
+	border: 1px solid #585858;
     display: block;
     width: 74px;
     height: 71px;
@@ -459,7 +459,9 @@ border-bottom: 1px solid #ebebeb;
 }
 
 .selectPeople{
-    padding-bottom: 52px;
+   width: 100%;
+   padding-bottom: 52px;
+   float: left;
 }
 .calender,.timeHeader,.BookingData{
 	padding-bottom:20px;
@@ -472,14 +474,21 @@ border-bottom: 1px solid #ebebeb;
 .phoneIcon{
 	padding:0px 9px 7px 0px;	
 }
-.totalPrice{
+.finalTotal1,.finalTotal2{
+	width:50%;
+	float:left;
+}
+.finalTotal2{
+	text-align: center;
+}
+.totalPrice,.addPrice{
 	text-align: right;
     color: #4c74b9;
     width: 77%;
     float: left;
 }
 
-.totalPrice2{
+.totalPrice2,.totalPrice3{
 	width: 23%;
     float: right;
     text-align: center;
