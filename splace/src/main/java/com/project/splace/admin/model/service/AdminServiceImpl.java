@@ -73,4 +73,20 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<QnA> selectQAdminlist() {
 		return adminDao.selectQAdminlist();
 	}
+
+	/* 8. 관리자답변관리
+	 * return aList
+	 */
+	@Override
+	public ArrayList<QnA> selectAadminList() {
+		return adminDao.selectAadminList();
+	}
+
+	/* 9. 관리자답변작성
+	 * return result
+	 */
+	@Override
+	public int insertAnswerAdmin(QnA qna) {
+		return adminDao.insertAnswerAdmin(qna);
+	}
 }

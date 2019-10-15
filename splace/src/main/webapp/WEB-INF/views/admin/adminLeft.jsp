@@ -138,7 +138,7 @@
           <div class="collapse-divider"></div>
           <h6 class="collapse-header">관리자</h6>
           <a class="collapse-item" href="qnaAdminManagement.sp">내역관리</a>
-          <a class="collapse-item" href="noticeManagement.sp">답변관리</a>
+          <a class="collapse-item" href="answerAdminManagement.sp">답변관리</a>
         </div>
       </div>
     </li>

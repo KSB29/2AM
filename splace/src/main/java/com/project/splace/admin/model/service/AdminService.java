@@ -31,4 +31,10 @@ public interface AdminService {
 	// 관리자문의관리
 	public abstract ArrayList<QnA> selectQAdminlist();
 
+	// 관리자답변관리
+	public abstract ArrayList<QnA> selectAadminList();
+
+	// 관리자답변작성
+	public abstract int insertAnswerAdmin(QnA qna);
+
 }
