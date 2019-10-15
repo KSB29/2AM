@@ -96,7 +96,7 @@
 							<c:if test="${ pi.currentPage > 1 }">
 								<c:url var="before" value="hostReview.sp">
 									<c:param name="page" value="${ pi.currentPage - 1 }"/>
-								<c:param name="spaceId" value="${ search.spaceId }"/>
+								<c:param name="spaceId" value="${ search.spaceId }"/>	
 								</c:url>
 								<a class="pagination-newer" href="${ before }"><</a>
 							</c:if>					

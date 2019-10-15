@@ -13,7 +13,6 @@ public class MemberQnaVO {
 	private String qStatus;
 	private String qMemberId;
 	private String aMemberId;
-	private int spaceId;
 	
 	
 	public MemberQnaVO() {}
@@ -31,7 +30,6 @@ public class MemberQnaVO {
 		this.qStatus = qStatus;
 		this.qMemberId = qMemberId;
 		this.aMemberId = aMemberId;
-		this.spaceId = spaceId;
 	}
 
 
@@ -125,21 +123,13 @@ public class MemberQnaVO {
 	}
 
 
-	public int getSpaceId() {
-		return spaceId;
-	}
-
-
-	public void setSpaceId(int spaceId) {
-		this.spaceId = spaceId;
-	}
 
 
 	@Override
 	public String toString() {
 		return "memberQnaVO [qnaId=" + qnaId + ", qContent=" + qContent + ", qDate=" + qDate + ", aContent=" + aContent
 				+ ", aDate=" + aDate + ", qType=" + qType + ", qStatus=" + qStatus + ", qMemberId=" + qMemberId
-				+ ", aMemberId=" + aMemberId + ", spaceId=" + spaceId + "]";
+				+ ", aMemberId=" + aMemberId+ "]";
 	}
 	
 	

@@ -117,7 +117,7 @@ public class MemberDao {
 	public ArrayList<MemberQnaVO> selectQnaList(PageInfo pageInfo, String memberId) {
 		int offset = (pageInfo.getCurrentPage()- 1) * pageInfo.getLimit();
 		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
-		return (ArrayList)sqlSession.selectList("memberMapper.selectReviewList",memberId, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.selectQnaList",memberId, rowBounds);
 	}
 
 

@@ -688,9 +688,11 @@ public class MemberController {
 	/*-------------------------------------1:1 문의 view---------------------------------------------*/ 
 	
 	@RequestMapping(value = "memberQna.sp", method=RequestMethod.GET)
-	public String memberQnaView(HttpServletRequest request,  ModelAndView mv, Integer page) {
+	public ModelAndView memberQnaView(HttpServletRequest request,  ModelAndView mv, Integer page) {
 		HttpSession session = request.getSession();
-		String memberId =  (String) session.getAttribute("loginUser");
+		Member mem =  (Member) session.getAttribute("loginUser");
+		String memberId = mem.getMemberId();
+		
 		int currentPage = page == null? 1 : page;
 		logger.info("회원ID : "+memberId);
 		ArrayList<MemberQnaVO> qnaList = mService.selectQnaList(memberId,currentPage);
@@ -699,14 +701,12 @@ public class MemberController {
 		//ArrayList<Review> rList = mService.selectReviewList(search, currentPage);
 		
 		if (qnaList != null) {
-			mv.addObject("reviewList", qnaList);
-			mv.addObject("pi", Pagination.getPageInfo()).setViewName("member/userReview");
+			mv.addObject("qnaList", qnaList);
+			mv.addObject("pi", Pagination.getPageInfo()).setViewName("member/memberQnaView");
 		} else {
 			mv.addObject("msg", "후기리스트 조회 중 오류 발생");
 		}
-		
-		
-		return "member/memberQnaView";
+		return mv;
 		
 	}
 	

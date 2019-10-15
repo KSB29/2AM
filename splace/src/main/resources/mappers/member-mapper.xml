@@ -38,7 +38,7 @@
 	</resultMap>
 	
 	
-	<resultMap id="memberReviewResultSet" type="MemberReviewVO">
+	<resultMap id="memberQnaResultSet" type="MemberQnaVO">
 		<id property="qnaId" column="QNA_ID"/>
 		<result property="qContent" column="Q_CONTENT"/>
 		<result property="qDate" column="Q_DATE"/>
@@ -179,10 +179,23 @@
 	  	 WHERE SPACE_ID = #{spaceId} AND MEMBER_ID= #{memberId}
 	  </delete>
 	  
-	  <select id="memberQListCount" parameterType="String" >
+	  <select id="memberQListCount" parameterType="String" resultType="_int">
 	    SELECT COUNT(*)
  		FROM QNA
-	    WHERE Q_MEMBER_ID = #{memberId} AND Q_STATUS='Y'
+	    WHERE Q_MEMBER_ID = #{memberId} AND Q_STATUS='Y' AND Q_TYPE=1
+	  </select>
+	  
+	  <select id="selectQnaList" parameterType="String" resultMap="memberQnaResultSet">
+        SELECT 
+            QNA_ID,
+            Q_CONTENT, Q_DATE, Q_TYPE,
+            A_CONTENT, A_DATE,  
+            Q_STATUS, Q_MEMBER_ID, A_MEMBER_ID
+	  	FROM QNA
+	  	WHERE Q_MEMBER_ID= 'user02'  AND  Q_TYPE=1  AND Q_STATUS='Y'
+	  	ORDER BY QNA_ID DESC
+	  	
+	  
 	  </select>
 	  
 	  	

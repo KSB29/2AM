@@ -140,6 +140,8 @@ public class MemberServiceImpl implements MemberService{
 		ArrayList<MemberQnaVO> qList = mDao.selectQnaList(pageInfo, memberId);
 		return qList;
 		
+		
+		
 	}
 
 

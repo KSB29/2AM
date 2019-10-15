@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+   
+   
 <!DOCTYPE html>
 <html>
 	<head>
@@ -27,7 +31,6 @@
 						<div class="inner">
 							<jsp:include page="memberMenu.jsp"/>
                             <section>
-
                             </section>
                                 <section>
                                         <h1 class="center">1:1문의 </h1>
@@ -45,6 +48,8 @@
                                             </div>
                                         </article>
                                         <div class=>
+                                        
+                                        	
                                             <table>
 												<colgroup>
 													<col width="20%">							
@@ -56,51 +61,92 @@
                                                     <tr class="center">
                                                         <th>글번호</th>
                                                         <th>제목</th>
-                                                        <th></th>
+                                                        <th>등록일</th>
                                                         <th>처리상태</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                	<c:if test="${empty qnaList}">
+														<tr><td colspan="5" class="align-center">문의 내역이 없습니다</td></tr>
+													</c:if>
+                                            		<c:forEach var="q" items="${qnaList}" varStatus="vs">
+                                             		
                                                     <tr>
-                                                        <td>Item One</td>
-                                                        <td>Ante turpis integer aliquet porttitor.</td>
-                                                        <td>29.99</td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Item Two</td>
-                                                        <td>Vis ac commodo adipiscing arcu aliquet.</td>
-                                                        <td>19.99</td>
-                                                        <td></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Item Three</td>
-                                                        <td> Morbi faucibus arcu accumsan lorem.</td>
-                                                        <td>29.99</td>
-                                                        <td></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Item Four</td>
-                                                        <td>Vitae integer tempus condimentum.</td>
-                                                        <td>19.99</td>
-                                                        <td></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Item Five</td>
-                                                        <td>Ante turpis integer aliquet porttitor.</td>
-                                                        <td>29.99</td>
-                                                        <td></td>
-
-                                                    </tr>
+                                                        <td>${q.qnaId}</td>
+                                                        <td>${q.qContent}</td>
+                                                        <td>
+		               										<div><fmt:formatDate value="${q.qDate}" pattern="yyyy.MM.dd(E)"/></div>
+                                                        </td>   
+                                                  		 <tr>
+                                                   		<c:if test="${empty q.aContent}">                                             
+                                                       		 <td> <input type="radio" checked></td>
+                                                        </c:if>
+                                                   		<c:if test="${!empty q.aContent}">                                             
+                                                        </c:if>
+                                                    </tr>                                                                                                           
+                                                    </c:forEach>
                                                 </tbody>
 
                                             </table>
                                         </div>
     
 							</section>
+							
+					<div class="row">
+					<nav class="pagination-container">
+						<div class="pagination">
+							<!-- [이전] -->
+							<c:url var="startPage" value="memberQna.sp">
+								<c:param name="page" value="${ pi.startPage }"/>
+							</c:url>
+							<a class="pagination-newest" href="${startPage }"><<</a>
+							<c:if test="${ pi.currentPage <= 1 }">
+								<a class="pagination-newer" href="#"><</a>
+							</c:if>
+							<c:if test="${ pi.currentPage > 1 }">
+								<c:url var="before" value="memberQna.sp">
+									<c:param name="page" value="${ pi.currentPage - 1 }"/>
+								</c:url>
+								<a class="pagination-newer" href="${ before }"><</a>
+							</c:if>					
+							<span class="pagination-inner">
+								<!-- 페이지 -->
+								<c:if test="${ empty rList}">
+									<a class="pagination-active" href="#">1</a>
+								</c:if>
+								<c:if test="${ !empty rList}">
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:if test="${ p eq pi.currentPage }">
+										<a class="pagination-active" href="#">${ p }</a>
+									</c:if>
+									
+									<c:if test="${ p ne pi.currentPage }">
+										<c:url var="pagination" value="memberQna.sp">
+											<c:param name="page" value="${ p }"/>
+										</c:url>
+										<a href="${ pagination }">${ p }</a>
+									</c:if>
+								</c:forEach>
+								</c:if>
+							</span>
+							<!-- [다음] -->
+							<c:if test="${ pi.currentPage >= pi.maxPage }">
+								<a class="pagination-older" href="#">></a>
+							</c:if>
+							<c:if test="${ pi.currentPage < pi.maxPage }">
+								<c:url var="after" value="memberQna.sp">
+									<c:param name="page" value="${ pi.currentPage + 1 }"/>
+								</c:url> 
+								<a class="pagination-older" href="${ after }">></a>
+							</c:if>
+							<c:url var="endPage" value="memberQna.sp">
+								<c:param name="page" value="${ pi.endPage}"/>
+							</c:url>
+							<a class="pagination-oldest" href="${endPage}">>></a>
+						</div>
+					</nav>
+					</div>							
+							
 						</div>
 					</div>
 			</div>
