@@ -23,14 +23,9 @@
 		<!-- Wrapper -->
 			<div id="wrapper">
 
-				<!-- url -->
-	
+			<!-- url -->
 			<c:url var="deleteForm" value="deleteForm.sp"/>
-			<c:url var="changePwForm" value="changePwForm.sp"/>
 			
-		
-				<!-- Menu -->
-
 				<!-- Main -->
 				<div id="main">
 					<div class="inner">
@@ -38,66 +33,102 @@
 					
 						<jsp:include page="memberMenu.jsp"/>
 					
+						<h1 class="center">프로필 관리</h1>
 						<div class="profile_wrapper row display">
-							<section class="co1-12">
-								<h1>프로필</h1>
-							</section>
 							<section class="profile_box col-12">
 								<p></p>
 								<div class="row">
-									<p class="col-2">이름</p>
-									<p class="col-2">${loginUser.memberName}</p>
-									<span class="col-8"></span>
+									<p class="content"><strong>이름</strong></p>
+									<p class="col-3">${loginUser.memberName}</p>
+									<span class="col-5"></span>
 								</div>
 								<div class="row">
-									<p class="col-2">이메일</p>
-									<p class="col-2">${loginUser.memberId}</p>
-									<span class="col-8"></span>
+									<p class="content"><strong>이메일</strong></p>
+									<p class="col-3">${loginUser.memberId}</p>
+									<span class="col-5"></span>
 
 								</div>
 								<div class="row">
-									<p class="col-2">연락처</p>
-									<p class="col-2">${loginUser.memberPhone}</p>
-									<span class="col-8"></span>
+									<p class="content"><strong>연락처</strong></p>
+									<p id="phoneNo" class="col-2">${loginUser.memberPhone}</p>
+									<span class="col-5"><button class="button primary small" data-target="#updatePhone" data-toggle="modal">번호 수정</button></span>
 
 								</div>
 								<div class="row">
-									<p class="col-2">비밀번호</p>
-									<p class="col-2"> <a href="#exampleModalCenter" data-toggle="modal">변경하기</a></p>
-									<span class="col-8"></span>
+									<p class="content"><strong>비밀번호</strong></p>
+									<p class="col-3"> <a href="#checkPwd" data-toggle="modal">변경하기</a></p>
+									<span class="col-5"></span>
 								</div>
 								<div class="row"> 
-									<p class="col-2">SNS연동</p>
-									<p class="col-2">네이버연동</p>
-									<span class="col-8"></span>
-							
+									<p class="content"><strong>SNS연동</strong></p>
+									<p class="col-3">네이버 연동</p>
+									<span class="col-5"></span>
 								</div>
 								<div class="row">
-									<p class="col-2"></p>
-									<p class="col-2">카카오연동</p>
-									<span class="col-8"></span>
+									<p class="content"></p>
+									<p class="col-3">카카오 연동</p>
+									<span class="col-5"></span>
 								</div>
 								<div class="row">
-									<p class="col-12"> <a href="${deleteForm}">탈퇴할래요</a></p>
+									<p class="content"></p>
+									<p class="col-3">구글 연동</p>
+									<span class="col-5"></span>
 								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								
+								<div class="row">
+									<p class="content"><strong>마케팅 <br>수신 동의</strong></p>
+									<p class="col-3"></p>
+									<span class="col-5"></span>
+								</div>
+								
+
+								<!-- 비밀번호 변경 Modal -->
+								<div class="modal fade" id="checkPwd" tabindex="-1" role="dialog" aria-labelledby="checkPwdCenterTitle" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-header modal_title">
-											<h2 class="modal-title center" id="exampleModalCenterTitle">비밀번호 확인</h2>
+											<h2 class="modal-title center" id="checkPwdCenterTitle">비밀번호 확인</h2>
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
 											<div class="modal-body">
-												<input type="password" id="memberPwd" name="memberPwd" placeholder="password">
+												<input type="password" id="memberPwd" name="memberPwd" placeholder="비밀번호 입력">
 												<input type="hidden" id="memberId" value="${loginUser.memberId}" name="memberId" >
 												<span class="warning"></span>
 											</div>
 											<div class="modal_btn_box center">
 												<div class="modal_btn">
-													<button  type="button" onclick="pwdCheck();"  class="button fit">확인</button>
+													<button  type="button" onclick="pwdCheck()"  class="button fit">확인</button>
+												</div>
+												
+												<div class="modal_btn">
+													<button type="button" class="button fit primary" data-dismiss="modal">취소</button>											
+												</div>
+											</div>						
+										</div>
+									</div>
+								</div>
+								
+								
+								<!-- 전화번호 변경 Modal -->
+								<div class="modal fade" id="updatePhone" tabindex="-1" role="dialog" aria-labelledby="updatePhoneCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header modal_title">
+											<h2 class="modal-title center" id="updatePhoneCenterTitle">핸드폰 번호 변경 </h2>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+											<div class="modal-body">
+												<input type="text" id="memberPhone" name="memberPhone" placeholder="핸드폰 번호">
+												<input type="hidden" id="memberId" value="${loginUser.memberId}" name="memberId" >
+												<span class="warning2"></span>
+											</div>
+											<div class="modal_btn_box center">
+												<div class="modal_btn">
+													<button  id="changeNo_btn"  class="button fit"  type="button" onclick="updatePhone()" data-dismiss="modal" disabled>확인</button>
 												</div>
 												
 												<div class="modal_btn">
@@ -110,42 +141,16 @@
 							</section>
 
 						</div>
+															<div class="delete_btn center"> <a href="${deleteForm}">탈퇴할래요</a></div>
+						
 						
 					</div>
 				</div>
 			</div>	
 			
 			 <c:url value="changePwForm" var="changePwForm.sp"/> 
-			
-			<script>
-	
-				function pwdCheck(){
-									var memberPwd = $("#memberPwd").val();
-									var memberId = $("#memberId").val();
-					 				console.log(memberId);
-									
-							 	$.ajax({
-									url: "checkPwForm.sp",
-									type: "POST",
-									data: {memberPwd:memberPwd, memberId:memberId},
-									success:function(result){				
-										console.log('ajax성공')
-										if(!result){							
-											$(".warning").text('비밀번호를 잘못 입력하셨습니다').css('color','rgb(204, 0, 0)');
-											setTimeout(function(){
-												$(".warning").text("");
-											},2000);
-										}else{
-											console.log('비밀번호 변경 폼으로 이동')
-											location.href="${changePwForm}";
-										}
-									}
-								}); 
-	 
-							}
-										
 				
-			</script>
+			<script type="text/javascript" src="${contextPath}/resources/js/profile.js"></script>
 			<!-- Footer -->
 			<jsp:include page="../common/bottom.jsp"/>
 			

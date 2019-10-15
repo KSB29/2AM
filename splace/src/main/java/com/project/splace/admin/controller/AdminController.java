@@ -126,5 +126,14 @@ public class AdminController {
 		mv.addObject("qList", qList).setViewName("admin/qnaAdminManagement");
 		
 		return mv;
+    
+	// 9. 호스트 신청 관리
+	@RequestMapping("hApplyManagement.sp")
+	public ModelAndView hApplyManagement(ModelAndView mv) {
+		
+		ArrayList<Host> hList = adminService.selectHostList(1);
+		mv.addObject("hList", hList).setViewName("admin/hostManagement");
+		
+		return mv; 
 	}
 }

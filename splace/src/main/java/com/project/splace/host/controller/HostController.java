@@ -39,30 +39,25 @@ public class HostController {
 	@RequestMapping("hostApplyForm.sp")
 	public ModelAndView hostApplyForm(HttpSession session, ModelAndView mv) {
 		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
-		// memberId로 로그인 여부 확인
-		if (memberId != null) {
-			Host hostInfo = hService.selectOne(memberId);
-			// 등록된 host 정보가 있을 경우에만
-			if (hostInfo != null) {
-				mv.addObject("host", hostInfo).addObject("hostId", hostInfo.getHostId()); // hostId session 추가용
-			}
-			mv.setViewName("host/hostApplyForm");
-		} else {
-			mv.setViewName("redirect:loginForm.sp");
+		Host hostInfo = hService.selectOne(memberId);
+		// 등록된 host 정보가 있을 경우에만
+		if (hostInfo != null) {
+			mv.addObject("host", hostInfo)
+			.addObject("hostId", hostInfo.getHostId());
+			// hostId session 추가용
 		}
+		mv.setViewName("host/hostApplyForm");
 		return mv;
 	}
 	
 	// 호스트 정보 등록 처리 후 마이페이지 이동
-	@RequestMapping("hostInsert.sp")
+	@RequestMapping("hjoinInsert.sp")
 	public ModelAndView hostInsert(Host host, ModelAndView mv) {
 		Host hostInfo = hService.insertHost(host);
 		// 호스트 등록 후 승인 요청가능하도록 등록 페이지 다시 이동
-		if (hostInfo != null) {
-			mv.addObject("host", hostInfo).addObject("hostId", hostInfo.getHostId()).setViewName("host/hostApplyForm"); // hostId session 추가용
-		} else {
-			mv.addObject("msg", "호스트 등록 및 조회 중 오류 발생").setViewName("common/errorPage");
-		}
+		mv.addObject("host", hostInfo)
+		.addObject("hostId", hostInfo.getHostId()).setViewName("host/hostApplyForm");
+		// hostId session 추가용
 		return mv;
 	}
 	
@@ -70,11 +65,7 @@ public class HostController {
 	@RequestMapping("hostUpdate.sp")
 	public ModelAndView hostUpdate(Host host, ModelAndView mv) {
 		Host hostInfo = hService.updateHost(host);
-		if (hostInfo != null) {
-			mv.addObject("host", hostInfo).setViewName("host/hostApplyForm");
-		} else {
-			mv.addObject("msg", "호스트 수정 및 조회 중 오류 발생").setViewName("common/errorPage");
-		}
+		mv.addObject("host", hostInfo).setViewName("host/hostApplyForm");
 		return mv;
 	}
 	
@@ -83,11 +74,7 @@ public class HostController {
 	public ModelAndView hostApply(HttpSession session, ModelAndView mv) {
 		int hostId = (int)session.getAttribute("hostId");
 		Host hostInfo = hService.updateApplyHost(hostId);
-		if (hostInfo != null) {
-			mv.addObject("host", hostInfo).setViewName("host/hostApplyForm");
-		} else {
-			mv.addObject("msg", "호스트 신청 및 조회 중 오류 발생").setViewName("common/errorPage");
-		}
+		mv.addObject("host", hostInfo).setViewName("host/hostApplyForm");
 		return mv;
 	}
 	
@@ -102,12 +89,8 @@ public class HostController {
 		ArrayList<Space> sList = hService.selectSpaceList(hostId);
 		ArrayList<Status> stList = hService.selectStatus("bStatus");
 		
-		if (bList != null) {
-			mv.addObject("search", search).addObject("bList", bList).addObject("sList", sList).addObject("stList", stList)
-			.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostBookList");
-		} else {
-			mv.addObject("msg", "예약리스트 조회 중 오류 발생").setViewName("common/errorPage");
-		}
+		mv.addObject("search", search).addObject("bList", bList).addObject("sList", sList).addObject("stList", stList)
+		.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostBookList");
 		return mv;
 	}
 	
@@ -136,12 +119,8 @@ public class HostController {
 		
 		ArrayList<QnA> qList = hService.selectQnaList(search, currentPage);
 		ArrayList<Space> sList = hService.selectSpaceList(hostId);
-		if (qList != null) {
-			mv.addObject("search", search).addObject("qList", qList).addObject("sList", sList)
-			.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostQna");
-		} else {
-			mv.addObject("msg", "공간 문의 리스트 조회 중 오류 발생").setViewName("common/errorPage");
-		}
+		mv.addObject("search", search).addObject("qList", qList).addObject("sList", sList)
+		.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostQna");
 		return mv;
 	}
 	
@@ -152,11 +131,7 @@ public class HostController {
 		int currentPage = page == null? 1 : page;
 		
 		ArrayList<Account> aList = hService.selectAccountList(hostId, currentPage);
-		if (aList != null) {
-			mv.addObject("aList", aList).addObject("pi", Pagination.getPageInfo()).setViewName("host/hostAccount");
-		} else {
-			mv.addObject("msg", "정산 리스트 조회 중 오류 발생").setViewName("common/errorPage");
-		}
+		mv.addObject("aList", aList).addObject("pi", Pagination.getPageInfo()).setViewName("host/hostAccount");
 		return mv;
 	}
 	
@@ -186,12 +161,8 @@ public class HostController {
 		ArrayList<Review> rList = hService.selectReviewList(search, currentPage);
 		ArrayList<Space> sList = hService.selectSpaceList(hostId);
 		
-		if (rList != null) {
-			mv.addObject("search", search).addObject("rList", rList).addObject("sList", sList)
-			.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostReview");
-		} else {
-			mv.addObject("msg", "후기리스트 조회 중 오류 발생").setViewName("common/errorPage");
-		}
+		mv.addObject("search", search).addObject("rList", rList).addObject("sList", sList)
+		.addObject("pi", Pagination.getPageInfo()).setViewName("host/hostReview");
 		return mv;
 		
 	}

@@ -1,11 +1,14 @@
 package com.project.splace.member.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.member.model.vo.WishListVO;
 
 @Repository("mDao")
 public class MemberDao {
@@ -15,10 +18,9 @@ public class MemberDao {
 
 
 	public Member selectMember(Member mem) {
-		
 		Member loginUser = sqlSession.selectOne("memberMapper.selectOne", mem);
 		return loginUser;
-		
+
 	}
 
 
@@ -67,6 +69,17 @@ public class MemberDao {
 		
 		Member loginUser = sqlSession.selectOne("memberMapper.selectSocialId", memberId);
 		return loginUser;
+	}
+
+
+
+	public ArrayList<WishListVO> selectWishList(String memberId) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectWishList", memberId);
+	}
+
+
+	public int updatePhone(Member mem) {
+		return sqlSession.update("memberMapper.updatePhone", mem);
 	}
 
 

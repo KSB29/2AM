@@ -12,7 +12,7 @@ $('.scrollup').click(function(){
 });
 
 /* 알림창 오픈클로즈 */
-function myFunction() {
+/*function myFunction() {
     var x = document.getElementById("bellList");
     if (x.style.display === "none") {
         x.style.display = "block";
@@ -21,7 +21,7 @@ function myFunction() {
         x.style.display = "none";
         $("#bell>i").css("color","#585858");
     }
-}
+}*/
 
 $(function(){
     /* select box */

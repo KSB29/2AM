@@ -9,6 +9,7 @@
 	<typeAliases>
 		<typeAlias type="com.project.splace.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.project.splace.member.model.vo.MailVO" alias="MailVO"/>
+		<typeAlias type="com.project.splace.member.model.vo.WishListVO" alias="WishListVO"/>
 		<typeAlias type="com.project.splace.host.model.vo.Host" alias="Host"/>
 		<typeAlias type="com.project.splace.space.model.vo.Space" alias="Space"/>
 		<typeAlias type="com.project.splace.space.model.vo.SpaceAtt" alias="SpaceAtt"/>
@@ -24,6 +25,7 @@
 		<typeAlias type="com.project.splace.admin.model.vo.Account" alias="Account"/>
 		<typeAlias type="com.project.splace.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.project.splace.host.model.vo.HostSearch" alias="HostSearch"/>
+		<typeAlias type="com.project.splace.main.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.project.splace.review.model.vo.Review" alias="Review"/>
 		<typeAlias type="com.project.splace.host.model.vo.Status" alias="Status"/>
 	</typeAliases>

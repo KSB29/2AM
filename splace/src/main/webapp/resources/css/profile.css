@@ -1,12 +1,17 @@
 
 .profile_wrapper{
+	padding: 0 10em 0 10em;
 }
-.display{
+display{
     display: block;
 }
+/* #title{
+	padding : 0em 0 0 0 !important;
+	margin : 0em 0 0 0 !important;
+} */
 .profile_box{
-    border-top: 0.5px solid #c9c9c9  ;
-    border-bottom: 0.5px solid #c9c9c9 ;
+  	border-bottom: 3px solid #4C74B9;
+    border-top: 5px solid #4C74B9;
 }
 
 .modal_btn_box{
@@ -17,7 +22,42 @@
 }
 
 .modal_btn{
-	display:inline-block;
+	display:inline-block; 
 	width:48%;
 }
+.content{
+	width: 20%;
+	padding:  0 2em 0 0;
+}
+
+/* 탈퇴버튼 */
+.delete_btn{
+	display:block !important;
+	margin: 1em 0 0 0 ;
+}
+
+.icon{
+	width: 25px;
+	height:25px;	
+}
+.icon_box{
+	display: inline-block;
+	margin: 5px 0 0 0;
+	witdh:30px !important;
+}
+.icon_box2{
+	display: inline-block;
+	witdh:100px ;
+	margin: 0 0 2em 0;
+}
+
+.ok {
+box-shadow:inset 0 -1px 0 0 #1b6b2e;
+border-color:#1b6b2e;
+}
+.error{
+	box-shadow:inset 0 -1px 0 0 rgb(204, 0, 0);
+	border-color: rgb(204, 0, 0);
+}
+
 

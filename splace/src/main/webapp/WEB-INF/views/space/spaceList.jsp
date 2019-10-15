@@ -29,6 +29,7 @@
 								<div class="marginClear">
 									<span>등록일 : ${ list.spaceEnroll }</span>
 									<span>&nbsp;&nbsp;&nbsp;</span>
+									<input type="hidden" value="${ list.bookFlag }">
 									<label class="switch">
 							            <c:if test="${ list.spaceOperStatus == 'Y' }">
 							            <c:set var="operValue" value="운영"/>
@@ -76,7 +77,7 @@
 							</div>
 						</c:forEach>
 					</div>
-					<div class="row">
+					<%-- <div class="row">
 					<nav class="pagination-container">
 						<div class="pagination">
 							<!-- [이전] -->
@@ -129,8 +130,7 @@
 							<a class="pagination-oldest" href="${endPage }">>></a>
 						</div>
 					</nav>
-					</div>
-					<c:if test="${ loginUser.grade == '2' }">
+					</div> --%>
 					<br><br>
 					<div class="row">
 						<div class="col-4"></div>
@@ -139,7 +139,6 @@
 						</div>
 						<div class="col-4"></div>
 					</div>
-					</c:if>
 				</section>
 			</div>
 		</div>

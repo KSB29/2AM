@@ -30,6 +30,7 @@ public class Space {
 	private String spaceAttChange;
 	private String typeName;
 	private String priceFlag;
+	private String bookFlag;
 	
 	public Space() {}
 
@@ -96,7 +97,7 @@ public class Space {
 			String spaceOption, String spaceAddress, String spacePhone, String spaceNotice, String spaceOperStatus, int spaceTime,
 			int spaceMinPer, int spaceMaxPer, int spaceAdd, int spaceOpenTime, int spaceCloseTime, int hostId,
 			int typeId, int statusId, Date spaceEnroll, Date spaceUpdate, String memberId, String spaceAttOrigin,
-			String spaceAttChange, String typeName, String priceFlag) {
+			String spaceAttChange, String typeName, String priceFlag, String bookFlag) {
 		super();
 		this.spaceId = spaceId;
 		this.spaceName = spaceName;
@@ -124,6 +125,7 @@ public class Space {
 		this.spaceAttChange = spaceAttChange;
 		this.typeName = typeName;
 		this.priceFlag = priceFlag;
+		this.bookFlag = bookFlag;
 	}
 
 	public int getSpaceId() {
@@ -332,6 +334,14 @@ public class Space {
 
 	public void setSpacePhone(String spacePhone) {
 		this.spacePhone = spacePhone;
+	}
+
+	public String getBookFlag() {
+		return bookFlag;
+	}
+
+	public void setBookFlag(String bookFlag) {
+		this.bookFlag = bookFlag;
 	}
 
 	@Override

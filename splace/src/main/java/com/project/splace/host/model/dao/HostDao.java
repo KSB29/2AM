@@ -199,5 +199,23 @@ public class HostDao {
 	public ArrayList<String> selectReviewAtt(int reviewId) {
 		return (ArrayList)sqlSession.selectList("hostMapper.selectReviewAtt", reviewId);
 	}
+
+	/**
+	 * 예약 승인 처리 시 알림 등록
+	 * @param bookId
+	 * @return result
+	 */
+	public int insertNoticeApprove(String bookId) {
+		return sqlSession.insert("hostMapper.insertNoticeApprove", bookId);
+	}
+
+	/**
+	 * 예약 취소 처리 시 알림 등록
+	 * @param bookId
+	 * @return result
+	 */
+	public int insertNoticeCancel(String bookId) {
+		return sqlSession.insert("hostMapper.insertNoticeCancel", bookId);
+	}
 	
 }

@@ -1,7 +1,11 @@
 package com.project.splace.member.model.service;
 
+import java.util.ArrayList;
+
 import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.member.model.vo.WishListVO;
+import com.project.splace.space.model.vo.WishList;
 
 public interface MemberService {
 	
@@ -22,6 +26,10 @@ public interface MemberService {
 	public abstract int updatePwd(Member mem);
 
 	public abstract int updatePwd(MailVO vo);
+
+	public abstract ArrayList<WishListVO> selectWishList(String memberId);
+
+	public abstract int updatePhone(Member mem);
 
 
 
