@@ -23,6 +23,7 @@
 		<typeAlias type="com.project.splace.space.model.vo.DayOff" alias="DayOff"/>
 		<typeAlias type="com.project.splace.host.model.vo.BookList" alias="BookList"/>
 		<typeAlias type="com.project.splace.admin.model.vo.Account" alias="Account"/>
+		<typeAlias type="com.project.splace.admin.model.vo.TodayBook" alias="TodayBook"/>
 		<typeAlias type="com.project.splace.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.project.splace.host.model.vo.HostSearch" alias="HostSearch"/>
 		<typeAlias type="com.project.splace.main.model.vo.Notice" alias="Notice"/>
