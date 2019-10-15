@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="com.project.splace.space.model.dao.SpaceDao" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/dao/SpaceDao.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="603" width="244" x="2841" y="1379"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.project.splace.space.model.vo.DayOff" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/vo/DayOff.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="351" width="159" x="327" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.project.splace.space.model.vo.SpaceAtt" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/vo/SpaceAtt.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="549" width="284" x="526" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.project.splace.space.model.vo.Space" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/vo/Space.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1557" width="686" x="850" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.project.splace.space.controller.SpaceController" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/controller/SpaceController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="369" width="600" x="1803" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.project.splace.space.model.vo.WishList" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/vo/WishList.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="159" x="1803" y="1379"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.project.splace.space.model.vo.Price" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/vo/Price.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="531" width="187" x="1576" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="8" language="java" name="com.project.splace.space.model.service.SpaceService" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/service/SpaceService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="477" width="400" x="2322" y="1379"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="9" language="java" name="com.project.splace.space.model.vo.Option" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/vo/Option.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="159" x="2443" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.project.splace.space.model.service.SpaceServiceImpl" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/service/SpaceServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="531" width="400" x="2841" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.project.splace.space.model.vo.Type" project="splace" 
+    file="/splace/src/main/java/com/project/splace/space/model/vo/Type.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="159" x="2642" y="-218"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="12">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="13" name="wishList"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="15">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="16" name="sService"/>      
+      <multiplicity id="17" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="18">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <association id="19">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="20" name="sDao"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

@@ -54,6 +54,18 @@
 		<result property="boardEnroll" column="FAQ_ENROLL"/>
 		<result property="boardUpdate" column="FAQ_UPDATE"/>
 	</resultMap>
+   <resultMap type="QnA" id="QnAResultSet">
+      <id property="qnaId" column="QNA_ID"/>
+      <result property="qContent" column="Q_CONTENT"/>
+      <result property="qDate" column="Q_DATE"/>
+      <result property="aContent" column="A_CONTENT"/>
+      <result property="aDate" column="A_DATE"/>
+      <result property="qType" column="Q_TYPE"/>
+      <result property="qStatus" column="Q_STATUS"/>
+      <result property="qMemberId" column="Q_MEMBER_ID"/>
+      <result property="aMemberId" column="A_MEMBER_ID"/>
+      <result property="spaceId" column="SPACE_ID"/>
+   </resultMap>
 
 	<!-- 1. 정산관리 -->
 	<select id="selectAccountList" parameterType="_int" resultMap="accountResultSet">
@@ -89,5 +101,19 @@
 	<!-- 5. 공지사항관리 -->
 	<select id="selectNoticeList" resultMap="boardResultSet">
 		SELECT * FROM BOARD
+	</select>
+	
+	<!-- 6. 호스트문의관리 -->
+	<select id="selectQlist" resultMap="QnAResultSet">
+		SELECT QNA_ID, Q_CONTENT, Q_DATE, A_CONTENT, A_DATE, Q_STATUS, Q_MEMBER_ID, A_MEMBER_ID, SPACE_ID
+		FROM QNA
+		WHERE Q_TYPE = 0
+	</select>
+	
+	<!-- 7. 관리자문의관리 -->
+	<select id="selectQAdminlist" resultMap="QnAResultSet">
+		SELECT QNA_ID, Q_CONTENT, Q_DATE, A_CONTENT, A_DATE, Q_STATUS, Q_MEMBER_ID, A_MEMBER_ID
+		FROM QNA
+		WHERE Q_TYPE = 1
 	</select>
 </mapper>

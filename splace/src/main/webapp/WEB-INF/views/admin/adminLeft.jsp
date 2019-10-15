@@ -134,10 +134,10 @@
       <div id="collapseA1" class="collapse" aria-labelledby="headingA1" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">호스트</h6>
-          <a class="collapse-item" href="noticeManagement.sp">내역관리</a>
+          <a class="collapse-item" href="qnaHostManagement.sp">내역관리</a>
           <div class="collapse-divider"></div>
           <h6 class="collapse-header">관리자</h6>
-          <a class="collapse-item" href="noticeManagement.sp">내역관리</a>
+          <a class="collapse-item" href="qnaAdminManagement.sp">내역관리</a>
           <a class="collapse-item" href="noticeManagement.sp">답변관리</a>
         </div>
       </div>

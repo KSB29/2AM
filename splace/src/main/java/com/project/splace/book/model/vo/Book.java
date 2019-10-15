@@ -29,6 +29,8 @@ public class Book {
 	private String receiptId;	// 영수증번호
 	private int paymentCancelPrice; // 환불금액
 	private Date approvalDate;  // 호스트승인날짜
+	private String spacePhone;	// 가게전화번호
+	private int reviewId;		// 리뷰아이디
 
 	public Book() {}
 	
@@ -63,12 +65,12 @@ public class Book {
 		this.bookStartTime = bookStartTime;
 		this.bookEndTime = bookEndTime;
 	}
-
 	public Book(String bookId, Date bookEnroll, int bookPrice, Date bookDate, int bookStartTime, int bookEndTime,
 			int bookPer, String bookRequest, int spaceId, String memberId, int statusId, String booker,
 			String bookerPhone, String bookerEmail, Date bookCancel, String spaceName, String typeName,
 			String spaceAttChange, String spaceAddress, String paymentId, Date paymentDate, String paymentType,
-			int pStatusId, String receiptId, int paymentCancelPrice, Date approvalDate) {
+			int pStatusId, String receiptId, int paymentCancelPrice, Date approvalDate, String spacePhone,
+			int reviewId) {
 		super();
 		this.bookId = bookId;
 		this.bookEnroll = bookEnroll;
@@ -96,6 +98,8 @@ public class Book {
 		this.receiptId = receiptId;
 		this.paymentCancelPrice = paymentCancelPrice;
 		this.approvalDate = approvalDate;
+		this.spacePhone = spacePhone;
+		this.reviewId = reviewId;
 	}
 
 	public String getBookId() {
@@ -254,6 +258,18 @@ public class Book {
 	public void setApprovalDate(Date approvalDate) {
 		this.approvalDate = approvalDate;
 	}
+	public String getSpacePhone() {
+		return spacePhone;
+	}
+	public void setSpacePhone(String spacePhone) {
+		this.spacePhone = spacePhone;
+	}
+	public int getReviewId() {
+		return reviewId;
+	}
+	public void setReviewId(int reviewId) {
+		this.reviewId = reviewId;
+	}
 
 	@Override
 	public String toString() {
@@ -265,6 +281,6 @@ public class Book {
 				+ ", spaceAttChange=" + spaceAttChange + ", spaceAddress=" + spaceAddress + ", paymentId=" + paymentId
 				+ ", paymentDate=" + paymentDate + ", paymentType=" + paymentType + ", pStatusId=" + pStatusId
 				+ ", receiptId=" + receiptId + ", paymentCancelPrice=" + paymentCancelPrice + ", approvalDate="
-				+ approvalDate + "]";
+				+ approvalDate + ", spacePhone=" + spacePhone + ", reviewId=" + reviewId + "]";
 	}
 }

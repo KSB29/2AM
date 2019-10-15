@@ -6,6 +6,7 @@ import com.project.splace.admin.model.vo.Account;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.qna.model.vo.QnA;
 
 public interface AdminService {
 
@@ -23,5 +24,11 @@ public interface AdminService {
 
 	// 공지사항관리
 	public abstract ArrayList<Board> selectNoticeList();
+
+	// 호스트문의관리
+	public abstract ArrayList<QnA> selectQlist();
+
+	// 관리자문의관리
+	public abstract ArrayList<QnA> selectQAdminlist();
 
 }

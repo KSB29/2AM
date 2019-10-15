@@ -61,11 +61,6 @@ public class BookServiceImpl implements BookService{
 		return bookDao.deleteBook(bookId);
 	}
 
-	@Override
-	public int selectReviewCount(Book book) {
-		return bookDao.selectReviewCount(book);
-	}
-
 	
 	//------------------------------------------
 	//--결제-------------------------------------

@@ -40,8 +40,6 @@ public interface BookService {
 	// 결제 취소
 	public abstract int updatePaymentCancel(Book book);
 
-	// 리뷰작성여부
-	public abstract int selectReviewCount(Book book);
 
 
 }

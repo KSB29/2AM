@@ -10,6 +10,7 @@ import com.project.splace.admin.model.vo.Account;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.qna.model.vo.QnA;
 
 @Repository("adminDao")
 public class AdminDao {
@@ -59,6 +60,22 @@ public class AdminDao {
 	 */
 	public ArrayList<Board> selectNoticeList() {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectNoticeList");
+	}
+
+	/**
+	 * 6. 호스트문의관리
+	 * @return qList
+	 */
+	public ArrayList<QnA> selectQlist() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectQlist");
+	}
+
+	/**
+	 * 7. 관리자문의관리
+	 * @return qList
+	 */
+	public ArrayList<QnA> selectQAdminlist() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectQAdminlist");
 	}
 
 }
