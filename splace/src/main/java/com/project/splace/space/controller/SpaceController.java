@@ -4,7 +4,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -52,25 +54,38 @@ public class SpaceController {
 		ArrayList<Type> tList = sService.selectType();
 		// 공간 옵션
 		ArrayList<Option> oList = sService.selectOption();
-		mv.addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceInsertForm");
+		if (tList != null && oList != null) {
+			mv.addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceInsertForm");
+		} else {
+			mv.addObject("msg", "공간 타입 및 옵션 조회 중 오류 발생").setViewName("common/errorPage");
+		}
 		return mv;
 	}
 	
 	@RequestMapping("spaceInsert.sp")
-	public String spaceInsert(Space space, String address, String post, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
+	public String spaceInsert(Space space, String address, String post, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model, RedirectAttributes rd) {
 		space.setMemberId(((Member)request.getSession().getAttribute("loginUser")).getMemberId());
 		// 주소 : 우편번호,도로명주소,상세주소
 		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
 		int result = sService.insertSpace(space, request, uploadFile, files);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간이 등록되었습니다");
+			return "redirect:spaceList.sp";
+		} else {
+			model.addAttribute("msg", "공간 등록 중 오류 발생");
+			return "common/errorPage";
+		}
 	}
 	
 	@RequestMapping("spaceList.sp")
-	public ModelAndView spaceInfoList(HttpSession session, ModelAndView mv) {
-		ArrayList<Space> sList = sService.selectList(((Member)session.getAttribute("loginUser")).getMemberId());
-		mv.addObject("sList", sList);
-		mv.setViewName("space/spaceList");
+	public ModelAndView spaceInfoList(HttpSession session, ModelAndView mv, Integer page) {
+		int currentPage = page == null? 1 : page;
+		ArrayList<Space> sList = sService.selectList(((Member)session.getAttribute("loginUser")).getMemberId(), currentPage);
+		if (sList != null) {
+			mv.addObject("sList", sList).setViewName("space/spaceList");
+		} else {
+			mv.addObject("msg", "공간 조회 중 오류 발생").setViewName("common/errorPage");
+		}
 		return mv;
 	}
 	
@@ -86,31 +101,21 @@ public class SpaceController {
 		int spaceCloseTime = 0;
 		int spaceAdd = 0;
 		
-		if (((Member)session.getAttribute("loginUser")).getMemberId() == null) {
-			mv.setViewName("redirect:loginForm.sp");
-		} else {
-			
-			ArrayList<Price> pList = sService.selectPrice(spaceId);
-			if (pList != null) {
-				for (int i = 0; i < pList.size(); i++) {
-					if (i == 0) {
-						spaceOpenTime = pList.get(i).getSpaceOpenTime();
-						spaceCloseTime = pList.get(i).getSpaceCloseTime();
-						spaceAdd = pList.get(i).getSpaceAdd();
-					}
+		ArrayList<Price> pList = sService.selectPrice(spaceId);
+		if (pList != null) {
+			for (int i = 0; i < pList.size(); i++) {
+				if (i == 0) {
+					spaceOpenTime = pList.get(i).getSpaceOpenTime();
+					spaceCloseTime = pList.get(i).getSpaceCloseTime();
+					spaceAdd = pList.get(i).getSpaceAdd();
 				}
-				//System.out.println(spaceOpenTime + " ~ " + spaceCloseTime + " : spaceAdd");
-				mv.addObject("pList", pList);
 			}
-			mv.addObject("spaceOpenTime", spaceOpenTime).addObject("spaceCloseTime", spaceCloseTime).addObject("spaceAdd", spaceAdd);
-			mv.addObject("spaceId", spaceId).addObject("priceFlag", priceFlag).setViewName("space/spacePrice");
+			mv.addObject("pList", pList);
 		}
+		mv.addObject("spaceOpenTime", spaceOpenTime).addObject("spaceCloseTime", spaceCloseTime).addObject("spaceAdd", spaceAdd);
+		mv.addObject("spaceId", spaceId).addObject("priceFlag", priceFlag).setViewName("space/spacePrice");
+
 		return mv;
-	}
-	
-	@RequestMapping("spaceReview.sp")
-	public String spaceReview() {
-		return "space/spaceReview";
 	}
 	
 	@RequestMapping("spaceUpdateForm.sp")
@@ -125,17 +130,16 @@ public class SpaceController {
 			// 공간 옵션
 			ArrayList<Option> oList = sService.selectOption();
 			
-			// 우편번호
-			String post = space.getSpaceAddress().substring(0, 5);
-			// 주소(도로명주소+상세주소)
-			String add = space.getSpaceAddress().substring(6);
-			int index = add.indexOf(",");
-			String address1 = add.substring(0, index);
-			String address2 = add.substring(index +1);
+			String[] address = space.getSpaceAddress().split(",");
+			// 상세주소
+			String address2 = "";
+			for (int i = 2; i < address.length; i++) {
+				address2 += address[i];
+			}
 			// 도로명주소
-			space.setSpaceAddress(address1);
+			space.setSpaceAddress(address[1]);
 			// 우편번호, 상세주소
-			mv.addObject("post", post).addObject("address", address2);
+			mv.addObject("post", address[0]).addObject("address", address2);
 			mv.addObject("space", space).addObject("tList", tList).addObject("oList", oList).setViewName("space/spaceUpdateForm");
 		} else {
 			mv.addObject("msg", "공간 정보 조회 중 오류 발생").setViewName("common/errorPage");
@@ -144,12 +148,17 @@ public class SpaceController {
 	}
 	
 	@RequestMapping("spaceUpdate.sp")
-	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model) {
+	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model, RedirectAttributes rd) {
 		// 주소 : 우편번호,도로명주소,상세주소
 		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
 		int result = sService.updateSpace(space, filesIndex, request, uploadFile, files);
-		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간 내역이 수정되었습니다");
+			return "redirect:spaceList.sp";
+		} else {
+			model.addAttribute("msg", "공간 내역 수정 중 오류 발생");
+			return "common/errorPage";
+		}
 	}
 	
 	// 공간 승인 요청
@@ -157,7 +166,7 @@ public class SpaceController {
 	public String spaceApply(int spaceId) {
 		int result = sService.updateApply(spaceId);
 		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		else return "common/errorPage";
 	}
 	
 	// 공간 삭제
@@ -165,28 +174,40 @@ public class SpaceController {
 	public String spaceDelete(int spaceId) {
 		int result = sService.deleteSpace(spaceId);
 		if (result > 0) return "redirect:spaceList.sp";
-		else return null;
+		else return "common/errorPage";
 	}
 	
 	// 공간 가격 등록
 	@RequestMapping("spacePriceInsert.sp")
-	public String spacePriceInsert(int spaceId, int spaceAdd, String[] spacePrice) {
+	public String spacePriceInsert(int spaceId, int spaceAdd, String[] spacePrice, Model model, RedirectAttributes rd) {
 		int result = sService.insertPrice(spaceId, spaceAdd, spacePrice);
-		return "redirect:spaceList.sp";
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간 가격이 등록되었습니다");
+			return "redirect:spaceList.sp";
+		} else {
+			model.addAttribute("msg", "공간 가격 등록 중 오류 발생");
+			return "common/errorPage";
+		}
 	}
   
 	// 공간 가격 수정
 	@RequestMapping("spacePriceUpdate.sp")
-	public String spacePriceUpdate(int spaceId, int spaceAdd, String[] spacePrice) {
+	public String spacePriceUpdate(int spaceId, int spaceAdd, String[] spacePrice, Model model, RedirectAttributes rd) {
 		int result = sService.updatePrice(spaceId, spaceAdd, spacePrice);
-		return "redirect:spaceList.sp";
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "공간 가격이 수정되었습니다");
+			return "redirect:spaceList.sp";
+		} else {
+			model.addAttribute("msg", "공간 가격 수정 중 오류 발생");
+			return "common/errorPage";
+		}
 	}
 	
 	// 미리, 다운영역--------------------------------------------------------------------------------
 
 	// 공간 상세보기 조회
 	@RequestMapping("detailSpace.sp")
-	public ModelAndView spaceDatail(int spaceId, ModelAndView mv, HttpSession session) {
+	public ModelAndView spaceDetail(int spaceId, ModelAndView mv, HttpSession session) {
 	      Space space =sService.selectspaceDetail(spaceId);
 	      Book book = new Book();
 	      if(space !=null) {
@@ -208,7 +229,7 @@ public class SpaceController {
 	                  
 	               }
 	            }
-	         }
+	         } 
 	         
 	         // 주의사항
 	         String spaceNotice[] = space.getSpaceNotice().substring(1).split("#");
@@ -222,15 +243,15 @@ public class SpaceController {
 	         // 공간 휴무일 
 	         DayOff dayOff = new DayOff();
 	         ArrayList<DayOff> dayOffList = sService.dayOffList(space.getSpaceId());
-	         System.out.println("휴무일"+dayOffList);
-	         book.setSpaceId(spaceId);
-	         
-	         //예약 조회 
-			/*
-			 * ArrayList<Book> bookTime = sService.bookTime(space.getSpaceId());
-			 * System.out.println("예약시간"+bookTime);
-			 */
-	         
+	         String dayArr[]= new String[dayOffList.size()];
+	         DayOff dddddddddd = dayOffList.get(1);
+	       
+	         SimpleDateFormat newForm = new SimpleDateFormat("yyyy-MM-dd");
+	         for(int i=0; i<dayOffList.size(); i++) {
+	        	 String dfdf = newForm.format((dayOffList.get(i)).getDayOffStart());
+	        	 dayArr[i]=dfdf;
+	         }
+	         mv.addObject("dayArr", Arrays.toString(dayArr).substring(1,Arrays.toString(dayArr).lastIndexOf("]")));
 	         mv.addObject("dayOffList", dayOffList);
 	         mv.addObject("hostSpace", hostSpace);
 	         mv.addObject("spaceAttImg",spaceAttImg);
@@ -298,77 +319,81 @@ public class SpaceController {
 	// 선택한 일자의 시간+가격 리스트 조회
 		@ResponseBody
 		@RequestMapping(value="timeList.sp", produces="application/json; charset=utf8")
-		public String timeList(String bookDate, int spaceId, ModelAndView mv) throws ParseException {
+		public String timeList(String bookDate, int spaceId) throws ParseException {
 			Price price = new Price();
 			Book book = new Book();
-			
 			// 달력 요일 뽑기 
 			String day= bookDate.substring(11,12);
 			System.out.println(bookDate);
 			System.out.println(day);
-		/*
-		 * SimpleDateFormat original = new SimpleDateFormat("yy-mm-dd E");
-		 * SimpleDateFormat newForm = new SimpleDateFormat("yyyy/mm/DD/E");
-		 * 
-		 * Date originDate = (Date) original.parse(inputDate);
-		 * 
-		 * String selectDate = newForm.format(originDate);
-		 * 
-		 * String day=selectDate.substring(11,12);
-		 * 
-		 */ 
-		  price.setPriceWeekend(day); price.setSpaceId(spaceId);
+		
+		  SimpleDateFormat original = new SimpleDateFormat("yy-mm-dd E");
+		  SimpleDateFormat newForm = new SimpleDateFormat("yyyy/mm/DD/E");
 		  
-		  //해당 일의 예약 조회 DateFormat sdFormat = new SimpleDateFormat("yy-MM-dd E"); Date
-		/*
-		 * tempDate = (Date) sdFormat.parse(bookDate);
-		 * 
-		 * book.setSpaceId(spaceId); book.setBookDate(tempDate);
-		 * 
-		 * System.out.println(book.getBookDate());
-		 * 
-		 * ArrayList<Book> bookTime = sService.bookTime(book);
-		 * 
-		 * System.out.println("예약시간"+bookTime);
-		 */
-		
-				 
-				
-				//일치 요일의 가격 조회
-				Price selectPrice = sService.selectPriceList(price);
-			
-				
-				JsonParser jp = new JsonParser();
-				
-				JsonArray priceTime = (JsonArray)jp.parse(selectPrice.getPriceTime());
-				// JsonParser --> HttpURLConnection 대체하기
-				
-				Iterator<JsonElement> it = priceTime.iterator();
-				
-				JsonObject obj = null;
-				Map<String, Integer> pricePerTime = new LinkedHashMap<String, Integer>();
-				
-				JsonArray resultArr = new JsonArray();
-				
-				while(it.hasNext()) {
-					JsonObject obj2 = new JsonObject();
-					
-					obj = it.next().getAsJsonObject();
-					
-					String h = obj.get("hour").toString();
-					String p = obj.get("price").toString();
-					
-					
-					obj2.addProperty(h.substring(1, h.lastIndexOf('~')), Integer.parseInt(p.replace('\"', ' ').trim()) );
-					
-					resultArr.add(obj2);
-					
-				}
-				
-				
-					
-				return new Gson().toJson(resultArr);
-		
-		
+		  price.setPriceWeekend(day); 
+		  price.setSpaceId(spaceId);
+
+		  //일치 요일의 가격 조회
+		  Price selectPrice = sService.selectPriceList(price);
+
+
+		  JsonParser jp = new JsonParser();
+
+		  JsonArray priceTime = (JsonArray)jp.parse(selectPrice.getPriceTime());
+		  // JsonParser --> HttpURLConnection 대체하기
+
+		  Iterator<JsonElement> it = priceTime.iterator();
+
+		  JsonObject obj = null;
+		  Map<String, Integer> pricePerTime = new LinkedHashMap<String, Integer>();
+
+		  JsonArray resultArr = new JsonArray();
+
+		  while(it.hasNext()) {
+			  JsonObject obj2 = new JsonObject();
+
+			  obj = it.next().getAsJsonObject();
+
+			  String h = obj.get("hour").toString();
+			  String p = obj.get("price").toString();
+
+
+			  obj2.addProperty(h.substring(1, h.lastIndexOf('~')), Integer.parseInt(p.replace('\"', ' ').trim()) );
+
+			  resultArr.add(obj2);
+
+		  }
+
+		  return new Gson().toJson(resultArr);
+
+
 	}
+		
+		
+		@ResponseBody
+		@RequestMapping(value="timeListBook.sp")
+		public ArrayList<Book> bookTimeArr(String bookDate, int spaceId) throws ParseException{
+			//해당 일의 예약 조회 
+		 Book book = new Book();
+		 
+		 System.out.println("되니"+bookDate);
+		
+		 Date date = new SimpleDateFormat("yyyy-MM-dd").parse(bookDate);
+		
+
+
+		 System.out.println(date);
+		 
+		 book.setSpaceId(spaceId);
+		 book.setBookDate(date);
+		 
+		 ArrayList<Book> bookTimeArrr= sService.bookTime(book);
+		 System.out.println(bookTimeArrr);
+		
+		 
+			
+			return bookTimeArrr;
+			
+			 
+		}
 }

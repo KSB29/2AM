@@ -25,6 +25,14 @@
 		<result property="spaceEnroll" column="SPACE_ENROLL"/>
 	</resultMap>
 	
+	<resultMap type="Notice" id="noticeResultSet">
+		<id property="noticeId" column="NOTICE_ID"/>
+		<result property="noticeContent" column="NOTICE_CONTENT"/>
+		<result property="noticeDate" column="NOTICE_DATE"/>
+		<result property="noticeStatus" column="NOTICE_STATUS"/>
+		<result property="memberId" column="MEMBER_ID"/>
+	
+	</resultMap>
 
 	
 	<!-- 새로 등록된 공간 정보 조회 쿼리 -->
@@ -53,6 +61,14 @@
 	    AND STATUS_ID = 2
 	    AND SPACE_ATT_STATUS = 'Y' 
 	  	AND <![CDATA[ROWNUM<7 ]]>
+	</select>
+
+	<select id="noticeSelect" resultMap="noticeResultSet" parameterType="Notice">
+	SELECT NOTICE_CONTENT, NOTICE_DATE
+	FROM NOTICE
+	WHERE NOTICE_STATUS != 2
+	AND MEMBER_ID=#{userId}
+	
 	</select>
 	
 </mapper>

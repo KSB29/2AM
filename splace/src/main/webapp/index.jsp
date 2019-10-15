@@ -219,7 +219,7 @@ margin-bottom: 1em !important;
 				<!-- 목록  -->
 				<section class="tiles">
 					<div class="row" id="newSpace">
-					<c:url var="sDetail" value="spaceDetail.sp">
+					<c:url var="sDetail" value="detailSpace.sp">
 			        <c:param name="spaceId" value="${newSpace.spaceId}"></c:param>
 			        </c:url>
 						

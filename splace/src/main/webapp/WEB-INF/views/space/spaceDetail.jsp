@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -525,7 +526,7 @@
 					<div class="swiper-container ">
 						<div class="swiper-wrapper">
 							<c:forEach items="${hostSpace}" var="host">
-								<c:url var="sDetail" value="spaceDetail.sp">
+								<c:url var="sDetail" value="detailSpace.sp">
 									<c:param name="spaceId" value="${host.spaceId }"></c:param>
 								</c:url>
 								<div class="swiper-slide hostSpace">
@@ -590,9 +591,15 @@
 	      <script>
 			
 		$(function() {
-				var disabledDays  =["2019-10-21"];
+			// 휴무일 
+				var dayArr = "${dayArr}";
+				var disabledDays=[];
+				<c:forTokens var="day" items="${dayArr}"
+					delims=", " varStatus="status">
+					disabledDays.push("${day}");
+				</c:forTokens>
 				var headerHtml = $("#material-header-holder .ui-datepicker-material-header");
-							 
+			
 				var changeMaterialHeader = function(header, date) {
 				var year   = date.format('YYYY');
 				var month  = date.format('MM');
@@ -664,16 +671,16 @@
 	 // 달력 선택 시 시간 div 표출
 		$(function(){
 			$("#datepicker").change(function(){
-				
-				$(".timeHeader").css("display","block"); 
 				var bookDate = $("#datepicker").val();
+				$(".timeHeader").css("display","block"); 
 				var spaceId = ${space.spaceId};
-				
+				console.log(bookDate); 	
 				
 				$.ajax({
 					url:"timeList.sp",
 					data:{bookDate:bookDate, spaceId:spaceId},
 					type:"POST",
+					async:false, 
 					dataType:"json",
 					success:function(timeList){
 						console.log(timeList);
@@ -681,13 +688,11 @@
 						var $bookB = $(".BookingDate");
 						$body.html("");
 						$bookB.text("");
-					
 						if(timeList.length>0){
 							$.each(timeList, function(index, item) {
 								$.each(item, function(key, value){
 								   
 								    var result="";
-								    var result2="";
 								    result+='<li data-num="'
 								    	   +index
 								    	   +'" id="timeSlotLi">'
@@ -698,6 +703,8 @@
 								    	   +'" name="timeClick">'
 								    	   +'<label for="'
 								    	   +(index+1)
+								    	   +'" class="'
+								    	   +key
 								    	   +'">'
 								    	   +key
 								    	   +'시 <br>'
@@ -708,11 +715,17 @@
 								});
 							});
 							$bookB.append(bookDate);
+							
+							
 						}
+					bookTime();
 					}
 				});
 				
-			})
+			});
+		
+			
+			
 			// 시간 선택 묶음 
 			function check(){
 				var length = ($(".time_slot li:last-child input")).attr("id");
@@ -732,7 +745,17 @@
 		    var priceArr=[];
 		    
 			$(document).on("click",".temp",function(){
+				priceArr = [];
+				$("input[name=timeClick]:checked").parent().addClass("ss");
+				$(".ss").each(function(index, item) {
+					console.log($(item).children("label").text().split(" ")[1]);
+					priceArr.push($(item).children("label").text().split(" ")[1]);
+				});
+				console.log($ssss1+":"+$ssss2);
+				console.log(priceArr);
+				
 				if($(this).is(":checked")){
+					
 					var idval = parseInt(($(this).attr("id")));
 					var $ssss1;
 					var $ssss2;
@@ -750,7 +773,7 @@
 						$(this).parent().addClass("dSt");
 						console.log($ssss1.html());
 						if(max==-1) max=min;
-						priceArr.push(price);
+						/* priceArr.push(price); */
 					}
 					else{
 						max = idval;
@@ -764,14 +787,14 @@
 						$(this).parent().addClass("dEd");
 						console.log($ssss2.html());
 
-						priceArr.push(price);
+						/* priceArr.push(price);
 						$(".dSt").nextUntil(".dEd").addClass("ss");
 						$(".ss").each(function(index, item) {
 							console.log($(item).children("label").text().split(" ")[1]);
 							priceArr.push($(item).children("label").text().split(" ")[1]);
 						});
 						console.log($ssss1+":"+$ssss2);
-						console.log(priceArr);
+						console.log(priceArr); */
 						
 						if(min==100) min=max;
 						//console.log();
@@ -813,7 +836,36 @@
 				
 			});
 		});
-	 
+	    
+	    // 해당 일자의 예약 시간 disabled로 막기 
+		 function bookTime(){
+			var bookDate = $("#datepicker").val();
+			var spaceId = ${space.spaceId};
+			console.log("bookDate: "+bookDate);
+			$.ajax({
+				url: "timeListBook.sp",
+				data:{bookDate:bookDate, spaceId:spaceId},
+				type:"POST",
+				async:false,
+				success: function(bookTimeArrr){
+					$.each(bookTimeArrr, function(i) {
+						var Start = bookTimeArrr[i].bookStartTime;
+						var End = bookTimeArrr[i].bookEndTime;
+					console.log("Start :" +Start);
+					console.log("End : "+End);
+					console.log($("."+Start).text());
+					$("."+Start).prev().attr('disabled', true);
+					$("."+End).prev().attr('disabled', true);
+					
+					});
+				},
+				error: function(){
+					console.log("에러에러");
+				}
+			});
+			
+		} 
+		 
 	    
 	    // 인원 수 클릭 (마이너스 )
 	    $("#min").click(function(){

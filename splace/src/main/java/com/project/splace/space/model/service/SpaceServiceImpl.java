@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.splace.book.model.vo.Book;
+import com.project.splace.common.PageInfo;
+import com.project.splace.common.Pagination;
 import com.project.splace.space.model.dao.SpaceDao;
 import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
@@ -121,8 +123,13 @@ public class SpaceServiceImpl implements SpaceService {
 
 
 	@Override
-	public ArrayList<Space> selectList(String memberId) {
-		return sDao.selectList(memberId);
+	public ArrayList<Space> selectList(String memberId, int currentPage) {
+		// 공간리스트 수 조회
+		int listCount = sDao.getsListCount(memberId);
+		
+		// 공간리스트 조회(페이징 처리 적용)
+		PageInfo pageInfo = Pagination.getPageInfo(currentPage, listCount);
+		return sDao.selectList(memberId, pageInfo);
 	}
 
 

@@ -2,6 +2,7 @@ package com.project.splace.main.model.service;
 
 import java.util.ArrayList;
 
+import com.project.splace.main.model.vo.Notice;
 import com.project.splace.space.model.vo.Space;
 
 public interface MainService {
@@ -17,4 +18,6 @@ public interface MainService {
 	 * @return
 	 */
 	public abstract ArrayList<Space> bestSpace();
+
+	public abstract ArrayList<Notice> noticeSelect(String userId);
 }
