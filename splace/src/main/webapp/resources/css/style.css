@@ -3616,7 +3616,7 @@ a.scrollup i:hover {
 	height: 70%;
   }
   .notification-container:before {
-	content: "";
+	/* content: "";
 	position: absolute;
 	top: 1px;
 	right: 7px;
@@ -3625,7 +3625,7 @@ a.scrollup i:hover {
 	transform: translate(-1rem, -100%);
 	border-left: .75rem solid transparent;
 	border-right: .75rem solid transparent;
-	border-bottom: .75rem solid white;
+	border-bottom: .75rem solid white; */
   }
   .notification-container h3 {
 	text-transform: uppercase;

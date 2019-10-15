@@ -53,7 +53,7 @@
       </a>
       <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="hostManagement.sp">호스트 정보관리</a>
+          <a class="collapse-item" href="hhostManagement.sp">호스트 정보관리</a>
           <a class="collapse-item" href="hApplyManagement.sp">호스트 신청관리</a>
         </div>
       </div>
