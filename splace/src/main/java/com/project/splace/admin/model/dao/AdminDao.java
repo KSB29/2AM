@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
+import com.project.splace.book.model.vo.Book;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
@@ -93,6 +95,22 @@ public class AdminDao {
 	 */
 	public int insertAnswerAdmin(QnA qna) {
 		return sqlSession.update("adminMapper.insertAnswerAdmin", qna);
+	}
+
+	/**
+	 * 10. 신규회원목록(1달)
+	 * @return mList
+	 */
+	public ArrayList<Member> selectNewMemberList() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectNewMemberlist");
+	}
+
+	/**
+	 * 11. 오늘예약목록
+	 * @return bList
+	 */
+	public ArrayList<TodayBook> selectBookList() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectBookList");
 	}
 
 }

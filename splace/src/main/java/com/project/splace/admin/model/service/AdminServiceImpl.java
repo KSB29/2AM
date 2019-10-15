@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.splace.admin.model.dao.AdminDao;
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
@@ -88,5 +89,21 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int insertAnswerAdmin(QnA qna) {
 		return adminDao.insertAnswerAdmin(qna);
+	}
+
+	/* 10. 신규회원목록(1달)
+	 * return mList
+	 */
+	@Override
+	public ArrayList<Member> selectNewMemberList() {
+		return adminDao.selectNewMemberList();
+	}
+
+	/* 11. 오늘예약목록
+	 * return bList
+	 */
+	@Override
+	public ArrayList<TodayBook> selectBookList() {
+		return adminDao.selectBookList();
 	}
 }
