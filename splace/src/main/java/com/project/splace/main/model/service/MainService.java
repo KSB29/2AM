@@ -20,4 +20,6 @@ public interface MainService {
 	public abstract ArrayList<Space> bestSpace();
 
 	public abstract ArrayList<Notice> noticeSelect(String userId);
+
+	public abstract int noticeDelete(int noticeId);
 }

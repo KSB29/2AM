@@ -33,5 +33,9 @@ public class MainServiceImpl implements MainService{
 	public ArrayList<Notice> noticeSelect(String userId) {
 		return mainDao.noticeSelect(userId);
 	}
+	@Override
+	public int noticeDelete(int noticeId) {
+		return mainDao.noticeDelete(noticeId);
+	}
 
 }
