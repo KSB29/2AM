@@ -31,7 +31,7 @@
 					</c:if>
 					<c:choose>
 						<c:when test="${ hostId == null }">
-							<c:url var="hostUrl" value="hostInsert.sp"/>
+							<c:url var="hostUrl" value="hjoinInsert.sp"/>
 						</c:when>
 						<c:otherwise>
 							<c:url var="hostUrl" value="hostUpdate.sp"/>

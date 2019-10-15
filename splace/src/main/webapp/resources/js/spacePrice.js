@@ -81,7 +81,7 @@ $(document).ready(function(){
 	function dayChange(day) {
 		var num = day.replace("day", "");
 		// 선택한 요일 표시
-		$("#dayText").html("* " + $("#"+day).next().html() + "시간 당 금액").css("color", "#4C74B9");
+		$("#dayText").html("* " + $("#"+day).next().html() + "1인 당 금액").css("color", "#4C74B9");
 		$(".timeTable").css("display", "none");
 		$("#timeTableAm"+num).css("display", "table-row");
 		$("#timeTablePm"+num).css("display", "table-row");

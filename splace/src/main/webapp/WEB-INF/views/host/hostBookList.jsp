@@ -21,26 +21,28 @@
 			<!-- Content -->
 				<section>
 					<h1 class="align-center">예약 리스트</h1>
-					<form action="hostBookList.sp" method="get">
+					<form action="hostBookList.sp" id="bookSearchForm" method="get">
 						<div class="row gtr-uniform" id="bookSearchArea">
 							<div class="col-6"></div>
 							<div class="col-3">
+								<div class="default-select" id="default-select">
 									<select name="spaceId" id="spaceId">
 										<option value="">- 공간 -</option>
 										<c:forEach var="sList" items="${ sList }">
 										<option value="${ sList.spaceId }" <c:if test="${ search.spaceId == sList.spaceId }">selected</c:if>>${ sList.spaceName }</option>
 										</c:forEach>
 									</select>
+								</div>
 							</div>
 							<div class="col-3">
-								<!-- <div class="default-select" id="default-select"> -->
+								<div class="default-select" id="default-select">
 									<select name="statusId" id="statusId">
 										<option value="">- 예약상태 -</option>
 										<c:forEach var="stList" items="${ stList }">
 										<option value="${ stList.statusId }" <c:if test="${ search.statusId == stList.statusId }">selected</c:if>>${ stList.statusName }</option>
 										</c:forEach>
 									</select>
-								<!-- </div> -->
+								</div>
 							</div>
 						</div>
 					</form>

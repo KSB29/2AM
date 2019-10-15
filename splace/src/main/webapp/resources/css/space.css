@@ -145,3 +145,13 @@ input[type="file"] {
 #reviewArea .attImg {
 	width: 30%;
 }
+
+/* select box */
+#dayoffSearchForm, #bookSearchForm, #qnaSearchForm, #reviewSearchForm {
+	overflow-x: inherit !important;
+}
+.default-select .nice-select .list
+{
+	height: 300px;
+	overflow: auto;
+}

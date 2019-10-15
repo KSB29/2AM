@@ -16,7 +16,6 @@
 			<div class="col-2 align-center">
 				<h2><a href="hostApplyForm.sp">마이페이지</a></h2>
 			</div>
-			<c:if test="${ sessionScope.hostId != null }">
 			<div class="col-2 align-center">
 				<h2><a href="spaceList.sp">공간관리</a></h2>
 			</div>
@@ -32,24 +31,6 @@
 			<div class="col-2 align-center">
 				<h2><a href="hostAccount.sp">정산내역</a></h2>
 			</div>
-			</c:if>
-			<c:if test="${ sessionScope.hostId == null }">
-			<div class="col-2 align-center">
-				<h2>공간관리</h2>
-			</div>
-			<div class="col-2 align-center">
-				<h2>예약관리</h2>
-			</div>
-			<div class="col-2 align-center">
-				<h2>Q&A관리</h2>
-			</div>
-			<div class="col-2 align-center">
-				<h2>후기관리</h2>
-			</div>
-			<div class="col-2 align-center">
-				<h2>정산내역</h2>
-			</div>
-			</c:if>
 		</div>
 		<hr>
 	</section>

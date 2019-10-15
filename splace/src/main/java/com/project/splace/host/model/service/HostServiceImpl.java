@@ -72,15 +72,26 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public int updateApplyBook(String statusId, JSONArray jsonArr) {
 		int result = 0;
+		int noticeResult = 0;
 		Iterator<String> iterator = jsonArr.iterator();
+		String bookId = "";
 		while (iterator.hasNext()) {
+			bookId = iterator.next();
 			// 예약 승인
 			if (statusId.equals("101")) {
-				result += hDao.updateApproveBook(iterator.next());
+				if (hDao.updateApproveBook(bookId) > 0) {
+					if (hDao.insertNoticeApprove(bookId) > 0) {
+						result++;
+					}
+				}
 			}
 			// 예약 취소
 			else if (statusId.equals("102")) {
-				result += hDao.updateCancelBook(iterator.next());
+				if (hDao.updateCancelBook(bookId) > 0) {
+					if (hDao.insertNoticeCancel(bookId) > 0) {
+						result++;
+					}
+				}
 			}
 		}
 		// 처리 건 수 리턴
