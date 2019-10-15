@@ -446,7 +446,7 @@
 							<h3>날짜 선택</h3>
 							<a id="calIcon"></a> 
 							<p></p>
-							<input type="text" id="datepicker">
+							<input type="text" id="datepicker" name="bookDates">
 						</div>
 						<!-- 날짜 선택  끝-->
 
@@ -491,7 +491,7 @@
 									</a>
 								</div>
 								<div class="personCkeck">
-									<input type="tel" value="${space.spaceMinPer}" id="partyInput">
+									<input name="bookPer" type="tel" value="${space.spaceMinPer}" id="partyInput">
 								</div>
 								<div class="maxBtn personBtn">
 									<a class="btn_plus partyBtn"> 
@@ -513,6 +513,9 @@
 							
 						</div>
 						<!-- 공간 사용료 끝 -->
+						<input type="hidden" name="bookStartTime">
+						<input type="hidden" name="bookEndTime">
+						<input type="hidden" name="bookPrice">
 						<button type="submit" class="button primary fit" id="reserveBtn" onclick="return rDataCheck();"> 바로 예약하기</button>
 					</form>
 					</div>
@@ -609,11 +612,16 @@
 	   	      			regExpCheck=false;
 	   	    		}
 	   	  
-	   	  			if($("input:checkbox[name=timeClick]:checked").length< ${space.spaceTime}){
+	   	  			if($("input:checkbox[name=timeClick]:checked").length<${space.spaceTime}){
 	   	      			alert("최소 예약시간을 확인해주세요!");
 	   	      			$(".timeHeader").focus();
 	   	      			regExpCheck=false;
 	   	      		}
+	   	  		if(regExpCheck){
+	   	  			$("input[name=bookStartTime]").val($(".start").text().substring(0,$(".start").text().lastIndexOf("시")));
+	   	  			$("input[name=bookEndTime]").val($(".end").text().substring(0,$(".end").text().lastIndexOf("시")));
+	   	  			$("input[name=bookPrice]").val($(".totalPrice3").text());
+	   	  		}
 	   	    	return regExpCheck;
 	    	};
 	      
@@ -762,9 +770,6 @@
 				}
 				
 			};
-			
-			
-			
 			
 			var min = 100;
 			var max = -1;

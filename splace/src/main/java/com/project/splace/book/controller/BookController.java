@@ -39,9 +39,10 @@ public class BookController {
 	
 	// 1. 예약신청 화면으로 이동
 	@RequestMapping("bookForm.sp")
-	public ModelAndView bookForm(int spaceId,
+	public ModelAndView bookForm(int spaceId, String bookDates, int bookStartTime, int bookEndTime, int bookPrice, int bookPer,
 								ModelAndView mv) {
-		
+
+		System.out.println("bookDates: "+bookDates+", bookStartTime"+bookStartTime+", bookEndTime"+bookEndTime+", bookPrice"+bookPrice+", bookPer"+bookPer);
 		// 공간정보
 		Space space = bookService.selectSpace(spaceId);
 		System.out.println(space);
@@ -68,22 +69,21 @@ public class BookController {
 			
 			if(host != null) {
 				// 예약정보
-				Date date = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd (E)");
-				String bookDate = sdf.format(date);
-				int startTime = 18;
-				int endTime = 22;
-				int bookPer = 3;
+		    	String date2 = bookDates.substring(0, bookDates.lastIndexOf(" "));
+		    	String weekend = "("+bookDates.substring(bookDates.lastIndexOf(" ")+1)+")";
+		    	date2 = date2.replace("-", ".");
+		    	String bookDate = date2 +" "+ weekend;
+		    	System.out.println(bookDate);
 
 				mv.addObject("space", space) 				// 예약공간정보
 				  .addObject("spaceO", spaceO)				// 세부옵션
 				  .addObject("spaceNotice", spaceNotice)	// 주의사항
 				  .addObject("host", host)					// 호스트정보
 				  .addObject("bookDate", bookDate)			// 예약날짜
-				  .addObject("startTime", startTime)		// 예약시작시간
-				  .addObject("endTime", endTime)			// 예약끝시간
+				  .addObject("startTime", bookStartTime)	// 예약시작시간
+				  .addObject("endTime", bookEndTime)		// 예약끝시간
 				  .addObject("bookPer", bookPer) 			// 예약인원
-				  .addObject("bookPrice", 12900);			// 예약최종가격
+				  .addObject("bookPrice", bookPrice);		// 예약최종가격
 				mv.setViewName("book/book");
 			}
 		}
@@ -94,6 +94,7 @@ public class BookController {
 	// 1.1 예약신청
 	@RequestMapping("book.sp")
 	public String book(Book book, int spaceId, String bookDateS, HttpSession session, RedirectAttributes rd) throws ParseException {
+		System.out.println("date: "+bookDateS);
 		// 예약일
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Date bookDates = sdf.parse(bookDateS);
@@ -314,6 +315,8 @@ public class BookController {
 		// 예약완료&결제완료 상태이고, 오늘 == 예약전날 ? 결제취소금액설정(결제금액/2) : 결제취소금액설정(결제금액)
 		if(book.getStatusId() == 103 && book.getpStatusId() == 103 && sdf.format(today).equals(sdf.format(bookDateEve))) {
 			book.setPaymentCancelPrice(book.getBookPrice() / 2);
+		} else if(book.getStatusId() == 103 && book.getpStatusId() == 103) {
+			book.setPaymentCancelPrice(book.getBookPrice());
 		}
 		System.out.println("취소금액: "+book.getPaymentCancelPrice());
 				
@@ -368,7 +371,7 @@ public class BookController {
 
 		Cancel cancel = new Cancel();
 		cancel.receipt_id = receiptId;
-		cancel.price = 500;
+		cancel.price = 1000;
 		cancel.name = "관리자";
 		cancel.reason = "구매자 취소요청";
 

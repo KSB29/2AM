@@ -43,3 +43,7 @@ table td:last-child button{
     margin: 1% 0 !important;
 }
 
+#bookListRow{
+	margin-left: 0;
+    margin-right: 0;
+}

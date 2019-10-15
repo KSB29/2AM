@@ -1,5 +1,6 @@
 package com.project.splace.bootpay;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
@@ -14,10 +15,16 @@ import com.project.splace.bootpay.model.request.SubscribeBilling;
 public class Test {
     static BootpayApi api;
     public static void main(String[] args) {
-        api = new BootpayApi("5d7209d802f57e003591d59a", "nKnUBiaphtcJt3Y8fELMbowN3Di6PV+Kp6JxKLVyKVQ=");
-        goGetToken();
+    	String date1 = "2019-10-25 금";
+    	String date2 = date1.substring(0, date1.lastIndexOf(" "));
+    	String weekend = "("+date1.substring(date1.lastIndexOf(" ")+1)+")";
+    	date2 = date2.replace("-", ".");
+    	System.out.println(date2 +" "+ weekend);
+    	
+//        api = new BootpayApi("5d7209d802f57e003591d59a", "nKnUBiaphtcJt3Y8fELMbowN3Di6PV+Kp6JxKLVyKVQ=");
+//        goGetToken();
 //        goVerfity();
-        goCancel();
+//        goCancel();
 //        goSubscribeBilling();
 //        goRemoteForm();
     }
