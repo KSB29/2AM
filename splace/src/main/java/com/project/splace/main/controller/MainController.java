@@ -71,7 +71,7 @@ public class MainController {
 	    return gson.toJson(NoticeArr);
 		
 	}
-	
+	  
 	//알림 삭제
 		@ResponseBody
 		@RequestMapping("alarmDelete.sp")
