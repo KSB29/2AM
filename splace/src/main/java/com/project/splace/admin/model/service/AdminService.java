@@ -7,6 +7,7 @@ import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
+import com.project.splace.space.model.vo.Space;
 
 public interface AdminService {
 
@@ -30,5 +31,20 @@ public interface AdminService {
 
 	// 관리자문의관리
 	public abstract ArrayList<QnA> selectQAdminlist();
+
+	// 호스트 승인 처리
+	public abstract int updateApproveHost(int hostId);
+	
+	// 호스트 반려 처리
+	public abstract int updateCancelHost(int hostId);
+
+	// 공간 관리
+	public abstract ArrayList<Space> selectSpaceList(int status);
+	
+	// 공간 승인 처리
+	public abstract int updateApproveSpace(int spaceId);
+	
+	// 공간 반려 처리
+	public abstract int updateCancelSpace(int spaceId);
 
 }

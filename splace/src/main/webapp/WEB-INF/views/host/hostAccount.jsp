@@ -30,6 +30,9 @@
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty aList}">
+								<tr><td colspan="4" class="align-center">정산 내역이 없습니다.</td></tr>
+								</c:if>
 								<c:forEach var="aList" items="${ aList }">
 								<tr>
 									<td><fmt:formatDate value="${ aList.accountStart }" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${ aList.accountEnd }" pattern="yyyy.MM.dd"/></td>

@@ -102,7 +102,7 @@ public interface SpaceService {
 	 * @return result
 	 */
 	public abstract int updateSpace(Space space, int filesIndex, HttpServletRequest request, MultipartFile uploadFile,
-			List<MultipartFile> files);
+			List<MultipartFile> files, String[] spaceAttChanges);
 
 	/**
 	 * 공간 가격 수정 Service

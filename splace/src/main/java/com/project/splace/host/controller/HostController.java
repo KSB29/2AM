@@ -62,7 +62,7 @@ public class HostController {
 	}
 	
 	// 호스트 정보 수정 처리 후 마이페이지 이동
-	@RequestMapping("hostUpdate.sp")
+	@RequestMapping({"hostUpdate.sp", "hjoinUpdate.sp"})
 	public ModelAndView hostUpdate(Host host, ModelAndView mv) {
 		Host hostInfo = hService.updateHost(host);
 		mv.addObject("host", hostInfo).setViewName("host/hostApplyForm");
@@ -70,7 +70,7 @@ public class HostController {
 	}
 	
 	// 호스트 승인 요청 처리 후 마이페이지 이동
-	@RequestMapping("hostApply.sp")
+	@RequestMapping("hjoinApply.sp")
 	public ModelAndView hostApply(HttpSession session, ModelAndView mv) {
 		int hostId = (int)session.getAttribute("hostId");
 		Host hostInfo = hService.updateApplyHost(hostId);

@@ -11,6 +11,7 @@ import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
+import com.project.splace.space.model.vo.Space;
 
 @Repository("adminDao")
 public class AdminDao {
@@ -76,6 +77,51 @@ public class AdminDao {
 	 */
 	public ArrayList<QnA> selectQAdminlist() {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectQAdminlist");
+	}
+
+	/**
+	 * 호스트 승인 처리
+	 * @param hostId
+	 * @return result
+	 */
+	public int updateApproveHost(int hostId) {
+		return sqlSession.update("adminMapper.updateApproveHost", hostId);
+	}
+
+	/**
+	 * 호스트 반려 처리
+	 * @param hostId
+	 * @return result
+	 */
+	public int updateCancelHost(int hostId) {
+		return sqlSession.update("adminMapper.updateCancelHost", hostId);
+	}
+
+	/**
+	 * 공간 관리
+	 * @param status
+	 * @return sList
+	 */
+	public ArrayList<Space> selectSpaceList(int status) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectSpaceList", status);
+	}
+
+	/**
+	 * 공간 승인 처리
+	 * @param spaceId
+	 * @return result
+	 */
+	public int updateApproveSpace(int spaceId) {
+		return sqlSession.update("adminMapper.updateApproveSpace", spaceId);
+	}
+
+	/**
+	 * 공간 반려 처리
+	 * @param spaceId
+	 * @return result
+	 */
+	public int updateCancelSpace(int spaceId) {
+		return sqlSession.update("adminMapper.updateCancelSpace", spaceId);
 	}
 
 }

@@ -218,13 +218,20 @@
 		WHERE  SPACE_ID = #{spaceId}
 	</update>
 	
+	<!-- 공간 파일ID 조회 -->
+	<select id="getAttId" parameterType="string" resultType="_int">
+		SELECT SPACE_ATT_ID
+		FROM   SPACE_ATT
+		WHERE  SPACE_ATT_CHANGE = #{prevFileName}
+	</select>
+	
 	<!-- 공간 파일 정보 수정 -->
 	<update id="updateFile" parameterType="SpaceAtt">
 		UPDATE SPACE_ATT
-		SET    SPACE_ATT_ORIGIN = #{spaceAttOrigin}
-		WHERE  SPACE_ID = #{spaceId}
-		AND    SPACE_ATT_TYPE = #{spaceAttType}
-		AND    SPACE_ATT_CHANGE = #{spaceAttChange}
+		SET    SPACE_ATT_ORIGIN = #{spaceAttOrigin},
+			   SPACE_ATT_CHANGE = #{spaceAttChange},
+			   SPACE_ATT_FILEPATH = #{spaceAttChange}
+		WHERE  SPACE_ATT_ID = #{spaceAttId}
 	</update>
 	
 	<!-- 공간 가격 조회 -->
@@ -269,8 +276,14 @@
 		AND    STATUS_ID IN (0, 3)
 	</update>
 	
-	<!-- 공간 삭제 -->
+	<!-- 공간 사진 파일 삭제 -->
 	<!-- 등록, 대기, 반려 상태일 경우 삭제 가능 -->
+	<delete id="deleteSpaceAtt" parameterType="_int">
+		DELETE SPACE_ATT
+		WHERE  SPACE_ID = #{spaceId}
+	</delete>
+	
+	<!-- 공간 삭제 -->
 	<delete id="deleteSpace" parameterType="_int">
 		DELETE SPACE
 		WHERE  SPACE_ID = #{spaceId}

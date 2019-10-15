@@ -162,8 +162,8 @@
 						</div>
 						<div class="row gtr-uniform">
 							<div class="col-2 col-12-xsmall">
-								<label for="spaceAdd">1인당 추가 금액</label>
-								<input type="number" class="align-right" name="spaceAdd" id="spaceAdd" min="0" value="${ spaceAdd }">
+								<label for="spaceAdd">* 공간 대표 금액</label>
+								<input type="number" class="align-right" name="spaceAdd" id="spaceAdd" value="${ spaceAdd }">
 							</div>
 							<div class="col-10 col-12-xsmall">
 							</div>
