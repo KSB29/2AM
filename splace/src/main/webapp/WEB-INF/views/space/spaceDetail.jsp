@@ -613,8 +613,7 @@
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>
 	
 	<!--  ajax  -->   
-	      <script>
-	 
+	   <script>
 	      function rDataCheck(){
 	    	 var regExpCheck= true;
 	   	    		if($("#datepicker").val()==""){
