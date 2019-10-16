@@ -178,8 +178,8 @@ public class SpaceController {
 	
 	// 공간 삭제 처리
 	@RequestMapping("spaceDelete.sp")
-	public String spaceDelete(int spaceId, RedirectAttributes rd) {
-		int result = sService.deleteSpace(spaceId);
+	public String spaceDelete(int spaceId, HttpServletRequest request, RedirectAttributes rd) {
+		int result = sService.deleteSpace(spaceId, request);
 		if (result > 0) {
 			rd.addFlashAttribute("msg", "공간이 삭제되었습니다.");
 		} else {

@@ -75,9 +75,10 @@ public interface SpaceService {
 	/**
 	 * 공간 삭제 Service
 	 * @param spaceId
+	 * @param request 
 	 * @return result
 	 */
-	public abstract int deleteSpace(int spaceId);
+	public abstract int deleteSpace(int spaceId, HttpServletRequest request);
 
 	/**
 	 * 공간 정보 조회 Service

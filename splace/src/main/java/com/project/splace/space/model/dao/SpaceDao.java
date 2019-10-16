@@ -363,12 +363,30 @@ public class SpaceDao {
 	}
 
 	/**
-	 * 공간 사진 파일ID 조회
+	 * 공간 사진 파일ID 조회 Dao
 	 * @param spaceId
 	 * @param prevFileName
 	 * @return attId
 	 */
 	public int getAttId(String prevFileName) {
 		return sqlSession.selectOne("spaceMapper.getAttId", prevFileName);
+	}
+
+	/**
+	 * 공간 가격 삭제 Dao
+	 * @param spaceId
+	 * @return result
+	 */
+	public int deleteSpacePrice(int spaceId) {
+		return sqlSession.delete("spaceMapper.deleteSpacePrice", spaceId);
+	}
+
+	/**
+	 * 공간 휴일 삭제 Dao
+	 * @param spaceId
+	 * @return result
+	 */
+	public int deleteSpaceDayoff(int spaceId) {
+		return sqlSession.delete("spaceMapper.deleteSpaceDayoff", spaceId);
 	}
 }
