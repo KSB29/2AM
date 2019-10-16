@@ -45,7 +45,7 @@ public interface AdminService {
 	// 오늘예약목록
 	public abstract ArrayList<TodayBook> selectBookList();
 
-  // 호스트 승인 처리
+    // 호스트 승인 처리
 	public abstract int updateApproveHost(int hostId);
 	
 	// 호스트 반려 처리

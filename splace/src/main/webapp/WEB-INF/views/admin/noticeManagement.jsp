@@ -77,7 +77,7 @@
 	                      <td><fmt:formatDate value="${notice.boardUpdate}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
 	                      <td>
 	                      	<c:if test="${notice.boardStatus eq 'Y' }">
-	                      		<button class="btn btn-google btn-block" onclick="location.href='faqDelete.sp?faqId=${faq.boardId}'">삭제</button>
+	                      		<button class="btn btn-google btn-block" onclick="location.href='noticeDelete.sp?noticeId=${notice.boardId}'">삭제</button>
 	                      	</c:if>
 	                      	<button class="btn btn-facebook btn-block" onclick="location.href='noticeUpdateForm.sp?noticeId=${notice.boardId}'">수정</button>
 	                      </td>
