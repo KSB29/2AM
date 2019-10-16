@@ -55,7 +55,7 @@
 									</tr>
 									<tr>
 										<td>예약공간</td>
-										<td><a href="#">${book.spaceName }</a></td>
+										<td><a href="detailSpace.sp?spaceId=${book.spaceId }">${book.spaceName }</a></td>
 									</tr>
 									<tr>
 										<td>예약날짜</td>
@@ -63,7 +63,7 @@
 									</tr>
 									<tr>
 										<td>예약시간</td>
-										<td>${book.bookStartTime}시 ~ ${book.bookEndTime}시, ${book.bookEndTime-book.bookStartTime}시간</td>
+										<td>${book.bookStartTime}시 ~ ${book.bookEndTime}시, ${book.bookEndTime-book.bookStartTime+1}시간</td>
 									</tr>
 									<tr>
 										<td>예약인원</td>
@@ -207,7 +207,7 @@
 										</tr>
 										<tr>
 											<td>예약시간</td>
-											<td>${book.bookStartTime}시 ~ ${book.bookEndTime}시, ${book.bookEndTime-book.bookStartTime}시간</td>
+											<td>${book.bookStartTime}시 ~ ${book.bookEndTime}시, ${book.bookEndTime-book.bookStartTime+1}시간</td>
 										</tr>
 										<tr class="borderBottom2">
 											<td>예약인원</td>
@@ -249,7 +249,7 @@
 														<td>
 															<input type="text" name="last-child" id="bookStartTime" value="${book.bookStartTime}" readonly> ~ 
 															<input type="text" name="bookEndTime" id="bookEndTime" value="${book.bookEndTime}" readonly> 
-															, <span>(${book.bookEndTime-book.bookStartTime}시간)</span>
+															, <span>(${book.bookEndTime-book.bookStartTime+1}시간)</span>
 														</td>
 													</tr>
 													<tr>
@@ -393,7 +393,7 @@
 				+ '<td>'
 				+ '${book.bookStartTime} ~ '
 				+ '${book.bookEndTime}'
-				+ ', <span>(${book.bookEndTime-book.bookStartTime}시간)</span>'
+				+ ', <span>(${book.bookEndTime-book.bookStartTime+1}시간)</span>'
 				+ '</td>'
 				+ '</tr>'
 				+ '<tr>'
