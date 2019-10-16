@@ -700,8 +700,14 @@
 			$("#datepicker").change(function(){
 				var bookDate = $("#datepicker").val();
 				$(".timeHeader").css("display","block"); 
-				var spaceId = ${space.spaceId};
 				
+				var spaceId = ${space.spaceId};
+				$(".start").text("");
+				$(".start4").text("");
+				$(".bar").text("");
+				$(".end").text("");
+				$(".bar4").text("");
+				$(".end4").text("");
 				$.ajax({
 					url:"timeList.sp",
 					data:{bookDate:bookDate, spaceId:spaceId},
@@ -737,6 +743,7 @@
 								    	   +'</label></li>';
 			                              
 								    	   $body.append(result);
+								    	   
 								});
 							});
 							$bookB.append(bookDate);
@@ -744,12 +751,18 @@
 							
 						}
 					bookTime();
+					
 					}
 				});
 				
 			});
 		
-			
+			var min = 100;
+			var max = -1;
+		    var startTime ="";;
+		    var startPrice =0;
+		    var endTime="";
+		    var priceArr=[];
 			
 			var tot = 0;
 			var total =0;
@@ -759,6 +772,18 @@
 				tot = 0;
 				for (var i = 1; i <= length; i++) {
 					$("#"+i).prop("checked",false);
+				}
+				for(var i = min; i <= max; i++){
+					if($("#"+i).is(":disabled")){
+						alert("유효한 시간을 선택해주세요");
+						min = 100;
+						max = -1;
+						$(".bar").text("");
+						$(".end").text("");
+						$(".bar4").text("");
+						$(".end4").text("");
+						return false;
+					}
 				}
 				for(var i = min; i <= max; i++){
 			var per=parseInt($('input[id="partyInput"]').val());
@@ -782,18 +807,13 @@
 			};
 			
 			
-			var min = 100;
-			var max = -1;
-		    var startTime ="";;
-		    var startPrice =0;
-		    var endTime="";
-		    var priceArr=[];
+
 		    
 			$(document).on("click",".temp",function(){
 				priceArr = [];
 				
 				if($(this).is(":checked")){
-					
+					var endTime2= $('li:nth-of-type('+max+')').children("label").text().split(" ")[0];
 					var idval = parseInt(($(this).attr("id")));
 					var label = $(this).parent().children("label").text().split(" ")[0];
 					var price=$(this).parent().children("label").text().split(" ")[1];
@@ -801,10 +821,6 @@
 						min = idval;
 						startTime = label;
 						startPrice = price;
-						console.log("1"+min);
-						console.log("1"+max);
-						console.log("1"+idval);
-						console.log("1"+label);
  						$(".start").text(startTime);
 						$(".start4").text(startTime);
 						$(".bar").text("");
@@ -812,43 +828,23 @@
 						$(".bar4").text("");
 						$(".end4").text("");
 						if(min<max){
-							console.log("dfjalkfjk;as");
 							$(".start").text(startTime);
 							$(".start4").text(startTime);
 							$(".bar").text("-");
-							$(".end").text("");
+							$(".end").text(endTime2);
 							$(".bar4").text("-");
-							$(".end4").text("");
+							$(".end4").text(endTime2);
 							
 						}
  					if(max==-1) 
  						if(max=min){
-	 					console.log("9"+min);
-						console.log("9"+max);
-						console.log("9"+idval);
-						console.log("9"+label);
 						$(".start").text(startTime);
 						$(".start4").text(startTime);
-						
- 						}
- 						else{
- 							console.log("10dddd"+min);
- 							console.log("10dddd"+max);
- 							console.log("10dddd"+idval);
- 							console.log("10dddd"+label);
  						}
 					}
 					else{
 						max = idval;
 						endTime=label;
-						console.log("2"+min);
-						console.log("2"+max);
-						console.log("2"+idval);
-						console.log("2"+label);
-/* 						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime); */
 						$(".start").text(startTime);
 						$(".start4").text(startTime);
 						$(".bar").text("-");
@@ -858,10 +854,6 @@
 
 						if(min==100) 
 						min=max;
-						console.log("3"+min);
-						console.log("3"+max);
-						console.log("3"+idval);
-						console.log("3"+label);
 						$(".start").text(startTime);
 						$(".start4").text(startTime);
 						$(".bar").text("-");
@@ -880,10 +872,6 @@
 						$(this).prop("checked",false);
 						min = 100;
 						max = -1;
-						console.log("4"+min);
-						console.log("4"+max);
-						console.log("4"+idval2);
-						console.log("4"+label2);
 						$(".start").text("");
 						$(".start4").text("");
 						$(".bar").text("");
@@ -893,10 +881,6 @@
 					}
 					else if(idval2==max){
 						max = min;
-						console.log("5"+min);
-						console.log("5"+max);
-						console.log("5"+idval2);
-						console.log("5"+label2);
 						$(".start").text(startTime);
 						$(".start4").text(startTime);
 						$(".bar").text("");
@@ -908,10 +892,6 @@
 					else if(idval2 < centerval && idval2!=min){
 						min = idval2;
 						startTime=label2;
-						console.log("6"+min);
-						console.log("6"+max);
-						console.log("6"+idval2);
-						console.log("6"+label2);
 						$(".start").text(startTime);
 						$(".start4").text(startTime);
 						$(".bar").text("-");
@@ -922,10 +902,6 @@
 					else if(idval2 >= centerval && idval2!=max){
 						max = idval2;
 						endTime=label2;
-						console.log("7"+min);
-						console.log("7"+max);
-						console.log("7"+idval2);
-						console.log("7"+label2);
 						$(".start").text(startTime);
 						$(".start4").text(startTime);
 						$(".bar").text("-");
@@ -937,10 +913,6 @@
 					}
 					else{
 						min = max;
-						console.log("8"+min);
-						console.log("8"+max);
-						console.log("8"+idval2);
-						console.log("8"+label2);
 						$(".start").text("");
 						$(".start4").text("");
 						$(".bar").text("");
