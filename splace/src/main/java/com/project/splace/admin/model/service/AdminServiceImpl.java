@@ -1,3 +1,4 @@
+
 package com.project.splace.admin.model.service;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
 import com.project.splace.space.model.vo.Space;
+import com.project.splace.admin.model.vo.Payment;
+
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -143,5 +146,11 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public ArrayList<Book> selectBookList(int status) {
 		return adminDao.selectBookList(status);
+	}
+
+	// 18. 결제 정보 관리
+	@Override
+	public ArrayList<Payment> selectPaymentList(int status) {
+		return adminDao.selectPaymentList(status);
 	}
 }

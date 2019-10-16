@@ -19,7 +19,22 @@ public interface MainService {
 	 */
 	public abstract ArrayList<Space> bestSpace();
 
+	/** 알림 조회
+	 * @param userId
+	 * @return
+	 */
 	public abstract ArrayList<Notice> noticeSelect(String userId);
 
+	/** 알림 삭제 
+	 * @param noticeId
+	 * @return
+	 */
 	public abstract int noticeDelete(int noticeId);
+
+	/** 
+	 * 안읽은 알림 조회
+	 * @param memberId
+	 * @return
+	 */
+	public abstract int checkAlarm(String memberId);
 }

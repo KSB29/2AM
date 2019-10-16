@@ -1,3 +1,4 @@
+
 package com.project.splace.admin.model.service;
 
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
 import com.project.splace.space.model.vo.Space;
+import com.project.splace.admin.model.vo.Payment;
+
 
 public interface AdminService {
 
@@ -63,5 +66,8 @@ public interface AdminService {
 	
 	// 예약 정보 관리
 	public abstract ArrayList<Book> selectBookList(int status);
+
+    // 결제 완료 관리 
+	public abstract ArrayList<Payment> selectPaymentList(int status);
 
 }

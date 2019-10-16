@@ -65,17 +65,26 @@
 	
 	<!-- 알림 조회 -->
 	<select id="noticeSelect" resultMap="noticeResultSet" parameterType="Notice">
-	SELECT NOTICE_CONTENT, NOTICE_DATE,NOTICE_ID
-	FROM NOTICE
-	WHERE NOTICE_STATUS != 2
-	AND MEMBER_ID=#{userId}
+		SELECT NOTICE_CONTENT, NOTICE_DATE,NOTICE_ID
+		FROM NOTICE
+		WHERE NOTICE_STATUS != 2
+		AND MEMBER_ID=#{userId}
 	</select>
 	
 	
 	<!--알림 삭제  -->
 	<delete id="noticeDelete" parameterType="_int">
-	DELETE 
-	FROM NOTICE 
-	WHERE NOTICE_ID=#{noticeId}
+		DELETE 
+		FROM NOTICE 
+		WHERE NOTICE_ID=#{noticeId}
 	</delete>
+
+	
+	<!-- 안읽은 알림 조회  -->
+	<select id="checkAlarm" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE 
+		WHERE NOTICE_STATUS=0
+		AND MEMBER_ID=#{userId}
+	</select>
 </mapper>

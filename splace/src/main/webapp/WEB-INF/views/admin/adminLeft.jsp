@@ -73,15 +73,9 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
-        <i class="fas fa-fw fa-cog	"></i>
-        <span>예약관리</span>
-      </a>
-      <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="bInfoManagement.sp">예약 정보관리</a>
-        </div>
-      </div>
+      <a class="nav-link" href="bInfoManagement.sp">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>예약관리</span></a>
     </li>
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
@@ -90,8 +84,7 @@
       </a>
       <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="noticeManagement.sp">결제완료</a>
-          <a class="collapse-item" href="noticeManagement.sp">결제취소</a>
+          <a class="collapse-item" href="paymentManagement.sp">결제 관리</a>
         </div>
       </div>
     </li>

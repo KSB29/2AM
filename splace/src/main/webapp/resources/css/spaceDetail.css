@@ -63,7 +63,7 @@ ol{
    cursor: pointer;
 } 
 #dislike,#like{
-	width:80px;
+	width:56px;
 }
 .detailSimple>p{
 	font-size: 45px;
@@ -159,9 +159,6 @@ ol{
 	border-top: 1px solid #ebebeb;
 	
 }
-.review{
-	overflow: hidden;
-}
 .QDelete{
 	height: 20%;
 	width: 100%;
@@ -222,8 +219,11 @@ ol{
 	height: 20%;
 	float: left;
 }
+
 .review{
-	padding-left: 2em;
+   float: left;
+   width: 100%;
+   padding-left: 2em;
 }
 
 
@@ -365,7 +365,9 @@ input.checkbox[type='checkbox']:not(:checked) {
 width:50%;
 float:left;
 }
-
+.timeHeader>i, .timeHeader>#text{
+	size:3x !important;
+}
 
 /* 공간 세부 옵션   */
 .fontStyle>ol{
@@ -405,6 +407,30 @@ border-bottom: 1px solid #ebebeb;
 }
 .pagination .pagination-active{
    color: #fff !important;
+}
+
+#imageArea{
+   margin: 1em 0 0 2.5em;
+}
+.col-4{
+   padding: 0 !important;
+
+}
+#subFile1,#subFile2,#subFile3{
+   display: none;
+}
+#subImg1,#subImg2,#subImg3{
+   width: 100px;
+   height: 100px;
+}
+.reImgList>img{
+   width: 100px;
+   height: 100px;
+   float: left;
+   margin: 0.5em 0.5em 0 0;
+}
+.review>i{
+   color: #4c74b9;
 }
 
 /* 달력 */
@@ -450,9 +476,7 @@ border-bottom: 1px solid #ebebeb;
 	.time_select_wrap .time_slot input:checked+label{background:#4c74b9;color:#fff;}
 
 /* 공간 사용료 */
-.totalCountD{
-	border-bottom: 1px solid #585858;
-}
+
 .totalPrice{
 	text-align: right;
 	color:#4c74b9;
@@ -463,9 +487,6 @@ border-bottom: 1px solid #ebebeb;
    padding-bottom: 52px;
    float: left;
 }
-.calender,.timeHeader,.BookingData{
-	padding-bottom:20px;
-}
 
 #reserveBtn{
 	margin-top:20px
@@ -474,12 +495,16 @@ border-bottom: 1px solid #ebebeb;
 .phoneIcon{
 	padding:0px 9px 7px 0px;	
 }
-.finalTotal1,.finalTotal2{
+.finalTotal1{
 	width:50%;
 	float:left;
 }
 .finalTotal2{
-	text-align: center;
+	text-align: right;
+	width:77%;
+	float:left;
+	color:#4c74b9;
+	
 }
 .totalPrice,.addPrice{
 	text-align: right;
@@ -496,9 +521,17 @@ border-bottom: 1px solid #ebebeb;
 }
 
 .warning{
-	padding-top:15px;
 	color:#ff3a48;
 	font-size:14px;
+}
+.alert{
+	padding-left: 0 !important;
+	color:#585858;
+	font-size:14px;
+}
+#select{
+	background-color: #4c74b9;
+	color:#4c74b9;
 }
 .start,.end,.timePer{
 	width:14% !important;
@@ -523,6 +556,10 @@ border-bottom: 1px solid #ebebeb;
 .BookingDate{
 	width: 31%;
     float: left;
+    border:none!important;
+}
+.timeHeader,.calender{
+	 border:none!important;
 }
 .BookingTime{
 	width:60%;
