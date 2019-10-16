@@ -33,13 +33,14 @@ public class AdminController {
 		// 호스트 신청목록
 		ArrayList<Host> hList = adminService.selectHostList(1);
 		// 공간 신청목록
+		ArrayList<Space> sList = adminService.selectSpaceList(1);
 		// 신규회원(1달)
 		ArrayList<Member> mList = adminService.selectNewMemberList();
 		// 오늘예약수
 		ArrayList<TodayBook> bList = adminService.selectBookList();
 		System.out.println(bList);
 		
-		mv.addObject("aList", aList).addObject("hList", hList).addObject("mList", mList).addObject("bList", bList);
+		mv.addObject("aList", aList).addObject("hList", hList).addObject("mList", mList).addObject("bList", bList).addObject("sList", sList);
 		mv.setViewName("admin/adminHome");
 		
 		return mv;
@@ -144,85 +145,12 @@ public class AdminController {
 		return mv;
 	}
 	
-	// 호스트 신청 관리
+	// 9.호스트 신청 관리
 	@RequestMapping("hApplyManagement.sp")
 	public ModelAndView hApplyManagement(ModelAndView mv) {
 		
 		ArrayList<Host> hList = adminService.selectHostList(1);
 		mv.addObject("hList", hList).setViewName("admin/hApplyManagement");
-		
-		return mv; 
-	}
-	
-	// 호스트 승인 처리
-	@RequestMapping("hApproveManagement")
-	public ModelAndView hApproveManagement(ModelAndView mv, int hostId) {
-		
-		int result = adminService.updateApproveHost(hostId);
-		ArrayList<Host> hList = adminService.selectHostList(1);
-		mv.addObject("hList", hList).setViewName("admin/hApplyManagement");
-		
-		return mv; 
-	}
-	
-	// 호스트 반려 처리
-	@RequestMapping("hCancelManagement")
-	public ModelAndView hCancelManagement(ModelAndView mv, int hostId) {
-		
-		int result = adminService.updateCancelHost(hostId);
-		ArrayList<Host> hList = adminService.selectHostList(1);
-		mv.addObject("hList", hList).setViewName("admin/hApplyManagement");
-		
-		return mv; 
-	}
-	
-	// 공간관리
-	@RequestMapping("sInfoManagement.sp")
-	public ModelAndView goSpaceManagement(ModelAndView mv, String spaceStatus) {
-		
-		// 상태
-		int status = 0;
-		
-		if(spaceStatus == null) {
-			status = 4;
-		} else{
-			status = Integer.parseInt(spaceStatus);
-		}
-		
-		ArrayList<Space> sList = adminService.selectSpaceList(status);
-		mv.addObject("sList", sList).addObject("status", status).setViewName("admin/spaceManagement");
-		
-		return mv; 
-	}
-	
-	// 공간 신청 관리
-	@RequestMapping("sApplyManagement.sp")
-	public ModelAndView sApplyManagement(ModelAndView mv) {
-		
-		ArrayList<Space> sList = adminService.selectSpaceList(1);
-		mv.addObject("sList", sList).setViewName("admin/sApplyManagement");
-		
-		return mv; 
-	}
-	
-	// 공간 승인 처리
-	@RequestMapping("sApproveManagement")
-	public ModelAndView sApproveManagement(ModelAndView mv, int spaceId) {
-		
-		int result = adminService.updateApproveSpace(spaceId);
-		ArrayList<Space> sList = adminService.selectSpaceList(1);
-		mv.addObject("sList", sList).setViewName("admin/sApplyManagement");
-		
-		return mv; 
-	}
-	
-	// 공간 반려 처리
-	@RequestMapping("sCancelManagement")
-	public ModelAndView sCancelManagement(ModelAndView mv, int spaceId) {
-		
-		int result = adminService.updateCancelSpace(spaceId);
-		ArrayList<Space> sList = adminService.selectSpaceList(1);
-		mv.addObject("sList", sList).setViewName("admin/sApplyManagement");
 		
 		return mv; 
 	}
@@ -252,4 +180,76 @@ public class AdminController {
 		return "redirect:qnaAdminManagement.sp";
 	}
 	
+	// 12. 호스트 승인 처리
+	@RequestMapping("hApproveManagement")
+	public ModelAndView hApproveManagement(ModelAndView mv, int hostId) {
+		
+		int result = adminService.updateApproveHost(hostId);
+		ArrayList<Host> hList = adminService.selectHostList(1);
+		mv.addObject("hList", hList).setViewName("admin/hApplyManagement");
+		
+		return mv; 
+	}
+	
+	// 13. 호스트 반려 처리
+	@RequestMapping("hCancelManagement")
+	public ModelAndView hCancelManagement(ModelAndView mv, int hostId) {
+		
+		int result = adminService.updateCancelHost(hostId);
+		ArrayList<Host> hList = adminService.selectHostList(1);
+		mv.addObject("hList", hList).setViewName("admin/hApplyManagement");
+		
+		return mv; 
+	}
+	
+	// 14. 공간관리
+	@RequestMapping("sInfoManagement.sp")
+	public ModelAndView goSpaceManagement(ModelAndView mv, String spaceStatus) {
+		
+		// 상태
+		int status = 0;
+		
+		if(spaceStatus == null) {
+			status = 4;
+		} else{
+			status = Integer.parseInt(spaceStatus);
+		}
+		
+		ArrayList<Space> sList = adminService.selectSpaceList(status);
+		mv.addObject("sList", sList).addObject("status", status).setViewName("admin/spaceManagement");
+		
+		return mv; 
+	}
+	
+	// 15. 공간 신청 관리
+	@RequestMapping("sApplyManagement.sp")
+	public ModelAndView sApplyManagement(ModelAndView mv) {
+		
+		ArrayList<Space> sList = adminService.selectSpaceList(1);
+		mv.addObject("sList", sList).setViewName("admin/sApplyManagement");
+		
+		return mv; 
+	}
+	
+	// 16. 공간 승인 처리
+	@RequestMapping("sApproveManagement")
+	public ModelAndView sApproveManagement(ModelAndView mv, int spaceId) {
+		
+		int result = adminService.updateApproveSpace(spaceId);
+		ArrayList<Space> sList = adminService.selectSpaceList(1);
+		mv.addObject("sList", sList).setViewName("admin/sApplyManagement");
+		
+		return mv; 
+	}
+	
+	// 17. 공간 반려 처리
+	@RequestMapping("sCancelManagement")
+	public ModelAndView sCancelManagement(ModelAndView mv, int spaceId) {
+		
+		int result = adminService.updateCancelSpace(spaceId);
+		ArrayList<Space> sList = adminService.selectSpaceList(1);
+		mv.addObject("sList", sList).setViewName("admin/sApplyManagement");
+		
+		return mv; 
+	}
 }

@@ -80,7 +80,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-lg-5">
 					<div class="card shadow mb-4">
 		                <div class="card-header py-3">
 		                  <h6 class="m-0 font-weight-bold text-primary">호스트 신청목록</h6>
@@ -112,13 +112,54 @@
 		                </div>
 					</div>
 				</div>
-				<div class="col-lg-6">
+				<div class="col-lg-7">
 					<div class="card shadow mb-4">
 		                <div class="card-header py-3">
 		                  <h6 class="m-0 font-weight-bold text-primary">공간 신청목록</h6>
 		                </div>
 		                <div class="card-body">
-		                  
+		                  <div class="table-responsive">
+			                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0">
+			                  <thead>
+			                    <tr>
+			                      <th>번호</th>
+			                      <th>공간이름</th>
+			                      <th>한줄소개</th>
+			                      <th>태그</th>
+			                      <th>주소/전화번호</th>
+			                      <th>운영시간</th>
+			                      <th>등록일</th>
+			                      <th>회원ID</th>
+			                    </tr>
+			                  </thead>
+			                  <tfoot>
+			                    <tr>
+			                      <th>번호</th>
+			                      <th>공간이름</th>
+			                      <th>한줄소개</th>
+			                      <th>태그</th>
+			                      <th>주소/전화번호</th>
+			                      <th>운영시간</th>
+			                      <th>등록일</th>
+			                      <th>회원ID</th>
+			                    </tr>
+			                  </tfoot>
+			                  <tbody>
+			                  	<c:forEach items="${sList }" var="space">
+				                    <tr onclick="location.href='sApplyManagement.sp'">
+				                      <td>${space.spaceId}</td>
+				                      <td>${space.spaceName}</td>
+				                      <td>${space.spaceComment}</td>
+				                      <td>${space.spaceTag}</td>
+				                      <td>${space.spaceAddress} / ${space.spacePhone}</td>
+				                      <td>${space.spaceOpenTime} ~ ${space.spaceCloseTime} 시</td>
+				                      <td><fmt:formatDate value="${space.spaceEnroll}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+				                      <td>${space.memberId}</td>
+				                    </tr>
+			                  	</c:forEach>
+			                  </tbody>
+			                </table>
+			              </div>
 		                </div>
 					</div>
 				</div>
@@ -145,7 +186,7 @@
 			                  </thead>
 			                  <tbody>
 			                  	<c:forEach items="${mList }" var="mem">
-			                  	  <tr>
+			                  	  <tr onclick="location.href='memberManagement.sp'">
 				                      <td>${mem.memberId}</td>
 				                      <td>${mem.memberName}</td>
 				                      <td>${mem.memberPhone}</td>
