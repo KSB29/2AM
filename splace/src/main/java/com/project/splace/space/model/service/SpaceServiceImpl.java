@@ -409,8 +409,8 @@ public class SpaceServiceImpl implements SpaceService {
 
    // 호스트의 다른 공간 조회
    @Override
-   public ArrayList<Space> hostSpace(int hostId) {
-      return sDao.hostSpace(hostId);
+   public ArrayList<Space> hostSpace(Space space) {
+      return sDao.hostSpace(space);
    }
 
 

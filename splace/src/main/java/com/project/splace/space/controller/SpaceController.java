@@ -294,7 +294,8 @@ public class SpaceController {
 	         ArrayList<SpaceAtt> spaceAttImg = sService.spaceAttImg(space.getSpaceId());
 	         
 	         // 호스트 다른 공간
-	         ArrayList<Space> hostSpace = sService.hostSpace(space.getHostId());
+	        System.out.println("잇냐 호스트"+space);
+	         ArrayList<Space> hostSpace = sService.hostSpace(space);
 	         
 	         // 공간 휴무일 
 	         DayOff dayOff = new DayOff();
