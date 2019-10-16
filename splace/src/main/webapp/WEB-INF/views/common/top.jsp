@@ -70,7 +70,7 @@
 				</div>
 				<!-- 알림 벨  -->
 				<div class="col-3 align-right">
-					<button id="bell" onclick="myFunction();"><i class="fa fa-bell"></i></button>
+					<button id="bell" onclick="myFunction();"><i class="fa fa-bell"></i><i class="fas fa-circle" id="redBell"></i></button>
 				</div>
 				<!-- 알림 리스트 -->
                 <div class=" row notification-container" id="bellList" style="display: none">
@@ -139,89 +139,104 @@
 	</nav>
 
 	<!-- Scripts -->
-	  <script>
-                /* 알림창 오픈클로즈 */
-					function myFunction(){
-					    var x = document.getElementById("bellList");
-					    if (x.style.display === "none") {
-					        x.style.display = "block";
-					        $("#bell>i").css("color","#4c74b9");
-					    } else {
-					        x.style.display = "none";
-					        $("#bell>i").css("color","#585858");
-					    }
-					} 
-                
-                $(".fa-bell").click(function Alarm(){
-                	  $.ajax({
-				        	url:"alarmList.sp",
-							dataType:"JSON",
-				        	success:function(NoticeArr){
-				        		var $body = $("#notificationDiv");
-				        		$body.html("");
+	<script>
+	 /* 알림창 오픈클로즈 */
+	function myFunction(){
+		var x = document.getElementById("bellList");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+			$("#bell>i").css("color","#4c74b9");
+			Alarm();
+		}else {
+			x.style.display = "none";
+			$("#bell>i").css("color","#585858");
+		}
+	 }
+	 
+	 // 알림 조회 function 호출
+  	$(function(){
+  		checkAlarm();
+	  });
+ 	 
+ 	 // 안읽은 알람 여부 조회
+	 function checkAlarm(){
+		 $.ajax({
+			 url:"checkAlarm.sp",
+			 success:function(result){
+				 if(result=="ok"){
+					 $("#redBell").css("display","block");
+				 }else{
+					 $("#redBell").css("display","none");
+				 }
+			 }
+		 });
+	 }
+	  
+	 
+	//벨 클릭 시 알림 리스트 출력
+	$(".fa-bell").click(function Alarm(){
+       $.ajax({
+		url:"alarmList.sp",
+		dataType:"JSON",
+		success:function(NoticeArr){
+			var $body = $("#notificationDiv");
+			$body.html("");
 				        		
-				        		console.log("알림 조회"+NoticeArr);
-				        		if(NoticeArr.length>0){
-				        			$.each(NoticeArr,function(i){
-				        				var result="";
-				        				
-				        				result+='<input class="checkbox" type="checkbox" id="size_'
-				        						+(i+1)
-				        						+'" value="'
-				        						+NoticeArr[i].noticeId 
-				        						+'" checked />'
-				        						+'<label class="notification" for="size_'
-				        						+(i+1)
-				        						+'"><em>'
-				        						+(i+1)
-				        						+'</em>'
-				        						+NoticeArr[i].noticeContent
-				        						+NoticeArr[i].noticeDate
-				        						+'<i class="material-icons dp48 right">clear</i></label>';
-				        						
-				        						
-				        						$body.append(result);
-				        			});
-					        		$(".checkbox").click(function(noticeId){
-					        			var noticeId = $(this).val();
-					        			console.log(noticeId);
-					                	$.ajax({
-					                		url:"alarmDelete.sp",
-					                		data:{noticeId:noticeId},
-					                	    success:function(result){
-					           	          	console.log("dfafggggggggg");
-					           	             if(result=="success"){
-					           	                alert("알림이 삭제되었습니다!");
-					           	        	     Alarm();
-					           	             }
-					           	          },
-					           	          error:function(){
-					           	       	console.log("error");
-					           	          }
-					            
-					                	});
-					                	
-					            	});
-
-				        		}else{
-				        			result+="새로운 알림이 없습니다!";
-				        			
-				        			$body.append(result);
-				        		}
-				        	
-				        	},
-				        	error:function(){
-				        		console.log("error");
-				        	}
-				        		
-				        		
-				        });
-                });
-                
-                
-            	
-                
-              </script>
+		if(NoticeArr.length>0){
+			$.each(NoticeArr,function(i){
+				var result="";
+				result+='<input class="checkbox" type="checkbox" id="size_'
+						+(i+1)
+						+'" value="'
+						+NoticeArr[i].noticeId 
+						+'" checked />'
+						+'<label class="notification" for="size_'
+						+(i+1)
+						+'"><em>'
+						+(i+1)
+						+'</em>'
+						+NoticeArr[i].noticeContent
+						+NoticeArr[i].noticeDate
+						+'<i class="material-icons dp48 right">clear</i></label>';
+						
+						
+						$body.append(result);
+	    			});
+			
+     			// 알림 클릭 시 삭제
+	     		$(".checkbox").click(function(noticeId){
+	     			var noticeId = $(this).val();
+	     			console.log(noticeId);
+	             	$.ajax({
+	             		url:"alarmDelete.sp",
+	             		data:{noticeId:noticeId},
+	             	    success:function(result){
+		        	        if(result=="success"){
+			        	        alert("알림이 삭제되었습니다!");
+			        	       	Alarm();
+			        	       	checkAlarm();
+		        	         }
+	        	          },
+	        	          error:function(){
+	        	      	 	console.log("error");
+	        	         }
+	             	});
+	         	});
+    			
+    		}else{
+    			var result2="";
+	    		result2+='<p>새로운 알림이 없습니다!</p>';
+	    		$body.append(result2);
+    		}
+	    	
+	    	},
+	    	error:function(){
+	    		console.log("error");
+	    	}
+	   	});
+	  });
+	
+    </script>
 	<script src="${contextPath }/resources/js/browser.min.js"></script>
 	<script src="${contextPath }/resources/js/breakpoints.min.js"></script>
 	<script src="${contextPath }/resources/js/util.js"></script>

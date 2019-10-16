@@ -53,7 +53,7 @@
 								type:"post",
 								success:function(result){
 									if(result=="success")
-										alert("찜 했음!");
+										alert("위시리스트에 저장되었습니다!");
 										checkWish();
 										}
 								});
@@ -92,7 +92,6 @@
 								type:"post",
 								success:function(status){
 									if(status=="success")
-									alert("찜취소");
 									checkWish();
 								}
 									
@@ -230,7 +229,8 @@
 							<h2>찾아오시는길</h2>
 							<p></p>
 							<h3>${space.spaceName }</h3>
-							<h4><i class="fas fa-phone-alt phoneIcon"></i>${space.spacePhone }</h4>
+							<h4>
+								<i class="fas fa-phone-alt phoneIcon"></i>${space.spacePhone }</h4>
 							<h4>${space.spaceAddress}</h4>
 							<div id="map"
 								style="width: 100%; height: 400px; border: 1px solid #585858"></div>
@@ -287,64 +287,63 @@
 						</div>
 						<!-- 지도 끝 -->
 
- 				<!------- QnA ------->
-                  <div class="spaceIntro">
-                     <div class="write fontStyle">
-                        <h2>Q & A</h2>
-                        <p></p>
-                     </div>
-                     <!-- 글쓰기 버튼 -->
-                     <c:if test="${!empty loginUser}">
-                        <div class="writeBtn">
-                           <button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter" data-backdrop="static"></button>
-                        </div>
-                     </c:if>
-                     <!-- Modal -->
-                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                           <div class="modal-content">
-                              <div class="modal-header">
-                                 <h5 class="modal-title" id="exampleModalCenterTitle">Q&A작성</h5>
-                              </div>
-                              <div>
-                                 <h5>작성자  ${ loginUser.memberId }</h5>
-                              
-                              </div>
-                              <%-- <form action="insertQnA.sp?spaceId=${space.spaceId}" method="post"> --%>
-                                 <div class="modal-body">
-                                    <textarea class="qContent" maxlength="300" name="qContent"></textarea>
-                                    <!-- 글자수 세기 -->
-                                    <div class="textCount">
-                                       <p class="counter"></p>
-                                    </div>
-                                 </div>
+						<!------- QnA ------->
+						<div class="spaceIntro">
+							<div class="write fontStyle">
+								<h2>Q & A</h2>
+								<p></p>
+							</div>
+							<!-- 글쓰기 버튼 -->
+							<c:if test="${!empty loginUser}">
+								<div class="writeBtn">
+									<button type="button" class="fa fa-edit" data-toggle="modal"
+										data-target="#exampleModalCenter" data-backdrop="static"></button>
+								</div>
+							</c:if>
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+								role="dialog" aria-labelledby="exampleModalCenterTitle"
+								aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalCenterTitle">Q&A작성</h5>
+										</div>
+										<div>
+											<h5>작성자 ${ loginUser.memberId }</h5>
 
-                                 <div class="modal-footer">
-                                    <button class="button primary cancel" data-dismiss="modal">취소</button>
-                                    <button class="button submitQnA" id="submitQnA" data-dismiss="modal">등록</button>
-                                 </div>
-                              <!-- </form> -->
-                           </div>
-                        </div>
-                     </div>
-                     <!--Modal끝  -->
+										</div>
+										<%-- <form action="insertQnA.sp?spaceId=${space.spaceId}" method="post"> --%>
+										<div class="modal-body">
+											<textarea class="qContent" maxlength="300" name="qContent"></textarea>
+											<!-- 글자수 세기 -->
+											<div class="textCount">
+												<p class="counter"></p>
+											</div>
+										</div>
 
-                     <!-- QnA list 출력 -->
-                     <div class="QnAList">
-                  <!-- 공간에 대한 문의 리스트  -->
-                        <div class="QnA_QA">
+										<div class="modal-footer">
+											<button class="button primary cancel" data-dismiss="modal">취소</button>
+											<button class="button submitQnA" id="submitQnA"
+												data-dismiss="modal">등록</button>
+										</div>
+										<!-- </form> -->
+									</div>
+								</div>
+							</div>
+							<!--Modal끝  -->
 
-                        </div>
-                       
-                     </div>
-                     
-                     <!-- Q&A 페이징 처리 -->
-                     <div class="QnAPaging">
+							<!-- QnA list 출력 -->
+							<div class="QnAList">
+								<!-- 공간에 대한 문의 리스트  -->
+								<div class="QnA_QA"></div>
 
-                     </div>
-                  </div>
-                  <!-- QnA끝 -->
+							</div>
 
+							<!-- Q&A 페이징 처리 -->
+							<div class="QnAPaging"></div>
+						</div>
+						<!-- QnA끝 -->
 
 						<!-------리뷰 -------->
 						<div class="spaceIntro">
@@ -354,13 +353,15 @@
 							</div>
 							<!-- 글쓰기 버튼 -->
 							<div class="writeBtn">
-								<button type="button" class="fa fa-edit" data-toggle="modal"
-									data-target="#exampleModalCenter2" data-backdrop="static"></button>
+								<%-- <c:if test="${loginUser.memberId eq reList.memberId}">
+                           <button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter2" data-backdrop="static"></button>
+                        </c:if> --%>
 							</div>
 							<!-- Modal -->
 							<div class="modal fade" id="exampleModalCenter2" tabindex="-1"
 								role="dialog" aria-labelledby="exampleModalCenterTitle"
 								aria-hidden="true">
+
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -368,66 +369,76 @@
 												후기 작성</h5>
 										</div>
 
-										<form action="">
-											<div class="modal-body">
-												<div class="starArea">
-													<h5 class="starGrade">별점</h5>
-													<div class="starChange">
-														<p id="star_grade">
-															<a href="#"><i class="fas fa-star"></i></a> <a href="#"><i
-																class="fas fa-star"></i></a> <a href="#"><i
-																class="fas fa-star"></i></a> <a href="#"><i
-																class="fas fa-star"></i></a> <a href="#"><i
-																class="fas fa-star"></i></a>
-														</p>
+
+										<div class="modal-body">
+											<div class="starArea">
+												<h5 class="starGrade">별점</h5>
+												<div class="starChange">
+													<p id="star_grade">
+														<a href="#" id="aStar1"><i class="fas fa-star"></i></a> <a
+															href="#" id="aStar2"><i class="fas fa-star"></i></a> <a
+															href="#" id="aStar3"><i class="fas fa-star"></i></a> <a
+															href="#" id="aStar4"><i class="fas fa-star"></i></a> <a
+															href="#" id="aStar5"><i class="fas fa-star"></i></a>
+													</p>
+												</div>
+											</div>
+
+
+											<textarea class="content reviewContent" maxlength="300"
+												name="reviewContent"></textarea>
+											<!-- 글자수 세기 -->
+											<div class="textCount">
+												<p class="counter"></p>
+											</div>
+											<form id="ImgUploadForm" enctype="multipart/form-data">
+												<div class="wrapFile">
+													<div class="row gtr-uniform borderTop" id="imageArea">
+														<div class="col-4">
+															<label for="subFile1" class="button small">이미지1
+																등록</label> <input type="file" name="files" id="subFile1"
+																value="등록" onchange="loadImg(this,1);">
+														</div>
+														<div class="col-4">
+															<label for="subFile2" class="button small">이미지2
+																등록</label> <input type="file" name="files" id="subFile2"
+																value="등록" onchange="loadImg(this,2);">
+														</div>
+														<div class="col-4">
+															<label for="subFile3" class="button small">이미지3
+																등록</label> <input type="file" name="files" id="subFile3"
+																value="등록" onchange="loadImg(this,3);">
+														</div>
 													</div>
 												</div>
+											</form>
+										</div>
 
+										<div class="modal-footer">
+											<button type="reset" class="button primary cancel"
+												data-dismiss="modal">취소</button>
+											<button class="button" id="reviewBtn" data-dismiss="modal">등록</button>
+										</div>
 
-												<textarea class="content" maxlength="300"></textarea>
-												<!-- 글자수 세기 -->
-												<div class="textCount">
-													<p class="counter"></p>
-												</div>
-												<div class="wrapFile">
-													<input type="file" name="file" id="reviewFile3"
-														class="reviewFile col-3" /> <label for="reviewFile3">
-														<i class="far fa-image"></i>
-													</label> <input type="file" name="file" class="reviewFile col-3" />
-													<input type="file" name="file" class="reviewFile col-3" />
-												</div>
-											</div>
-
-											<div class="modal-footer">
-												<button type="reset" class="button primary cancel"
-													data-dismiss="modal">취소</button>
-												<button type="button" class="button">등록</button>
-											</div>
-										</form>
 									</div>
 								</div>
 							</div>
 							<!--  review list 출력 -->
 							<div class="reviewList">
-								<div class="reviewBtn">
-									<button>[수정]</button>
-									<button>[삭제]</button>
-								</div>
-								<div class="review">
-									<h5>이름</h5>
-									<h5>별점</h5>
-									<h4>리뷰 내용</h4>
-									<h6>작성날짜</h6>
-								</div>
+								<!-- 수정 삭제 -->
+
+								<div class="review"></div>
 							</div>
-							<!-- review 페이징 처리 -->
-							<div class="paging">
-								<p>페이징</p>
-							</div>
+
 						</div>
 						<!-- review끝 -->
 
+						<!-- 리뷰 수정  -->
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true"></div>
+
 					</div>
+
 					<!-- detailLeft 끝-->
 
 
@@ -460,12 +471,18 @@
 								<ui class="time_slot"> 
 								</ui>
 							</div>
+								<p class="alert">
 								<i class="fas fa-square" style="color:#585858"></i>
-								예약 불가 
+								예약 불가 &nbsp; &nbsp;
+								<i class="far fa-square"></i>
+								예약 가능  &nbsp; &nbsp;
+								<i class="far fa-square" id="select"></i>
+								선택한 시간
+								<p> 
 								<p class="warning">
 								<i class="fas fa-exclamation-circle"></i>
 								해당 금액은 1인 기준입니다.
-								초과시 추가 금액  ${space.spaceAdd }원이 발생합니다.
+								초과시 추가 금액이 발생합니다.
 								</p>
 						</div>
 						<!-- 시간 선택 끝 -->
@@ -506,10 +523,9 @@
 						<div class="totalCount">
 							<div class="totalCountD">
 							<h3 class="finalTotal1">공간사용료</h3>
-							<h3 class="finalTotal2"></h3>
 							</div>
 							<h3 class="totalPrice"></h3><h3 class="totalPrice2"></h3>
-							<h3 class="addPrice"></h3><h3 class="totalPrice3"></h3>
+							<h3 class="finalTotal2"></h3><h3 class="totalPrice3"></h3>
 							
 						</div>
 						<!-- 공간 사용료 끝 -->
@@ -542,7 +558,7 @@
 									<article>
 										<span class="image"> 
 											<img src="${contextPath }/resources/spaceImg/${host.spaceAttChange}" alt="" />
-										</span> 
+											</span> 
 											<a href="${sDetail}"></a> 
 											<span>
 											<div class="locationName">
@@ -550,7 +566,7 @@
 											</div>
 											<div class="location">
 												<span> <img src="resources/img/location.svg">
-													서울시 중구 <c:forTokens var="addr" items="${host.spaceAddress}"
+													 <c:forTokens var="addr" items="${host.spaceAddress}"
 														delims="," varStatus="status">
 														<c:if test="${status.index eq 1}">
 														${addr}
@@ -562,7 +578,7 @@
 												<span>${host.spaceTag }</span>
 											</div>
 											<div class="price">
-												<strong>10,000</strong> <span>원/시간</span>
+												<strong>${host.spaceAdd}</strong> <span>원/시간</span>
 											</div>
 										</span>
 									</article>
@@ -602,15 +618,14 @@
 	      function rDataCheck(){
 	    	 var regExpCheck= true;
 	   	    		if($("#datepicker").val()==""){
-	   	      			console.log()
 	   	      			alert("예약일을 선택해주세요!");
 	   	      			$("#datepicker").focus();
 	   	      			
 	   	      			regExpCheck=false;
 	   	    		}
 	   	  
-	   	  			if($("input:checkbox[name=timeClick]:checked").length< ${space.spaceTime}){
-	   	      			alert("최소 예약시간을 확인해주세요!");
+	   	  			if($("input:checkbox[name=timeClick]:checked").length<${space.spaceTime}){
+	   	      			alert("최소 예약시간을 확인해주세요!")
 	   	      			$(".timeHeader").focus();
 	   	      			regExpCheck=false;
 	   	      		}
@@ -686,7 +701,6 @@
 				var bookDate = $("#datepicker").val();
 				$(".timeHeader").css("display","block"); 
 				var spaceId = ${space.spaceId};
-				console.log(bookDate); 	
 				
 				$.ajax({
 					url:"timeList.sp",
@@ -695,7 +709,6 @@
 					async:false, 
 					dataType:"json",
 					success:function(timeList){
-						console.log(timeList);
 						var $body = $(".time_slot");
 						var $bookB = $(".BookingDate");
 						$body.html("");
@@ -743,27 +756,30 @@
 			// 시간 선택 묶음 
 			function check(){
 				var length = ($(".time_slot li:last-child input")).attr("id");
-				var total=parseInt($(".totalPrice3").text());
 				tot = 0;
 				for (var i = 1; i <= length; i++) {
 					$("#"+i).prop("checked",false);
 				}
 				for(var i = min; i <= max; i++){
+			var per=parseInt($('input[id="partyInput"]').val());
 					$("#"+i).prop("checked",true);
 					tot += parseInt($("#"+i).val());
 					$(".totalPrice").html('&#8361;'); 
 					$(".totalPrice2").text(tot);
+					$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+					$(".totalPrice3").text((tot*per));
+					
 					if($(".totalPrice3").text()==""){
-						$(".finalTotal2").html('&#8361;').text(tot);
+						$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+						$(".totalPrice3").text(tot*per);
 					}else{
-					$(".finalTotal2").html('&#8361;').text((tot+total));
+						$(".finalTotal2").html('최종 금액  &nbsp;&#8361;');
+						$(".totalPrice3").text((tot*per));
 					}
 					
 				}
 				
 			};
-			
-			
 			
 			
 			var min = 100;
@@ -781,24 +797,77 @@
 					var idval = parseInt(($(this).attr("id")));
 					var label = $(this).parent().children("label").text().split(" ")[0];
 					var price=$(this).parent().children("label").text().split(" ")[1];
-					
 					if(min > idval) {
 						min = idval;
 						startTime = label;
 						startPrice = price;
+						console.log("1"+min);
+						console.log("1"+max);
+						console.log("1"+idval);
+						console.log("1"+label);
+ 						$(".start").text(startTime);
+						$(".start4").text(startTime);
+						$(".bar").text("");
+						$(".end").text("");
+						$(".bar4").text("");
+						$(".end4").text("");
+						if(min<max){
+							console.log("dfjalkfjk;as");
+							$(".start").text(startTime);
+							$(".start4").text(startTime);
+							$(".bar").text("-");
+							$(".end").text("");
+							$(".bar4").text("-");
+							$(".end4").text("");
+							
+						}
+ 					if(max==-1) 
+ 						if(max=min){
+	 					console.log("9"+min);
+						console.log("9"+max);
+						console.log("9"+idval);
+						console.log("9"+label);
 						$(".start").text(startTime);
 						$(".start4").text(startTime);
-						if(max==-1) max=min;
+						
+ 						}
+ 						else{
+ 							console.log("10dddd"+min);
+ 							console.log("10dddd"+max);
+ 							console.log("10dddd"+idval);
+ 							console.log("10dddd"+label);
+ 						}
 					}
 					else{
 						max = idval;
 						endTime=label;
+						console.log("2"+min);
+						console.log("2"+max);
+						console.log("2"+idval);
+						console.log("2"+label);
+/* 						$(".bar").text("-");
+						$(".end").text(endTime);
+						$(".bar4").text("-");
+						$(".end4").text(endTime); */
+						$(".start").text(startTime);
+						$(".start4").text(startTime);
 						$(".bar").text("-");
 						$(".end").text(endTime);
 						$(".bar4").text("-");
 						$(".end4").text(endTime);
 
-						if(min==100) min=max;
+						if(min==100) 
+						min=max;
+						console.log("3"+min);
+						console.log("3"+max);
+						console.log("3"+idval);
+						console.log("3"+label);
+						$(".start").text(startTime);
+						$(".start4").text(startTime);
+						$(".bar").text("-");
+						$(".end").text(endTime);
+						$(".bar4").text("-");
+						$(".end4").text(endTime);
 					}
 					
 					
@@ -811,27 +880,73 @@
 						$(this).prop("checked",false);
 						min = 100;
 						max = -1;
+						console.log("4"+min);
+						console.log("4"+max);
+						console.log("4"+idval2);
+						console.log("4"+label2);
+						$(".start").text("");
+						$(".start4").text("");
+						$(".bar").text("");
+						$(".end").text("");
+						$(".bar4").text("");
+						$(".end4").text("");
 					}
 					else if(idval2==max){
 						max = min;
+						console.log("5"+min);
+						console.log("5"+max);
+						console.log("5"+idval2);
+						console.log("5"+label2);
+						$(".start").text(startTime);
+						$(".start4").text(startTime);
+						$(".bar").text("");
+						$(".end").text("");
+						$(".bar4").text("");
+						$(".end4").text("");
+						
 					}
 					else if(idval2 < centerval && idval2!=min){
 						min = idval2;
 						startTime=label2;
+						console.log("6"+min);
+						console.log("6"+max);
+						console.log("6"+idval2);
+						console.log("6"+label2);
 						$(".start").text(startTime);
 						$(".start4").text(startTime);
+						$(".bar").text("-");
+						$(".end").text(endTime);
+						$(".bar4").text("-");
+						$(".end4").text(endTime);  
 					}
 					else if(idval2 >= centerval && idval2!=max){
 						max = idval2;
 						endTime=label2;
+						console.log("7"+min);
+						console.log("7"+max);
+						console.log("7"+idval2);
+						console.log("7"+label2);
+						$(".start").text(startTime);
+						$(".start4").text(startTime);
 						$(".bar").text("-");
 						$(".end").text(endTime);
 						$(".bar4").text("-");
-						$(".end4").text(endTime);
+						$(".end4").text(endTime);  
+						
 						
 					}
 					else{
 						min = max;
+						console.log("8"+min);
+						console.log("8"+max);
+						console.log("8"+idval2);
+						console.log("8"+label2);
+						$(".start").text("");
+						$(".start4").text("");
+						$(".bar").text("");
+						$(".end").text(endTime);
+						$(".bar4").text("");
+						$(".end4").text(endTime);  
 					}
 				}
 				check();
@@ -844,7 +959,6 @@
 		 function bookTime(){
 			var bookDate = $("#datepicker").val();
 			var spaceId = ${space.spaceId};
-			console.log("bookDate: "+bookDate);
 			$.ajax({
 				url: "timeListBook.sp",
 				data:{bookDate:bookDate, spaceId:spaceId},
@@ -872,63 +986,425 @@
 	    $("#min").click(function(){
 	    	var min=${space.spaceMinPer};
 	    	var n = $("#min").index(this);
-	    	var num = $("#partyInput:eq("+n+")").val();
-	    	var addPrice =  ${space.spaceAdd };
-	    	var per=$('input[id="partyInput"]').val()-2;
-	    	var total=0;
+	    	var num =$("#partyInput:eq("+n+")").val();
+	    	var per=parseInt($('input[id="partyInput"]').val()-1);
 	    	var tot=parseInt($(".totalPrice2").text());
-	    	
+	    		
 	    	if(num>min){
 	    		num= $("#partyInput:eq("+n+")").val(num*1-1);
-	    		//공간 사용료 값 바꾸기 
-	    		total=(addPrice*per);
-	    		
-	    		$(".addPrice").html('추가 &#8361;');
-	    		if((addPrice*per)==0){
-	    			$(".totalPrice3").text("");
-	    			$(".addPrice").html('');
-	    			$(".finalTotal2").text("");
-	    		}else{
-	    			if($(".totalPrice2").text()==""){
-		    			$(".finalTotal2").html('&#8361;').text(total);
-		    			$(".totalPrice3").text((addPrice*per));
-	    			}else{
-	    				$(".finalTotal2").html('&#8361;').text(total+tot);
-	    				$(".totalPrice3").text((addPrice*per));
-	    				}
-	    		}
-		    
-	    	}else{
-		    		alert("최소 인원을 확인해주세요.");
+		    		$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+		    		$(".totalPrice3").text(tot*per);
+		    	}else{
+		    		alert("최소 인원을 확인해주세요!");
 		    	}
-	    });
+		    	
+		    });
 	    
 	    // 인원 수 클릭 (플러스)
 	    $("#plu").click(function(){
 	    	var max = ${space.spaceMaxPer}
+	    	var min=${space.spaceMinPer};
 	    	var n = $("#plu").index(this);
 	    	var num = $("#partyInput:eq("+n+")").val();
-	    	var addPrice =${space.spaceAdd};
-	    	var per=$('input[id="partyInput"]').val();
-	    	var total=0;
+	    	var per=parseInt($('input[id="partyInput"]').val());
 	    	var tot=parseInt($(".totalPrice2").text());
 	    	if(num<max){
-	    	num= $("#partyInput:eq("+n+")").val(num*1+1);
-	    	// 공간 사용료 값 바꾸기 
-	    	total=(addPrice*per);
-	    	$(".addPrice").html('추가금액&nbsp; &#8361;');
-	    	$(".totalPrice3").text(total);
-	    	if($(".totalPrice2").text()==""){
-	    		$(".finalTotal2").html('&#8361;').text(total);
+			    if($(".totalPrice2").text()!=""){
+		    	num= $("#partyInput:eq("+n+")").val(num*1+1);
+			    	// 공간 사용료 값 바꾸기 
+			    	$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+		    		$(".totalPrice3").text(tot*(per+1));
+		    	}else{
+	    			num=${space.spaceMinPer};
+		    		alert("예약일을 선택해주세요!");
+   	      			$("#datepicker").focus();
+   	      			$(".finalTotal2").html('');
+	    			$(".totalPrice3").text("");
+	    			
+   	      			
+		    	}
+	    	
+	    	
 	    	}else{
-	    		
-	    		$(".finalTotal2").html('&#8361;').text(total+tot);
-	    	}
-	    	}else{
-	    		alert("최대 인원을 초과하였습니다.");
+	    		alert("최대 인원을 초과했습니다.");
 	    	}
 	    	
 	    });
+	    
+	    
+	    
+	      function loadImg(value, num) {/* 
+	          console.log("이미지변경!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"); */
+	           var reader = new FileReader(); // FileReader -> javascript
+	           
+	           console.log("reader:"+reader);    
+	           var imgId = "#" + $(value).attr("id");
+	           var imgId2 = $(value).attr("id").replace("File","Img");
+	           console.log("1: "+imgId+"/ 2: "+imgId2);
+	           
+	           // reader.onload : reader 객체가 생성된 경우 이벤트 발생
+	               
+	           reader.onload = function(e) {
+	              /*
+	              $("#"+imgId2).attr("src",e.target.result);
+	              $("#"+imgId2).after('<button type="button" class="deleteImg">삭제</button>');  */
+	               $(imgId).after('<img class="image fit" id="'+imgId2+'" src="' + e.target.result + '"/> <button type="button" class="deleteImg">삭제</button>'); // e.target this와 비슷, e.target.result 해당 파일 이름(경로포함) */
+	           }
+	       
+	           // 보안처리(Data URI) : RFC 2397 정의되어 있는 개발 규약
+	           // 미사용 시 파일 경로가 모두 표시됨, 파일 경로를 알 수 없게 만들어줌 (파일의 직접적인 경로 노출 방지)
+	           reader.readAsDataURL(value.files[0]);
+	       }
+	       
+	       // 이미지 삭제 버튼 누르면
+	       $(document).on("click",".deleteImg",function(){
+	          var src = $(this).parent().children("img").prop("src").substring($(this).parent().children("img").prop("src").lastIndexOf("/")+1);
+	          $.ajax({
+	            url: "deleteReviewAtt.sp",
+	            data: {src:src},
+	            success: function(checkatt) {
+	             console.log(checkatt);
+	            }, error: function() {
+	             console.log("실패");
+	            }
+	          });
+	          $(this).parent().children("img").remove();
+	          $(this).remove();
+	          /*
+	          $(".deleteImg").remove();
+	          $(this).prev().attr("src", ""); */
+	       });
+	       
+	       
+	       var files=[];
+	       
+	       $(function(){
+	          $('input[type="file"]').on("change",function(){
+	             files.push(this.files[0]);
+	             console.log(files);
+	          });
+	       });
+	       
+	       
+	       //리뷰 등록 (글 + 별점 )
+	          $("#reviewBtn").on("click",function(){
+	 /*          $(document).on("click","#reviewBtn",function(){ */
+	              // console.log(filesTempArr); 
+	             var reviewContent = $(".reviewContent").val();
+	             var spaceId = ${space.spaceId};
+	             var reviewScore = $(".on").length;
+	             console.log("별 개수 : " + reviewScore);
+	             console.log("스페이스 아이디 : "+ spaceId);
+	             
+	             var formData = new FormData();
+	             formData.append('files[]',files);
+	             
+	             for(var i=0, filesTempArrLen = files.length; i<filesTempArrLen; i++) {
+	                   formData.append("files", files[i]);
+	                }
+
+
+	                 formData.append('reviewContent',reviewContent);
+	                 formData.append('spaceId',spaceId);
+	                 formData.append('reviewScore',reviewScore);
+	                 
+	                 /* console.log(formData.get('reviewContent')); 
+	                 console.log(formData.get('spaceId')); 
+	                 console.log(formData.get('on')); 
+	                 console.log(formData.getAll('files')); */
+	                    
+	            $.ajax({
+	               url : "insertReview.sp",
+	               data:formData,
+	                 type:"POST",
+	                 contentType: false,
+	                 processData: false,
+	                 success: function(check3){
+	                    console.log(check3);
+	                    if(check3=="ok"){
+	                       alert("게시글이 등록되었습니다.");
+	                       $(".reviewContent").val("");
+	                       $('#star_grade a').parent().children("a").removeClass("on");
+	                       $("#imageArea img").remove();
+	                      /*  $(".deleteImg").remove(); */
+	                       ReviewList();
+	                    }
+	                 }
+	            });
+	          });
+	       
+	       ReviewList();
+	       
+	       // 글쓰기 버튼
+	       $(function(){
+	          
+	       var spaceId = ${space.spaceId};
+	          
+	          $.ajax({
+	             url:"ReviewBtn.sp",
+	             data : {spaceId:spaceId},
+	             success:function(check4){
+	                if(check4=="write"){
+	                   var $writeBtn=$(".writeBtn");
+	                   $writeBtn.html("");
+	                   
+	                   var reviewBtn="";
+	                   reviewBtn += '<button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter2" data-backdrop="static"></button>';
+	                   $writeBtn.append(reviewBtn);
+	                }
+	             },
+	             error : function(e){
+	                console(e)
+	             }
+	             
+	          });
+	             
+	       }); 
+	       
+	       // 리뷰 조회
+	       
+	       function ReviewList(){
+	          $.ajax({
+	             url:"ReviewList.sp",
+	             data: {spaceId:spaceId},
+	             dataType:"JSON",
+	             
+	             success: function(reList){
+	                
+	                var $reviewBtn=$(".reviewBtn");
+	                var $review=$(".review");
+	                $review.html("");
+	                $reviewBtn.html("");
+	                
+	                console.log(reList);
+	                if(reList != null){
+	                   $.each(reList,function(i){
+	                      var rewiewList = "";
+	                      console.log("reList[i].memberId : " +reList[i].memberId)
+	                      /* 내가 쓴 글만 수정 삭제 */
+	                      if("${loginUser.memberId}"== reList[i].memberId){
+	                         rewiewList   += '<div class="reviewBtn2">' 
+	                                  + '<button data-toggle="modal" data-target="#exampleModalCenter3" data-backdrop="static" onclick="reviewUpdate('
+	                                  + reList[i].reviewId
+	                                  + ');">[수정]</button>'
+	                                  + '<button onclick="reviewDelete('
+	                                  + reList[i].reviewId
+	                                  + ');">[삭제]</button>'
+	                                  + '</div>';
+	                      }
+	                      $reviewBtn.append(rewiewList);
+	                      $review.append($reviewBtn);
+	                      
+	                      rewiewList    += '<h6 style="display:none">리뷰 글 번호'+ reList[i].reviewId + '</h6>' 
+	                               + '<h5>작성자 ['+ reList[i].memberId +']</h5>';
+	                               for(var j=0; j<reList[i].reviewScore;j++){
+	                                  rewiewList += '<i class="fas fa-star"></i>';
+	                               }
+	                               
+	                      rewiewList +='<h4>리뷰 내용['+reList[i].reviewContent+']</h4>'
+	                               + '<h6>작성날짜['+reList[i].reviewUpdate+']</h6>';
+	                         
+	                      $review.append(rewiewList);
+	                      
+	                      var rewiewList2 = "";
+	                      // 리뷰 사진 가져오기 
+	                      $.ajax({
+	                         url : "reviewListImg.sp",
+	                         data : {"reviewId": reList[i].reviewId},
+	                         success:function(reImgList){
+	                            if(reImgList !=null){
+	                               $.each(reImgList,function(j){
+	                                  /*"${contextPath }/resources/spaceImg/${images}"  */
+	                                  rewiewList2 += '<div class = "reImgList">'
+	                                           +'<img src=" ${contextPath }/resources/ReviewImg/'+reImgList[j].reviewAttChange+'" alt="" />'
+	                                           +'</div>'
+	                               });
+	                               $review.append(rewiewList2);
+	                               
+	                            }
+	                         }
+	                      });
+	                      
+	                    });
+	                 }
+	              }
+	          });
+	       }
+	       
+	       
+	    // 리뷰에 맞는 글  조회 해오기
+
+	    var reviewCount = 0;
+	    var rId = "";
+	    function reviewUpdate(reviewId){
+	       console.log("수정 조회용 글번호 :" +reviewId);
+	       rId = reviewId;
+	       $.ajax({
+	          url:"reviewUpdate.sp",
+	          data:{reviewId:reviewId},
+	          type:"POST",
+	          dataType:"json",
+	          success:function(rh){
+	             console.log(rh.att);
+	             console.log(rh.review);
+	             var $exampleModalCenter3 = $("#exampleModalCenter3");
+	             $exampleModalCenter3.html("");
+	             
+	             console.log("리뷰아이디 "+rh.review.reviewId);
+	             
+	             
+	             updateForm="";
+	             
+	             updateForm   += '<div class="modal-dialog modal-dialog-centered" role="document">'
+	                      + '<div class="modal-content">'
+	                      + '<div class="modal-header">'
+	                      + '<h5 class="modal-title" id="exampleModalCenterTitle">이용후기 수정</h5>'
+	                      + '</div>'
+	                      + '<div class="modal-body">'
+	                      + '<div class="starArea">'
+	                      + '<h5 class="starGrade">별점</h5>'
+	                      + '<div class="starChange">'
+	                      + '<p id="star_grade">'; 
+	                      console.log(rh.review.reviewScore);
+	                      reviewCount = rh.review.reviewScore;
+	                      console.log("리뷰"+reviewCount);
+	                      for(var i=0; i<reviewCount; i++){
+	                         updateForm   +='<a href="#" id="aStar'+(i+1)+'" class="on"><i class="fas fa-star"></i></a>';
+	                      }
+	                      if(reviewCount<5){
+	                         for(var i=0; i<5-reviewCount; i++){
+	                            updateForm   +='<a href="#" id="aStar'+(reviewCount+i+1)+'"><i class="fas fa-star"></i></a> ';                           
+	                         }
+	                      }
+	                      
+	             updateForm  += '</p>'
+	                      + '</div>'
+	                      + '</div>'
+	                      + '<textarea class="content reviewContent" maxlength="300" id="rc" name="reviewContent">'+rh.review.reviewContent.replace(/(<br>)/g,'\r\n')+'</textarea>'
+	                      + '<div class="textCount">'
+	                      + '<p class="counter"></p>'
+	                      + '</div>';
+
+	             /* 리뷰사진 */
+	             updateForm   += '<form id="ImgUploadForm" enctype="multipart/form-data">' 
+	                      + '<div class="wrapFile">'
+	                      + '<div class="row gtr-uniform borderTop" id="imageArea">';
+	                      
+	             if(rh.att !=null){
+	                
+	                for(var i=0; i<3; i++){
+	                   if(rh.att[i] == null){
+	                      console.log("reImgList[0].reviewAttChange : "+ "/ j: "+i);
+	                      updateForm   += '<div class="col-4">'
+	                               + '<label for="subFile'+(i+1)+'" class="button small">이미지'+(i+1)+'등록</label>'
+	                               + '<input type="file" name="files" id="subFile'+(i+1)+'" value="등록" onchange="loadImg(this,'+(i+1)+');">'
+	                               + '</div>';   
+	                   } else{
+	                      console.log("reImgList[0].reviewAttChange : "+rh.att[i].reviewAttChange + "/ j: "+i);
+	                      updateForm   += '<div class="col-4">'
+	                               + '<label for="subFile'+(i+1)+'" class="button small">이미지'+(i+1)+'등록</label>'
+	                               + '<input type="file" name="files" id="subFile'+(i+1)+'" value="등록"  onchange="loadImg(this,'+(i+1)+');">'
+	                               + '<img class="image fit" id="subImg'+(i+1)+'" src="${contextPath }/resources/ReviewImg/'+rh.att[i].reviewAttChange+'" alt="" />'
+	                               + '<button type="button" class="deleteImg">삭제</button>'
+	                               + '</div>';   
+	                   }
+	                   
+	                }
+	             }
+	             
+	             updateForm += '</div>'
+	                      + '</div>'
+	                      + '</form>';
+	                      
+	             updateForm   += '<div class="modal-footer">'
+	                      + '<button class="button primary cancel" data-dismiss="modal">취소</button>'
+	                      /* + '<button type="reset" class="button primary cancel" data-dismiss="modal">취소</button>' */
+	                      + '<button type="button" class="button" id="reviewUpBtn"  data-dismiss="modal">등록</button>'
+	                      + '</div>'
+	                      + '</div>'
+	                      + '</div>';
+	                      
+	                      /*  onclick="test(' + rh.review.reviewId + ' */
+	             $exampleModalCenter3.append(updateForm);
+	          },
+	           error:function(){
+	              console.log("ㅇ레러러러러");
+	           }
+	     
+	       });
+	       
+	    }
+	    
+
+	    
+	    // 리뷰 수정
+	    $(document).on("click","#reviewUpBtn", function() {
+	       console.log("글 수정할 거야 reviewId: "+rId);
+	       var reviewId = rId;
+	       var reviewContent = $("#rc").val();
+	       console.log("새로운 글 내용 : " +reviewContent);
+	       var reviewScore = $(".on").length;
+	       console.log("별 개수 : " + reviewScore);
+	       
+	       
+	       var formData = new FormData();
+	       formData.append('files[]',files);
+	       
+	       for(var i=0, filesTempArrLen = files.length; i<filesTempArrLen; i++) {
+	             formData.append("files", files[i]);
+	          }
+	       
+	          formData.append('reviewId',reviewId);
+	            formData.append('reviewContent',reviewContent);
+	            formData.append('reviewScore',reviewScore);
+	       
+	           $.ajax({
+	               url : "reviewUpdateSubmit.sp",
+	               data:formData,
+	                 type:"POST",
+	                 dataType:"JSON",
+	                 contentType: false,
+	                 processData: false,
+	                 success: function(check6){
+	                    if(check6=="ok"){
+	                       alert("게시글이 수정되었습니다.");/* 
+	                       $(".reviewContent").val("");
+	                       $('#star_grade a').parent().children("a").removeClass("on");
+	                       $("#imageArea img").remove();
+	                       $(".deleteImg").remove(); */
+	                       $('#exampleModalCenter3').modal('show');
+	                       ReviewList();
+	                    }
+	                 }
+	        });
+	    });
+	    
+
+
+	    
+	  
+	       
+	        
+	     // 리뷰 삭제 
+	     function reviewDelete(reviewId){
+	        console.log("삭제할 리뷰 아이디 : "+reviewId)
+	        $.ajax({
+	          url:"reviewDelete.sp" ,
+	          data: {reviewId:reviewId},
+	          type: "POST",
+	          success: function(check7){
+	             if(check7=="ok")
+	             alert("리뷰가 삭제되었습니다.");
+	             ReviewList();
+	          }
+	        
+	        });
+	        
+	     }
+	    
+	    
+	    
+	    
 	    
 	    // 질문 등록 
 	       $("#submitQnA").on("click",function(){
@@ -940,11 +1416,9 @@
 	             data:{qContent:qContent,spaceId :spaceId },
 	             type:"POST",
 	             success: function(check){
-	                console.log(check);
 	                if(check=="success"){
 	                   $(".qContent").val("");
 	                   QnANextList();
-	                   /* console.log("됐냐"); */
 	                }
 	             }
 	          });
@@ -1189,6 +1663,7 @@
 	          }
 	       });
 	    }
+	   
 
 </script>
 </body>

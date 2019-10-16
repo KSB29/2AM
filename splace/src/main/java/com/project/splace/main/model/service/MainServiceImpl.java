@@ -29,13 +29,20 @@ public class MainServiceImpl implements MainService{
 		
 		return mainDao.bestSpace();
 	}
+	// 알림 조회 
 	@Override
 	public ArrayList<Notice> noticeSelect(String userId) {
 		return mainDao.noticeSelect(userId);
 	}
+	// 알림 삭제 
 	@Override
 	public int noticeDelete(int noticeId) {
 		return mainDao.noticeDelete(noticeId);
+	}
+	//안 읽은 알림 조회
+	@Override
+	public int checkAlarm(String memberId) {
+		return mainDao.checkAlarm(memberId);
 	}
 
 }

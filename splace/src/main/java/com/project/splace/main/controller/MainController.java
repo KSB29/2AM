@@ -64,6 +64,7 @@ public class MainController {
 		
 		ArrayList<Notice> NoticeArr = mainService.noticeSelect(userId);
 		
+		
 		System.out.println(NoticeArr);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
@@ -71,7 +72,6 @@ public class MainController {
 	    return gson.toJson(NoticeArr);
 		
 	}
-	  
 	//알림 삭제
 		@ResponseBody
 		@RequestMapping("alarmDelete.sp")
@@ -85,5 +85,19 @@ public class MainController {
 		         return "fail";
 		      }
 			
+		}
+		// 안 읽은 알람 여부 조회 
+		@ResponseBody
+		@RequestMapping("checkAlarm.sp")  
+		public String checkAlarm(HttpSession session) {
+			String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+			System.out.println(memberId);
+			int result = mainService.checkAlarm(memberId);
+			System.out.println(result);
+			if(result>0) {
+				return "ok";
+			}else {
+				return "fail";
+			}
 		}
 }
