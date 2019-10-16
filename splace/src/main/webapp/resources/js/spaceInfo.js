@@ -46,6 +46,10 @@ $(document).ready(function(){
 	$(".imgClear").on("click", function(){
 		if (confirm("이미지를 삭제하시겠습니까?")) {
 			
+			var id = $(this).prev().attr("id").replace("attName","");
+			var spaceId = $("#spaceId").val();
+			var attName = $("#attName"+id).val();
+			console.log(attName);
 			$.ajax({
 				url : "spaceDeleteAtt.sp",
         		data : {spaceId:spaceId, attName:attName},
@@ -61,9 +65,9 @@ $(document).ready(function(){
         					console.log(e);
         				}
 			});
-			var id = $(this).attr("id").replace("delBtn","");
 			$("#subFile"+id).val("");
 			$("#subImg"+id).prop("src","");
+			$("#attName"+id).next().remove();
 			
 		} else {
 			return false;

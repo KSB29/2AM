@@ -234,7 +234,7 @@
 		WHERE  SPACE_ATT_ID = #{spaceAttId}
 	</update>
 	
-	<delete id="deleteFile" parameterMap="SpaceAtt">
+	<delete id="deleteFile" parameterType="SpaceAtt">
 		DELETE FROM SPACE_ATT
 		WHERE  SPACE_ID = #{spaceId}
 		AND	   SPACE_ATT_CHANGE = #{spaceAttChange}
