@@ -152,10 +152,10 @@ public class SpaceController {
 	
 	// 공간 수정 처리
 	@RequestMapping("spaceUpdate.sp")
-	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model, RedirectAttributes rd) {
+	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, String[] spaceAttChanges, Model model, RedirectAttributes rd) {
 		// 주소 : 우편번호,도로명주소,상세주소
 		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
-		int result = sService.updateSpace(space, filesIndex, request, uploadFile, files);
+		int result = sService.updateSpace(space, filesIndex, request, uploadFile, files, spaceAttChanges);
 		if (result > 0) {
 			rd.addFlashAttribute("msg", "공간 내역이 수정되었습니다.");
 		} else {

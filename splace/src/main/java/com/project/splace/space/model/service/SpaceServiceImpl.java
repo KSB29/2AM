@@ -87,9 +87,9 @@ public class SpaceServiceImpl implements SpaceService {
 	public String renameFile(MultipartFile file, int spaceId, int index) {
 		
 		// "공간아이디_순번.확장자"로 파일명 변경
-		//SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
-		String renameFileName = spaceId + "_" + index //+ "_" + sdf.format(new Date())
+		String renameFileName = spaceId + "_" + index + "_" + sdf.format(new Date())
 								+ "." + originFileName.substring(originFileName.lastIndexOf(".")+1);
 		return renameFileName;
 	}
@@ -120,6 +120,22 @@ public class SpaceServiceImpl implements SpaceService {
 		}
 		
 		return result;
+	}
+	
+	// 파일 삭제 메소드
+	public void deleteFile(String renameFileName, HttpServletRequest request) {
+		// 파일 저장 경로
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\spaceImg";
+		
+		// 삭제할 파일 경로 + 파일명
+		File deleteFile = new File(savePath + "\\" + renameFileName);
+		
+		// 해당 파일이 존재할 경우 삭제
+		if(deleteFile.exists()) {
+			deleteFile.delete();
+		}
+	
 	}
 
 
@@ -193,6 +209,7 @@ public class SpaceServiceImpl implements SpaceService {
 
 	@Override
 	public int deleteSpace(int spaceId) {
+		int result = sDao.deleleSpaceAtt(spaceId);
 		return sDao.deleleSpace(spaceId);
 	}
 
@@ -210,7 +227,7 @@ public class SpaceServiceImpl implements SpaceService {
 
 	@Override
 	public int updateSpace(Space space, int filesIndex, HttpServletRequest request, MultipartFile uploadFile,
-			List<MultipartFile> files) {
+			List<MultipartFile> files, String[] spaceAttChanges) {
 		
 		// 개행문자 변경
 		space.setSpaceDetail(space.getSpaceDetail().replace("\n", "<br>"));
@@ -229,26 +246,29 @@ public class SpaceServiceImpl implements SpaceService {
 		// 공간 정보 파일
 		SpaceAtt sAtt = new SpaceAtt();
 		if (result > 0 && !uploadFile.getOriginalFilename().equals("")) {
+			// 기존 파일 삭제
+			String prevFileName = space.getSpaceAttChange();
+			deleteFile(prevFileName, request);
+			int attId = sDao.getAttId(prevFileName);
+			// 변경된 파일 저장
 			renameFileName = renameFile(uploadFile, spaceId, 0); // 변경된 파일명
+			sAtt.setSpaceAttId(attId);
 			sAtt.setSpaceAttOrigin(uploadFile.getOriginalFilename());
 			sAtt.setSpaceAttChange(renameFileName);
-			sAtt.setSpaceId(spaceId);
-			sAtt.setSpaceAttType("0"); // 대표사진
 			// 서버에 파일 저장
 			if (renameFileName != null) result = saveFile(renameFileName, uploadFile, request);
 			// DB에 파일 저장
 			if (result > 0) result = sDao.updateFile(sAtt);
 		}
-		System.out.println(filesIndex);
-		if (result > 0 && files.size() > 0) {
+		
+		/*if (result > 0 && files.size() > 0) {
+			// 
 			for (int i = 0; i < files.size(); i++) {
 				if (!files.get(i).getOriginalFilename().equals("")) {
 					System.out.println(i + " : " + files.get(i).getOriginalFilename());
 					renameFileName = renameFile(files.get(i), spaceId, i+1); // 변경된 파일명
 					sAtt.setSpaceAttOrigin(files.get(i).getOriginalFilename());
 					sAtt.setSpaceAttChange(renameFileName);
-					sAtt.setSpaceId(spaceId);
-					sAtt.setSpaceAttType("1"); // 슬라이드
 					// 서버에 파일 저장
 					if (renameFileName != null) result = saveFile(renameFileName, files.get(i), request);
 					// DB에 파일 저장
@@ -258,7 +278,7 @@ public class SpaceServiceImpl implements SpaceService {
 					}
 				}
 			}
-		}
+		}*/
 		return result;
 	}
 
@@ -267,17 +287,16 @@ public class SpaceServiceImpl implements SpaceService {
 	public int updatePrice(int spaceId, int spaceAdd, String[] spacePrice) {
 		int result = 0;
 		
-		// 1 인당 추가 금액 저장
-		if (spaceAdd >= 0) {
-			Space space = new Space();
-			space.setSpaceId(spaceId);
-			space.setSpaceAdd(spaceAdd);
-			result = sDao.updateAddPrice(space);
-		}
+		// 대표 가격 저장
+		Space space = new Space();
+		space.setSpaceId(spaceId);
+		space.setSpaceAdd(spaceAdd);
+		result = sDao.updateAddPrice(space);
 		
-		if (spaceAdd >= 0 && result > 0 ) {
+		if (result > 0 ) {
 			// 공간 가격 등록
 			int priceId;
+			result = 0;
 			Price price = new Price();
 			for (int i = 0; i < spacePrice.length; i++) {
 				int place = spacePrice[i].indexOf('[');

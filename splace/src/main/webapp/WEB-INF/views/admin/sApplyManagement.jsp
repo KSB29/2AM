@@ -36,7 +36,7 @@
         <div class="container-fluid">
 			
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">호스트 신청 관리</h1>
+          <h1 class="h3 mb-2 text-gray-800">공간 신청 관리</h1>
           <p class="mb-4"></p>
 
           <!-- DataTales Example -->
@@ -46,54 +46,56 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>아이디</th>
-                      <th>회원아이디</th>
-                      <th>전화번호</th>
-                      <th>이메일</th>
-                      <th>이름</th>
-                      <th>상호명</th>
-                      <th>사업자번호</th>
-                      <th>은행</th>
-                      <th>계좌번호</th>
-                      <th>예금주</th>
+                      <th>번호</th>
+                      <th>공간이름</th>
+                      <th>한줄소개</th>
+                      <th>상세소개</th>
+                      <th>태그</th>
+                      <th>주의사항</th>
+                      <th>주소/전화번호</th>
+                      <th>이용인원</th>
+                      <th>운영시간</th>
                       <th>등록일</th>
+                      <th>수정일</th>
+                      <th>회원ID</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>아이디</th>
-                      <th>회원아이디</th>
-                      <th>전화번호</th>
-                      <th>이메일</th>
-                      <th>이름</th>
-                      <th>상호명</th>
-                      <th>사업자번호</th>
-                      <th>은행</th>
-                      <th>계좌번호</th>
-                      <th>예금주</th>
+                      <th>번호</th>
+                      <th>공간이름</th>
+                      <th>한줄소개</th>
+                      <th>상세소개</th>
+                      <th>태그</th>
+                      <th>주의사항</th>
+                      <th>주소/전화번호</th>
+                      <th>이용인원</th>
+                      <th>운영시간</th>
                       <th>등록일</th>
+                      <th>수정일</th>
+                      <th>회원ID</th>
                       <th></th>
                     </tr>
                   </tfoot>
                   <tbody>
-                  	<c:forEach items="${hList }" var="host">
+                  	<c:forEach items="${sList }" var="space">
 	                    <tr>
-	                      <td>${host.hostId}</td>
-	                      <td>${host.memberId}</td>
-	                      <td>${host.hostPhone}</td>
-	                      <td>${host.hostEmail}</td>
-	                      <td>${host.hostName}</td>
-	                      <td>${host.storeName}</td>
-	                      <td>${host.hostNo}</td>
-	                      <td>${host.hostBank}</td>
-	                      <td>${host.hostAccount}</td>
-	                      <td>${host.hostBname}</td>
-	                      <td><fmt:formatDate value="${host.hostEnroll}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
-	                      <td><fmt:formatDate value="${host.hostUpdate}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+	                      <td>${space.spaceId}</td>
+	                      <td>${space.spaceName}</td>
+	                      <td>${space.spaceComment}</td>
+	                      <td>${space.spaceDetail}</td>
+	                      <td>${space.spaceTag}</td>
+	                      <td>${space.spaceNotice}</td>
+	                      <td>${space.spaceAddress} / ${space.spacePhone}</td>
+	                      <td>${space.spaceMinPer} ~ ${space.spaceMaxPer} 명</td>
+	                      <td>${space.spaceOpenTime} ~ ${space.spaceCloseTime} 시</td>
+	                      <td><fmt:formatDate value="${space.spaceEnroll}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+	                      <td><fmt:formatDate value="${space.spaceUpdate}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+	                      <td>${space.memberId}</td>
 	                      <td>
-	                      	<button class="btn btn-google btn-block" onclick="location.href='hApproveManagement.sp?hostId=${host.hostId}'">승인</button>
-	                      	<button class="btn btn-facebook btn-block" onclick="location.href='hCancelManagement.sp?hostId=${host.hostId}'">반려</button>
+	                      	<button class="btn btn-google btn-block" onclick="location.href='sApproveManagement.sp?spaceId=${space.spaceId}'">승인</button>
+	                      	<button class="btn btn-facebook btn-block" onclick="location.href='sCancelManagement.sp?spaceId=${space.spaceId}'">반려</button>
 	                      </td>
 	                    </tr>
                   	</c:forEach>

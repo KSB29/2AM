@@ -115,7 +115,7 @@
 								<textarea name="spaceDetail" id="spaceDetail" placeholder="상세소개" rows="6" maxlength="10000" required>${ spaceDetail }</textarea>
 							</div>
 							<div class="col-10 col-12-xsmall">
-								<label for="tag">태그 <span id="tagLength"></span></label>
+								<label for="tag">* 태그 <span id="tagLength"></span></label>
 								<input type="text" id="tag" placeholder="태그">
 							</div>
 							<div class="col-2 col-12-xsmall">
@@ -125,7 +125,7 @@
 							<div class="col-12 col-12-xsmall noticeDiv" id="tagList"></div>
 							<input type="hidden" name="spaceTag" id="spaceTag" maxlength="150" value="${ space.spaceTag }">
 							<div class="col-12 col-12-xsmall">
-								<label>세부옵션</label>
+								<label>* 세부옵션</label>
 								<div class="row" id="optionField">
 									<ul>
 										<c:forEach var="oList" items="${ oList }">
@@ -145,7 +145,7 @@
 								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">구비된 편의시설을 선택해주세요.</span>
 							</div>
 							<div class="col-10 col-12-xsmall">
-								<label for="">주의사항 <span id="noticeLength"></span></label>
+								<label for="">* 주의사항 <span id="noticeLength"></span></label>
 								<input type="text" id="notice" placeholder="주의사항">
 							</div>
 							<div class="col-2 col-12-xsmall">
@@ -192,6 +192,7 @@
 									<label for="mainFile" class="button primary small">메인 이미지 등록</label>
 									<input type="file" name="uploadFile" id="mainFile" value="등록" onchange="loadImg(this,1);">
 									<img id="mainImg" class="image fit" src="${ contextPath }/resources/spaceImg/${ space.spaceAttChange }">
+									<input type="hidden" name="spaceAttChange" value="${ space.spaceAttChange }">
 									<span>${ space.spaceAttOrigin }</span>
 								</div>
 								<c:forEach var="attList" items="${ attList }" varStatus="vs">
@@ -199,6 +200,7 @@
 									<label for="subFile${ vs.index + 1 }" class="button small">이미지${ vs.index + 1 } 등록</label>
 									<input type="file" name="files" id="subFile${ vs.index + 1 }" value="등록" multiple onchange="loadImg(this,${ vs.index + 1 });">
 									<img id="subImg${ vs.index + 1 }" class="image fit" src="${ contextPath }/resources/spaceImg/${ attList.spaceAttChange }">
+									<input type="hidden" name="spaceAttChanges" value="${ attList.spaceAttChange }">
 									<span>${ attList.spaceAttOrigin }</span>
 								</div>
 								</c:forEach>
@@ -210,6 +212,7 @@
 									<label for="subFile${ i }" class="button small">이미지${ i } 등록</label>
 									<input type="file" name="files" id="subFile${ i }" value="등록" multiple onchange="loadImg(this,${ i });">
 									<img id="subImg${ i }" class="image fit">
+									<input type="hidden" name="spaceAttChanges" value="">
 								</div>
 								</c:forEach>
 								</c:if>
@@ -223,7 +226,7 @@
 								<input type="submit" class="button primary fit" value="수정" disabled>
 								</c:if>
 								<c:if test="${ spaceStatus != 1 }">
-								<input type="submit" class="button primary fit" value="수정">
+								<input type="submit" id="submitBtn" class="button primary fit" value="수정">
 								</c:if>
 							</div>
 							<div class="col-3"><input type="button" class="button fit" value="취소" onclick="location.href='spaceList.sp'"></div>

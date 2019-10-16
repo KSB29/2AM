@@ -67,8 +67,8 @@
       </a>
       <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="noticeManagement.sp">공간 정보관리</a>
-          <a class="collapse-item" href="noticeManagement.sp">공간 신청관리</a>
+          <a class="collapse-item" href="sInfoManagement.sp">공간 정보관리</a>
+          <a class="collapse-item" href="sApplyManagement.sp">공간 신청관리</a>
         </div>
       </div>
     </li>

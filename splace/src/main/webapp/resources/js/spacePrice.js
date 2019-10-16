@@ -34,7 +34,12 @@ $(document).ready(function(){
 	}
 	
 	$("#submitBtn").click(function(){
-		
+		var spaceAdd = $("#spaceAdd").val();
+		if (spaceAdd == "" || spaceAdd < 1) {
+			alert("공간 대표 금액을 입력하세요.");
+			$("#spaceAdd").focus();
+			return false;
+		}
 		for (var i = 1; i <= 8; i++ ) {
 			
 			var priceList = new Array();
@@ -93,8 +98,12 @@ $(document).ready(function(){
 	// 금액 일괄 입력
 	$(document).on("click", "#insertBtn", function(){
 		var num = ($("#dayArea input:checked").attr("id")).replace("day", "");
-		// 시간 당 금액
 		var price = $("#inputPrice").val();
+		// 공간 대표 금액
+		if ($("#spaceAdd").val() == "" || $("#spaceAdd").val() == 0) {
+			$("#spaceAdd").val(price);
+		}
+		// 시간 당 금액
 		$("#timeTableAm"+num + " .price").val(price);
 		$("#timeTablePm"+num + " .price").val(price);
 	});

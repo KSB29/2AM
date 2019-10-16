@@ -50,7 +50,7 @@
 							</thead>
 							<tbody>
 								<c:if test="${empty rList}">
-								<tr><td colspan="5" class="align-center">후기 내역이 없습니다</td></tr>
+								<tr><td colspan="5" class="align-center">후기 내역이 없습니다.</td></tr>
 								</c:if>
 								<input type="hidden" id="img" value="${ contextPath }">
 								<c:forEach var="rList" items="${ rList }" varStatus="vs">

@@ -127,6 +127,16 @@ public class SpaceDao {
 	
 	
 	/**
+	 * 공간 사진 파일 삭제 Dao
+	 * @param spaceId
+	 * @return result
+	 */
+	public int deleleSpaceAtt(int spaceId) {
+		return sqlSession.delete("spaceMapper.deleteSpaceAtt", spaceId);
+	}
+	
+	
+	/**
 	 * 공간 삭제 Dao
 	 * @param spaceId
 	 * @return result
@@ -350,5 +360,15 @@ public class SpaceDao {
 	 */
 	public int deleteDayoff(int dayoffId) {
 		return sqlSession.delete("spaceMapper.deleteDayoff", dayoffId);
+	}
+
+	/**
+	 * 공간 사진 파일ID 조회
+	 * @param spaceId
+	 * @param prevFileName
+	 * @return attId
+	 */
+	public int getAttId(String prevFileName) {
+		return sqlSession.selectOne("spaceMapper.getAttId", prevFileName);
 	}
 }

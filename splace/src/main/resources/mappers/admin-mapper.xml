@@ -37,6 +37,30 @@
 		<result property="memberId" column="MEMBER_ID"/>
 		<result property="statusId" column="STATUS_ID"/>
 	</resultMap>
+	<resultMap type="Space" id="spaceResultSet">
+		<id property="spaceId" column="SPACE_ID"/>
+		<result property="spaceName" column="SPACE_NAME"/>
+		<result property="spaceComment" column="SPACE_COMMENT"/>
+		<result property="spaceDetail" column="SPACE_DETAIL" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="spaceTag" column="SPACE_TAG"/>
+		<result property="spaceOption" column="SPACE_OPTION"/>
+		<result property="spaceAddress" column="SPACE_ADDRESS"/>
+		<result property="spacePhone" column="SPACE_PHONE"/>
+		<result property="spaceNotice" column="SPACE_NOTICE"/>
+		<result property="spaceOperStatus" column="SPACE_OPER_STATUS"/>
+		<result property="spaceTime" column="SPACE_TIME"/>
+		<result property="spaceMinPer" column="SPACE_MIN_PER"/>
+		<result property="spaceMaxPer" column="SPACE_MAX_PER"/>
+		<result property="spaceAdd" column="SPACE_ADD"/>
+		<result property="spaceOpenTime" column="SPACE_OPEN_TIME"/>
+		<result property="spaceCloseTime" column="SPACE_CLOSE_TIME"/>
+		<result property="hostId" column="HOST_ID"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="typeId" column="TYPE_ID"/>
+		<result property="statusId" column="STATUS_ID"/>
+		<result property="spaceEnroll" column="SPACE_ENROLL"/>
+		<result property="spaceUpdate" column="SPACE_UPDATE"/>
+	</resultMap>
 	<resultMap type="Board" id="boardResultSet">
 		<id property="boardId" column="BOARD_ID"/>
 		<result property="boardTitle" column="BOARD_TITLE"/>
@@ -180,4 +204,41 @@
 		GROUP BY TO_CHAR(BOOK_ENROLL, 'HH24')
 	</select>
 	
+	<!-- 12. 호스트 승인 처리 -->
+	<update id="updateApproveHost" parameterType="_int">
+		UPDATE HOST
+		SET    STATUS_ID = 2, HOST_UPDATE = SYSDATE
+		WHERE  HOST_ID = #{hostId}
+	</update>
+	
+	<!-- 13. 호스트 반려 처리 -->
+	<update id="updateCancelHost" parameterType="_int">
+		UPDATE HOST
+		SET    STATUS_ID = 3, HOST_UPDATE = SYSDATE
+		WHERE  HOST_ID = #{hostId}
+	</update>
+	
+	<!-- 14. 공간 관리 -->
+	<select id="selectSpaceList" parameterType="_int" resultMap="spaceResultSet">
+		SELECT S.*, H.MEMBER_ID FROM SPACE S, HOST H
+		WHERE  S.HOST_ID = H.HOST_ID
+		<if test="_parameter != 4">
+			AND S.STATUS_ID = #{status}
+		</if>
+	</select>
+	
+	<!-- 15. 공간 승인 처리 -->
+	<update id="updateApproveSpace" parameterType="_int">
+		UPDATE SPACE
+		SET    STATUS_ID = 2, SPACE_UPDATE = SYSDATE
+		WHERE  SPACE_ID = #{spaceId}
+	</update>
+	
+	<!-- 16. 공간 반려 처리 -->
+	<update id="updateCancelSpace" parameterType="_int">
+		UPDATE SPACE
+		SET    STATUS_ID = 3, SPACE_UPDATE = SYSDATE
+		WHERE  SPACE_ID = #{spaceId}
+	</update>
+  
 </mapper>
