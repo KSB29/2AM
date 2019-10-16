@@ -612,7 +612,7 @@
  	<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>
 	
-	<!--  ajax  -->
+	<!--  ajax  -->   
 	      <script>
 	 
 	      function rDataCheck(){
