@@ -130,12 +130,12 @@
 							<c:choose>
 								<c:when test="${ hostStatus == null }">
 									<div class="col-4">
-										<input type="submit" class="button primary fit" value="등록">
+										<input type="submit" id="inserBtn" class="button primary fit" value="등록">
 									</div>
 								</c:when>
 								<c:when test="${ hostStatus == 0 || hostStatus == 3 }">
 									<div class="col-2">
-										<input type="submit" class="button primary fit" value="등록">
+										<input type="submit" id="inserBtn" class="button primary fit" value="등록">
 									</div>
 									<div class="col-2">
 										<c:url var="hjoinApply" value="hjoinApply.sp"/>

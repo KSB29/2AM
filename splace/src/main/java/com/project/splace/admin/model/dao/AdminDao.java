@@ -159,4 +159,13 @@ public class AdminDao {
 		return sqlSession.update("adminMapper.updateCancelSpace", spaceId);
   }
 
+	/**
+	 * 17. 예약 정보 관리
+	 * @param status
+	 * @return bList
+	 */
+	public ArrayList<Book> selectBookList(int status) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectAllBookList", status);
+	}
+
 }

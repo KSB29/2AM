@@ -191,16 +191,17 @@
 								<div class="col-2 col-12-xsmall">
 									<label for="mainFile" class="button primary small">메인 이미지 등록</label>
 									<input type="file" name="uploadFile" id="mainFile" value="등록" onchange="loadImg(this,1);">
-									<img id="mainImg" class="image fit" src="${ contextPath }/resources/spaceImg/${ space.spaceAttChange }">
+									<img id="mainImg" class="image fit" src="${ contextPath }/resources/spaceImg/${ space.spaceAttChange }" accept="image/gif,image/jpeg,image/png">
 									<input type="hidden" name="spaceAttChange" value="${ space.spaceAttChange }">
 									<span>${ space.spaceAttOrigin }</span>
 								</div>
 								<c:forEach var="attList" items="${ attList }" varStatus="vs">
 								<div class="col-2">
 									<label for="subFile${ vs.index + 1 }" class="button small">이미지${ vs.index + 1 } 등록</label>
-									<input type="file" name="files" id="subFile${ vs.index + 1 }" value="등록" multiple onchange="loadImg(this,${ vs.index + 1 });">
+									<input type="file" name="files" id="subFile${ vs.index + 1 }" value="등록" multiple onchange="loadImg(this,${ vs.index + 1 });" accept="image/gif,image/jpeg,image/png">
 									<img id="subImg${ vs.index + 1 }" class="image fit" src="${ contextPath }/resources/spaceImg/${ attList.spaceAttChange }">
 									<input type="hidden" name="spaceAttChanges" value="${ attList.spaceAttChange }">
+									<i class="material-icons imgClear warningColor">cancel</i>
 									<span>${ attList.spaceAttOrigin }</span>
 								</div>
 								</c:forEach>
@@ -210,7 +211,7 @@
 								<c:forEach var="i" begin="${ length + 1 }" end="5">
 								<div class="col-2">
 									<label for="subFile${ i }" class="button small">이미지${ i } 등록</label>
-									<input type="file" name="files" id="subFile${ i }" value="등록" multiple onchange="loadImg(this,${ i });">
+									<input type="file" name="files" id="subFile${ i }" value="등록" multiple onchange="loadImg(this,${ i });" accept="image/gif,image/jpeg,image/png">
 									<img id="subImg${ i }" class="image fit">
 									<input type="hidden" name="spaceAttChanges" value="">
 								</div>

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.splace.book.model.vo.Book;
 import com.project.splace.common.PageInfo;
 import com.project.splace.common.Pagination;
+import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.dao.SpaceDao;
 import com.project.splace.space.model.vo.DayOff;
@@ -135,9 +136,7 @@ public class SpaceServiceImpl implements SpaceService {
 		if(deleteFile.exists()) {
 			deleteFile.delete();
 		}
-	
 	}
-
 
 	@Override
 	public ArrayList<Space> selectList(String memberId, int currentPage) {
@@ -208,8 +207,24 @@ public class SpaceServiceImpl implements SpaceService {
 
 
 	@Override
-	public int deleteSpace(int spaceId) {
-		int result = sDao.deleleSpaceAtt(spaceId);
+	public int deleteSpace(int spaceId, HttpServletRequest request) {
+		// 공간 승인 이전에는 모든 정보 삭제 가능
+		// 공간 사진 파일 삭제
+		int result = 0;
+		ArrayList<SpaceAtt> sAtt = sDao.selectSpaceAtt(spaceId);
+		if (sAtt.size() > 0) {
+			result = sDao.deleleSpaceAtt(spaceId);
+			if (result > 0) {
+				for (int i = 0; i < sAtt.size(); i++) {
+					deleteFile(sAtt.get(i).getSpaceAttChange(), request);
+				}
+			}
+		}
+		// 공간 가격 삭제
+		result = sDao.deleteSpacePrice(spaceId);
+		// 공간 휴일 삭제
+		result = sDao.deleteSpaceDayoff(spaceId);
+		// 공간 내역 삭제
 		return sDao.deleleSpace(spaceId);
 	}
 
@@ -260,12 +275,22 @@ public class SpaceServiceImpl implements SpaceService {
 			// DB에 파일 저장
 			if (result > 0) result = sDao.updateFile(sAtt);
 		}
-		
-		/*if (result > 0 && files.size() > 0) {
-			// 
+		for (int i=0;i<files.size();i++) {
+			System.out.println(i + " : " + files.get(i).getOriginalFilename());
+		}
+		for (int i=0;i<spaceAttChanges.length;i++) {
+			System.out.println(i + " : " + spaceAttChanges[i]);
+		}
+		if (result > 0 && files.size() > 0) {
 			for (int i = 0; i < files.size(); i++) {
 				if (!files.get(i).getOriginalFilename().equals("")) {
-					System.out.println(i + " : " + files.get(i).getOriginalFilename());
+					int attId = 0;
+					// 기존 파일 삭제
+					if (!spaceAttChanges[i].equals("")) {
+						String prevFileName = spaceAttChanges[i];
+						deleteFile(prevFileName, request);
+						attId = sDao.getAttId(prevFileName);
+					}
 					renameFileName = renameFile(files.get(i), spaceId, i+1); // 변경된 파일명
 					sAtt.setSpaceAttOrigin(files.get(i).getOriginalFilename());
 					sAtt.setSpaceAttChange(renameFileName);
@@ -273,12 +298,20 @@ public class SpaceServiceImpl implements SpaceService {
 					if (renameFileName != null) result = saveFile(renameFileName, files.get(i), request);
 					// DB에 파일 저장
 					if (result > 0) {
-						if (filesIndex < i + 1 ) result = sDao.insertFile(sAtt);
-						else result = sDao.updateFile(sAtt);
+						if (attId == 0) {
+							sAtt.setSpaceId(spaceId);
+							sAtt.setSpaceAttType("1");
+							result = sDao.insertFile(sAtt);
+							System.out.println("사진 추가");
+						} else {
+							sAtt.setSpaceAttId(attId);
+							result = sDao.updateFile(sAtt);
+							System.out.println("사진 변경");
+						}
 					}
 				}
 			}
-		}*/
+		}
 		return result;
 	}
 
@@ -439,6 +472,12 @@ public class SpaceServiceImpl implements SpaceService {
 		}
 		if (result == idList.length) return result + "";
 		return "0";
+	}
+
+
+	@Override
+	public Host selectOne(String memberId) {
+		return sDao.selectOne(memberId);
 	}
 
 

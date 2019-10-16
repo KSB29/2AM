@@ -283,6 +283,18 @@
 		WHERE  SPACE_ID = #{spaceId}
 	</delete>
 	
+	<!-- 공간 가격 삭제 -->
+	<delete id="deleteSpacePrice" parameterType="_int">
+		DELETE PRICE
+		WHERE  SPACE_ID = #{spaceId}
+	</delete>
+	
+	<!-- 공간 가격 삭제 -->
+	<delete id="deleteSpaceDayoff" parameterType="_int">
+		DELETE DAYOFF
+		WHERE  SPACE_ID = #{spaceId}
+	</delete>
+	
 	<!-- 공간 삭제 -->
 	<delete id="deleteSpace" parameterType="_int">
 		DELETE SPACE

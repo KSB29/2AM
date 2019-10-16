@@ -79,8 +79,7 @@
       </a>
       <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="noticeManagement.sp">승인대기</a>
-          <a class="collapse-item" href="noticeManagement.sp">결제대기</a>
+          <a class="collapse-item" href="bInfoManagement.sp">예약 정보관리</a>
         </div>
       </div>
     </li>

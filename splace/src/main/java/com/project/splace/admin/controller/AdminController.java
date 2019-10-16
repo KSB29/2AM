@@ -14,6 +14,7 @@ import com.project.splace.admin.model.service.AdminService;
 import com.project.splace.admin.model.vo.Account;
 import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
+import com.project.splace.book.model.vo.Book;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
@@ -249,6 +250,25 @@ public class AdminController {
 		int result = adminService.updateCancelSpace(spaceId);
 		ArrayList<Space> sList = adminService.selectSpaceList(1);
 		mv.addObject("sList", sList).setViewName("admin/sApplyManagement");
+		
+		return mv; 
+	}
+	
+	// 18. 예약 정보 관리
+	@RequestMapping("bInfoManagement")
+	public ModelAndView goBookManagement(ModelAndView mv, String bookStatus) {
+		
+		// 상태
+		int status = 0;
+		
+		if(bookStatus == null) {
+			status = 109;
+		} else{
+			status = Integer.parseInt(bookStatus);
+		}
+		
+		ArrayList<Book> bList = adminService.selectBookList(status);
+		mv.addObject("bList", bList).addObject("status", status).setViewName("admin/bookManagement");
 		
 		return mv; 
 	}
