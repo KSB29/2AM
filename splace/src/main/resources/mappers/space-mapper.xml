@@ -424,11 +424,10 @@
 	WHERE STATUS_ID=2  
 	AND(SPACE_ATT_TYPE=0
 	AND SPACE_OPER_STATUS='Y'
-	AND HOST_ID=#{hostId})
+	AND HOST_ID=#{hostId}
+	AND P.SPACE_ID != #{spaceId})
 	</select>
 	 
-	
-	
 	<!-- 찜 조회  -->
 	<select id="wishSelect" parameterType="WishList" resultType="_int">
 	SELECT COUNT(*) 

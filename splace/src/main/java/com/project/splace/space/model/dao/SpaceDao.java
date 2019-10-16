@@ -266,12 +266,12 @@ public class SpaceDao {
 
    /**
     * 호스트 다른 공간
-    * @param hostId
+    * @param space
     * @return
     */
-   public ArrayList<Space> hostSpace(int hostId) {
+   public ArrayList<Space> hostSpace(Space space) {
    
-      return (ArrayList)sqlSession.selectList("spaceMapper.hostSpace", hostId);
+      return (ArrayList)sqlSession.selectList("spaceMapper.hostSpace", space);
    }
 
 	/** 
