@@ -317,6 +317,17 @@ public class SpaceServiceImpl implements SpaceService {
 
 
 	@Override
+	public String spaceDeleteAtt(int spaceId, String attName, HttpServletRequest request) {
+		deleteFile(attName, request);
+		SpaceAtt sAtt = new SpaceAtt();
+		sAtt.setSpaceId(spaceId);
+		sAtt.setSpaceAttChange(attName);
+		int result = sDao.deleteFile(sAtt);
+		if (result > 0) return "Y";
+		else return "N";
+	}
+
+	@Override
 	public int updatePrice(int spaceId, int spaceAdd, String[] spacePrice) {
 		int result = 0;
 		

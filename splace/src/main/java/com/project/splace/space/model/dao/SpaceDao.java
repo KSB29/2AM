@@ -399,4 +399,12 @@ public class SpaceDao {
 	public Host selectOne(String memberId) {
 		return sqlSession.selectOne("hostMapper.selectOne", memberId);
 	}
+
+	/**
+	 * @param sAtt
+	 * @return result
+	 */
+	public int deleteFile(SpaceAtt sAtt) {
+		return sqlSession.delete("spaceMapper.deleteFile", sAtt);
+	}
 }

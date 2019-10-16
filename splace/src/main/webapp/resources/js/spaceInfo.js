@@ -45,9 +45,25 @@ $(document).ready(function(){
 	
 	$(".imgClear").on("click", function(){
 		if (confirm("이미지를 삭제하시겠습니까?")) {
-			//var id = $(this).attr("id").replace("delBtn","");
-			//$("#subFile"+id).val("");
-			//$("#subImg"+id).prop("src","");
+			
+			$.ajax({
+				url : "spaceDeleteAtt.sp",
+        		data : {spaceId:spaceId, attName:attName},
+        		type : "post",
+        		success : function(result) {
+        					if (result == "Y") {
+        						alert("삭제되었습니다");
+        					} else {
+        						alert("삭제 중 오류가 발생했습니다");
+        					}
+        				},
+        		error : function(e) {
+        					console.log(e);
+        				}
+			});
+			var id = $(this).attr("id").replace("delBtn","");
+			$("#subFile"+id).val("");
+			$("#subImg"+id).prop("src","");
 			
 		} else {
 			return false;

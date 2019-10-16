@@ -173,6 +173,12 @@ public class SpaceController {
 		return "redirect:spaceList.sp";
 	}
 	
+	@RequestMapping("spaceDeleteAtt.sp")
+	public String spaceDeleteAtt(int spaceId, String attName, HttpServletRequest request) {
+		String result = sService.spaceDeleteAtt(spaceId, attName, request);
+		return result;
+	}
+	
 	// 공간 승인 요청
 	@RequestMapping("spaceApply.sp")
 	public String spaceApply(int spaceId, RedirectAttributes rd) {
