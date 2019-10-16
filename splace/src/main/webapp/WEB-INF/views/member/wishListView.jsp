@@ -61,14 +61,14 @@
 														<span>최대 인원 : </span><strong>${n.spaceMaxPer}</strong><span>명</span>
 													</li>
 													<li>
-													 	<input id="spaceId" type="hidden" value="${n.spaceId}"/>
+													 	<input class="spaceId" type="hidden" value="${n.spaceId}"/>
 													</li>													
 													<li>
 														<div class="reserver_btn">
-															<a class="button primary small fit">예약</a>
+															<a class="button primary small fit" href="${contextPath}/detailSpace.sp?spaceId=${n.spaceId}">예약</a>
 														</div>
 														<div class="reserver_btn">
-															<a id="deleteWish" class="button small fit">삭제</a>
+															<a id="" class="button small fit deleteWish">삭제</a>
 														</div>											
 													</li>
 												</ul>
@@ -97,7 +97,6 @@
 										  var address;
 										  
 										  $(".location").on("click",function(){
-											
 											console.log($(this).text() );
 											address = $(this).text();
 										  	geocodeAddress(geocoder, map, address);

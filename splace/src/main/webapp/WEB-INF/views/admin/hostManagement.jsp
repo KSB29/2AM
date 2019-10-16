@@ -44,7 +44,7 @@
               <select class="custom-select" name="statusSelect" id="statusSelect">
                 <option value="4" <c:if test="${status==4 }">selected</c:if>>전체</option>
                 <option value="0" <c:if test="${status==0 }">selected</c:if>>등록</option>
-                <option value="1" <c:if test="${status==1 }">selected</c:if>>대기</option>
+                <option value=",1" <c:if test="${status==1 }">selected</c:if>>대기</option>
                 <option value="2" <c:if test="${status==2 }">selected</c:if>>승인</option>
                 <option value="3" <c:if test="${status==3 }">selected</c:if>>반려</option>
               </select>

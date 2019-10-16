@@ -1,3 +1,4 @@
+
 package com.project.splace.admin.model.dao;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
 import com.project.splace.space.model.vo.Space;
+import com.project.splace.admin.model.vo.Payment;
+
 
 @Repository("adminDao")
 public class AdminDao {
@@ -166,6 +169,11 @@ public class AdminDao {
 	 */
 	public ArrayList<Book> selectBookList(int status) {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectAllBookList", status);
+	}
+  
+  public ArrayList<Payment> selectPaymentList(int status) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectPaymentlist",status);
+		
 	}
 
 }

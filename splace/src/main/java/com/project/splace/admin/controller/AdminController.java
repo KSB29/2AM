@@ -9,9 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.project.splace.admin.model.service.AdminService;
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.Payment;
 import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.book.model.vo.Book;
@@ -269,6 +269,27 @@ public class AdminController {
 		
 		ArrayList<Book> bList = adminService.selectBookList(status);
 		mv.addObject("bList", bList).addObject("status", status).setViewName("admin/bookManagement");
+		
+		return mv; 
+	}
+	
+	// 10. 결제 완료 관리 
+	@RequestMapping("paymentManagement.sp")
+	public ModelAndView paymentManagement(ModelAndView mv, String paymentStatus) {
+
+		// 상태
+		int status = 0;
+		if(paymentStatus == null) {
+			status = 0;
+		} else{
+			status = Integer.parseInt(paymentStatus);
+		}
+				
+		ArrayList<Payment> pList = adminService.selectPaymentList(status);
+		mv.addObject("pList", pList).addObject("status", status).setViewName("admin/paymentManagement");
+
+
+		
 		
 		return mv; 
 	}
