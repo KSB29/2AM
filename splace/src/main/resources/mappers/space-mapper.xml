@@ -234,6 +234,12 @@
 		WHERE  SPACE_ATT_ID = #{spaceAttId}
 	</update>
 	
+	<delete id="deleteFile" parameterType="SpaceAtt">
+		DELETE FROM SPACE_ATT
+		WHERE  SPACE_ID = #{spaceId}
+		AND	   SPACE_ATT_CHANGE = #{spaceAttChange}
+	</delete>
+	
 	<!-- 공간 가격 조회 -->
 	<select id="selectPrice" parameterType="_int" resultMap="priceResultSet">
 		SELECT S.SPACE_OPEN_TIME,

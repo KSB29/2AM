@@ -17,6 +17,7 @@ import com.project.splace.member.model.vo.Member;
 import com.project.splace.member.model.vo.MemberQnaVO;
 import com.project.splace.member.model.vo.MemberReviewVO;
 import com.project.splace.member.model.vo.WishListVO;
+import com.project.splace.qna.model.vo.QnA;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService{
@@ -142,6 +143,11 @@ public class MemberServiceImpl implements MemberService{
 		
 		
 		
+	}
+
+	@Override
+	public int insertQna(MemberQnaVO qna) {
+		return mDao.insertQna(qna);
 	}
 
 

@@ -60,6 +60,7 @@ import com.project.splace.member.model.vo.Member;
 import com.project.splace.member.model.vo.MemberQnaVO;
 import com.project.splace.member.model.vo.MemberReviewVO;
 import com.project.splace.member.model.vo.WishListVO;
+import com.project.splace.qna.model.vo.QnA;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -688,13 +689,13 @@ public class MemberController {
 	/*-------------------------------------1:1 문의 view---------------------------------------------*/ 
 	
 	@RequestMapping(value = "memberQna.sp", method=RequestMethod.GET)
-	public ModelAndView memberQnaView(HttpServletRequest request,  ModelAndView mv, Integer page) {
-		HttpSession session = request.getSession();
-		Member mem =  (Member) session.getAttribute("loginUser");
-		String memberId = mem.getMemberId();
+	public ModelAndView memberQnaView(HttpSession session, ModelAndView mv, /* MemberQnaVO search, */ Integer page) {
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
 		
 		int currentPage = page == null? 1 : page;
 		logger.info("회원ID : "+memberId);
+		// MemberQnaVO search 검색용 vo 대신 활용
+		//search.setqMemberId(memberId);
 		ArrayList<MemberQnaVO> qnaList = mService.selectQnaList(memberId,currentPage);
 	
 		
@@ -702,12 +703,34 @@ public class MemberController {
 		
 		if (qnaList != null) {
 			mv.addObject("qnaList", qnaList);
+			//mv.addObject("search", search);
 			mv.addObject("pi", Pagination.getPageInfo()).setViewName("member/memberQnaView");
 		} else {
 			mv.addObject("msg", "후기리스트 조회 중 오류 발생");
 		}
 		return mv;
 		
+	}
+	
+	// 1:1문의 등록 화면 이동
+	@RequestMapping("memberQnaForm.sp")
+	public ModelAndView memberQnaForm(ModelAndView mv) {
+		mv.setViewName("member/memberQnaForm");
+		return mv;
+	}
+	
+	// 1:1문의 등록 처리
+	@RequestMapping("memberInsertQna.sp")
+	public String memberInsertQna(MemberQnaVO qna, HttpSession session, RedirectAttributes rd) {
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		qna.setqMemberId(memberId);
+		int result = mService.insertQna(qna);
+		if (result > 0) {
+			rd.addFlashAttribute("msg", "1:1문의가 등록되었습니다.");
+		} else {
+			rd.addFlashAttribute("msg", "1:1문의가 등록되었습니다.");
+		}
+		return "redirect:memberQna.sp";
 	}
 	
 }

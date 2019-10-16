@@ -200,7 +200,7 @@
 									<label for="subFile${ vs.index + 1 }" class="button small">이미지${ vs.index + 1 } 등록</label>
 									<input type="file" name="files" id="subFile${ vs.index + 1 }" value="등록" multiple onchange="loadImg(this,${ vs.index + 1 });" accept="image/gif,image/jpeg,image/png">
 									<img id="subImg${ vs.index + 1 }" class="image fit" src="${ contextPath }/resources/spaceImg/${ attList.spaceAttChange }">
-									<input type="hidden" name="spaceAttChanges" value="${ attList.spaceAttChange }">
+									<input type="hidden" name="spaceAttChanges" id="attName${ vs.index + 1 }" value="${ attList.spaceAttChange }">
 									<i class="material-icons imgClear warningColor">cancel</i>
 									<span>${ attList.spaceAttOrigin }</span>
 								</div>

@@ -173,6 +173,16 @@ public class SpaceController {
 		return "redirect:spaceList.sp";
 	}
 	
+	// 공간 파일 삭제 처리(Ajax)
+	@ResponseBody
+	@RequestMapping("spaceDeleteAtt.sp")
+	public String spaceDeleteAtt(int spaceId, String attName, HttpServletRequest request) {
+		System.out.println(spaceId);
+		System.out.println(attName);
+		String result = sService.spaceDeleteAtt(spaceId, attName, request);
+		return result;
+	}
+	
 	// 공간 승인 요청
 	@RequestMapping("spaceApply.sp")
 	public String spaceApply(int spaceId, RedirectAttributes rd) {

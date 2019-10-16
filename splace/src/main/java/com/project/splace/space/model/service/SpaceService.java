@@ -252,4 +252,6 @@ public interface SpaceService {
 	 * @return host
 	 */
 	public abstract Host selectOne(String memberId);
+
+	public abstract String spaceDeleteAtt(int spaceId, String attName, HttpServletRequest request);
 }

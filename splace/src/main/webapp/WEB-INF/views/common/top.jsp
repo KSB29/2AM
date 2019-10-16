@@ -134,7 +134,7 @@
 		</section>
 		<c:url var="noticeList" value="noticeList.sp"/>
 		<c:url var="faqList" value="faqList.sp" />
-		<c:url var="qnaList" value="qnaList.sp"></c:url>
+		<c:url var="qnaList" value="memberQna.sp"></c:url>
 		<ul>
 			<li><a href="${contextPath }">홈</a></li>
 			<li><a href="${noticeList}">공지사항</a></li>
