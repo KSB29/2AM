@@ -9,6 +9,7 @@ import com.project.splace.admin.model.dao.AdminDao;
 import com.project.splace.admin.model.vo.Account;
 import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
+import com.project.splace.book.model.vo.Book;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
@@ -136,5 +137,11 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int updateCancelSpace(int spaceId) {
 		return adminDao.updateCancelSpace(spaceId);
-  }
+	}
+	
+	// 17. 예약 정보 관리
+	@Override
+	public ArrayList<Book> selectBookList(int status) {
+		return adminDao.selectBookList(status);
+	}
 }

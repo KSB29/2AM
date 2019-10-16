@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.project.splace.admin.model.vo.Account;
 import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
+import com.project.splace.book.model.vo.Book;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
@@ -59,5 +60,8 @@ public interface AdminService {
 	
 	// 공간 반려 처리
 	public abstract int updateCancelSpace(int spaceId);
+	
+	// 예약 정보 관리
+	public abstract ArrayList<Book> selectBookList(int status);
 
 }

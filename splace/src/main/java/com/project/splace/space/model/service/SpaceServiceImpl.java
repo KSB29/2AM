@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.splace.book.model.vo.Book;
 import com.project.splace.common.PageInfo;
 import com.project.splace.common.Pagination;
+import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.dao.SpaceDao;
 import com.project.splace.space.model.vo.DayOff;
@@ -135,9 +136,7 @@ public class SpaceServiceImpl implements SpaceService {
 		if(deleteFile.exists()) {
 			deleteFile.delete();
 		}
-	
 	}
-
 
 	@Override
 	public ArrayList<Space> selectList(String memberId, int currentPage) {
@@ -276,6 +275,12 @@ public class SpaceServiceImpl implements SpaceService {
 			// DB에 파일 저장
 			if (result > 0) result = sDao.updateFile(sAtt);
 		}
+		for (int i=0;i<files.size();i++) {
+			System.out.println(i + " : " + files.get(i).getOriginalFilename());
+		}
+		for (int i=0;i<spaceAttChanges.length;i++) {
+			System.out.println(i + " : " + spaceAttChanges[i]);
+		}
 		if (result > 0 && files.size() > 0) {
 			for (int i = 0; i < files.size(); i++) {
 				if (!files.get(i).getOriginalFilename().equals("")) {
@@ -297,9 +302,11 @@ public class SpaceServiceImpl implements SpaceService {
 							sAtt.setSpaceId(spaceId);
 							sAtt.setSpaceAttType("1");
 							result = sDao.insertFile(sAtt);
+							System.out.println("사진 추가");
 						} else {
 							sAtt.setSpaceAttId(attId);
 							result = sDao.updateFile(sAtt);
+							System.out.println("사진 변경");
 						}
 					}
 				}
@@ -465,6 +472,12 @@ public class SpaceServiceImpl implements SpaceService {
 		}
 		if (result == idList.length) return result + "";
 		return "0";
+	}
+
+
+	@Override
+	public Host selectOne(String memberId) {
+		return sDao.selectOne(memberId);
 	}
 
 

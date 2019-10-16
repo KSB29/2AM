@@ -104,7 +104,12 @@
 			</c:when>
 			<c:when test="${!empty sessionScope.loginUser}">
 				<c:url var="profileView" value="profileView.sp"/>
-				<c:url var="hostApplyForm" value="hostApplyForm.sp"/>
+				<c:if test="${ loginUser.grade eq '2' }">
+					<c:url var="hostMain" value="spaceList.sp"/>
+				</c:if>
+				<c:if test="${ loginUser.grade ne '2' }">
+					<c:url var="hostMain" value="hostApplyForm.sp"/>
+				</c:if>
 				<c:url var="hostInfoForm" value="hostInfoForm.sp"/>
 				<c:url var="adminHome" value="adminHome.sp"/>
 				<div class="row" id="section2row">
@@ -119,7 +124,7 @@
 								<button class="button primary small" onclick="location.href='${profileView}'">회원</button>
 							</div>
 							<div class="col-6">		
-								<button class="button primary small" onclick="location.href='${hostApplyForm}'">호스트</button>
+								<button class="button primary small" onclick="location.href='${hostMain}'">호스트</button>
 							</div>
 						</c:otherwise>
 					</c:choose>

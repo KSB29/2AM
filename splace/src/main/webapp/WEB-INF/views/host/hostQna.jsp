@@ -22,7 +22,7 @@
 					<form action="hostQna.sp" id="qnaSearchForm" method="get">
 						<div class="row gtr-uniform">
 							<div class="col-6"></div>
-							<div class="col-3">
+							<div class="col-3 spaceSelectBox">
 								<div class="default-select" id="default-select">
 									<select name="spaceId" id="spaceId">
 										<option value="">- 공간 -</option>
@@ -32,7 +32,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-3">
+							<div class="col-3 statusSelectBox">
 								<div class="default-select" id="default-select">
 									<select name="statusId" id="statusId">
 										<option value="">- 답변상태 -</option>

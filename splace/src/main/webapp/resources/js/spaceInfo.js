@@ -43,6 +43,17 @@ function loadImg(value, num) {
 
 $(document).ready(function(){
 	
+	$(".imgClear").on("click", function(){
+		if (confirm("이미지를 삭제하시겠습니까?")) {
+			//var id = $(this).attr("id").replace("delBtn","");
+			//$("#subFile"+id).val("");
+			//$("#subImg"+id).prop("src","");
+			
+		} else {
+			return false;
+		}
+	});
+
 	// 공간 수정 시 정보 표시
 	if ($("#spaceId").val() != null) {
 		
@@ -143,6 +154,7 @@ $(document).ready(function(){
 	});
 	
 	$(".tagClear").css("cursor", "pointer");
+	$(".imgClear").css("cursor", "pointer");
 	
 	// 이미지 클릭 시 원본 이미지 보여주는 창 열기
 	$("#imageArea .image").click(function(){

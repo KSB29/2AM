@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.splace.book.model.vo.Book;
+import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
@@ -244,4 +245,11 @@ public interface SpaceService {
 	 * @return result
 	 */
 	public abstract String deleteDayoff(String list);
+
+	/**
+	 * 호스트 정보 조회 Service
+	 * @param memberId
+	 * @return host
+	 */
+	public abstract Host selectOne(String memberId);
 }

@@ -125,6 +125,28 @@
 		<result property="time" column="time"/>
 		<result property="count" column="count"/>
 	</resultMap>
+	<!-- 예약 정보 -->
+	<resultMap type="BookList" id="AllBookResultSet">
+		<id property="bookId" column="BOOK_ID"/>
+		<result property="bookEnroll" column="BOOK_ENROLL"/>
+		<result property="bookPrice" column="BOOK_PRICE"/>
+		<result property="bookDate" column="BOOK_DATE"/>
+		<result property="bookStartTime" column="BOOK_START_TIME"/>
+		<result property="bookEndTime" column="BOOK_END_TIME"/>
+		<result property="bookPer" column="BOOK_PER"/>
+		<result property="bookRequest" column="BOOK_REQUEST"/>
+		<result property="booker" column="BOOKER"/>
+		<result property="bookerPhone" column="BOOKER_PHONE"/>
+		<result property="bookerEmail" column="BOOKER_EMAIL"/>
+		<result property="bookCancel" column="BOOK_CANCEL"/>
+		<result property="approvalDate" column="APPROVAL_DATE"/>
+		<result property="spaceId" column="SPACE_ID"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="statusId" column="STATUS_ID"/>
+		<result property="spaceName" column="SPACE_NAME"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="statusName" column="STATUS_NAME"/>
+	</resultMap>
 
 	<!-- 1. 정산관리 -->
 	<select id="selectAccountList" parameterType="_int" resultMap="accountResultSet">
@@ -240,5 +262,20 @@
 		SET    STATUS_ID = 3, SPACE_UPDATE = SYSDATE
 		WHERE  SPACE_ID = #{spaceId}
 	</update>
+	
+	<!-- 17. 예약 정보 관리 -->
+	<select id="selectAllBookList" parameterType="_int" resultMap="AllBookResultSet">
+		SELECT B.*, M.MEMBER_NAME, S.SPACE_NAME, T.STATUS_NAME
+		FROM   BOOK B,
+			   MEMBER M,
+			   SPACE S,
+			   STATUS T
+		WHERE  B.MEMBER_ID = M.MEMBER_ID
+		AND    B.SPACE_ID = S.SPACE_ID
+		AND    B.STATUS_ID = T.STATUS_ID
+		<if test="_parameter != 109">
+			AND B.STATUS_ID = #{status}
+		</if>
+	</select>
   
 </mapper>
