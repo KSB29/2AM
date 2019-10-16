@@ -440,8 +440,69 @@
 
 						<!-- 리뷰 수정  -->
 						<!-- Modal -->
-						<div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true"></div>
+						<div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalCenterTitle">
+											후기 수정
+										</h5>
+									</div>
 
+
+									<div class="modal-body">
+										<div class="starArea">
+											<h5 class="starGrade">별점</h5>
+											<div class="starChange">
+												<p id="star_grade">
+													<a href="#" id="aStar1"><i class="fas fa-star"></i></a> <a
+														href="#" id="aStar2"><i class="fas fa-star"></i></a> <a
+														href="#" id="aStar3"><i class="fas fa-star"></i></a> <a
+														href="#" id="aStar4"><i class="fas fa-star"></i></a> <a
+														href="#" id="aStar5"><i class="fas fa-star"></i></a>
+												</p>
+											</div>
+										</div>
+
+
+										<textarea class="content reviewContent" maxlength="300"
+											name="reviewContent"></textarea>
+										<!-- 글자수 세기 -->
+										<div class="textCount">
+											<p class="counter"></p>
+										</div>
+										<form id="ImgUploadForm" enctype="multipart/form-data">
+											<div class="wrapFile">
+												<div class="row gtr-uniform borderTop" id="imageArea">
+													<div class="col-4">
+														<label for="subFile1" class="button small">이미지1
+															등록</label> <input type="file" name="files" id="subFile1"
+															value="등록" onchange="loadImg(this,1);">
+													</div>
+													<div class="col-4">
+														<label for="subFile2" class="button small">이미지2
+															등록</label> <input type="file" name="files" id="subFile2"
+															value="등록" onchange="loadImg(this,2);">
+													</div>
+													<div class="col-4">
+														<label for="subFile3" class="button small">이미지3
+															등록</label> <input type="file" name="files" id="subFile3"
+															value="등록" onchange="loadImg(this,3);">
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="button primary cancel"
+											data-dismiss="modal">취소</button>
+										<button class="button" id="reviewBtn" data-dismiss="modal">등록</button>
+									</div>
+
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- detailLeft 끝-->
@@ -462,7 +523,7 @@
 							<h3>날짜 선택</h3>
 							<a id="calIcon"></a> 
 							<p></p>
-							<input type="text" id="datepicker">
+							<input type="text" id="datepicker" name="bookDates">
 						</div>
 						<!-- 날짜 선택  끝-->
 
@@ -513,7 +574,7 @@
 									</a>
 								</div>
 								<div class="personCkeck">
-									<input type="tel" value="${space.spaceMinPer}" id="partyInput">
+									<input type="tel" name="bookPer" value="${space.spaceMinPer}" id="partyInput">
 								</div>
 								<div class="maxBtn personBtn">
 									<a class="btn_plus partyBtn"> 
@@ -534,6 +595,9 @@
 							
 						</div>
 						<!-- 공간 사용료 끝 -->
+						<input type="hidden" name="bookStartTime">
+						<input type="hidden" name="bookEndTime">
+						<input type="hidden" name="bookPrice">
 						<button type="submit" class="button primary fit" id="reserveBtn" onclick="return rDataCheck();"> 바로 예약하기</button>
 					</form>
 					</div>
@@ -1020,33 +1084,49 @@
 	    });
 	    
 	    
+		/* ------------------------------------------------------------------------- */
 	    
-	      function loadImg(value, num) {/* 
-	          console.log("이미지변경!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"); */
-	           var reader = new FileReader(); // FileReader -> javascript
-	           
-	           console.log("reader:"+reader);    
-	           var imgId = "#" + $(value).attr("id");
-	           var imgId2 = $(value).attr("id").replace("File","Img");
-	           console.log("1: "+imgId+"/ 2: "+imgId2);
-	           
-	           // reader.onload : reader 객체가 생성된 경우 이벤트 발생
-	               
-	           reader.onload = function(e) {
-	              /*
-	              $("#"+imgId2).attr("src",e.target.result);
-	              $("#"+imgId2).after('<button type="button" class="deleteImg">삭제</button>');  */
-	               $(imgId).after('<img class="image fit" id="'+imgId2+'" src="' + e.target.result + '"/> <button type="button" class="deleteImg">삭제</button>'); // e.target this와 비슷, e.target.result 해당 파일 이름(경로포함) */
-	           }
-	       
-	           // 보안처리(Data URI) : RFC 2397 정의되어 있는 개발 규약
-	           // 미사용 시 파일 경로가 모두 표시됨, 파일 경로를 알 수 없게 만들어줌 (파일의 직접적인 경로 노출 방지)
-	           reader.readAsDataURL(value.files[0]);
-	       }
+		function loadImg(value) {
+          console.log("이미지변경!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+           var reader = new FileReader(); // FileReader -> javascript
+           
+           console.log("reader:"+reader);    
+           var imgId = "#" + $(value).attr("id");
+           var imgId2 = $(value).attr("id").replace("File","Img");
+           console.log("1: "+imgId+"/ 2: "+imgId2);
+           
+           // reader.onload : reader 객체가 생성된 경우 이벤트 발생
+               
+           reader.onload = function(e) {
+
+        	   
+              $("#"+imgId2).attr("src", "");
+              $("#"+imgId2).attr("src", e.target.result);
+              $("#"+imgId2).after('<button type="button" class="deleteImg">삭제</button>');
+              
+              //$im = "#"+imgId;
+              
+              //$("#"+imgId).next($("#"+imgId2));
+              
+              //$("#"+imgId2).attr("src", "");
+              //$im.attr("src", e.target.result);
+              //$im.after('<button type="button" class="deleteImg">삭제</button>');
+              
+              
+              console.log($("#"+imgId2));
+              //$(imgId).after('<img class="image fit" id="'+imgId2+'" src="' + e.target.result + '"/> <button type="button" class="deleteImg">삭제</button>'); // e.target this와 비슷, e.target.result 해당 파일 이름(경로포함) */
+           }
+       
+           // 보안처리(Data URI) : RFC 2397 정의되어 있는 개발 규약
+           // 미사용 시 파일 경로가 모두 표시됨, 파일 경로를 알 수 없게 만들어줌 (파일의 직접적인 경로 노출 방지)
+           reader.readAsDataURL(value.files[0]);
+       }
 	       
 	       // 이미지 삭제 버튼 누르면
 	       $(document).on("click",".deleteImg",function(){
 	          var src = $(this).parent().children("img").prop("src").substring($(this).parent().children("img").prop("src").lastIndexOf("/")+1);
+	    	   console.log(files);
+	    	   files = [];
 	          $.ajax({
 	            url: "deleteReviewAtt.sp",
 	            data: {src:src},
@@ -1056,7 +1136,7 @@
 	             console.log("실패");
 	            }
 	          });
-	          $(this).parent().children("img").remove();
+	          $(this).parent().children("img").attr("src", "");
 	          $(this).remove();
 	          /*
 	          $(".deleteImg").remove();
@@ -1142,7 +1222,7 @@
 	                }
 	             },
 	             error : function(e){
-	                console(e);
+	                console(e)
 	             }
 	             
 	          });
@@ -1235,13 +1315,9 @@
 	          success:function(rh){
 	             console.log(rh.att);
 	             console.log(rh.review);
+	             updateForm="";
 	             var $exampleModalCenter3 = $("#exampleModalCenter3");
 	             $exampleModalCenter3.html("");
-	             
-	             console.log("리뷰아이디 "+rh.review.reviewId);
-	             
-	             
-	             updateForm="";
 	             
 	             updateForm   += '<div class="modal-dialog modal-dialog-centered" role="document">'
 	                      + '<div class="modal-content">'
@@ -1277,7 +1353,7 @@
 	             updateForm   += '<form id="ImgUploadForm" enctype="multipart/form-data">' 
 	                      + '<div class="wrapFile">'
 	                      + '<div class="row gtr-uniform borderTop" id="imageArea">';
-	                      
+	                     
 	             if(rh.att !=null){
 	                
 	                for(var i=0; i<3; i++){
@@ -1285,13 +1361,14 @@
 	                      console.log("reImgList[0].reviewAttChange : "+ "/ j: "+i);
 	                      updateForm   += '<div class="col-4">'
 	                               + '<label for="subFile'+(i+1)+'" class="button small">이미지'+(i+1)+'등록</label>'
-	                               + '<input type="file" name="files" id="subFile'+(i+1)+'" value="등록" onchange="loadImg(this,'+(i+1)+');">'
+	                               + '<input type="file" name="files" id="subFile'+(i+1)+'" value="등록" onchange="loadImg(this);">'
+	                               + '<img class="image fit" id="subImg'+(i+1)+'" src="" alt="" />'
 	                               + '</div>';   
 	                   } else{
 	                      console.log("reImgList[0].reviewAttChange : "+rh.att[i].reviewAttChange + "/ j: "+i);
 	                      updateForm   += '<div class="col-4">'
 	                               + '<label for="subFile'+(i+1)+'" class="button small">이미지'+(i+1)+'등록</label>'
-	                               + '<input type="file" name="files" id="subFile'+(i+1)+'" value="등록"  onchange="loadImg(this,'+(i+1)+');">'
+	                               + '<input type="file" name="files" id="subFile'+(i+1)+'" value="등록"  onchange="loadImg(this);">'
 	                               + '<img class="image fit" id="subImg'+(i+1)+'" src="${contextPath }/resources/ReviewImg/'+rh.att[i].reviewAttChange+'" alt="" />'
 	                               + '<button type="button" class="deleteImg">삭제</button>'
 	                               + '</div>';   
@@ -1306,7 +1383,6 @@
 	                      
 	             updateForm   += '<div class="modal-footer">'
 	                      + '<button class="button primary cancel" data-dismiss="modal">취소</button>'
-	                      /* + '<button type="reset" class="button primary cancel" data-dismiss="modal">취소</button>' */
 	                      + '<button type="button" class="button" id="reviewUpBtn"  data-dismiss="modal">등록</button>'
 	                      + '</div>'
 	                      + '</div>'
@@ -1360,7 +1436,7 @@
 	                       $('#star_grade a').parent().children("a").removeClass("on");
 	                       $("#imageArea img").remove();
 	                       $(".deleteImg").remove(); */
-	                       $('#exampleModalCenter3').modal('show');
+	                       //$('#exampleModalCenter3').modal('show');
 	                       ReviewList();
 	                    }
 	                 }
@@ -1385,7 +1461,6 @@
 	             alert("리뷰가 삭제되었습니다.");
 	             ReviewList();
 	          }
-	        
 	        });
 	        
 	     }
@@ -1651,8 +1726,9 @@
 	          }
 	       });
 	    }
-	   
-
+		  $('#exampleModalCenter3').on('hidden.bs.modal', function (e) {
+			  ReviewList();
+			});
 </script>
 </body>
 </html>
