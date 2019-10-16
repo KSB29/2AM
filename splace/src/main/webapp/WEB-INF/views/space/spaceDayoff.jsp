@@ -22,7 +22,7 @@
 					<form action="spaceDayoff.sp" id="dayoffSearchForm" method="get">
 						<div class="row gtr-uniform" id="dayoffSearchArea">
 							<div class="col-9"></div>
-							<div class="col-3">
+							<div class="col-3 spaceSelectBox">
 								<div class="default-select" id="default-select">
 									<select name="spaceId" id="spaceId">
 										<option value="">- 공간 -</option>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.splace.book.model.vo.Book;
 import com.project.splace.common.PageInfo;
+import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
@@ -123,6 +124,16 @@ public class SpaceDao {
 	 */
 	public int updateApply(int spaceId) {
 		return sqlSession.update("spaceMapper.updateApply", spaceId);
+	}
+	
+	
+	/**
+	 * 공간 사진 파일 삭제 Dao
+	 * @param spaceId
+	 * @return result
+	 */
+	public int deleleSpaceAtt(int spaceId) {
+		return sqlSession.delete("spaceMapper.deleteSpaceAtt", spaceId);
 	}
 	
 	
@@ -350,5 +361,42 @@ public class SpaceDao {
 	 */
 	public int deleteDayoff(int dayoffId) {
 		return sqlSession.delete("spaceMapper.deleteDayoff", dayoffId);
+	}
+
+	/**
+	 * 공간 사진 파일ID 조회 Dao
+	 * @param spaceId
+	 * @param prevFileName
+	 * @return attId
+	 */
+	public int getAttId(String prevFileName) {
+		return sqlSession.selectOne("spaceMapper.getAttId", prevFileName);
+	}
+
+	/**
+	 * 공간 가격 삭제 Dao
+	 * @param spaceId
+	 * @return result
+	 */
+	public int deleteSpacePrice(int spaceId) {
+		return sqlSession.delete("spaceMapper.deleteSpacePrice", spaceId);
+	}
+
+	/**
+	 * 공간 휴일 삭제 Dao
+	 * @param spaceId
+	 * @return result
+	 */
+	public int deleteSpaceDayoff(int spaceId) {
+		return sqlSession.delete("spaceMapper.deleteSpaceDayoff", spaceId);
+	}
+
+	/**
+	 * 호스트 정보 조회 Dao
+	 * @param memberId
+	 * @return host
+	 */
+	public Host selectOne(String memberId) {
+		return sqlSession.selectOne("hostMapper.selectOne", memberId);
 	}
 }

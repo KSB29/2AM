@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 탈퇴</title>
 				<!-- template -->
 				<noscript><link rel="stylesheet" href="${contextPath }/resources/css/noscript.css"></noscript>
 				<!-- js -->

@@ -19,6 +19,7 @@
 				<section id="hostSection">
 					<c:set var="hostId" value="${ host.hostId }"/>
 					<c:set var="hostStatus" value="${ host.statusId }"/>
+					<c:set var="grade" value="${ loginUser.grade }"/>
 					<h1 class="align-center">호스트 정보</h1>
 					<c:if test="${ hostStatus == 0 }">
 						<div class="col-12 align-center"><h2 class="noticeColor">정보가 등록되었습니다. 호스트 승인 신청하세요.</h2></div>
@@ -34,7 +35,12 @@
 							<c:url var="hostUrl" value="hjoinInsert.sp"/>
 						</c:when>
 						<c:otherwise>
+							<c:if test="${ grade == '1' }">
+							<c:url var="hostUrl" value="hjoinUpdate.sp"/>
+							</c:if>
+							<c:if test="${ grade == '2' }">
 							<c:url var="hostUrl" value="hostUpdate.sp"/>
+							</c:if>
 						</c:otherwise>
 					</c:choose>
 				<!-- Form -->
@@ -124,16 +130,16 @@
 							<c:choose>
 								<c:when test="${ hostStatus == null }">
 									<div class="col-4">
-										<input type="submit" class="button primary fit" value="등록">
+										<input type="submit" id="inserBtn" class="button primary fit" value="등록">
 									</div>
 								</c:when>
 								<c:when test="${ hostStatus == 0 || hostStatus == 3 }">
 									<div class="col-2">
-										<input type="submit" class="button primary fit" value="등록">
+										<input type="submit" id="inserBtn" class="button primary fit" value="등록">
 									</div>
 									<div class="col-2">
-										<c:url var="hostApply" value="hostApply.sp"/>
-										<input type="button" class="button primary fit" onclick="location.href='${ hostApply }'" value="신청">
+										<c:url var="hjoinApply" value="hjoinApply.sp"/>
+										<input type="button" class="button primary fit" onclick="location.href='${ hjoinApply }'" value="신청">
 									</div>
 								</c:when>
 								<c:otherwise>

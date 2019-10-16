@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -321,7 +322,7 @@
 													<td>
 														<input type="text" name="bookStartTime" id="bookStartTime" value="${startTime }" readonly>시 ~ 
 														<input type="text" name="bookEndTime" id="bookEndTime" value="${endTime }" readonly>시 
-														, <span>(${21-18}시간)</span>
+														, <span>(${endTime-startTime}시간)</span>
 													</td>
 												</tr>
 												<tr>

@@ -97,4 +97,28 @@ $(document).ready(function(){
             regExpCheck = false;
         }
     });
+	
+	$("#inserBtn, #updateBtn").click(function(){
+		var check1 = $("#regCheck1 span").text();
+		var check2 = $("#regCheck2 span").text();
+		var check3 = $("#regCheck3 span").text();
+		
+		if (check1 != "") {
+			alert("유효한 사업자등록번호를 입력해주세요.");
+			$("#hostNo").focus();
+			return false;
+		}
+		if (check2 != "") {
+			alert("이메일 형식으로 작성해주세요.");
+			$("#hostEmail").focus();
+			return false;
+		}
+		if (check3 != "") {
+			alert("전화번호는 숫자만 입력가능합니다.");
+			$("#hostPhone").focus();
+			return false;
+		}
+		$("form").submit();
+	});
+	
 });

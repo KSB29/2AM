@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.splace.book.model.vo.Book;
+import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.vo.DayOff;
 import com.project.splace.space.model.vo.Option;
@@ -75,9 +76,10 @@ public interface SpaceService {
 	/**
 	 * 공간 삭제 Service
 	 * @param spaceId
+	 * @param request 
 	 * @return result
 	 */
-	public abstract int deleteSpace(int spaceId);
+	public abstract int deleteSpace(int spaceId, HttpServletRequest request);
 
 	/**
 	 * 공간 정보 조회 Service
@@ -102,7 +104,7 @@ public interface SpaceService {
 	 * @return result
 	 */
 	public abstract int updateSpace(Space space, int filesIndex, HttpServletRequest request, MultipartFile uploadFile,
-			List<MultipartFile> files);
+			List<MultipartFile> files, String[] spaceAttChanges);
 
 	/**
 	 * 공간 가격 수정 Service
@@ -243,4 +245,11 @@ public interface SpaceService {
 	 * @return result
 	 */
 	public abstract String deleteDayoff(String list);
+
+	/**
+	 * 호스트 정보 조회 Service
+	 * @param memberId
+	 * @return host
+	 */
+	public abstract Host selectOne(String memberId);
 }

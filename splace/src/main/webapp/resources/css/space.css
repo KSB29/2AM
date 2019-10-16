@@ -146,12 +146,20 @@ input[type="file"] {
 	width: 30%;
 }
 
+#qnaArea textarea {
+	resize: none;
+}
+
 /* select box */
 #dayoffSearchForm, #bookSearchForm, #qnaSearchForm, #reviewSearchForm {
 	overflow-x: inherit !important;
 }
-.default-select .nice-select .list
+.spaceSelectBox .default-select .nice-select .list
 {
 	height: 300px;
+	overflow: auto;
+}
+.statusSelectBox .default-select .nice-select .list
+{
 	overflow: auto;
 }

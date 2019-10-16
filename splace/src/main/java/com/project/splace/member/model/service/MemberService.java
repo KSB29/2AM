@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.member.model.vo.MemberQnaVO;
+import com.project.splace.member.model.vo.MemberReviewVO;
 import com.project.splace.member.model.vo.WishListVO;
-import com.project.splace.space.model.vo.WishList;
 
 public interface MemberService {
 	
@@ -31,9 +32,9 @@ public interface MemberService {
 
 	public abstract int updatePhone(Member mem);
 
+	public abstract ArrayList<MemberReviewVO> selectReviewList(String memberId, int currentPage);
 
+	public abstract int deleteWishList(WishListVO wish) throws Exception;
 
-	
-	
-	
+	public abstract ArrayList<MemberQnaVO> selectQnaList(String memberId, int currentPage);
 }

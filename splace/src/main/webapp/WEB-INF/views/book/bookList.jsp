@@ -23,8 +23,9 @@
 				<!-- 여기에만 씁시다.(다른 부분은 고정!)
 					section단위로 묶고 nav 템플릿에 elements.html를 참고해주세요.
 				-->
+				
 				<section>
-					<div class="row">
+					<div class="row" id="bookListRow">
 						<div class="col-12 bookListTop">
 							<div class="listCount">total: ${pi.listCount }</div>
 							<div class="filterContainer">

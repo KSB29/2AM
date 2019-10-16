@@ -519,7 +519,7 @@
 		$("#payment").click(function(){
 		    //실제 복사하여 사용시에는 모든 주석을 지운 후 사용하세요
 		    BootPay.request({
-		        price: '1000', //실제 결제되는 가격
+		        price: '${book.bookPrice}', //실제 결제되는 가격
 		        application_id: aid,
 		        name: '${book.spaceName}', //결제창에서 보여질 이름
 		        pg: 'inicis',

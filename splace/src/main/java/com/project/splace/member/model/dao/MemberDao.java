@@ -2,12 +2,16 @@ package com.project.splace.member.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.splace.common.PageInfo;
 import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.member.model.vo.MemberQnaVO;
+import com.project.splace.member.model.vo.MemberReviewVO;
 import com.project.splace.member.model.vo.WishListVO;
 
 @Repository("mDao")
@@ -80,6 +84,45 @@ public class MemberDao {
 
 	public int updatePhone(Member mem) {
 		return sqlSession.update("memberMapper.updatePhone", mem);
+	}
+
+
+	/**
+	 * 후기 리스트 조회 DAO
+	 * @param memberId
+	 * @return
+	 */
+	public ArrayList<MemberReviewVO> selectReviewList( PageInfo pageInfo, String memberId) {
+		int offset = (pageInfo.getCurrentPage()- 1) * pageInfo.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectReviewList",memberId, rowBounds);
+	}
+
+
+	/**
+	 * 후기 리스트 수 조회 DAO
+	 * @param membeId
+	 * @return
+	 */
+	public int getrListCount(String membeId)  {
+		return sqlSession.selectOne("memberMapper.memberListCount");
+		
+	}
+
+
+	public int deleteWishList(WishListVO wish)throws Exception {
+		return sqlSession.delete("memberMapper.delteWishList", wish);
+	}
+
+	public ArrayList<MemberQnaVO> selectQnaList(PageInfo pageInfo, String memberId) {
+		int offset = (pageInfo.getCurrentPage()- 1) * pageInfo.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectQnaList",memberId, rowBounds);
+	}
+
+
+	public int getqListCount(String memberId) {
+		return sqlSession.selectOne("memberMapper.memberQListCount");
 	}
 
 

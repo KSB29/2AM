@@ -89,6 +89,7 @@
 		WHERE SPACE_ID = #{spaceId}
 		AND STATUS_ID = 2
 		AND SPACE_ATT_STATUS = 'Y'
+        AND SPACE_ATT_TYPE = 0
 	</select>
 	
 	<!-- 공간 상세 옵션 조회 쿼리 -->
@@ -133,6 +134,7 @@
 		LEFT JOIN PAYMENT P ON (B.BOOK_ID = P.BOOK_ID)
 		LEFT JOIN REVIEW R ON(R.BOOK_ID=B.BOOK_ID)
 		WHERE B.MEMBER_ID = #{memberId}
+        AND SPACE_ATT_TYPE = 0
 		<if test="_parameter.statusId != 0">
 			<if test="_parameter.statusId != 104">
 				<if test="_parameter.statusId != 103">
@@ -146,7 +148,7 @@
 				 AND P.STATUS_ID = #{statusId} AND B.STATUS_ID = 103
 			</if>
 		</if>
-		ORDER BY B.BOOK_ID DESC
+		ORDER BY B.BOOK_DATE DESC
 	</select>
 	
 	<!-- 전체 예약 수 조회 쿼리 -->
@@ -167,6 +169,7 @@
 				 AND P.STATUS_ID = #{statusId} AND B.STATUS_ID = 103
 			</if>
 		</if>
+		ORDER BY B.BOOK_DATE DESC
 	</select>
 	
 	<!-- 예약 내역 조회 쿼리 -->

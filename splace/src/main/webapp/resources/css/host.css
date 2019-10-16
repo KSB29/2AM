@@ -5,7 +5,7 @@ input[type="password"],
 input[type="email"],
 input[type="number"],
 input[type="date"],
-select {
+select :not("#searchBox") {
 	height: 2em !important;
 }
 
