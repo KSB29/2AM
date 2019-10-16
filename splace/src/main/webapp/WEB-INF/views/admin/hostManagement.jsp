@@ -50,7 +50,7 @@
               </select>
 			  <script>
 				$("#statusSelect").on("change", function() {
-					location.href = "hostManagement.sp?hostStatus="+$(this).val();
+					location.href = "hhostManagement.sp?hostStatus="+$(this).val();
 				});
 			  </script>
             </div>
