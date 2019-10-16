@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.splace.admin.model.dao.AdminDao;
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
@@ -74,34 +75,66 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<QnA> selectQAdminlist() {
 		return adminDao.selectQAdminlist();
 	}
-	
-	// 호스트 승인 처리
+    
+	/* 8. 관리자답변관리
+	 * return aList
+	 */
+	@Override
+	public ArrayList<QnA> selectAadminList() {
+		return adminDao.selectAadminList();
+	}
+
+	/* 9. 관리자답변작성
+	 * return result
+	 */
+	@Override
+	public int insertAnswerAdmin(QnA qna) {
+		return adminDao.insertAnswerAdmin(qna);
+	}
+
+	/* 10. 신규회원목록(1달)
+	 * return mList
+	 */
+	@Override
+	public ArrayList<Member> selectNewMemberList() {
+		return adminDao.selectNewMemberList();
+	}
+
+	/* 11. 오늘예약목록
+	 * return bList
+	 */
+	@Override
+	public ArrayList<TodayBook> selectBookList() {
+		return adminDao.selectBookList();
+	}
+  
+	// 12. 호스트 승인 처리
 	@Override
 	public int updateApproveHost(int hostId) {
 		return adminDao.updateApproveHost(hostId);
 	}
 	
-	// 호스트 반려 처리
+	// 13. 호스트 반려 처리
 	@Override
 	public int updateCancelHost(int hostId) {
 		return adminDao.updateCancelHost(hostId);
 	}
 	
-	// 공간 관리
+	// 14. 공간 관리
 	@Override
 	public ArrayList<Space> selectSpaceList(int status) {
 		return adminDao.selectSpaceList(status);
 	}
 	
-	// 공간 승인 처리
+	// 15. 공간 승인 처리
 	@Override
 	public int updateApproveSpace(int spaceId) {
 		return adminDao.updateApproveSpace(spaceId);
 	}
 	
-	// 공간 반려 처리
+	// 16. 공간 반려 처리
 	@Override
 	public int updateCancelSpace(int spaceId) {
 		return adminDao.updateCancelSpace(spaceId);
-	}
+  }
 }

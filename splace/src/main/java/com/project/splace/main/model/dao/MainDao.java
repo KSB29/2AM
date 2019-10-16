@@ -39,4 +39,9 @@ public class MainDao {
 	public ArrayList<Notice> noticeSelect(String userId) {
 		return (ArrayList)sqlSession.selectList("mainMapper.noticeSelect", userId);
 	}
+
+
+	public int noticeDelete(int noticeId) {
+		return sqlSession.delete("mainMapper.noticeDelete", noticeId);
+	}
 }

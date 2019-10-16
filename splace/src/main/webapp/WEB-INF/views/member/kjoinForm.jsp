@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+	<title>카카오 로그인</title>
 	<head>
 	<!-- template -->
 	<noscript><link rel="stylesheet" href="${contextPath}/resources/css/noscript.css"></noscript>

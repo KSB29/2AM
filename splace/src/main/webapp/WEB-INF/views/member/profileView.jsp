@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Phantom by HTML5 UP</title>
+		<title>마이 페이지</title>
 		<meta charset="utf-8" />
 		<!-- js -->
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

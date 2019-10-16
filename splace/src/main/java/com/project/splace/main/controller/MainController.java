@@ -57,7 +57,7 @@ public class MainController {
 	
 	//알림 조회
 	@ResponseBody
-	@RequestMapping(value="noticeList.sp", produces="application/json; charset=utf8")
+	@RequestMapping(value="alarmList.sp", produces="application/json; charset=utf8")
 	public String noticeSelectList(String memberId,HttpSession session) {
 		String userId = ((Member)session.getAttribute("loginUser")).getMemberId();
 		System.out.println("유저 아이디"+userId);
@@ -66,10 +66,24 @@ public class MainController {
 		
 		System.out.println(NoticeArr);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd hh:mm:ss").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
 	    return gson.toJson(NoticeArr);
 		
 	}
-	
+	  
+	//알림 삭제
+		@ResponseBody
+		@RequestMapping("alarmDelete.sp")
+		public String noticeDelete(int noticeId) {
+			System.out.println("공간 아이디 "+noticeId);
+			 int result = mainService.noticeDelete(noticeId);
+			 System.out.println("결과"+result);
+		      if(result>0) {
+		         return "success";
+		      }else {
+		         return "fail";
+		      }
+			
+		}
 }

@@ -3,6 +3,7 @@ package com.project.splace.admin.model.service;
 import java.util.ArrayList;
 
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
@@ -32,7 +33,19 @@ public interface AdminService {
 	// 관리자문의관리
 	public abstract ArrayList<QnA> selectQAdminlist();
 
-	// 호스트 승인 처리
+	// 관리자답변관리
+	public abstract ArrayList<QnA> selectAadminList();
+
+	// 관리자답변작성
+	public abstract int insertAnswerAdmin(QnA qna);
+
+	// 신규회원목록(1달)
+	public abstract ArrayList<Member> selectNewMemberList();
+
+	// 오늘예약목록
+	public abstract ArrayList<TodayBook> selectBookList();
+
+    // 호스트 승인 처리
 	public abstract int updateApproveHost(int hostId);
 	
 	// 호스트 반려 처리
