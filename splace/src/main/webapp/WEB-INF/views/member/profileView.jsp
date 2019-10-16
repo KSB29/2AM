@@ -4,11 +4,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Phantom by HTML5 UP</title>
+		<title>마이 페이지</title>
 		<meta charset="utf-8" />
-		<!-- js -->
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		
 		<!-- css -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,6 +13,9 @@
 		<link rel="stylesheet" href="${contextPath }/resources/css/style.css" type="text/css">
 		<link rel="stylesheet" href="${contextPath }/resources/css/profile.css" type="text/css">
 		<link rel="stylesheet" href="${contextPath }/resources/css/common.css" type="text/css">
+		<!-- js -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
 	
 	

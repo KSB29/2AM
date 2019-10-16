@@ -29,8 +29,8 @@ $(document).ready(function(){
 	});
 	
 	$("#qArea td").click(function(){
-		$("#qContent").text($(this).parent().children().eq(4).val());
-		$("#aContent").text($(this).parent().children().eq(5).val());
+		$("#qContent").val($(this).parent().children().eq(4).val());
+		$("#aContent").val($(this).parent().children().eq(5).val());
 		$("#qnaId").val($(this).parent().children().eq(6).val());
 	}).mouseenter(function(){
 		$(this).parent().css("cursor", "pointer");

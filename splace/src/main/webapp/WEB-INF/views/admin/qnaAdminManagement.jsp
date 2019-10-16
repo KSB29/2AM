@@ -50,7 +50,6 @@
                       <th>문의내용</th>
                       <th>문의등록일</th>
                       <th>문의작성자</th>
-                      <th>공간아이디</th>
                       <th>삭제여부</th>
                       <th></th>
                     </tr>
@@ -61,7 +60,6 @@
                       <th>문의내용</th>
                       <th>문의등록일</th>
                       <th>문의작성자</th>
-                      <th>공간아이디</th>
                       <th>삭제여부</th>
                       <th></th>
                     </tr>
@@ -73,7 +71,6 @@
 	                      <td>${qna.qContent}</td>
 	                      <td><fmt:formatDate value="${qna.qDate}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
 	                      <td>${qna.qMemberId}</td>
-	                      <td>${qna.spaceId}</td>
 	                      <td>${qna.qStatus}</td>
 	                      <td>
 	                      	<c:if test="${qna.aDate != null }">
@@ -113,11 +110,6 @@
           </div>
         </div>
         <!-- /.container-fluid -->
-        <script>
-        	function showAnswer() {
-            	
-			}
-        </script>
 
       </div>
       <!-- End of Main Content -->

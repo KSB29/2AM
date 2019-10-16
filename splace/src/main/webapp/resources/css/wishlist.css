@@ -1,13 +1,12 @@
-.wishList_wrapper{
-	
-	padding: 0 0.5em 0 2em;
 
+/*찜한 내역이 없을 시*/
+
+.wishList_wrapper{
+	padding: 0 0.5em 0 2em;
 }
 .wishList_border{
-	
     border-top: 5px solid #4C74B9;
-	border-bottom: 3px solid #4C74B9;
-	
+	border-bottom: 4px solid #4C74B9;
 }
 
 .con>ul, .con>ul>li{
@@ -20,11 +19,13 @@ div.con>ul>li{
 
 /*contents*/
 .contents_box{
+	margin : 2em 0 2em 0;
 	padding: 1em 1em 0 0 !important; 
-	min-height: 40rem;
+	max-height: 60rem;
+	
 }
 /*
-div, article, section{
+div, article, sectionT{
 border:1px solid #c9c9c9 !important;
 }*/
 .contents_box, .contents_box>div {
@@ -50,7 +51,8 @@ border:1px solid #c9c9c9 !important;
 }
 .con{
 	margin: 1em 0 0 0;
-	display:inline-block;	
+	display:inline-block;
+	width:60%;	
 }
 /*예약버튼*/
 .reserver_btn{
@@ -69,10 +71,13 @@ border:1px solid #c9c9c9 !important;
 	border: 0.5px solid #ddd;
 }
 #wish_info{
-	float:right;
 	margin:1em 1em 0 0 ;
+	float: right;
 }
-
+#wish_info>ul>li>h3{
+	margin: 0 0 0 0 !important;
+	padding: 0 0 0 0 !important;
+}
 .contents>h3{
     margin: 0 0 1em 0 !important;
     padding: 0 0 0 0.5em;
@@ -108,10 +113,18 @@ border:1px solid #c9c9c9 !important;
     height: 100%;
 }
 */
-#location{
+.location{
     cursor: pointer;
 }
-#location:hover{
+.location:hover{
     transition: 0.3s;
     color: #4C74B9;
+}
+.title{
+	color: #c9c9c9 !important;
+}
+#wish_title{
+	display:block !important;
+	text-align:center;
+	margin: 2em 0 2em 3em;
 }

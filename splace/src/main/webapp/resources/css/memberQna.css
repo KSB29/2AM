@@ -1,0 +1,7 @@
+
+
+/* 셀렉트 버튼  */
+.filterContainer{width: 12%; float: right;}
+.filterContainer .current {font-size: 70%;}
+.filterContainer .option {font-size: 60% !important;}
+.filterContainer .nice-select .list{background-color: white !important; border: 1px solid #4c74b9 !important; border-radius: 5px !important;}

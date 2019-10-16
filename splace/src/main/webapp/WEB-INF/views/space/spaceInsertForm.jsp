@@ -49,7 +49,7 @@
 							</div>
 							<div class="col-1 col-12-xsmall">
 								<label>* 주소</label>
-								<input type="button" id="addressBtn" class="button primary small" value="주소찾기">
+								<input type="button" id="addressBtn" class="button primary small" value="주소찾기" required>
 							</div>
 							<div class="col-11 col-12-xsmall">
 								<label>&nbsp;</label>
@@ -78,7 +78,7 @@
 								<textarea name="spaceDetail" id="spaceDetail" placeholder="상세소개" rows="6" maxlength="10000" required></textarea>
 							</div>
 							<div class="col-10 col-12-xsmall">
-								<label for="tag">태그 <span id="tagLength"></span></label>
+								<label for="tag">* 태그 <span id="tagLength"></span></label>
 								<input type="text" id="tag" placeholder="태그">
 							</div>
 							<div class="col-2 col-12-xsmall">
@@ -89,7 +89,7 @@
 							<input type="hidden" name="spaceTag" id="spaceTag" maxlength="150">
 							<!-- <input type="text" name="spaceTag" id="spaceTag" maxlength="150"> -->
 							<div class="col-12 col-12-xsmall">
-								<label>세부옵션</label>
+								<label>* 세부옵션</label>
 								<div class="row" id="optionField">
 									<ul>
 										<c:forEach var="oList" items="${ oList }">
@@ -109,7 +109,7 @@
 								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">구비된 편의시설을 선택해주세요.</span>
 							</div>
 							<div class="col-10 col-12-xsmall">
-								<label for="">주의사항 <span id="noticeLength"></span></label>
+								<label for="">* 주의사항 <span id="noticeLength"></span></label>
 								<input type="text" id="notice" placeholder="주의사항">
 							</div>
 							<div class="col-2 col-12-xsmall">
@@ -126,26 +126,26 @@
 						<div class="row gtr-uniform borderTop">
 							<div class="col-4 col-12-xsmall">
 								<label for="spaceOpenTime">* 운영시작시간(0 ~ 24)</label>
-								<input type="number" name="spaceOpenTime" id="spaceOpenTime" min="0" max="24">
+								<input type="number" name="spaceOpenTime" id="spaceOpenTime" min="0" max="24" required>
 							</div>
 							<div class="col-4 col-12-xsmall">
 								<label for="spaceCloseTime">* 이용종료시간(0 ~ 24)</label>
-								<input type="number" name="spaceCloseTime" id="spaceCloseTime" min="1" max="24">
+								<input type="number" name="spaceCloseTime" id="spaceCloseTime" min="1" max="24" required>
 							</div>
 							<div class="col-4 col-12-xsmall">
 								<label for="spaceTime">* 최소예약시간(시간)</label>
-								<input type="number" name="spaceTime" id="spaceTime" min="1" max="24">
+								<input type="number" name="spaceTime" id="spaceTime" min="1" max="24" required>
 							</div>
 							<div class="col-12 col-12-xsmall noticeDiv">
 								<i class="fas fa-exclamation-circle noticeColor"></i> <span class="noticeColor">실제로 공간 공유가 가능한 시간을 입력해주세요.</span>
 							</div>
 							<div class="col-4 col-12-xsmall">
 								<label for="spaceMinPer">* 최소예약인원(명)</label>
-								<input type="number" name="spaceMinPer" id="spaceMinPer" min="1">
+								<input type="number" name="spaceMinPer" id="spaceMinPer" min="1" required>
 							</div>
 							<div class="col-4 col-12-xsmall">
 								<label for="spaceMaxPer">* 최대수용인원(명)</label>
-								<input type="number" name="spaceMaxPer" id="spaceMaxPer" min="1">
+								<input type="number" name="spaceMaxPer" id="spaceMaxPer" min="1" required>
 							</div>
 							<div class="col-4 col-12-xsmall">
 							</div>
@@ -190,7 +190,7 @@
 						<br><br>
 						<div class="row">
 							<div class="col-3"></div>
-							<div class="col-3"><input type="submit" class="button primary fit" value="등록"></div>
+							<div class="col-3"><input type="submit" id="submitBtn" class="button primary fit" value="등록"></div>
 							<div class="col-3"><input type="button" class="button fit" value="취소" onclick="location.href='spaceList.sp'"></div>
 							<div class="col-3"></div>
 						</div>

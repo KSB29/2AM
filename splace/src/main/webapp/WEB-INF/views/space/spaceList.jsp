@@ -22,8 +22,11 @@
 					<div class="row gtr-uniform">
 						<c:forEach var="list" items="${ sList }">
 							<div class="col-4">
-								<div class="image fit bgImage" style="background-image:url('${contextPath }/resources/spaceImg/space1.PNG');">
-									<c:if test="${ list.statusId != 2 || list.spaceOperStatus == 'N' }"><span class="bgBlur"><em>비공개 중입니다.</em></span></c:if>
+								<input type="hidden" id="status${ list.spaceId }" value="${ list.statusId }">
+								<div class="image fit bgImage" style="background-image:url('${contextPath }/resources/spaceImg/${ list.spaceAttChange }');">
+									<c:if test="${ list.statusId != 2 || list.spaceOperStatus == 'N' }">
+									<span class="bgBlur"><em>비공개 중입니다.</em></span>
+									</c:if>
 								</div>
 								<h2 class="marginClear">${ list.spaceName }</h2>
 								<div class="marginClear">

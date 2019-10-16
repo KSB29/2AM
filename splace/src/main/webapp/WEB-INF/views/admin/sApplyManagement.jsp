@@ -36,7 +36,7 @@
         <div class="container-fluid">
 			
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">공지사항 관리</h1>
+          <h1 class="h3 mb-2 text-gray-800">공간 신청 관리</h1>
           <p class="mb-4"></p>
 
           <!-- DataTales Example -->
@@ -47,39 +47,55 @@
                   <thead>
                     <tr>
                       <th>번호</th>
-                      <th>제목</th>
-                      <th>내용</th>
-                      <th>상태</th>
-                      <th>작성일</th>
+                      <th>공간이름</th>
+                      <th>한줄소개</th>
+                      <th>상세소개</th>
+                      <th>태그</th>
+                      <th>주의사항</th>
+                      <th>주소/전화번호</th>
+                      <th>이용인원</th>
+                      <th>운영시간</th>
+                      <th>등록일</th>
                       <th>수정일</th>
+                      <th>회원ID</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
                       <th>번호</th>
-                      <th>제목</th>
-                      <th>내용</th>
-                      <th>상태</th>
-                      <th>작성일</th>
+                      <th>공간이름</th>
+                      <th>한줄소개</th>
+                      <th>상세소개</th>
+                      <th>태그</th>
+                      <th>주의사항</th>
+                      <th>주소/전화번호</th>
+                      <th>이용인원</th>
+                      <th>운영시간</th>
+                      <th>등록일</th>
                       <th>수정일</th>
+                      <th>회원ID</th>
                       <th></th>
                     </tr>
                   </tfoot>
                   <tbody>
-                  	<c:forEach items="${bList }" var="notice">
+                  	<c:forEach items="${sList }" var="space">
 	                    <tr>
-	                      <td>${notice.boardId}</td>
-	                      <td>${notice.boardTitle}</td>
-	                      <td>${notice.boardContent}</td>
-	                      <td>${notice.boardStatus}</td>
-	                      <td><fmt:formatDate value="${notice.boardEnroll}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
-	                      <td><fmt:formatDate value="${notice.boardUpdate}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+	                      <td>${space.spaceId}</td>
+	                      <td>${space.spaceName}</td>
+	                      <td>${space.spaceComment}</td>
+	                      <td>${space.spaceDetail}</td>
+	                      <td>${space.spaceTag}</td>
+	                      <td>${space.spaceNotice}</td>
+	                      <td>${space.spaceAddress} / ${space.spacePhone}</td>
+	                      <td>${space.spaceMinPer} ~ ${space.spaceMaxPer} 명</td>
+	                      <td>${space.spaceOpenTime} ~ ${space.spaceCloseTime} 시</td>
+	                      <td><fmt:formatDate value="${space.spaceEnroll}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+	                      <td><fmt:formatDate value="${space.spaceUpdate}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+	                      <td>${space.memberId}</td>
 	                      <td>
-	                      	<c:if test="${notice.boardStatus eq 'Y' }">
-	                      		<button class="btn btn-google btn-block" onclick="location.href='noticeDelete.sp?noticeId=${notice.boardId}'">삭제</button>
-	                      	</c:if>
-	                      	<button class="btn btn-facebook btn-block" onclick="location.href='noticeUpdateForm.sp?noticeId=${notice.boardId}'">수정</button>
+	                      	<button class="btn btn-google btn-block" onclick="location.href='sApproveManagement.sp?spaceId=${space.spaceId}'">승인</button>
+	                      	<button class="btn btn-facebook btn-block" onclick="location.href='sCancelManagement.sp?spaceId=${space.spaceId}'">반려</button>
 	                      </td>
 	                    </tr>
                   	</c:forEach>
@@ -88,9 +104,7 @@
               </div>
             </div>
 
-            <div class="card-header py-3">
-            	<button class="btn btn-secondary btn-block" onclick="location.href='insertNoticeForm.sp'">글쓰기</button>
-            </div>
+            
           </div>
         </div>
         <!-- /.container-fluid -->

@@ -27,12 +27,23 @@ $(document).ready(function(){
 	    		return false;
 	    	}
 	        
+	    	var id = $(this).attr("id").replace("space", "");
+	    	var status = $("#status"+id).val();
+	    	var $divImg = $("#status"+id).next();
+	    	var $span = "<span class='bgBlur'><em>비공개 중입니다.</em></span>";
+
 	    	if (operStatus == true) {
-        		$(this).attr("checked", true);
+	    		$(this).attr("checked", true);
         		$(this).parent().next().html("운영").addClass("noticeColor").removeClass("warningColor");
+        		if (status == 2) {
+        			$divImg.children().remove();
+        		}
         	} else {
         		$(this).attr("checked", false);
         		$(this).parent().next().html("운영중지").addClass("warningColor").removeClass("noticeColor");
+        		if (status == 2) {
+        			$divImg.append($span);
+        		}
         	};
         	
 	        var statusId = operStatus == true? "Y" : "N";

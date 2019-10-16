@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -35,7 +36,7 @@
         <div class="container-fluid">
 			
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">호스트 관리</h1>
+          <h1 class="h3 mb-2 text-gray-800">공간 관리</h1>
           <p class="mb-4"></p>
 
           <!-- DataTales Example -->
@@ -44,13 +45,13 @@
               <select class="custom-select" name="statusSelect" id="statusSelect">
                 <option value="4" <c:if test="${status==4 }">selected</c:if>>전체</option>
                 <option value="0" <c:if test="${status==0 }">selected</c:if>>등록</option>
-                <option value=",1" <c:if test="${status==1 }">selected</c:if>>대기</option>
+                <option value="1" <c:if test="${status==1 }">selected</c:if>>대기</option>
                 <option value="2" <c:if test="${status==2 }">selected</c:if>>승인</option>
                 <option value="3" <c:if test="${status==3 }">selected</c:if>>반려</option>
               </select>
 			  <script>
 				$("#statusSelect").on("change", function() {
-					location.href = "hhostManagement.sp?hostStatus="+$(this).val();
+					location.href = "sInfoManagement.sp?spaceStatus="+$(this).val();
 				});
 			  </script>
             </div>
@@ -59,48 +60,51 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>아이디</th>
-                      <th>회원아이디</th>
-                      <th>전화번호</th>
-                      <th>이메일</th>
+                      <th>번호</th>
                       <th>이름</th>
-                      <th>가게상호</th>
-                      <th>사업자번호</th>
-                      <th>은행</th>
-                      <th>계좌번호</th>
-                      <th>예금주</th>
-                      <th>등록날짜</th>
+                      <th>한줄소개</th>
+                      <th>상세소개</th>
+                      <th>태그</th>
+                      <th>주의사항</th>
+                      <th>주소/전화번호</th>
+                      <th>이용인원</th>
+                      <th>운영시간</th>
+                      <th>등록일</th>
+                      <th>수정일</th>
+                      <th>회원ID</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>아이디</th>
-                      <th>회원아이디</th>
-                      <th>전화번호</th>
-                      <th>이메일</th>
+                      <th>번호</th>
                       <th>이름</th>
-                      <th>가게상호</th>
-                      <th>사업자번호</th>
-                      <th>은행</th>
-                      <th>계좌번호</th>
-                      <th>예금주</th>
-                      <th>등록날짜</th>
+                      <th>한줄소개</th>
+                      <th>상세소개</th>
+                      <th>태그</th>
+                      <th>주의사항</th>
+                      <th>주소/전화번호</th>
+                      <th>이용인원</th>
+                      <th>운영시간</th>
+                      <th>등록일</th>
+                      <th>수정일</th>
+                      <th>회원ID</th>
                     </tr>
                   </tfoot>
                   <tbody>
-                  	<c:forEach items="${hList }" var="h">
+                  	<c:forEach items="${sList }" var="space">
                   	  <tr>
-	                      <td>${h.hostId}</td>
-	                      <td>${h.memberId}</td>
-	                      <td>${h.hostPhone}</td>
-	                      <td>${h.hostEmail}</td>
-	                      <td>${h.hostName}</td>
-	                      <td>${h.storeName}</td>
-	                      <td>${h.hostNo}</td>
-	                      <td>${h.hostBank}</td>
-	                      <td>${h.hostAccount}</td>
-	                      <td>${h.hostBname}</td>
-	                      <td>${h.hostEnroll}</td>
+	                      <td>${space.spaceId}</td>
+	                      <td>${space.spaceName}</td>
+	                      <td>${space.spaceComment}</td>
+	                      <td>${space.spaceDetail}</td>
+	                      <td>${space.spaceTag}</td>
+	                      <td>${space.spaceNotice}</td>
+	                      <td>${space.spaceAddress} / ${space.spacePhone}</td>
+	                      <td>${space.spaceMinPer} ~ ${space.spaceMaxPer} 명</td>
+	                      <td>${space.spaceOpenTime} ~ ${space.spaceCloseTime} 시</td>
+	                      <td><fmt:formatDate value="${space.spaceEnroll}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+	                      <td><fmt:formatDate value="${space.spaceUpdate}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+	                      <td>${space.memberId}</td>
                       </tr>
                   	</c:forEach>
                   </tbody>

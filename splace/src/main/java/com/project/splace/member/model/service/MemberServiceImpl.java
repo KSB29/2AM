@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.splace.common.PageInfo;
+import com.project.splace.common.Pagination;
 import com.project.splace.member.controller.MemberController;
 import com.project.splace.member.model.dao.MemberDao;
 import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
+import com.project.splace.member.model.vo.MemberQnaVO;
+import com.project.splace.member.model.vo.MemberReviewVO;
 import com.project.splace.member.model.vo.WishListVO;
 
 @Service("mService")
@@ -112,6 +116,33 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.updatePhone(mem);
 	}
 
+	@Override
+	public ArrayList<MemberReviewVO> selectReviewList(String memberId, int currentPage) {
+		// 후기 리스트 수 조회
+		int listCount = mDao.getrListCount(memberId);
+		// 후기 리스트 조회
+		PageInfo pageInfo = Pagination.getPageInfo(currentPage, listCount);	
+		ArrayList<MemberReviewVO> rList = mDao.selectReviewList(pageInfo, memberId);
+		return rList;
+	}
+
+	@Override
+	public int deleteWishList(WishListVO wish) throws Exception {
+		return mDao.deleteWishList(wish);
+	}
+
+	@Override
+	public ArrayList<MemberQnaVO> selectQnaList(String memberId, int currentPage) {
+		// 후기 리스트 수 조회
+		int listCount = mDao.getqListCount(memberId);
+		// 후기 리스트 조회
+		PageInfo pageInfo = Pagination.getPageInfo(currentPage, listCount);	
+		ArrayList<MemberQnaVO> qList = mDao.selectQnaList(pageInfo, memberId);
+		return qList;
+		
+		
+		
+	}
 
 
 

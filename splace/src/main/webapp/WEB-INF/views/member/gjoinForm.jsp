@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<title>구글 로그인</title>
 	<!-- template -->
 	<noscript><link rel="stylesheet" href="${contextPath}/resources/css/noscript.css"></noscript>
 	<!-- js -->

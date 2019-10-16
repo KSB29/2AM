@@ -57,8 +57,8 @@ $(document).ready(function(){
 							$("#bookCheck").css("display", "block");
 							$("#bookCheck span").text("해당 기간 내에 이용 예정인 예약 내역이 있습니다.").css("color","#cc0000");
 						} else {
-							$("#bookCheck").css("display", "none");
-							$("#bookCheck span").text("");
+							$("#bookCheck").css("display", "block");
+							$("#bookCheck span").text("해당 기간 내에 이용 예정인 예약 내역이 없습니다.");
 						}
 					},
 			error : function(e) {
