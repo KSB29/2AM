@@ -191,7 +191,7 @@
 				                      <td>${mem.memberName}</td>
 				                      <td>${mem.memberPhone}</td>
 				                      <td>${mem.memberAgree}</td>
-				                      <td><fmt:formatDate value="${mem.memberEnroll}" pattern="yyyy.MM.dd HH:mm"/></td>
+				                      <td><fmt:formatDate value="${mem.memberEnroll}" pattern="yyyy.MM.dd"/></td>
 				                      <td>${mem.memberSocial}</td>
 				                      <td>${mem.grade}</td>
 			                      </tr>
