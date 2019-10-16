@@ -611,8 +611,8 @@
     <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>  
  	<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>
-	   
-	<!--  ajax  -->   
+	      
+	<!--  ajax  -->  
 	   <script>
 	      function rDataCheck(){
 	    	 var regExpCheck= true;
