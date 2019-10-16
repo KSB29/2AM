@@ -77,12 +77,17 @@
                                                         <td>
 		               										<div><fmt:formatDate value="${q.qDate}" pattern="yyyy.MM.dd(E)"/></div>
                                                         </td>   
-                                                  		 <tr>
-                                                   		<c:if test="${empty q.aContent}">                                             
+                                                        
+                                                  		<td class="centser">
+                                                  		<input type="checkbox" id="qcheck" name="" value="" checked disabled>
+                                                  		<label for="qcheck"></label>
+                                                  		</td>
+                                                   		<%-- <c:if test="${empty q.aContent}">                                             
                                                        		 <td> <input type="radio" checked></td>
                                                         </c:if>
-                                                   		<c:if test="${!empty q.aContent}">                                             
-                                                        </c:if>
+                                                   		<c:if test="${!empty q.aContent}">     
+                                                      		 <td> <input type="radio" readonly></td>                                               		           	                           
+                                                        </c:if> --%>
                                                     </tr>                                                                                                           
                                                     </c:forEach>
                                                 </tbody>

@@ -3,6 +3,7 @@ package com.project.splace.admin.model.service;
 import java.util.ArrayList;
 
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.Payment;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
@@ -30,5 +31,10 @@ public interface AdminService {
 
 	// 관리자문의관리
 	public abstract ArrayList<QnA> selectQAdminlist();
+
+	// 결제 완료 관리 
+	public abstract ArrayList<Payment> selectPaymentList(int status);
+	
+	
 
 }

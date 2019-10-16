@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.splace.admin.model.service.AdminService;
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.Payment;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
@@ -134,6 +135,27 @@ public class AdminController {
 		
 		ArrayList<Host> hList = adminService.selectHostList(1);
 		mv.addObject("hList", hList).setViewName("admin/hostManagement");
+		
+		return mv; 
+	}
+	
+	// 10. 결제 완료 관리 
+	@RequestMapping("paymentManagement.sp")
+	public ModelAndView paymentManagement(ModelAndView mv, String paymentStatus) {
+
+		// 상태
+		int status = 0;
+		if(paymentStatus == null) {
+			status = 0;
+		} else{
+			status = Integer.parseInt(paymentStatus);
+		}
+				
+		ArrayList<Payment> pList = adminService.selectPaymentList(status);
+		mv.addObject("pList", pList).addObject("status", status).setViewName("admin/paymentManagement");
+
+
+		
 		
 		return mv; 
 	}

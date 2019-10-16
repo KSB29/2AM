@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.Payment;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
@@ -76,6 +77,11 @@ public class AdminDao {
 	 */
 	public ArrayList<QnA> selectQAdminlist() {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectQAdminlist");
+	}
+
+	public ArrayList<Payment> selectPaymentList(int status) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectPaymentlist",status);
+		
 	}
 
 }

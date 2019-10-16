@@ -51,7 +51,8 @@ border:1px solid #c9c9c9 !important;
 }
 .con{
 	margin: 1em 0 0 0;
-	display:inline-block;	
+	display:inline-block;
+	width:60%;	
 }
 /*예약버튼*/
 .reserver_btn{
@@ -70,11 +71,13 @@ border:1px solid #c9c9c9 !important;
 	border: 0.5px solid #ddd;
 }
 #wish_info{
-	float:right;
 	margin:1em 1em 0 0 ;
-	clear:both;
+	float: right;
 }
-
+#wish_info>ul>li>h3{
+	margin: 0 0 0 0 !important;
+	padding: 0 0 0 0 !important;
+}
 .contents>h3{
     margin: 0 0 1em 0 !important;
     padding: 0 0 0 0.5em;

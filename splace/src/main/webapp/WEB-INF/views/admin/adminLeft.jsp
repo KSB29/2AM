@@ -89,8 +89,7 @@
       </a>
       <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="noticeManagement.sp">결제완료</a>
-          <a class="collapse-item" href="noticeManagement.sp">결제취소</a>
+          <a class="collapse-item" href="paymentManagement.sp">결제 관리</a>
         </div>
       </div>
     </li>
