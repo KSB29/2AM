@@ -228,7 +228,7 @@ public class ReviewServiceImpl implements ReviewService{
       @Override
       public int deleteFileAtt(String src, HttpServletRequest request) {
          deleteFile(src, request);
-         int deleteResult = rDao.deleteReviewAtt(src);
+         int deleteResult = rDao.reviewAttDeleteSRC(src);
          System.out.println("파일삭제됨: "+deleteResult);
          
          return deleteResult;

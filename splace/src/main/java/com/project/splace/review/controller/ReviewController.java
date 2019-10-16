@@ -158,9 +158,9 @@ public class ReviewController {
       int result = rService.deleteFileAtt(src, request);
       
       if(result>0) {
-         return "ㅋㅋㅋㅋ";
+         return "oooooooo";
       } else {
-         return "ㅗㅗㅗㅗ";
+         return "xxxxxx";
       }
       
    }
