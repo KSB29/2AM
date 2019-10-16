@@ -1,7 +1,8 @@
 package com.project.splace.member.model.vo;
 
 public class WishListVO {
-	private String spaceId;
+	private String memberId;
+	private int spaceId;
 	private String spaceTag;
 	private String spaceName;
 	private String spaceOpenTime;
@@ -14,13 +15,13 @@ public class WishListVO {
 	
 	public WishListVO() {}
 	
-	public WishListVO(String memberId, String spaceId) {
+	public WishListVO(String memberId, int spaceId) {
 		super();
 		this.spaceId = spaceId;
 	}
 	
 
-	public WishListVO( String spaceId, String spaceTag, String spaceName, String spaceOpenTime,
+	public WishListVO( int spaceId, String spaceTag, String spaceName, String spaceOpenTime,
 			String spaceCloseTime, String spaceAddress, int spaceMaxPer, int spaceTime, String priceTime,
 			String spaceAttChange) {
 		super();
@@ -38,12 +39,20 @@ public class WishListVO {
 
 
 
-	public String getSpaceId() {
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public int getSpaceId() {
 		return spaceId;
 	}
 
 
-	public void setSpaceId(String spaceId) {
+	public void setSpaceId(int spaceId) {
 		this.spaceId = spaceId;
 	}
 

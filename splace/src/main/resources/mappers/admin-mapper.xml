@@ -90,6 +90,41 @@
       <result property="aMemberId" column="A_MEMBER_ID"/>
       <result property="spaceId" column="SPACE_ID"/>
    </resultMap>
+	<resultMap type="Book" id="bookResultSet">
+		<id property="bookId" column="BOOK_ID"/>
+		<result property="bookEnroll" column="BOOK_ENROLL"/>
+		<result property="bookPrice" column="BOOK_PRICE"/>
+		<result property="bookDate" column="BOOK_DATE"/>
+		<result property="bookStartTime" column="BOOK_START_TIME"/>
+		<result property="bookEndTime" column="BOOK_END_TIME"/>
+		<result property="bookPer" column="BOOK_PER"/>
+		<result property="bookRequest" column="BOOK_REQUEST"/>
+		<result property="spaceId" column="SPACE_ID"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="statusId" column="STATUS_ID"/>
+		<result property="booker" column="BOOKER" />
+		<result property="bookerPhone" column="BOOKER_PHONE" />
+		<result property="bookerEmail" column="BOOKER_EMAIL" />
+		<result property="bookCancel" column="BOOK_CANCEL" />
+		<result property="approvalDate" column="APPROVAL_DATE" />
+		<result property="spaceName" column="SPACE_NAME" />
+		<result property="typeName" column="TYPE_NAME" />
+		<result property="spaceAttChange" column="SPACE_ATT_CHANGE" />
+		<result property="spaceAddress" column="SPACE_ADDRESS" />
+		<result property="spacePhone" column="SPACE_PHONE"/>
+		<result property="reviewId" column="REVIEW_ID"/>
+		<!-- 결제 -->
+		<result property="pStatusId" column="P_STATUS_ID" />
+		<result property="paymentId" column="PAYMENT_ID"/>
+		<result property="paymentDate" column="PAYMENT_DATE"/>
+		<result property="paymentType" column="PAYMENT_TYPE"/>
+		<result property="receiptId" column="RECEIPT_ID"/>
+		<result property="paymentCancelPrice" column="PAYMENT_CANCEL_PRICE"/>
+	</resultMap>
+	<resultMap type="TodayBook" id="todayBookResultSet">
+		<result property="time" column="time"/>
+		<result property="count" column="count"/>
+	</resultMap>
 
 	<!-- 1. 정산관리 -->
 	<select id="selectAccountList" parameterType="_int" resultMap="accountResultSet">
@@ -141,21 +176,49 @@
 		WHERE Q_TYPE = 1
 	</select>
 	
-	<!-- 호스트 승인 처리 -->
+	<!-- 8. 관리자답변관리 -->
+	<select id="selectAdminlist" resultMap="QnAResultSet">
+		SELECT QNA_ID, Q_CONTENT, Q_DATE, A_CONTENT, A_DATE, Q_STATUS, Q_MEMBER_ID, A_MEMBER_ID
+		FROM QNA
+		WHERE Q_TYPE = 1 AND A_DATE IS NULL
+	</select>
+	
+	<!-- 9. 관리자답변작성 -->
+	<update id="insertAnswerAdmin" parameterType="QnA">
+		UPDATE QNA SET A_CONTENT = #{aContent}, A_DATE = SYSDATE, A_MEMBER_ID = #{aMemberId} WHERE QNA_ID = #{qnaId}
+	</update>
+	
+	<!-- 10. 신규회원목록(1달) -->
+	<select id="selectNewMemberlist" resultMap="memberResultSet">
+		SELECT * FROM MEMBER 
+		WHERE MEMBER_STATUS = 'Y'
+		AND TO_CHAR(MEMBER_ENROLL, 'YYYYMM') = TO_CHAR(SYSDATE, 'YYYYMM')
+		ORDER BY MEMBER_ENROLL DESC
+	</select>
+	
+	<!-- 11. 오늘예약목록 -->
+	<select id="selectBookList" resultMap="todayBookResultSet">
+		SELECT TO_CHAR(BOOK_ENROLL, 'HH24') "time", COUNT(*) "count" FROM BOOK B
+		WHERE TO_CHAR(BOOK_ENROLL, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+		AND TO_CHAR(BOOK_ENROLL, 'MM') = TO_CHAR(SYSDATE, 'MM')
+		GROUP BY TO_CHAR(BOOK_ENROLL, 'HH24')
+	</select>
+	
+	<!-- 12. 호스트 승인 처리 -->
 	<update id="updateApproveHost" parameterType="_int">
 		UPDATE HOST
 		SET    STATUS_ID = 2, HOST_UPDATE = SYSDATE
 		WHERE  HOST_ID = #{hostId}
 	</update>
 	
-	<!-- 호스트 반려 처리 -->
+	<!-- 13. 호스트 반려 처리 -->
 	<update id="updateCancelHost" parameterType="_int">
 		UPDATE HOST
 		SET    STATUS_ID = 3, HOST_UPDATE = SYSDATE
 		WHERE  HOST_ID = #{hostId}
 	</update>
 	
-	<!-- 공간 관리 -->
+	<!-- 14. 공간 관리 -->
 	<select id="selectSpaceList" parameterType="_int" resultMap="spaceResultSet">
 		SELECT S.*, H.MEMBER_ID FROM SPACE S, HOST H
 		WHERE  S.HOST_ID = H.HOST_ID
@@ -164,18 +227,18 @@
 		</if>
 	</select>
 	
-	<!-- 공간 승인 처리 -->
+	<!-- 15. 공간 승인 처리 -->
 	<update id="updateApproveSpace" parameterType="_int">
 		UPDATE SPACE
 		SET    STATUS_ID = 2, SPACE_UPDATE = SYSDATE
 		WHERE  SPACE_ID = #{spaceId}
 	</update>
 	
-	<!-- 공간 반려 처리 -->
+	<!-- 16. 공간 반려 처리 -->
 	<update id="updateCancelSpace" parameterType="_int">
 		UPDATE SPACE
 		SET    STATUS_ID = 3, SPACE_UPDATE = SYSDATE
 		WHERE  SPACE_ID = #{spaceId}
 	</update>
-	
+  
 </mapper>

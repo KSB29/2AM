@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.splace.admin.model.service.AdminService;
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
@@ -26,8 +27,22 @@ public class AdminController {
 	
 	// 1. 관리자홈
 	@RequestMapping("adminHome.sp")
-	public String goAdminHome() {
-		return "admin/adminHome";
+	public ModelAndView goAdminHome(ModelAndView mv) {
+		// 답변요청 문의목록
+		ArrayList<QnA> aList = adminService.selectAadminList();
+		// 호스트 신청목록
+		ArrayList<Host> hList = adminService.selectHostList(1);
+		// 공간 신청목록
+		// 신규회원(1달)
+		ArrayList<Member> mList = adminService.selectNewMemberList();
+		// 오늘예약수
+		ArrayList<TodayBook> bList = adminService.selectBookList();
+		System.out.println(bList);
+		
+		mv.addObject("aList", aList).addObject("hList", hList).addObject("mList", mList).addObject("bList", bList);
+		mv.setViewName("admin/adminHome");
+		
+		return mv;
 	}
 	
 	// 2. 정산페이지로 이동
@@ -211,4 +226,30 @@ public class AdminController {
 		
 		return mv; 
 	}
+	
+	// 10. 관리자답변관리
+	@RequestMapping("answerAdminManagement.sp")
+	public ModelAndView goAnswerManagement(ModelAndView mv) {
+		ArrayList<QnA> aList = adminService.selectAadminList();
+		mv.addObject("aList", aList).setViewName("admin/answerAdminManagement");
+		
+		return mv;
+	}
+	
+	// 11. 관리자답변작성
+	@RequestMapping("answerAdmin.sp")
+	public String answerAdmin(QnA qna, RedirectAttributes rd, HttpSession session) {
+		qna.setaMemberId(((Member)session.getAttribute("loginUser")).getMemberId());
+		System.out.println(qna);
+		
+		int result = adminService.insertAnswerAdmin(qna);
+		
+		if(result>0) {
+			rd.addFlashAttribute("msg", "답변이 작성되었습니다!");
+		} else {
+			rd.addFlashAttribute("msg", "답변이 작성되지않았습니다ㅜㅜㅜ");
+		}
+		return "redirect:qnaAdminManagement.sp";
+	}
+	
 }

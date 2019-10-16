@@ -23,8 +23,10 @@
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminHome.sp">
-      <div class="sidebar-brand-text mx-3">SPLACE - Admin</div>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center bg-white" href="adminHome.sp">
+      <div class="sidebar-brand-text mx-3">
+      	<img style="width:100%" src="${contextPath }/resources/img/logo.png" alt="logo" />
+      </div>
     </a>
 
     <!-- Divider -->
@@ -138,7 +140,7 @@
           <div class="collapse-divider"></div>
           <h6 class="collapse-header">관리자</h6>
           <a class="collapse-item" href="qnaAdminManagement.sp">내역관리</a>
-          <a class="collapse-item" href="noticeManagement.sp">답변관리</a>
+          <a class="collapse-item" href="answerAdminManagement.sp">답변관리</a>
         </div>
       </div>
     </li>
@@ -178,18 +180,15 @@
   <!-- Custom scripts for all pages-->
   <script src="${contextPath }/resources/admin/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="${contextPath }/resources/admin/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
+  <!-- chart.js : 원하는 페이지 밑에 붙여넣어 보세용 -->
+  <%-- <script src="${contextPath }/resources/admin/vendor/chart.js/Chart.min.js"></script>
   <script src="${contextPath }/resources/admin/js/demo/chart-area-demo.js"></script>
   <script src="${contextPath }/resources/admin/js/demo/chart-pie-demo.js"></script>
+  <script src="${contextPath }/resources/admin/js/demo/chart-bar-demo.js"></script> --%>
  
-  <!-- Page level plugins -->
+  <!-- datatables.js -->
   <script src="${contextPath }/resources/admin/vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="${contextPath }/resources/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
   <script src="${contextPath }/resources/admin/js/demo/datatables-demo.js"></script>
 </body>
 </html>

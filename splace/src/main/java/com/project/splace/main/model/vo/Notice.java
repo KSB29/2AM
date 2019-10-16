@@ -1,6 +1,6 @@
 package com.project.splace.main.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Notice {
 	private int noticeId;
@@ -13,10 +13,11 @@ public class Notice {
 	}
 
 	
-	public Notice(String noticeContent, Date noticeDate) {
+	public Notice(String noticeContent, Date noticeDate,int noticeId) {
 		super();
 		this.noticeContent = noticeContent;
 		this.noticeDate = noticeDate;
+		this.noticeId = noticeId;
 	}
 
 

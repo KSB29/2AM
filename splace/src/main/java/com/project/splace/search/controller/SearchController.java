@@ -24,18 +24,7 @@ public class SearchController {
 	public ModelAndView searchList(Search search,ModelAndView mv) {
 		
 		ArrayList<Space> searchList = searchService.searchList(search);
-		
-		for(Space s: searchList) {
-			/*
-			 * int spaceId = (s.getSpaceId()); System.out.println(spaceId);
-			 */
-			System.out.println("왜그래.."+s);
-		}
 		if(searchList !=null) {
-					/*
-					 * ArrayList<Price> priceList = searchService.priceList(spaceId);
-					 * System.out.println("아이디"+spaceId);
-					 */
 			mv.addObject("searchList", searchList);
 			mv.addObject("search",search);
 			mv.setViewName("search/searchList");
@@ -46,27 +35,20 @@ public class SearchController {
 	}
 	
 	// 상세 검색 결과 목록 출력
-	
 	 @RequestMapping("searchDetail.sp") 
 	 public ModelAndView searchDetailList(Search search, ModelAndView mv) { 
-		 System.out.println(search);
 
 		 ArrayList<Space> searchList = searchService.searchDetailList(search);
 	  
-	  for(Space s: searchList) {
-		 
-		  System.out.println(s); 
+		  if(searchList !=null) {
+				mv.addObject("searchList", searchList);
+				mv.addObject("search",search);
+				mv.setViewName("search/searchList");
+			}else {
+				mv.setViewName("search/searchList");
+			}
+				return mv;
 		  
-	  }
-	  if(searchList !=null) {
-			mv.addObject("searchList", searchList);
-			mv.addObject("search",search);
-			mv.setViewName("search/searchList");
-		}else {
-			mv.setViewName("search/searchList");
-		}
-			return mv;
-	  
 	  }
 	 
 	
