@@ -695,6 +695,11 @@
                         $(".timeHeader").focus();
                         regExpCheck=false;
                      }
+    	   	  		if(regExpCheck){
+    	   	  			$("input[name=bookStartTime]").val($(".start").text().substring(0,$(".start").text().lastIndexOf("시")));
+    	   	  			$("input[name=bookEndTime]").val($(".end").text().substring(0,$(".end").text().lastIndexOf("시")));
+    	   	  			$("input[name=bookPrice]").val($(".totalPrice3").text());
+    	   	  		}
                 return regExpCheck;
           };
          

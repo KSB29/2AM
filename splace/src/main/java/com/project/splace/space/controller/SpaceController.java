@@ -300,7 +300,7 @@ public class SpaceController {
 	         DayOff dayOff = new DayOff();
 	         ArrayList<DayOff> dayOffList = sService.dayOffList(space.getSpaceId());
 	         String dayArr[]= new String[dayOffList.size()];
-	         DayOff dddddddddd = dayOffList.get(1);
+	         //DayOff dddddddddd = dayOffList.get(1);
 	       
 	         SimpleDateFormat newForm = new SimpleDateFormat("yyyy-MM-dd");
 	         for(int i=0; i<dayOffList.size(); i++) {
