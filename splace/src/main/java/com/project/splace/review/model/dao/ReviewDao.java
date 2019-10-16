@@ -119,7 +119,7 @@ public class ReviewDao {
     * 리뷰파일삭제
     * @param reviewAttId
     */
-   public int deleteReviewAtt(String srcs) {
+   public int reviewAttDeleteSRC(String srcs) {
       return sqlSession.delete("reviewMapper.reviewAttDeleteSRC", srcs);
    }
 
