@@ -680,427 +680,396 @@
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>
 	
 	<!--  ajax  -->
-	      <script>
-	 
-	      function rDataCheck(){
-	    	 var regExpCheck= true;
-	   	    		if($("#datepicker").val()==""){
-	   	      			alert("예약일을 선택해주세요!");
-	   	      			$("#datepicker").focus();
-	   	      			
-	   	      			regExpCheck=false;
-	   	    		}
-	   	  
-	   	  			if($("input:checkbox[name=timeClick]:checked").length<${space.spaceTime}){
-	   	      			alert("최소 예약시간을 확인해주세요!");
-	   	      			$(".timeHeader").focus();
-	   	      			regExpCheck=false;
-	   	      		}
-	   	  		if(regExpCheck){
-	   	  			$("input[name=bookStartTime]").val($(".start").text().substring(0,$(".start").text().lastIndexOf("시")));
-	   	  			$("input[name=bookEndTime]").val($(".end").text().substring(0,$(".end").text().lastIndexOf("시")));
-	   	  			$("input[name=bookPrice]").val($(".totalPrice3").text());
-	   	  		}
-	   	    	return regExpCheck;
-	    	};
-	      
-			
-		$(function() {
-			// 휴무일 
-				var dayArr = "${dayArr}";
-				var disabledDays=[];
-				<c:forTokens var="day" items="${dayArr}"
-					delims=", " varStatus="status">
-					disabledDays.push("${day}");
-				</c:forTokens>
-				var headerHtml = $("#material-header-holder .ui-datepicker-material-header");
-			
-				var changeMaterialHeader = function(header, date) {
-				var year   = date.format('YYYY');
-				var month  = date.format('MM');
-				var dayNum = date.format('DD');
-				var isoDay = date.isoWeekday();
-								
-				var weekday = new Array(7);
-				weekday[1] = "Monday";
-				weekday[2] = "Tuesday";
-				weekday[3] = "Wednesday";
-				weekday[4] = "Thursday";
-				weekday[5] = "Friday";
-				weekday[6] = "Saturday";
-				weekday[7]=  "Sunday";
-		
-				$('.ui-datepicker-material-day', header).text(weekday[isoDay]);
-				$('.ui-datepicker-material-year', header).text(year);
-				$('.ui-datepicker-material-month', header).text(month);
-				$('.ui-datepicker-material-day-num', header).text(dayNum);
-			};
-			
-			$("#datepicker").datepicker({
-			dateFormat: 'yy-mm-dd D',
-	        showOn: "both",
-	        showButtonPanel: true,
-	        buttonImage: "${contextPath}/resources/img/calendar.png",
-	        buttonImageOnly: true,
-	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-			minDate: 1,
-			maxDate: "+1M",
-			closeText: 'OK',
-			beforeShowDay: disableAllTheseDays
-		});
-			
-		// 특정일 선택막기 
-		function disableAllTheseDays(date) { 
-		   var m = date.getMonth(), d = date.getDate(), y = date.getFullYear(); 
-		   for (i = 0; i < disabledDays.length; i++) { 
-		       if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) { 
-		           return [false]; 
-		       } 
-		   } 
-		   return [true]; 
-		}
-			});
-	   
-	
-	    
-	 // 달력 선택 시 시간 div 표출
-		$(function(){
-			$("#datepicker").change(function(){
-				var bookDate = $("#datepicker").val();
-				$(".timeHeader").css("display","block"); 
-				var spaceId = ${space.spaceId};
-				
-				$.ajax({
-					url:"timeList.sp",
-					data:{bookDate:bookDate, spaceId:spaceId},
-					type:"POST",
-					async:false, 
-					dataType:"json",
-					success:function(timeList){
-						var $body = $(".time_slot");
-						var $bookB = $(".BookingDate");
-						$body.html("");
-						$bookB.text("");
-						if(timeList.length>0){
-							$.each(timeList, function(index, item) {
-								$.each(item, function(key, value){
-								   
-								    var result="";
-								    result+='<li data-num="'
-								    	   +index
-								    	   +'" id="timeSlotLi">'
-								    	   +'<input type="checkbox" class="temp" id="'
-								    	   +(index+1)
-								    	   +'" value="'
-								    	   +value
-								    	   +'" name="timeClick">'
-								    	   +'<label for="'
-								    	   +(index+1)
-								    	   +'" class="'
-								    	   +key
-								    	   +'">'
-								    	   +key
-								    	   +'시 <br>'
-								    	   +value
-								    	   +'</label></li>';
-			                              
-								    	   $body.append(result);
-								});
-							});
-							$bookB.append(bookDate);
-							
-							
-						}
-					bookTime();
-					}
-				});
-				
-			});
-		
-			
-			
-			var tot = 0;
-			var total =0;
-			// 시간 선택 묶음 
-			function check(){
-				var length = ($(".time_slot li:last-child input")).attr("id");
-				tot = 0;
-				for (var i = 1; i <= length; i++) {
-					$("#"+i).prop("checked",false);
-				}
-				for(var i = min; i <= max; i++){
-			var per=parseInt($('input[id="partyInput"]').val());
-					$("#"+i).prop("checked",true);
-					tot += parseInt($("#"+i).val());
-					$(".totalPrice").html('&#8361;'); 
-					$(".totalPrice2").text(tot);
-					$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-					$(".totalPrice3").text((tot*per));
-					
-					if($(".totalPrice3").text()==""){
-						$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-						$(".totalPrice3").text(tot*per);
-					}else{
-						$(".finalTotal2").html('최종 금액  &nbsp;&#8361;');
-						$(".totalPrice3").text((tot*per));
-					}
-					
-				}
-				
-			};
+  <script>
+	  function rDataCheck(){
+           var regExpCheck= true;
+                   if($("#datepicker").val()==""){
+                        alert("예약일을 선택해주세요!");
+                        $("#datepicker").focus();
+                        
+                        regExpCheck=false;
+                   }
+           
+                    if($("input:checkbox[name=timeClick]:checked").length<${space.spaceTime}){
+                        alert("최소 예약시간을 확인해주세요!")
+                        $(".timeHeader").focus();
+                        regExpCheck=false;
+                     }
+                return regExpCheck;
+          };
+         
+         
+      $(function() {
+         // 휴무일 
+            var dayArr = "${dayArr}";
+            var disabledDays=[];
+            <c:forTokens var="day" items="${dayArr}"
+               delims=", " varStatus="status">
+               disabledDays.push("${day}");
+            </c:forTokens>
+            var headerHtml = $("#material-header-holder .ui-datepicker-material-header");
+         
+            var changeMaterialHeader = function(header, date) {
+            var year   = date.format('YYYY');
+            var month  = date.format('MM');
+            var dayNum = date.format('DD');
+            var isoDay = date.isoWeekday();
+                        
+            var weekday = new Array(7);
+            weekday[1] = "Monday";
+            weekday[2] = "Tuesday";
+            weekday[3] = "Wednesday";
+            weekday[4] = "Thursday";
+            weekday[5] = "Friday";
+            weekday[6] = "Saturday";
+            weekday[7]=  "Sunday";
       
-			var min = 100;
-			var max = -1;
-		    var startTime ="";;
-		    var startPrice =0;
-		    var endTime="";
-		    var priceArr=[];
-		    
-			$(document).on("click",".temp",function(){
-				priceArr = [];
-				
-				if($(this).is(":checked")){
-					
-					var idval = parseInt(($(this).attr("id")));
-					var label = $(this).parent().children("label").text().split(" ")[0];
-					var price=$(this).parent().children("label").text().split(" ")[1];
-					if(min > idval) {
-						min = idval;
-						startTime = label;
-						startPrice = price;
-						console.log("1"+min);
-						console.log("1"+max);
-						console.log("1"+idval);
-						console.log("1"+label);
- 						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("");
-						$(".end").text("");
-						$(".bar4").text("");
-						$(".end4").text("");
-						if(min<max){
-							console.log("dfjalkfjk;as");
-							$(".start").text(startTime);
-							$(".start4").text(startTime);
-							$(".bar").text("-");
-							$(".end").text("");
-							$(".bar4").text("-");
-							$(".end4").text("");
-							
-						}
- 					if(max==-1) 
- 						if(max=min){
-	 					console.log("9"+min);
-						console.log("9"+max);
-						console.log("9"+idval);
-						console.log("9"+label);
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						
- 						}
- 						else{
- 							console.log("10dddd"+min);
- 							console.log("10dddd"+max);
- 							console.log("10dddd"+idval);
- 							console.log("10dddd"+label);
- 						}
-					}
-					else{
-						max = idval;
-						endTime=label;
-						console.log("2"+min);
-						console.log("2"+max);
-						console.log("2"+idval);
-						console.log("2"+label);
-/* 						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime); */
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime);
+            $('.ui-datepicker-material-day', header).text(weekday[isoDay]);
+            $('.ui-datepicker-material-year', header).text(year);
+            $('.ui-datepicker-material-month', header).text(month);
+            $('.ui-datepicker-material-day-num', header).text(dayNum);
+         };
+         
+         $("#datepicker").datepicker({
+         dateFormat: 'yy-mm-dd D',
+           showOn: "both",
+           showButtonPanel: true,
+           buttonImage: "${contextPath}/resources/img/calendar.png",
+           buttonImageOnly: true,
+           monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+           monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+           dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+           dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+           dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+         minDate: 1,
+         maxDate: "+1M",
+         closeText: 'OK',
+         beforeShowDay: disableAllTheseDays
+      });
+         
+      // 특정일 선택막기 
+      function disableAllTheseDays(date) { 
+         var m = date.getMonth(), d = date.getDate(), y = date.getFullYear(); 
+         for (i = 0; i < disabledDays.length; i++) { 
+             if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) { 
+                 return [false]; 
+             } 
+         } 
+         return [true]; 
+      }
+         });
+      
+   
+       
+    // 달력 선택 시 시간 div 표출
+      $(function(){
+         $("#datepicker").change(function(){
+            var bookDate = $("#datepicker").val();
+            $(".timeHeader").css("display","block"); 
+            
+            var spaceId = ${space.spaceId};
+            $(".start").text("");
+            $(".start4").text("");
+            $(".bar").text("");
+            $(".end").text("");
+            $(".bar4").text("");
+            $(".end4").text("");
+            $.ajax({
+               url:"timeList.sp",
+               data:{bookDate:bookDate, spaceId:spaceId},
+               type:"POST",
+               async:false, 
+               dataType:"json",
+               success:function(timeList){
+                  var $body = $(".time_slot");
+                  var $bookB = $(".BookingDate");
+                  $body.html("");
+                  $bookB.text("");
+                  if(timeList.length>0){
+                     $.each(timeList, function(index, item) {
+                        $.each(item, function(key, value){
+                           
+                            var result="";
+                            result+='<li data-num="'
+                                  +index
+                                  +'" id="timeSlotLi">'
+                                  +'<input type="checkbox" class="temp" id="'
+                                  +(index+1)
+                                  +'" value="'
+                                  +value
+                                  +'" name="timeClick">'
+                                  +'<label for="'
+                                  +(index+1)
+                                  +'" class="'
+                                  +key
+                                  +'">'
+                                  +key
+                                  +'시 <br>'
+                                  +value
+                                  +'</label></li>';
+                                       
+                                  $body.append(result);
+                                  
+                        });
+                     });
+                     $bookB.append(bookDate);
+                     
+                     
+                  }
+               bookTime();
+               
+               }
+            });
+            
+         });
+      
+         var min = 100;
+         var max = -1;
+          var startTime ="";;
+          var startPrice =0;
+          var endTime="";
+          var priceArr=[];
+         
+         var tot = 0;
+         var total =0;
+         // 시간 선택 묶음 
+         function check(){
+            var length = ($(".time_slot li:last-child input")).attr("id");
+            tot = 0;
+            for (var i = 1; i <= length; i++) {
+               $("#"+i).prop("checked",false);
+            }
+            for(var i = min; i <= max; i++){
+               if($("#"+i).is(":disabled")){
+                  alert("유효한 시간을 선택해주세요");
+                  min = 100;
+                  max = -1;
+                  $(".bar").text("");
+                  $(".end").text("");
+                  $(".bar4").text("");
+                  $(".end4").text("");
+                  return false;
+               }
+            }
+            for(var i = min; i <= max; i++){
+         var per=parseInt($('input[id="partyInput"]').val());
+               $("#"+i).prop("checked",true);
+               tot += parseInt($("#"+i).val());
+               $(".totalPrice").html('&#8361;'); 
+               $(".totalPrice2").text(tot);
+               $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+               $(".totalPrice3").text((tot*per));
+               
+               if($(".totalPrice3").text()==""){
+                  $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+                  $(".totalPrice3").text(tot*per);
+               }else{
+                  $(".finalTotal2").html('최종 금액  &nbsp;&#8361;');
+                  $(".totalPrice3").text((tot*per));
+               }
+               
+            }
+            
+         };
+         
+         
 
-						if(min==100) 
-						min=max;
-						console.log("3"+min);
-						console.log("3"+max);
-						console.log("3"+idval);
-						console.log("3"+label);
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime);
-					}
-					
-					
-					
-				}else{
-					var idval2 = parseInt(($(this).attr("id")));
-					var label2 = $(this).parent().children("label").text().split(" ")[0];
-					var centerval = (min+max)/2;
-					if(min==max){
-						$(this).prop("checked",false);
-						min = 100;
-						max = -1;
-						console.log("4"+min);
-						console.log("4"+max);
-						console.log("4"+idval2);
-						console.log("4"+label2);
-						$(".start").text("");
-						$(".start4").text("");
-						$(".bar").text("");
-						$(".end").text("");
-						$(".bar4").text("");
-						$(".end4").text("");
-					}
-					else if(idval2==max){
-						max = min;
-						console.log("5"+min);
-						console.log("5"+max);
-						console.log("5"+idval2);
-						console.log("5"+label2);
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("");
-						$(".end").text("");
-						$(".bar4").text("");
-						$(".end4").text("");
-						
-					}
-					else if(idval2 < centerval && idval2!=min){
-						min = idval2;
-						startTime=label2;
-						console.log("6"+min);
-						console.log("6"+max);
-						console.log("6"+idval2);
-						console.log("6"+label2);
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime);  
-					}
-					else if(idval2 >= centerval && idval2!=max){
-						max = idval2;
-						endTime=label2;
-						console.log("7"+min);
-						console.log("7"+max);
-						console.log("7"+idval2);
-						console.log("7"+label2);
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime);  
-						
-						
-					}
-					else{
-						min = max;
-						console.log("8"+min);
-						console.log("8"+max);
-						console.log("8"+idval2);
-						console.log("8"+label2);
-						$(".start").text("");
-						$(".start4").text("");
-						$(".bar").text("");
-						$(".end").text(endTime);
-						$(".bar4").text("");
-						$(".end4").text(endTime);  
-					}
-				}
-				check();
-				
-			});
-		});
-	    
-	    
-	    // 해당 일자의 예약 시간 disabled로 막기 
-		 function bookTime(){
-			var bookDate = $("#datepicker").val();
-			var spaceId = ${space.spaceId};
-			$.ajax({
-				url: "timeListBook.sp",
-				data:{bookDate:bookDate, spaceId:spaceId},
-				type:"POST",
-				async:false,
-				success: function(bookTimeArrr){
-					$.each(bookTimeArrr, function(i) {
-						var Start = bookTimeArrr[i].bookStartTime;
-						var End = bookTimeArrr[i].bookEndTime;
-						$("."+Start).prev().attr('disabled', true);
-						$("."+End).prev().attr('disabled', true);
-						
-						$("."+Start).parent().nextUntil($("."+End).parent()).children("input").attr('disabled', true);
-					});
-				},
-				error: function(){
-					console.log("에러에러");
-				}
-			});
-			
-		} 
-		 
-	    
-	    // 인원 수 클릭 (마이너스 )
-	    $("#min").click(function(){
-	    	var min=${space.spaceMinPer};
-	    	var n = $("#min").index(this);
-	    	var num =$("#partyInput:eq("+n+")").val();
-	    	var per=parseInt($('input[id="partyInput"]').val()-1);
-	    	var tot=parseInt($(".totalPrice2").text());
-	    		
-	    	if(num>min){
-	    		num= $("#partyInput:eq("+n+")").val(num*1-1);
-		    		$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-		    		$(".totalPrice3").text(tot*per);
-		    	}else{
-		    		alert("최소 인원을 확인해주세요!");
-		    	}
-		    	
-		    });
-	    
-	    // 인원 수 클릭 (플러스)
-	    $("#plu").click(function(){
-	    	var max = ${space.spaceMaxPer}
-	    	var min=${space.spaceMinPer};
-	    	var n = $("#plu").index(this);
-	    	var num = $("#partyInput:eq("+n+")").val();
-	    	var per=parseInt($('input[id="partyInput"]').val());
-	    	var tot=parseInt($(".totalPrice2").text());
-	    	if(num<max){
-			    if($(".totalPrice2").text()!=""){
-		    	num= $("#partyInput:eq("+n+")").val(num*1+1);
-			    	// 공간 사용료 값 바꾸기 
-			    	$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-		    		$(".totalPrice3").text(tot*(per+1));
-		    	}else{
-	    			num=${space.spaceMinPer};
-		    		alert("예약일을 선택해주세요!");
-   	      			$("#datepicker").focus();
-   	      			$(".finalTotal2").html('');
-	    			$(".totalPrice3").text("");
-	    			
-   	      			
-		    	}
-	    	
-	    	
-	    	}else{
-	    		alert("최대 인원을 초과했습니다.");
-	    	}
-	    	
-	    });
+          
+         $(document).on("click",".temp",function(){
+            priceArr = [];
+            
+            if($(this).is(":checked")){
+               var endTime2= $('li:nth-of-type('+max+')').children("label").text().split(" ")[0];
+               var idval = parseInt(($(this).attr("id")));
+               var label = $(this).parent().children("label").text().split(" ")[0];
+               var price=$(this).parent().children("label").text().split(" ")[1];
+               if(min > idval) {
+                  min = idval;
+                  startTime = label;
+                  startPrice = price;
+                   $(".start").text(startTime);
+                  $(".start4").text(startTime);
+                  $(".bar").text("");
+                  $(".end").text("");
+                  $(".bar4").text("");
+                  $(".end4").text("");
+                  if(min<max){
+                     $(".start").text(startTime);
+                     $(".start4").text(startTime);
+                     $(".bar").text("-");
+                     $(".end").text(endTime2);
+                     $(".bar4").text("-");
+                     $(".end4").text(endTime2);
+                     
+                  }
+                if(max==-1) 
+                   if(max=min){
+                  $(".start").text(startTime);
+                  $(".start4").text(startTime);
+                   }
+               }
+               else{
+                  max = idval;
+                  endTime=label;
+                  $(".start").text(startTime);
+                  $(".start4").text(startTime);
+                  $(".bar").text("-");
+                  $(".end").text(endTime);
+                  $(".bar4").text("-");
+                  $(".end4").text(endTime);
+
+                  if(min==100) 
+                  min=max;
+                  $(".start").text(startTime);
+                  $(".start4").text(startTime);
+                  $(".bar").text("-");
+                  $(".end").text(endTime);
+                  $(".bar4").text("-");
+                  $(".end4").text(endTime);
+               }
+               
+               
+               
+            }else{
+               var idval2 = parseInt(($(this).attr("id")));
+               var label2 = $(this).parent().children("label").text().split(" ")[0];
+               var centerval = (min+max)/2;
+               if(min==max){
+                  $(this).prop("checked",false);
+                  min = 100;
+                  max = -1;
+                  $(".start").text("");
+                  $(".start4").text("");
+                  $(".bar").text("");
+                  $(".end").text("");
+                  $(".bar4").text("");
+                  $(".end4").text("");
+               }
+               else if(idval2==max){
+                  max = min;
+                  $(".start").text(startTime);
+                  $(".start4").text(startTime);
+                  $(".bar").text("");
+                  $(".end").text("");
+                  $(".bar4").text("");
+                  $(".end4").text("");
+                  
+               }
+               else if(idval2 < centerval && idval2!=min){
+                  min = idval2;
+                  startTime=label2;
+                  $(".start").text(startTime);
+                  $(".start4").text(startTime);
+                  $(".bar").text("-");
+                  $(".end").text(endTime);
+                  $(".bar4").text("-");
+                  $(".end4").text(endTime);  
+               }
+               else if(idval2 >= centerval && idval2!=max){
+                  max = idval2;
+                  endTime=label2;
+                  $(".start").text(startTime);
+                  $(".start4").text(startTime);
+                  $(".bar").text("-");
+                  $(".end").text(endTime);
+                  $(".bar4").text("-");
+                  $(".end4").text(endTime);  
+                  
+                  
+               }
+               else{
+                  min = max;
+                  $(".start").text("");
+                  $(".start4").text("");
+                  $(".bar").text("");
+                  $(".end").text(endTime);
+                  $(".bar4").text("");
+                  $(".end4").text(endTime);  
+               }
+            }
+            check();
+            
+         });
+      });
+       
+       
+       // 해당 일자의 예약 시간 disabled로 막기 
+       function bookTime(){
+         var bookDate = $("#datepicker").val();
+         var spaceId = ${space.spaceId};
+         $.ajax({
+            url: "timeListBook.sp",
+            data:{bookDate:bookDate, spaceId:spaceId},
+            type:"POST",
+            async:false,
+            success: function(bookTimeArrr){
+               $.each(bookTimeArrr, function(i) {
+                  var Start = bookTimeArrr[i].bookStartTime;
+                  var End = bookTimeArrr[i].bookEndTime;
+                  $("."+Start).prev().attr('disabled', true);
+                  $("."+End).prev().attr('disabled', true);
+                  
+                  $("."+Start).parent().nextUntil($("."+End).parent()).children("input").attr('disabled', true);
+               });
+            },
+            error: function(){
+               console.log("에러에러");
+            }
+         });
+         
+      } 
+       
+       
+       // 인원 수 클릭 (마이너스 )
+       $("#min").click(function(){
+          var min=${space.spaceMinPer};
+          var n = $("#min").index(this);
+          var num =$("#partyInput:eq("+n+")").val();
+          var per=parseInt($('input[id="partyInput"]').val()-1);
+          var tot=parseInt($(".totalPrice2").text());
+             
+          if(num>min){
+             num= $("#partyInput:eq("+n+")").val(num*1-1);
+                $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+                $(".totalPrice3").text(tot*per);
+             }else{
+                alert("최소 인원을 확인해주세요!");
+             }
+             
+          });
+       
+       // 인원 수 클릭 (플러스)
+       $("#plu").click(function(){
+          var max = ${space.spaceMaxPer}
+          var min=${space.spaceMinPer};
+          var n = $("#plu").index(this);
+          var num = $("#partyInput:eq("+n+")").val();
+          var per=parseInt($('input[id="partyInput"]').val());
+          var tot=parseInt($(".totalPrice2").text());
+          if(num<max){
+             if($(".totalPrice2").text()!=""){
+             num= $("#partyInput:eq("+n+")").val(num*1+1);
+                // 공간 사용료 값 바꾸기 
+                $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+                $(".totalPrice3").text(tot*(per+1));
+             }else{
+                num=${space.spaceMinPer};
+                alert("예약일을 선택해주세요!");
+                     $("#datepicker").focus();
+                     $(".finalTotal2").html('');
+                $(".totalPrice3").text("");
+                
+                     
+             }
+          
+          
+          }else{
+             alert("최대 인원을 초과했습니다.");
+          }
+          
+       });
+
+	      
 	    
 	    
 		function loadImg(value) {
