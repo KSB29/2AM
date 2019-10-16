@@ -273,7 +273,7 @@ public class AdminController {
 		return mv; 
 	}
 	
-	// 10. 결제 완료 관리 
+	// 19. 결제 완료 관리 
 	@RequestMapping("paymentManagement.sp")
 	public ModelAndView paymentManagement(ModelAndView mv, String paymentStatus) {
 
@@ -289,8 +289,6 @@ public class AdminController {
 		mv.addObject("pList", pList).addObject("status", status).setViewName("admin/paymentManagement");
 
 
-		
-		
 		return mv; 
 	}
 }

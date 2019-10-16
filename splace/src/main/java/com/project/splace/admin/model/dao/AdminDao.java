@@ -170,8 +170,13 @@ public class AdminDao {
 	public ArrayList<Book> selectBookList(int status) {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectAllBookList", status);
 	}
-  
-  public ArrayList<Payment> selectPaymentList(int status) {
+
+	/**
+	 * 18. 결제 정보 관리
+	 * @param status
+	 * @return pList
+	 */
+	public ArrayList<Payment> selectPaymentList(int status) {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectPaymentlist",status);
 		
 	}

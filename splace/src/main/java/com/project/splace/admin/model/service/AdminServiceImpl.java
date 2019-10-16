@@ -147,8 +147,9 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Book> selectBookList(int status) {
 		return adminDao.selectBookList(status);
 	}
-  
-  @Override
+
+	// 18. 결제 정보 관리
+	@Override
 	public ArrayList<Payment> selectPaymentList(int status) {
 		return adminDao.selectPaymentList(status);
 	}

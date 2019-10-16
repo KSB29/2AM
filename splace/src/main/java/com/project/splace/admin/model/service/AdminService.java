@@ -67,7 +67,7 @@ public interface AdminService {
 	// 예약 정보 관리
 	public abstract ArrayList<Book> selectBookList(int status);
 
-   // 결제 완료 관리 
+    // 결제 완료 관리 
 	public abstract ArrayList<Payment> selectPaymentList(int status);
 
 }
