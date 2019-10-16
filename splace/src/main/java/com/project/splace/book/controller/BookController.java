@@ -231,7 +231,7 @@ public class BookController {
 				+"</td>"
 				+"</tr>"
 				+"</table>"
-				+"<a class='go' href='http://localhost:8080/splace/'"
+				+"<br><br><a class='go' href='http://localhost:8080/splace/'"
 				+">SPLACE로 이동</a>"
 				+"</div>"
 				+"</body>"
@@ -371,7 +371,7 @@ public class BookController {
 
 		Cancel cancel = new Cancel();
 		cancel.receipt_id = receiptId;
-		cancel.price = 1000;
+		cancel.price = price;
 		cancel.name = "관리자";
 		cancel.reason = "구매자 취소요청";
 

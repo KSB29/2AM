@@ -54,7 +54,7 @@
 		                </div>
 		                <div class="card-body">
 		                  <div class="table-responsive">
-			                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0">
+			                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 			                  <thead>
 			                    <tr>
 			                      <th>번호</th>
@@ -68,7 +68,7 @@
 				                    <tr class="tr" onclick="location.href='answerAdminManagement.sp'">
 				                      <td>${qna.qnaId}</td>
 				                      <td>${qna.qContent}</td>
-				                      <td><fmt:formatDate value="${qna.qDate}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+				                      <td><fmt:formatDate value="${qna.qDate}" pattern="yyyy.MM.dd (E)"/></td>
 				                      <td>${qna.qMemberId}</td>
 				                    </tr>
 			                  	</c:forEach>
@@ -87,7 +87,7 @@
 		                </div>
 		                <div class="card-body">
 		                  <div class="table-responsive">
-			                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0">
+			                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 			                  <thead>
 			                    <tr>
 			                      <th>번호</th>
@@ -103,7 +103,8 @@
 				                      <td>${host.hostId}</td>
 				                      <td>${host.hostName}</td>
 				                      <td>${host.storeName}</td>
-				                      <td><fmt:formatDate value="${host.hostEnroll}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+				                      <td><fmt:formatDate value="${host.hostEnroll}" pattern="yyyy.MM.dd (E)"/></td>
+				                      <td>${host.memberId}</td>
 				                    </tr>
 			                  	</c:forEach>
 			                  </tbody>
@@ -119,7 +120,7 @@
 		                </div>
 		                <div class="card-body">
 		                  <div class="table-responsive">
-			                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0">
+			                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 			                  <thead>
 			                    <tr>
 			                      <th>번호</th>
@@ -132,18 +133,6 @@
 			                      <th>회원ID</th>
 			                    </tr>
 			                  </thead>
-			                  <tfoot>
-			                    <tr>
-			                      <th>번호</th>
-			                      <th>공간이름</th>
-			                      <th>한줄소개</th>
-			                      <th>태그</th>
-			                      <th>주소/전화번호</th>
-			                      <th>운영시간</th>
-			                      <th>등록일</th>
-			                      <th>회원ID</th>
-			                    </tr>
-			                  </tfoot>
 			                  <tbody>
 			                  	<c:forEach items="${sList }" var="space">
 				                    <tr onclick="location.href='sApplyManagement.sp'">
@@ -153,7 +142,7 @@
 				                      <td>${space.spaceTag}</td>
 				                      <td>${space.spaceAddress} / ${space.spacePhone}</td>
 				                      <td>${space.spaceOpenTime} ~ ${space.spaceCloseTime} 시</td>
-				                      <td><fmt:formatDate value="${space.spaceEnroll}" pattern="yyyy.MM.dd (E) HH:mm:ss"/></td>
+				                      <td><fmt:formatDate value="${space.spaceEnroll}" pattern="yyyy.MM.dd (E)"/></td>
 				                      <td>${space.memberId}</td>
 				                    </tr>
 			                  	</c:forEach>
@@ -172,7 +161,7 @@
 		                </div>
 		                <div class="card-body">
 			              <div class="table-responsive">
-			                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0">
+			                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 			                  <thead>
 			                    <tr>
 			                      <th>아이디</th>
@@ -191,7 +180,7 @@
 				                      <td>${mem.memberName}</td>
 				                      <td>${mem.memberPhone}</td>
 				                      <td>${mem.memberAgree}</td>
-				                      <td><fmt:formatDate value="${mem.memberEnroll}" pattern="yyyy.MM.dd"/></td>
+				                      <td><fmt:formatDate value="${mem.memberEnroll}" pattern="yyyy.MM.dd (E)"/></td>
 				                      <td>${mem.memberSocial}</td>
 				                      <td>${mem.grade}</td>
 			                      </tr>
@@ -220,11 +209,10 @@
   <!-- End of Page Wrapper -->
   <script src="${contextPath }/resources/admin/vendor/chart.js/Chart.min.js"></script>
   <script>
-  	/* datatables.js */
-  	$(document).ready(function() {
-	  $('table.dataTable').DataTable();
+	$(function() {
+	  $('.table').DataTable();
 	});
-
+  
   	/* charts.js */
 	var countArr = new Array(24);
 	/* console.log(countArr.length); */
