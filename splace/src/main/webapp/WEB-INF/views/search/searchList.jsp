@@ -35,7 +35,7 @@
                </div>
             </section>
             <!-- 상세 검색 리스트 구역 -->
-           <c:url var="searchDetail" value="detailSpace.sp"/>
+           <c:url var="searchDetail" value="searchDetail.sp"/>
             <form action="${searchDetail }" method="get">
             <input type="hidden" value="${search.searchBox}" name="searchBox">
 	       	 <section class="optionSection">
@@ -46,8 +46,6 @@
 		               <button id="searchOption" class="button primary searchBtn ">search</button>
 	               </div>
 	            </section>
-	            
-	          
 	            <!-- 지역 창 구역 -->
 					<section>
 						<div class="row" id="locationField"
@@ -302,7 +300,7 @@
 										
 										<!-- 가격 -->
 											<div class="price">
-												<strong>10,000</strong> <span>원/시간</span>
+												<strong>${s.spaceAdd}</strong> <span>원/시간</span>
 											</div>
 											
 										<!-- 리뷰 -->	

@@ -107,93 +107,6 @@ margin-bottom: 1em !important;
 					<c:url var="sDetail" value="detailSpace.sp">
 			        <c:param name="spaceId" value="${bestSpace.spaceId}"></c:param>
 			        </c:url>
-				 		<article>
-							<span class="image"> <img src="resources/img/studio.jpg"
-								alt="" />
-							</span> 
-							<a href="${bookForm}"></a> 
-							<span>
-								<div class="locationName">
-									<h3>Kh정보교육원</h3>
-								</div>
-								<div class="location">
-									<span> 
-									<img src="resources/img/location.svg"> 
-									서울시 중구
-									</span>
-								</div>
-								<div class="tags">
-									<span>#파티룸 #회의실 #중구</span>
-								</div>
-								<div class="price">
-									<strong>10,000</strong> 
-									<span>원/시간</span>
-								</div>
-								<div class="reviewHeart">
-									<span> 
-									<img src="resources/img/comment.svg"> 
-									<span>10</span>&nbsp;&nbsp;&nbsp;
-									</span> 
-									<span> 
-									<img src="resources/img/heart.svg"> 
-									<span>10</span>
-									</span>
-								</div>
-							</span>
-						</article>
-						<article>
-							<span class="image"> <img src="resources/img/studio.jpg"
-								alt="" />
-							</span> 
-							<a href="${bookList}"></a> 
-							<span>
-									<div class="locationName">
-										<h3>Kh정보교육원</h3>
-									</div>
-									<div class="location">
-										<span> <img src="resources/img/location.svg"> 서울시
-											중구
-										</span>
-									</div>
-									<div class="tags">
-										<span>#파티룸 #회의실 #중구</span>
-									</div>
-									<div class="price">
-										<strong>10,000</strong> <span>원/시간</span>
-									</div>
-									<div class="reviewHeart">
-										<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-										</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-										</span>
-									</div>
-							</span>
-						</article>
-						<article>
-							<span class="image"> <img src="resources/img/studio.jpg"
-								alt="" />
-							</span> <a href="${bookDetail}"></a> <span>
-								<div class="locationName">
-									<h3>Kh정보교육원</h3>
-								</div>
-								<div class="location">
-									<span> <img src="resources/img/location.svg"> 서울시
-										중구
-									</span>
-								</div>
-								<div class="tags">
-									<span>#파티룸 #회의실 #중구</span>
-								</div>
-								<div class="price">
-									<strong>10,000</strong> <span>원/시간</span>
-								</div>
-								<div class="reviewHeart">
-									<span> <img src="resources/img/comment.svg"> <span>10</span>&nbsp;&nbsp;&nbsp;
-									</span> <span> <img src="resources/img/heart.svg"> <span>10</span>
-									</span>
-								</div>
-							</span>
-						</article> 
-						
 					</div>
 				</section>
 				
@@ -264,7 +177,9 @@ margin-bottom: 1em !important;
 									+'</span>'
 									+'</div>'
 									+'<div class="price">'
-									+'<strong>10,000</strong> <span>원/시간</span>'
+									+'<strong>'
+									+newSpace[i].spaceAdd
+									+'</strong> <span>원/시간</span>'
 									+'</div>'
 									+'</span>'
 									+'</article>';
@@ -323,7 +238,9 @@ margin-bottom: 1em !important;
 									+'</span>'
 									+'</div>'
 									+'<div class="price">'
-									+'<strong>10,000</strong> <span>원/시간</span>'
+									+'<strong>'
+									+bestSpace[i].spaceAdd
+									+'</strong> <span>원/시간</span>'
 									+'</div>'
 									+'</span>'
 									+'</article>';

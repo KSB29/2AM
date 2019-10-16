@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reviewMapper">
+   <resultMap type="Review" id="reviewResultSet">
+      <id property="reviewId" column="REVIEW_ID"/>
+      <result property="reviewScore" column="REVIEW_SCORE"/>
+      <result property="reviewContent" column="REVIEW_CONTENT"/>
+      <result property="reviewEnroll" column="REVIEW_ENROLL"/>
+      <result property="reviewUpdate" column="REVIEW_UPDATE"/>
+      <result property="reviewStatus" column="REVIEW_STATUS"/>
+      <result property="memberId" column="MEMBER_ID"/>
+      <result property="spaceId" column="SPACE_ID"/>
+      <result property="bookId" column="BOOK_ID"/>
+      
+   </resultMap>
+   
+   <resultMap type="Review_ATT" id="review_ATTResultSet">
+      <id property="reviewAttId" column="REVIEW_ATT_ID"/>
+      <result property="reviewAttOrigin" column="REVIEW_ATT_ORIGIN"/>
+      <result property="reviewAttChange" column="REVIEW_ATT_CHANGE"/>
+      <result property="reviewAttFilepath" column="REVIEW_ATT_FILEPATH"/>
+      <result property="reviewAttDate" column="REVIEW_ATT_DATE"/>
+      <result property="reviewAttStatus" column="REVIEW_ATT_STATUS"/>
+      <result property="reviewId" column="REVIEW_ID"/>
+   </resultMap>
+   
+   <resultMap type="Book" id="bookResultSet">
+      <id property="bookId" column="BOOK_ID"/>
+      <result property="bookEnroll" column="BOOK_ENROLL"/>
+      <result property="bookPrice" column="BOOK_PRICE"/>
+      <result property="bookDate" column="BOOK_DATE"/>
+      <result property="bookStartTime" column="BOOK_START_TIME"/>
+      <result property="bookEndTime" column="BOOK_END_TIME"/>
+      <result property="bookPer" column="BOOK_PER"/>
+      <result property="bookRequest" column="BOOK_REQUEST"/>
+      <result property="spaceId" column="SPACE_ID"/>
+      <result property="memberId" column="MEMBER_ID"/>
+      <result property="statusId" column="STATUS_ID"/>
+      <result property="booker" column="BOOKER" />
+      <result property="bookerPhone" column="BOOKER_PHONE" />
+      <result property="bookerEmail" column="BOOKER_EMAIL" />
+      <result property="bookCancel" column="BOOK_CANCEL" />
+      <result property="approvalDate" column="APPROVAL_DATE" />
+      <result property="spaceName" column="SPACE_NAME" />
+      <result property="typeName" column="TYPE_NAME" />
+      <result property="spaceAttChange" column="SPACE_ATT_CHANGE" />
+      <result property="spaceAddress" column="SPACE_ADDRESS" />
+      <result property="spacePhone" column="SPACE_TEL" />
+      <!-- 결제 -->
+      <result property="pStatusId" column="P_STATUS_ID" />
+      <result property="paymentId" column="PAYMENT_ID"/>
+      <result property="paymentDate" column="PAYMENT_DATE"/>
+      <result property="paymentType" column="PAYMENT_TYPE"/>
+      <result property="receiptId" column="RECEIPT_ID"/>
+      <result property="paymentCancelPrice" column="PAYMENT_CANCEL_PRICE"/>
+   </resultMap>
+   
+   
+   <!-- 리뷰 등록 (글 + 별점) -->
+   <insert id="insertReview" parameterType="Review">
+      INSERT INTO REVIEW
+         SELECT #{reviewId},
+         #{reviewScore},
+         #{reviewContent},
+         SYSDATE,
+         SYSDATE,
+         'Y',
+         #{memberId},
+         bk.space_id, BK.BOOK_ID
+            FROM BOOK BK
+            JOIN PAYMENT PA ON (BK.BOOK_ID=PA.BOOK_ID)
+            LEFT JOIN REVIEW R ON(R.BOOK_ID=BK.BOOK_ID)
+            WHERE BK.STATUS_ID =103
+            AND PA.STATUS_ID=104
+            AND REVIEW_ID IS NULL
+            AND ROWNUM = 1
+            and bk.space_id=#{spaceId}
+      
+   </insert>
+   
+   <!-- 리뷰 아이디 조회 -->
+   <select id="selectReviewId" resultType="_int">
+      SELECT SEQ_R.NEXTVAL FROM DUAL
+   </select>
+   
+   <!-- 리뷰 사진 등록-->
+   <insert id="insertReviewFile" parameterType="Review_ATT" >
+      INSERT INTO REVIEW_ATT VALUES(
+         SEQ_RE_ATT.NEXTVAL,
+         #{reviewAttOrigin},
+         #{reviewAttChange},
+         #{reviewAttFilepath},
+         SYSDATE,
+         DEFAULT,
+         #{reviewId}
+      )
+   </insert>
+   
+   <!-- 리뷰 조회 (글 ) -->
+   <select id="selectReview" parameterType="_int" resultMap="reviewResultSet">
+      SELECT *
+      FROM REVIEW 
+      WHERE REVIEW_STATUS='Y'
+      AND SPACE_ID = #{spaceId}
+      ORDER BY REVIEW_ID DESC
+   </select>
+   
+   <!--리뷰 조회 (사진 ) -->
+   <select id="selectReviewImg" parameterType="_int" resultMap="review_ATTResultSet" >
+      SELECT *
+      FROM REVIEW_ATT 
+      WHERE REVIEW_ID = #{reviewId}
+   </select>
+   
+   <!-- 리뷰 작성한 이용자가 있는지 카운트  -->
+   <select id="selectWriteBtn" parameterType="Book" resultType="_int">
+      SELECT COUNT(*) 
+      FROM BOOK B
+      JOIN REVIEW R ON(B.BOOK_ID=R.BOOK_ID)
+      WHERE B.MEMBER_ID = #{memberId} AND R.MEMBER_ID = #{memberId}
+      AND B.SPACE_ID = #{spaceId} AND R.SPACE_ID = #{spaceId}
+   </select>
+   
+   <!-- 리뷰 수정 조회  -->
+   <select id="selectReviewUp" parameterType="_int" resultMap="reviewResultSet">
+      SELECT * 
+      FROM REVIEW
+      WHERE REVIEW_ID=#{reviewId}
+   </select>
+   
+   <!-- 리뷰 수정  -->
+   <update id="updateReview" parameterType="Review">
+      UPDATE REVIEW
+      SET REVIEW_CONTENT=#{reviewContent},
+         REVIEW_SCORE=#{reviewScore}
+      WHERE REVIEW_ID=#{reviewId}
+   </update>
+
+   <!--리뷰 사진 수정   -->
+   <update id="updateReviewImg" parameterType="Review_ATT">
+      UPDATE REVIEW_ATT
+      SET REVIEW_ATT_ORIGIN=#{reviewAttOrigin}
+      WHERE REVIEW_ID=#{reviewId}
+      AND REVIEW_ATT_CHANGE= #{reviewAttChange}
+   </update>
+   
+   <!-- 리뷰 글 삭제 -->
+   <update id="reviewDelete">
+      UPDATE REVIEW
+      SET REVIEW_STATUS = 'N'
+      WHERE REVIEW_ID=#{reviewId}
+   </update>
+   
+   <!-- 리뷰사진 삭제 -->
+   <delete id="reviewAttDelete" parameterType="_int">
+      DELETE FROM REVIEW_ATT WHERE REVIEW_ATT_ID = #{reviewAttId}
+   </delete>
+   
+   <!-- 리뷰 사진 삭제2 -->
+   <delete id="reviewAttDeleteSRC" parameterType="string">
+      DELETE FROM REVIEW_ATT WHERE REVIEW_ATT_CHANGE = #{srcs}
+   </delete>
+</mapper>

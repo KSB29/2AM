@@ -333,13 +333,9 @@ public class SpaceController {
 	      String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
 	      wishList.setMemberId(memberId);
 	      wishList.setSpaceId(spaceId);
-	   
-	      System.out.println(memberId);
-	      System.out.println(spaceId);
 	      
 	      int result = sService.wishSelect(wishList);
 	      
-	      System.out.println("찜"+result);
 	      if(result==0) {
 	         return "success";
 	      }else {
@@ -366,12 +362,11 @@ public class SpaceController {
 		@ResponseBody
 		@RequestMapping(value="timeList.sp", produces="application/json; charset=utf8")
 		public String timeList(String bookDate, int spaceId) throws ParseException {
-			Price price = new Price();
-			Book book = new Book();
-			// 달력 요일 뽑기 
-			String day= bookDate.substring(11,12);
-			System.out.println(bookDate);
-			System.out.println(day);
+		   Price price = new Price();
+		   Book book = new Book();
+		  
+		   // 달력 요일 뽑기 
+		  String day= bookDate.substring(11,12);
 		
 		  SimpleDateFormat original = new SimpleDateFormat("yy-mm-dd E");
 		  SimpleDateFormat newForm = new SimpleDateFormat("yyyy/mm/DD/E");
@@ -416,29 +411,20 @@ public class SpaceController {
 	}
 		
 		
+		//해당 일의 예약 조회 
 		@ResponseBody
 		@RequestMapping(value="timeListBook.sp")
 		public ArrayList<Book> bookTimeArr(String bookDate, int spaceId) throws ParseException{
-			//해당 일의 예약 조회 
 		 Book book = new Book();
 		 
-		 System.out.println("되니"+bookDate);
-		
 		 Date date = new SimpleDateFormat("yyyy-MM-dd").parse(bookDate);
 		
-
-
-		 System.out.println(date);
-		 
 		 book.setSpaceId(spaceId);
 		 book.setBookDate(date);
 		 
 		 ArrayList<Book> bookTimeArrr= sService.bookTime(book);
-		 System.out.println(bookTimeArrr);
 		
-		 
-			
-			return bookTimeArrr;
+		 return bookTimeArrr;
 			
 			 
 		}

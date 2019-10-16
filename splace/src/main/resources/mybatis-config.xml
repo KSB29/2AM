@@ -32,6 +32,7 @@
 		<typeAlias type="com.project.splace.host.model.vo.HostSearch" alias="HostSearch"/>
 		<typeAlias type="com.project.splace.main.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.project.splace.review.model.vo.Review" alias="Review"/>
+		<typeAlias type="com.project.splace.review.model.vo.Review_ATT" alias="Review_ATT"/>
 		<typeAlias type="com.project.splace.host.model.vo.Status" alias="Status"/>
 	</typeAliases>
 	
@@ -45,5 +46,6 @@
 		<mapper resource="mappers/main-mapper.xml"/>
 		<mapper resource="mappers/admin-mapper.xml"/>
 		<mapper resource="mappers/board-mapper.xml"/>
+		<mapper resource="mappers/review-mapper.xml"/>
   	</mappers>
 </configuration>
