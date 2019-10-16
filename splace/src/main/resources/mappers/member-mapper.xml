@@ -179,26 +179,35 @@
 	  	 WHERE SPACE_ID = #{spaceId} AND MEMBER_ID= #{memberId}
 	  </delete>
 	  
-	  <select id="memberQListCount" parameterType="String" resultType="_int">
+	  <select id="memberQListCount" parameterType="string" resultType="_int"><!-- 
+	  <bind name="qMemberId" value="_parameter.getqMemberId()" />
+		<bind name="qStatus" value="_parameter.getqStatus()" /> -->
 	    SELECT COUNT(*)
  		FROM QNA
-	    WHERE Q_MEMBER_ID = #{memberId} AND Q_STATUS='Y' AND Q_TYPE=1
+	    WHERE Q_MEMBER_ID = #{memberId}
+		AND Q_STATUS='Y' AND Q_TYPE=1
+		<!-- <if test="qStatus != 'A'">
+		AND    ((NVL(#{qStatus}, 'Y') = 'Y' AND Q.A_CONTENT IS NOT NULL) OR
+			    (NVL(#{qStatus}, 'N') = 'N' AND Q.A_CONTENT IS NULL))
+		</if> -->
 	  </select>
 	  
-	  <select id="selectQnaList" parameterType="String" resultMap="memberQnaResultSet">
-        SELECT 
-            QNA_ID,
-            Q_CONTENT, Q_DATE, Q_TYPE,
-            A_CONTENT, A_DATE,  
-            Q_STATUS, Q_MEMBER_ID, A_MEMBER_ID
-	  	FROM QNA
-	  	WHERE Q_MEMBER_ID= 'user02'  AND  Q_TYPE=1  AND Q_STATUS='Y'
-	  	ORDER BY QNA_ID DESC
-	  	
-	  
+	  <select id="selectQnaList" parameterType="string" resultMap="memberQnaResultSet">
+	  <!-- <bind name="qMemberId" value="_parameter.getqMemberId()" />
+		<bind name="qStatus" value="_parameter.getqStatus()" /> -->
+        SELECT *
+		FROM   QNA
+		WHERE  Q_TYPE = '1'
+		AND    Q_STATUS = 'Y'
+		AND    Q_MEMBER_ID = #{memberId}
+		ORDER BY QNA_ID DESC
 	  </select>
 	  
-	  	
+	  <!-- 1:1문의 등록 처리 -->
+	  <insert id="insertQna" parameterType="MemberQnaVO">
+	  	INSERT INTO QNA
+	  	VALUES (SEQ_Q.NEXTVAL, #{qContent}, SYSDATE, NULL, NULL, '1', DEFAULT, #{qMemberId}, NULL, NULL)
+	  </insert>
       
       
       

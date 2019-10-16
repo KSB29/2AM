@@ -13,6 +13,7 @@ import com.project.splace.member.model.vo.Member;
 import com.project.splace.member.model.vo.MemberQnaVO;
 import com.project.splace.member.model.vo.MemberReviewVO;
 import com.project.splace.member.model.vo.WishListVO;
+import com.project.splace.qna.model.vo.QnA;
 
 @Repository("mDao")
 public class MemberDao {
@@ -122,7 +123,17 @@ public class MemberDao {
 
 
 	public int getqListCount(String memberId) {
-		return sqlSession.selectOne("memberMapper.memberQListCount");
+		return sqlSession.selectOne("memberMapper.memberQListCount", memberId);
+	}
+
+	
+	/**
+	 * 1:1문의 등록 처리
+	 * @param qna
+	 * @return result
+	 */
+	public int insertQna(MemberQnaVO qna) {
+		return sqlSession.insert("memberMapper.insertQna", qna);
 	}
 
 
