@@ -23,7 +23,7 @@
 					<form action="hostReview.sp" id="reviewSearchForm" method="get">
 						<div class="row gtr-uniform" id="reviewSearchArea">
 							<div class="col-9"></div>
-							<div class="col-3">
+							<div class="col-3 spaceSelectBox">
 								<div class="default-select" id="default-select">
 									<select name="spaceId" id="spaceId">
 										<option value="">- 공간 -</option>
@@ -50,7 +50,7 @@
 							</thead>
 							<tbody>
 								<c:if test="${empty rList}">
-								<tr><td colspan="5" class="align-center">후기 내역이 없습니다</td></tr>
+								<tr><td colspan="5" class="align-center">후기 내역이 없습니다.</td></tr>
 								</c:if>
 								<input type="hidden" id="img" value="${ contextPath }">
 								<c:forEach var="rList" items="${ rList }" varStatus="vs">

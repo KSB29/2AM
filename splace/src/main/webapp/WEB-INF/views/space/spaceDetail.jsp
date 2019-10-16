@@ -432,7 +432,11 @@
 
 
 					<!-- 오른쪽 부분 : 공간 예약관련  -->
+					<c:url var="book" value="bookForm.sp">
+					<c:param name="spaceId" value="${space.spaceId }" />
+					</c:url>
 					<div class="detailRight">
+					<form action="${book}" method="post">
 						<div class="reservation leftfontStyle">
 							<h2>예약하기</h2>
 							<p></p>
@@ -442,20 +446,22 @@
 							<h3>날짜 선택</h3>
 							<a id="calIcon"></a> 
 							<p></p>
-							<input type="text" id="datepicker">
+							<input type="text" id="datepicker" name="bookDates">
 						</div>
 						<!-- 날짜 선택  끝-->
 
 						<!-- 시간 선택 -->
 						<div class="timeHeader" style="display: none;">
 							<h3>시간 선택</h3>
-							<h3 class="start"></h3><h3 class="bar"></h3><h3 class="end"></h3><h3 class="timePer"></h3>
+							<h3 class="start"></h3><h3 class="bar"></h3><h3 class="end"></h3>
 							<p></p>
 							<div class="time_select_wrap" style="display: block;">
 								<!-- Swiper -->
 								<ui class="time_slot"> 
 								</ui>
 							</div>
+								<i class="fas fa-square" style="color:#585858"></i>
+								예약 불가 
 								<p class="warning">
 								<i class="fas fa-exclamation-circle"></i>
 								해당 금액은 1인 기준입니다.
@@ -485,7 +491,7 @@
 									</a>
 								</div>
 								<div class="personCkeck">
-									<input type="tel" value="${space.spaceMinPer}" id="partyInput">
+									<input name="bookPer" type="tel" value="${space.spaceMinPer}" id="partyInput">
 								</div>
 								<div class="maxBtn personBtn">
 									<a class="btn_plus partyBtn"> 
@@ -499,13 +505,19 @@
 						<!-- 공간 사용료 -->
 						<div class="totalCount">
 							<div class="totalCountD">
-							<h3>공간사용료</h3>
+							<h3 class="finalTotal1">공간사용료</h3>
+							<h3 class="finalTotal2"></h3>
 							</div>
-							<h3 class="totalPrice">&#8361;</h3><h3 class="totalPrice2">2000</h3>
+							<h3 class="totalPrice"></h3><h3 class="totalPrice2"></h3>
+							<h3 class="addPrice"></h3><h3 class="totalPrice3"></h3>
+							
 						</div>
 						<!-- 공간 사용료 끝 -->
-						<button type="submit" class="button primary fit" id="reserveBtn" onclick="rDataCheck();"> 바로 예약하기</button>
-						
+						<input type="hidden" name="bookStartTime">
+						<input type="hidden" name="bookEndTime">
+						<input type="hidden" name="bookPrice">
+						<button type="submit" class="button primary fit" id="reserveBtn" onclick="return rDataCheck();"> 바로 예약하기</button>
+					</form>
 					</div>
 					<!-- detailRight끝 -->
 					</section>
@@ -589,6 +601,30 @@
 	
 	<!--  ajax  -->
 	      <script>
+	 
+	      function rDataCheck(){
+	    	 var regExpCheck= true;
+	   	    		if($("#datepicker").val()==""){
+	   	      			console.log()
+	   	      			alert("예약일을 선택해주세요!");
+	   	      			$("#datepicker").focus();
+	   	      			
+	   	      			regExpCheck=false;
+	   	    		}
+	   	  
+	   	  			if($("input:checkbox[name=timeClick]:checked").length<${space.spaceTime}){
+	   	      			alert("최소 예약시간을 확인해주세요!");
+	   	      			$(".timeHeader").focus();
+	   	      			regExpCheck=false;
+	   	      		}
+	   	  		if(regExpCheck){
+	   	  			$("input[name=bookStartTime]").val($(".start").text().substring(0,$(".start").text().lastIndexOf("시")));
+	   	  			$("input[name=bookEndTime]").val($(".end").text().substring(0,$(".end").text().lastIndexOf("시")));
+	   	  			$("input[name=bookPrice]").val($(".totalPrice3").text());
+	   	  		}
+	   	    	return regExpCheck;
+	    	};
+	      
 			
 		$(function() {
 			// 휴무일 
@@ -650,23 +686,7 @@
 		}
 			});
 	   
-	    // 달력 미 선택시 버튼 클릭 불가 	 
-	    function rDataCheck(){
-    		if($("#datepicker").val()==""){
-    			console.log()
-    			alert("예약일을 선택해주세요!");
-    			$("#datepicker").focus();
-    		}
-    	}
-	    
-	    /* 임시 */
-
-	    $(function () {
-	    	$("#timeSlotLi").click(function() {
-				console.log("zzz");
-			});
-		})
-
+	
 	    
 	 // 달력 선택 시 시간 div 표출
 		$(function(){
@@ -726,17 +746,31 @@
 		
 			
 			
+			var tot = 0;
+			var total =0;
 			// 시간 선택 묶음 
 			function check(){
 				var length = ($(".time_slot li:last-child input")).attr("id");
-				console.log("length : " + length);
+				var total=parseInt($(".totalPrice3").text());
+				tot = 0;
 				for (var i = 1; i <= length; i++) {
 					$("#"+i).prop("checked",false);
 				}
 				for(var i = min; i <= max; i++){
 					$("#"+i).prop("checked",true);
+					tot += parseInt($("#"+i).val());
+					$(".totalPrice").html('&#8361;'); 
+					$(".totalPrice2").text(tot);
+					if($(".totalPrice3").text()==""){
+						$(".finalTotal2").html('&#8361;').text(tot);
+					}else{
+					$(".finalTotal2").html('&#8361;').text((tot+total));
+					}
+					
 				}
+				
 			};
+			
 			var min = 100;
 			var max = -1;
 		    var startTime ="";;
@@ -746,22 +780,12 @@
 		    
 			$(document).on("click",".temp",function(){
 				priceArr = [];
-				$("input[name=timeClick]:checked").parent().addClass("ss");
-				$(".ss").each(function(index, item) {
-					console.log($(item).children("label").text().split(" ")[1]);
-					priceArr.push($(item).children("label").text().split(" ")[1]);
-				});
-				console.log($ssss1+":"+$ssss2);
-				console.log(priceArr);
 				
 				if($(this).is(":checked")){
 					
 					var idval = parseInt(($(this).attr("id")));
-					var $ssss1;
-					var $ssss2;
 					var label = $(this).parent().children("label").text().split(" ")[0];
 					var price=$(this).parent().children("label").text().split(" ")[1];
-					console.log("가격"+price);
 					
 					if(min > idval) {
 						min = idval;
@@ -769,11 +793,7 @@
 						startPrice = price;
 						$(".start").text(startTime);
 						$(".start4").text(startTime);
-						$ssss1 = $(this).parent();
-						$(this).parent().addClass("dSt");
-						console.log($ssss1.html());
 						if(max==-1) max=min;
-						/* priceArr.push(price); */
 					}
 					else{
 						max = idval;
@@ -782,22 +802,8 @@
 						$(".end").text(endTime);
 						$(".bar4").text("-");
 						$(".end4").text(endTime);
-						
-						$ssss2 = $(this).parent();
-						$(this).parent().addClass("dEd");
-						console.log($ssss2.html());
 
-						/* priceArr.push(price);
-						$(".dSt").nextUntil(".dEd").addClass("ss");
-						$(".ss").each(function(index, item) {
-							console.log($(item).children("label").text().split(" ")[1]);
-							priceArr.push($(item).children("label").text().split(" ")[1]);
-						});
-						console.log($ssss1+":"+$ssss2);
-						console.log(priceArr); */
-						
 						if(min==100) min=max;
-						//console.log();
 					}
 					
 					
@@ -827,6 +833,7 @@
 						$(".end").text(endTime);
 						$(".bar4").text("-");
 						$(".end4").text(endTime);
+						
 					}
 					else{
 						min = max;
@@ -836,6 +843,7 @@
 				
 			});
 		});
+	    
 	    
 	    // 해당 일자의 예약 시간 disabled로 막기 
 		 function bookTime(){
@@ -851,12 +859,10 @@
 					$.each(bookTimeArrr, function(i) {
 						var Start = bookTimeArrr[i].bookStartTime;
 						var End = bookTimeArrr[i].bookEndTime;
-					console.log("Start :" +Start);
-					console.log("End : "+End);
-					console.log($("."+Start).text());
-					$("."+Start).prev().attr('disabled', true);
-					$("."+End).prev().attr('disabled', true);
-					
+						$("."+Start).prev().attr('disabled', true);
+						$("."+End).prev().attr('disabled', true);
+						
+						$("."+Start).parent().nextUntil($("."+End).parent()).children("input").attr('disabled', true);
 					});
 				},
 				error: function(){
@@ -874,13 +880,30 @@
 	    	var num = $("#partyInput:eq("+n+")").val();
 	    	var addPrice =  ${space.spaceAdd };
 	    	var per=$('input[id="partyInput"]').val()-2;
-	    	var total="";
+	    	var total=0;
+	    	var tot=parseInt($(".totalPrice2").text());
 	    	
 	    	if(num>min){
 	    		num= $("#partyInput:eq("+n+")").val(num*1-1);
 	    		//공간 사용료 값 바꾸기 
-	    		$(".totalPrice2").text(2000+(addPrice*per));
-		    }else{
+	    		total=(addPrice*per);
+	    		
+	    		$(".addPrice").html('추가 &#8361;');
+	    		if((addPrice*per)==0){
+	    			$(".totalPrice3").text("");
+	    			$(".addPrice").html('');
+	    			$(".finalTotal2").text("");
+	    		}else{
+	    			if($(".totalPrice2").text()==""){
+		    			$(".finalTotal2").html('&#8361;').text(total);
+		    			$(".totalPrice3").text((addPrice*per));
+	    			}else{
+	    				$(".finalTotal2").html('&#8361;').text(total+tot);
+	    				$(".totalPrice3").text((addPrice*per));
+	    				}
+	    		}
+		    
+	    	}else{
 		    		alert("최소 인원을 확인해주세요.");
 		    	}
 	    });
@@ -892,11 +915,20 @@
 	    	var num = $("#partyInput:eq("+n+")").val();
 	    	var addPrice =${space.spaceAdd};
 	    	var per=$('input[id="partyInput"]').val();
-	    	var total="";
+	    	var total=0;
+	    	var tot=parseInt($(".totalPrice2").text());
 	    	if(num<max){
 	    	num= $("#partyInput:eq("+n+")").val(num*1+1);
 	    	// 공간 사용료 값 바꾸기 
-	    	$(".totalPrice2").text((addPrice*per)+2000);
+	    	total=(addPrice*per);
+	    	$(".addPrice").html('추가금액&nbsp; &#8361;');
+	    	$(".totalPrice3").text(total);
+	    	if($(".totalPrice2").text()==""){
+	    		$(".finalTotal2").html('&#8361;').text(total);
+	    	}else{
+	    		
+	    		$(".finalTotal2").html('&#8361;').text(total+tot);
+	    	}
 	    	}else{
 	    		alert("최대 인원을 초과하였습니다.");
 	    	}

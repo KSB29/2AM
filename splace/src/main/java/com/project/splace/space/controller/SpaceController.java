@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,6 +31,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.project.splace.book.model.vo.Book;
 import com.project.splace.common.Pagination;
+import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.space.model.service.SpaceService;
@@ -41,6 +43,8 @@ import com.project.splace.space.model.vo.SpaceAtt;
 import com.project.splace.space.model.vo.Type;
 import com.project.splace.space.model.vo.WishList;
 
+//session에 hostId 추가
+@SessionAttributes({"hostId"})
 @Controller
 public class SpaceController {
 	
@@ -78,8 +82,13 @@ public class SpaceController {
 	// 공간 리스트 화면
 	@RequestMapping("spaceList.sp")
 	public ModelAndView spaceInfoList(HttpSession session, ModelAndView mv, Integer page) {
+		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		// 메뉴에서 승인된 호스트일 경우 공간관리 화면으로 바로 이동
+		Host hostInfo = sService.selectOne(memberId);
+		mv.addObject("host", hostInfo).addObject("hostId", hostInfo.getHostId()); // hostId session 추가용
+		
 		int currentPage = page == null? 1 : page;
-		ArrayList<Space> sList = sService.selectList(((Member)session.getAttribute("loginUser")).getMemberId(), currentPage);
+		ArrayList<Space> sList = sService.selectList(memberId, currentPage);
 		mv.addObject("sList", sList).setViewName("space/spaceList");
 		return mv;
 	}
@@ -152,10 +161,10 @@ public class SpaceController {
 	
 	// 공간 수정 처리
 	@RequestMapping("spaceUpdate.sp")
-	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, Model model, RedirectAttributes rd) {
+	public String spaceUpdate(Space space, String address, String post, int filesIndex, HttpServletRequest request, MultipartFile uploadFile, List<MultipartFile> files, String[] spaceAttChanges, Model model, RedirectAttributes rd) {
 		// 주소 : 우편번호,도로명주소,상세주소
 		space.setSpaceAddress(post + "," + space.getSpaceAddress() + "," + address);
-		int result = sService.updateSpace(space, filesIndex, request, uploadFile, files);
+		int result = sService.updateSpace(space, filesIndex, request, uploadFile, files, spaceAttChanges);
 		if (result > 0) {
 			rd.addFlashAttribute("msg", "공간 내역이 수정되었습니다.");
 		} else {
@@ -178,8 +187,8 @@ public class SpaceController {
 	
 	// 공간 삭제 처리
 	@RequestMapping("spaceDelete.sp")
-	public String spaceDelete(int spaceId, RedirectAttributes rd) {
-		int result = sService.deleteSpace(spaceId);
+	public String spaceDelete(int spaceId, HttpServletRequest request, RedirectAttributes rd) {
+		int result = sService.deleteSpace(spaceId, request);
 		if (result > 0) {
 			rd.addFlashAttribute("msg", "공간이 삭제되었습니다.");
 		} else {

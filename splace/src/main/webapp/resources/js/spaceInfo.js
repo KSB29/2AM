@@ -43,6 +43,17 @@ function loadImg(value, num) {
 
 $(document).ready(function(){
 	
+	$(".imgClear").on("click", function(){
+		if (confirm("이미지를 삭제하시겠습니까?")) {
+			//var id = $(this).attr("id").replace("delBtn","");
+			//$("#subFile"+id).val("");
+			//$("#subImg"+id).prop("src","");
+			
+		} else {
+			return false;
+		}
+	});
+
 	// 공간 수정 시 정보 표시
 	if ($("#spaceId").val() != null) {
 		
@@ -65,13 +76,15 @@ $(document).ready(function(){
 			// 글자 수 표시
 			$("#tagLength").html(byteCheck($("#spaceTag"))).css("color", "#4C74B9");
 			var tagArr = tag.substring(1).split("#");
-			// 태그 리스트에 추가
-			var $tagList = $("#tagList");
-			for (var i = 0; i < tagArr.length; i++) {
-				var $span = $("<span class='tag'>").text("#"+tagArr[i]);
-				var $clear = $("<i class='material-icons tagClear warningColor'>").text("cancel");
-				$span.append($clear);
-				$tagList.append($span);
+			if (tagArr != "") {
+				// 태그 리스트에 추가
+				var $tagList = $("#tagList");
+				for (var i = 0; i < tagArr.length; i++) {
+					var $span = $("<span class='tag'>").text("#"+tagArr[i]);
+					var $clear = $("<i class='material-icons tagClear warningColor'>").text("cancel");
+					$span.append($clear);
+					$tagList.append($span);
+				}
 			}
 		}
 		// 주의사항
@@ -79,13 +92,15 @@ $(document).ready(function(){
 			// 글자 수 표시
 			$("#noticeLength").html(byteCheck($("#spaceNotice"))).css("color", "#4C74B9");
 			var noticeArr = notice.substring(1).split("#");
-			// 주의사항 리스트에 추가
-			var $noticeList = $("#noticeList");
-			for (var i = 0; i < noticeArr.length; i++) {
-				var $span = $("<span class='notice'>").text(noticeArr[i]);
-				var $clear = $("<i class='material-icons noticeClear warningColor'>").text("cancel");
-				$span.append($clear);
-				$noticeList.append($span);
+			if (noticeArr != "") {
+				// 주의사항 리스트에 추가
+				var $noticeList = $("#noticeList");
+				for (var i = 0; i < noticeArr.length; i++) {
+					var $span = $("<span class='notice'>").text(noticeArr[i]);
+					var $clear = $("<i class='material-icons noticeClear warningColor'>").text("cancel");
+					$span.append($clear);
+					$noticeList.append($span);
+				}
 			}
 		}
 	}
@@ -112,7 +127,34 @@ $(document).ready(function(){
 		$("#addressBtn").postcodifyPopUp();
 	});
 	
+	$("#submitBtn").click(function(){
+		
+		var typeId = $("input:radio").attr("checked", true);
+		console.log(typeId);
+		
+		if ($("#spaceTag").val() == "") {
+			alert("태그를 입력해주세요.");
+			$("#tag").focus();
+			return false;
+		};
+		
+		if ($("#spaceOption").val() == "") {
+			alert("세부옵션을 입력해주세요.");
+			return false;
+		};
+		
+		if ($("#spaceNotice").val() == "") {
+			alert("주의사항을 입력해주세요.");
+			$("#notice").focus();
+			return false;
+		};
+		
+		$("form").submit();
+		
+	});
+	
 	$(".tagClear").css("cursor", "pointer");
+	$(".imgClear").css("cursor", "pointer");
 	
 	// 이미지 클릭 시 원본 이미지 보여주는 창 열기
 	$("#imageArea .image").click(function(){

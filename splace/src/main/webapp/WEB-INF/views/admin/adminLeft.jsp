@@ -23,8 +23,10 @@
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminHome.sp">
-      <div class="sidebar-brand-text mx-3">SPLACE - Admin</div>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center bg-white" href="adminHome.sp">
+      <div class="sidebar-brand-text mx-3">
+      	<img style="width:100%" src="${contextPath }/resources/img/logo.png" alt="logo" />
+      </div>
     </a>
 
     <!-- Divider -->
@@ -65,8 +67,8 @@
       </a>
       <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="noticeManagement.sp">공간 정보관리</a>
-          <a class="collapse-item" href="noticeManagement.sp">공간 신청관리</a>
+          <a class="collapse-item" href="sInfoManagement.sp">공간 정보관리</a>
+          <a class="collapse-item" href="sApplyManagement.sp">공간 신청관리</a>
         </div>
       </div>
     </li>
@@ -77,8 +79,7 @@
       </a>
       <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="noticeManagement.sp">승인대기</a>
-          <a class="collapse-item" href="noticeManagement.sp">결제대기</a>
+          <a class="collapse-item" href="bInfoManagement.sp">예약 정보관리</a>
         </div>
       </div>
     </li>
@@ -137,7 +138,7 @@
           <div class="collapse-divider"></div>
           <h6 class="collapse-header">관리자</h6>
           <a class="collapse-item" href="qnaAdminManagement.sp">내역관리</a>
-          <a class="collapse-item" href="noticeManagement.sp">답변관리</a>
+          <a class="collapse-item" href="answerAdminManagement.sp">답변관리</a>
         </div>
       </div>
     </li>
@@ -177,18 +178,15 @@
   <!-- Custom scripts for all pages-->
   <script src="${contextPath }/resources/admin/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="${contextPath }/resources/admin/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
+  <!-- chart.js : 원하는 페이지 밑에 붙여넣어 보세용 -->
+  <%-- <script src="${contextPath }/resources/admin/vendor/chart.js/Chart.min.js"></script>
   <script src="${contextPath }/resources/admin/js/demo/chart-area-demo.js"></script>
   <script src="${contextPath }/resources/admin/js/demo/chart-pie-demo.js"></script>
+  <script src="${contextPath }/resources/admin/js/demo/chart-bar-demo.js"></script> --%>
  
-  <!-- Page level plugins -->
+  <!-- datatables.js -->
   <script src="${contextPath }/resources/admin/vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="${contextPath }/resources/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
   <script src="${contextPath }/resources/admin/js/demo/datatables-demo.js"></script>
 </body>
 </html>

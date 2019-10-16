@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.splace.book.model.vo.Book;
 import com.project.splace.common.PageInfo;
 import com.project.splace.common.Pagination;
+import com.project.splace.host.model.vo.Host;
 import com.project.splace.host.model.vo.HostSearch;
 import com.project.splace.space.model.dao.SpaceDao;
 import com.project.splace.space.model.vo.DayOff;
@@ -87,9 +88,9 @@ public class SpaceServiceImpl implements SpaceService {
 	public String renameFile(MultipartFile file, int spaceId, int index) {
 		
 		// "공간아이디_순번.확장자"로 파일명 변경
-		//SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
-		String renameFileName = spaceId + "_" + index //+ "_" + sdf.format(new Date())
+		String renameFileName = spaceId + "_" + index + "_" + sdf.format(new Date())
 								+ "." + originFileName.substring(originFileName.lastIndexOf(".")+1);
 		return renameFileName;
 	}
@@ -121,7 +122,21 @@ public class SpaceServiceImpl implements SpaceService {
 		
 		return result;
 	}
-
+	
+	// 파일 삭제 메소드
+	public void deleteFile(String renameFileName, HttpServletRequest request) {
+		// 파일 저장 경로
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\spaceImg";
+		
+		// 삭제할 파일 경로 + 파일명
+		File deleteFile = new File(savePath + "\\" + renameFileName);
+		
+		// 해당 파일이 존재할 경우 삭제
+		if(deleteFile.exists()) {
+			deleteFile.delete();
+		}
+	}
 
 	@Override
 	public ArrayList<Space> selectList(String memberId, int currentPage) {
@@ -192,7 +207,24 @@ public class SpaceServiceImpl implements SpaceService {
 
 
 	@Override
-	public int deleteSpace(int spaceId) {
+	public int deleteSpace(int spaceId, HttpServletRequest request) {
+		// 공간 승인 이전에는 모든 정보 삭제 가능
+		// 공간 사진 파일 삭제
+		int result = 0;
+		ArrayList<SpaceAtt> sAtt = sDao.selectSpaceAtt(spaceId);
+		if (sAtt.size() > 0) {
+			result = sDao.deleleSpaceAtt(spaceId);
+			if (result > 0) {
+				for (int i = 0; i < sAtt.size(); i++) {
+					deleteFile(sAtt.get(i).getSpaceAttChange(), request);
+				}
+			}
+		}
+		// 공간 가격 삭제
+		result = sDao.deleteSpacePrice(spaceId);
+		// 공간 휴일 삭제
+		result = sDao.deleteSpaceDayoff(spaceId);
+		// 공간 내역 삭제
 		return sDao.deleleSpace(spaceId);
 	}
 
@@ -210,7 +242,7 @@ public class SpaceServiceImpl implements SpaceService {
 
 	@Override
 	public int updateSpace(Space space, int filesIndex, HttpServletRequest request, MultipartFile uploadFile,
-			List<MultipartFile> files) {
+			List<MultipartFile> files, String[] spaceAttChanges) {
 		
 		// 개행문자 변경
 		space.setSpaceDetail(space.getSpaceDetail().replace("\n", "<br>"));
@@ -229,32 +261,53 @@ public class SpaceServiceImpl implements SpaceService {
 		// 공간 정보 파일
 		SpaceAtt sAtt = new SpaceAtt();
 		if (result > 0 && !uploadFile.getOriginalFilename().equals("")) {
+			// 기존 파일 삭제
+			String prevFileName = space.getSpaceAttChange();
+			deleteFile(prevFileName, request);
+			int attId = sDao.getAttId(prevFileName);
+			// 변경된 파일 저장
 			renameFileName = renameFile(uploadFile, spaceId, 0); // 변경된 파일명
+			sAtt.setSpaceAttId(attId);
 			sAtt.setSpaceAttOrigin(uploadFile.getOriginalFilename());
 			sAtt.setSpaceAttChange(renameFileName);
-			sAtt.setSpaceId(spaceId);
-			sAtt.setSpaceAttType("0"); // 대표사진
 			// 서버에 파일 저장
 			if (renameFileName != null) result = saveFile(renameFileName, uploadFile, request);
 			// DB에 파일 저장
 			if (result > 0) result = sDao.updateFile(sAtt);
 		}
-		System.out.println(filesIndex);
+		for (int i=0;i<files.size();i++) {
+			System.out.println(i + " : " + files.get(i).getOriginalFilename());
+		}
+		for (int i=0;i<spaceAttChanges.length;i++) {
+			System.out.println(i + " : " + spaceAttChanges[i]);
+		}
 		if (result > 0 && files.size() > 0) {
 			for (int i = 0; i < files.size(); i++) {
 				if (!files.get(i).getOriginalFilename().equals("")) {
-					System.out.println(i + " : " + files.get(i).getOriginalFilename());
+					int attId = 0;
+					// 기존 파일 삭제
+					if (!spaceAttChanges[i].equals("")) {
+						String prevFileName = spaceAttChanges[i];
+						deleteFile(prevFileName, request);
+						attId = sDao.getAttId(prevFileName);
+					}
 					renameFileName = renameFile(files.get(i), spaceId, i+1); // 변경된 파일명
 					sAtt.setSpaceAttOrigin(files.get(i).getOriginalFilename());
 					sAtt.setSpaceAttChange(renameFileName);
-					sAtt.setSpaceId(spaceId);
-					sAtt.setSpaceAttType("1"); // 슬라이드
 					// 서버에 파일 저장
 					if (renameFileName != null) result = saveFile(renameFileName, files.get(i), request);
 					// DB에 파일 저장
 					if (result > 0) {
-						if (filesIndex < i + 1 ) result = sDao.insertFile(sAtt);
-						else result = sDao.updateFile(sAtt);
+						if (attId == 0) {
+							sAtt.setSpaceId(spaceId);
+							sAtt.setSpaceAttType("1");
+							result = sDao.insertFile(sAtt);
+							System.out.println("사진 추가");
+						} else {
+							sAtt.setSpaceAttId(attId);
+							result = sDao.updateFile(sAtt);
+							System.out.println("사진 변경");
+						}
 					}
 				}
 			}
@@ -267,17 +320,16 @@ public class SpaceServiceImpl implements SpaceService {
 	public int updatePrice(int spaceId, int spaceAdd, String[] spacePrice) {
 		int result = 0;
 		
-		// 1 인당 추가 금액 저장
-		if (spaceAdd >= 0) {
-			Space space = new Space();
-			space.setSpaceId(spaceId);
-			space.setSpaceAdd(spaceAdd);
-			result = sDao.updateAddPrice(space);
-		}
+		// 대표 가격 저장
+		Space space = new Space();
+		space.setSpaceId(spaceId);
+		space.setSpaceAdd(spaceAdd);
+		result = sDao.updateAddPrice(space);
 		
-		if (spaceAdd >= 0 && result > 0 ) {
+		if (result > 0 ) {
 			// 공간 가격 등록
 			int priceId;
+			result = 0;
 			Price price = new Price();
 			for (int i = 0; i < spacePrice.length; i++) {
 				int place = spacePrice[i].indexOf('[');
@@ -420,6 +472,12 @@ public class SpaceServiceImpl implements SpaceService {
 		}
 		if (result == idList.length) return result + "";
 		return "0";
+	}
+
+
+	@Override
+	public Host selectOne(String memberId) {
+		return sDao.selectOne(memberId);
 	}
 
 
