@@ -53,7 +53,7 @@
 							</c:if>
 							<c:forEach items="${bList }" var="book">
 								<tr>
-									<td><img src="${contextPath}/resources/spaceImg/${book.spaceAttChange}" alt="공간대표사진"></td>
+									<td><img class="image" src="${contextPath}/resources/spaceImg/${book.spaceAttChange}" alt="공간대표사진"></td>
 									<td>
 										<c:choose>
 											<c:when test="${book.statusId == 100 }">
@@ -88,10 +88,10 @@
 										<div>
 											<button class="button fit primary" onclick="location.href='${bookDetail}?bookId=${book.bookId }'">상세보기</button>
 											<c:if test="${book.pStatusId == 104 && book.statusId == 103 }">
-												<c:if test="${book.reviewId != null }">
+												<c:if test="${book.reviewId != 0 }">
 													<button class="button fit" onclick="location.href='detailSpace.sp?spaceId=${book.spaceId}'">후기수정</button>
 												</c:if>
-												<c:if test="${book.reviewId == null}">
+												<c:if test="${book.reviewId == 0}">
 													<button class="button fit" onclick="location.href='detailSpace.sp?spaceId=${book.spaceId}'">후기작성</button>																						
 												</c:if>
 											</c:if>

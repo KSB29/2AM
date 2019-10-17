@@ -52,23 +52,19 @@ public class AdminController {
 	// 2. 정산페이지로 이동
 	@RequestMapping("settlementManagement.sp")
 	public ModelAndView goSettlementManagement(HttpSession session, ModelAndView mv, String monthS, RedirectAttributes rd) {
-		if(!((Member)session.getAttribute("loginUser")).getMemberId().equals("admin")) {
-			rd.addFlashAttribute("msg", "관리자로 로그인해주세요!");
-			mv.setViewName("redirect:loginForm.sp"); 
-		}else {
-			// 월
-			int month = 0;
-			if(monthS != null) {
-				month = Integer.parseInt(monthS);				
-			} else{
-				month = 0;
-			}
-			
-			ArrayList<Account> aList = adminService.selectAccountList(month);
-			System.out.println("정산관리: "+aList);
-			
-			mv.addObject("aList", aList).addObject("monthS", month).setViewName("admin/settlementManagement");
+		// 월
+		int month = 0;
+		if(monthS != null) {
+			month = Integer.parseInt(monthS);				
+		} else{
+			month = 0;
 		}
+		
+		ArrayList<Account> aList = adminService.selectAccountList(month);
+		System.out.println("정산관리: "+aList);
+		
+		mv.addObject("aList", aList).addObject("monthS", month).setViewName("admin/settlementManagement");
+
 		
 		return mv;
 	}
