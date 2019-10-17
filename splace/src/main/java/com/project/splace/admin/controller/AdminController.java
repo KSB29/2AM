@@ -309,6 +309,7 @@ public class AdminController {
 		ArrayList<Sales> sales = adminService.selectSalesManageMent();
 		mv.addObject("sales",sales).setViewName("admin/salesManagement");
 		return mv; 
+	}
     
 	// 20. 총매출
 	@RequestMapping("sales3Management.sp")
