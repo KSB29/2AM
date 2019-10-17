@@ -59,6 +59,7 @@ import com.project.splace.member.model.vo.MailVO;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.member.model.vo.MemberQnaVO;
 import com.project.splace.member.model.vo.MemberReviewVO;
+import com.project.splace.member.model.vo.Search;
 import com.project.splace.member.model.vo.WishListVO;
 import com.project.splace.qna.model.vo.QnA;
 
@@ -689,21 +690,23 @@ public class MemberController {
 	/*-------------------------------------1:1 문의 view---------------------------------------------*/ 
 	
 	@RequestMapping(value = "memberQna.sp", method=RequestMethod.GET)
-	public ModelAndView memberQnaView(HttpSession session, ModelAndView mv, /* MemberQnaVO search, */ Integer page) {
+	public ModelAndView memberQnaView(HttpSession session, ModelAndView mv, MemberQnaVO search, Integer page) {
 		String memberId = ((Member)session.getAttribute("loginUser")).getMemberId();
 		
 		int currentPage = page == null? 1 : page;
 		logger.info("회원ID : "+memberId);
 		// MemberQnaVO search 검색용 vo 대신 활용
 		//search.setqMemberId(memberId);
-		ArrayList<MemberQnaVO> qnaList = mService.selectQnaList(memberId,currentPage);
+		if (search.getqStatus().equals("")) search.setqStatus("A");
+		search.setqMemberId(memberId);
+		ArrayList<MemberQnaVO> qnaList = mService.selectQnaList(search,currentPage);
 	
 		
 		//ArrayList<Review> rList = mService.selectReviewList(search, currentPage);
 		
 		if (qnaList != null) {
 			mv.addObject("qnaList", qnaList);
-			//mv.addObject("search", search);
+			mv.addObject("search", search);
 			mv.addObject("pi", Pagination.getPageInfo()).setViewName("member/memberQnaView");
 		} else {
 			mv.addObject("msg", "후기리스트 조회 중 오류 발생");

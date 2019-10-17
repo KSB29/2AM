@@ -133,12 +133,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public ArrayList<MemberQnaVO> selectQnaList(String memberId, int currentPage) {
+	public ArrayList<MemberQnaVO> selectQnaList(MemberQnaVO search, int currentPage) {
 		// 후기 리스트 수 조회
-		int listCount = mDao.getqListCount(memberId);
+		int listCount = mDao.getqListCount(search);
 		// 후기 리스트 조회
 		PageInfo pageInfo = Pagination.getPageInfo(currentPage, listCount);	
-		ArrayList<MemberQnaVO> qList = mDao.selectQnaList(pageInfo, memberId);
+		ArrayList<MemberQnaVO> qList = mDao.selectQnaList(pageInfo, search);
 		return qList;
 		
 		

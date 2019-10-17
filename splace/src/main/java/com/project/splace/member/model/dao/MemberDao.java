@@ -115,15 +115,15 @@ public class MemberDao {
 		return sqlSession.delete("memberMapper.delteWishList", wish);
 	}
 
-	public ArrayList<MemberQnaVO> selectQnaList(PageInfo pageInfo, String memberId) {
+	public ArrayList<MemberQnaVO> selectQnaList(PageInfo pageInfo, MemberQnaVO search) {
 		int offset = (pageInfo.getCurrentPage()- 1) * pageInfo.getLimit();
 		RowBounds rowBounds = new RowBounds(offset, pageInfo.getLimit());
-		return (ArrayList)sqlSession.selectList("memberMapper.selectQnaList",memberId, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.selectQnaList",search, rowBounds);
 	}
 
 
-	public int getqListCount(String memberId) {
-		return sqlSession.selectOne("memberMapper.memberQListCount", memberId);
+	public int getqListCount(MemberQnaVO search) {
+		return sqlSession.selectOne("memberMapper.memberQListCount", search);
 	}
 
 	
