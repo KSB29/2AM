@@ -4,6 +4,8 @@ package com.project.splace.admin.model.service;
 import java.util.ArrayList;
 
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.Payment;
+import com.project.splace.admin.model.vo.Sales;
 import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.book.model.vo.Book;
@@ -11,7 +13,6 @@ import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
 import com.project.splace.space.model.vo.Space;
-import com.project.splace.admin.model.vo.Payment;
 
 
 public interface AdminService {
@@ -69,5 +70,8 @@ public interface AdminService {
 
     // 결제 완료 관리 
 	public abstract ArrayList<Payment> selectPaymentList(int status);
+
+	// 매출 관리 
+	public abstract ArrayList<Sales> selectSalesManageMent();
 
 }

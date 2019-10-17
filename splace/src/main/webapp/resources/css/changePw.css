@@ -1,17 +1,17 @@
 
+.press{
+	padding: 0 10em 0 10em !important;
+} 
 .changeForm_wrapper{
-    margin: 8rem 0 0 0;
+    margin: 8rem 2rem 0 0;
 }
 .changeForm_1, .changeForm_2{
-    margin: 1.5rem 0 0 0  !important;
+    margin: 1.5rem 0 0 0  ;
 }
 
 .changeForm_1>div{
-    margin: 0.5em 0 0 0 !important;
+    margin: 0.5em 0 0 0 ;
 }
-
-
-
 
 /* 배경 이미지 */
 

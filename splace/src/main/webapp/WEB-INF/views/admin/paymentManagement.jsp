@@ -85,7 +85,7 @@
 	                    </tr>          
 	                  </tfoot> 
                  	 <tbody>
-                  	<c:forEach items="pList" var="p">
+                  	<c:forEach items="${pList}" var="p">
 
 	                      <tr>
 		                      <td>${p.paymentId}</td>

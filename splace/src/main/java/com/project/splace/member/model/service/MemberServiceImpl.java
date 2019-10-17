@@ -149,6 +149,13 @@ public class MemberServiceImpl implements MemberService{
 	public int insertQna(MemberQnaVO qna) {
 		return mDao.insertQna(qna);
 	}
+	
+	
+	// 광고성 수신동의 메일 여부 변경
+	@Override
+	public int updateMemberAgree(Member mem) {
+		return mDao.updateMemberAgree(mem);
+	}
 
 
 

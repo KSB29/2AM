@@ -137,6 +137,11 @@ public class MemberDao {
 	}
 
 
+	public int updateMemberAgree(Member mem) {
+		return sqlSession.update("memberMapper.updateMemberAgree", mem);
+	}
+
+
 
 
 }

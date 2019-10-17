@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.splace.admin.model.vo.Account;
+import com.project.splace.admin.model.vo.Payment;
+import com.project.splace.admin.model.vo.Sales;
 import com.project.splace.admin.model.vo.TodayBook;
 import com.project.splace.board.model.vo.Board;
 import com.project.splace.book.model.vo.Book;
@@ -15,7 +17,6 @@ import com.project.splace.host.model.vo.Host;
 import com.project.splace.member.model.vo.Member;
 import com.project.splace.qna.model.vo.QnA;
 import com.project.splace.space.model.vo.Space;
-import com.project.splace.admin.model.vo.Payment;
 
 
 @Repository("adminDao")
@@ -180,5 +181,15 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectPaymentlist",status);
 		
 	}
+	
+	/**19.매출관리 DAO
+	 * @return
+	 */
+
+	public ArrayList<Sales> selectSales() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selecSaleslist");
+	}
+	
+
 
 }

@@ -40,4 +40,6 @@ public interface MemberService {
 	public abstract ArrayList<MemberQnaVO> selectQnaList(String memberId, int currentPage);
 
 	public abstract int insertQna(MemberQnaVO qna);
+
+	public abstract int updateMemberAgree(Member mem);
 }

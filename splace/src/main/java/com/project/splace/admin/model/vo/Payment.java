@@ -11,7 +11,7 @@ public class Payment {
 	private Date paymentCancel;
 	private String paymentType;
 	private String receiptId;
-	private int paymentCanclePrice;
+	private int paymentCancelPrice;
 	private int bookId;
 	private int statusId;
 
@@ -22,7 +22,7 @@ public class Payment {
 
 
 	public Payment(String memberId, String paymentId, int bookPrice, String booker, Date paymentDate,
-			Date paymentCancel, String paymentType, String receiptId, int paymentCanclePrice, int bookId,
+			Date paymentCancel, String paymentType, String receiptId, int paymentCancelPrice, int bookId,
 			int statusId) {
 		super();
 		this.memberId = memberId;
@@ -33,7 +33,7 @@ public class Payment {
 		this.paymentCancel = paymentCancel;
 		this.paymentType = paymentType;
 		this.receiptId = receiptId;
-		this.paymentCanclePrice = paymentCanclePrice;
+		this.paymentCancelPrice = paymentCancelPrice;
 		this.bookId = bookId;
 		this.statusId = statusId;
 	}
@@ -119,13 +119,13 @@ public class Payment {
 	}
 
 
-	public int getPaymentCanclePrice() {
-		return paymentCanclePrice;
+	public int getpaymentCancelPrice() {
+		return paymentCancelPrice;
 	}
 
 
-	public void setPaymentCanclePrice(int paymentCanclePrice) {
-		this.paymentCanclePrice = paymentCanclePrice;
+	public void setpaymentCancelPrice(int paymentCancelPrice) {
+		this.paymentCancelPrice = paymentCancelPrice;
 	}
 
 

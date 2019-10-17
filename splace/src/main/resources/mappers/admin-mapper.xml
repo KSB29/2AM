@@ -157,10 +157,20 @@
   	  <result property="paymentCancel" column="PAYMENT_CANCEL"/>
   	  <result property="paymentType" column="PAYMENT_TYPE"/>
   	  <result property="receiptId" column="RECEIPT_ID"/>
-  	  <result property="paymentCanclePrice" column="PAYMENT_CANCEL_PRICE"/>
+  	  <result property="paymentCancelPrice" column="PAYMENT_CANCEL_PRICE"/>
   	  <result property="bookId" column="BOOK_ID"/>
   	  <result property="statusId" column="STATUS_ID"/>
   </resultMap>
+  
+   <resultMap type="Sales" id="SalesResultSet">
+   	  <id property="" column="PAYMENT_ID"/>
+   	  <result property="memberId" column="MEMBER_ID"/>
+   	  <result property="bookPrice" column="BOOK_PRICE"/>
+   	  <result property="booker" column="BOOKER"/>
+   </resultMap>
+  
+  
+  
   
 	<!-- 1. 정산관리 -->
 	<select id="selectAccountList" parameterType="_int" resultMap="accountResultSet">

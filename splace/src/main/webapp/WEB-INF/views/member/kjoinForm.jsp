@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-	<title>카카오 로그인</title>
+	<title>SPLACE - 카카오 로그인</title>
 	<head>
 	<!-- template -->
 	<noscript><link rel="stylesheet" href="${contextPath}/resources/css/noscript.css"></noscript>
@@ -53,7 +53,7 @@
 														<input type="text" id="memberName" name="memberName" placeholder="이름을 입력해주세요" required>
 													</div>				
 													<div class="gjoin_box col-12">
-														<input type="email" id="memberId" name="memberId" value="" readonly>
+														<input type="email" id="memberId" name="memberId" value="${memberId}" readonly>
 														<input type="hidden" id="memberPwd" name="memberPwd" value="kakao123" >
 														<input type="hidden" id="memberSocial" name="memberSocial" value="카카오" >						
 													</div>

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/host.css" type="text/css">
 <link rel="stylesheet" href="${contextPath}/resources/css/space.css" type="text/css">
 <link rel="stylesheet" href="${contextPath}/resources/css/userReview.css" type="text/css">
-<title>후기 리스트</title>
+<title>SPLACE - 후기 리스트</title>
 </head>
 <body>
 	<div id="wrapper">

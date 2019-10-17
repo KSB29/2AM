@@ -28,12 +28,15 @@
 		<typeAlias type="com.project.splace.admin.model.vo.Account" alias="Account"/>
 		<typeAlias type="com.project.splace.admin.model.vo.Payment" alias="Payment"/>
 		<typeAlias type="com.project.splace.admin.model.vo.TodayBook" alias="TodayBook"/>
+		<typeAlias type="com.project.splace.admin.model.vo.Sales" alias="Sales"/>
 		<typeAlias type="com.project.splace.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.project.splace.host.model.vo.HostSearch" alias="HostSearch"/>
 		<typeAlias type="com.project.splace.main.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.project.splace.review.model.vo.Review" alias="Review"/>
 		<typeAlias type="com.project.splace.review.model.vo.Review_ATT" alias="Review_ATT"/>
 		<typeAlias type="com.project.splace.host.model.vo.Status" alias="Status"/>
+		
+	
 	</typeAliases>
 	
   	<mappers>

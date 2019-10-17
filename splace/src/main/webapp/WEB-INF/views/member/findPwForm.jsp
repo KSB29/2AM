@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>비밀번호 찾기</title>
+		<title>SPLACE - 비밀번호 찾기</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -28,7 +28,7 @@
 				<div id="main">
 					<div class="inner">
 							<div class="common_wrapper row type_2">
-									<section class="wrapper_left col-7 center">
+									<section class="wrapper_left col-7 center space">
 										<article class="find_form_1">
 											<form action="findPw.sp" method="POST">
 													<div class="center">
