@@ -232,9 +232,14 @@ ol{
 	width: 100%;
 	height: 30%;
 }
-.image>img{
+.image>a{
 	width: 100%;
 	height: 100%;
+}
+.image>a>img{
+		display: block;
+		width: 100%;
+		height:238px;
 }
 .hostSpace{
 	width: 30% !important;
