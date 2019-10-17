@@ -25,7 +25,7 @@ table *{margin: 0 !important;}
 table tr{background-color: transparent !important;}
 table td:first-child{vertical-align: middle; text-align: center; padding: auto 0 !important;}
 table td:nth-child(1){width: 20%; vertical-align: middle; text-align: center}
-table td:nth-child(1) img{height: 15%;}
+table td:nth-child(1) img{height: 25%;}
 table td:nth-child(2){width: 60%;vertical-align: middle}
 table td:nth-child(2)>div{border-left: 1px solid #c9c9c9;border-right: 1px solid #c9c9c9;}
 table td:nth-child(2) .col-12:first-child{

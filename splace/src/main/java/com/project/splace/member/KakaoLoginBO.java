@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class KakaoLoginBO {
 	private final static String K_CLIENT_ID = "4acbd194825fd92f9fd8862ebb73af26";
-    private final static String K_REDIRECT_URI = "http://localhost:8080/splace/kjoinForm.sp";
+    private final static String K_REDIRECT_URI ="http://192.168.10.54:8080/splace/kjoinForm.sp";
 
     public String getAuthorizationUrl(HttpSession session) {
 

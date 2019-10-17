@@ -99,8 +99,6 @@
 									for="location23"> 중구 </label></li>
 								<li><input type="radio" id="location24" class="locationSelect" name ="locationSelect" value="중랑구"> <label
 									for="location24"> 중랑구 </label></li>
-								<li><input type="radio" id="location25" class="locationSelect" name ="locationSelect" value="송파구"> <label
-									for="location25"> 송파구 </label></li>
 							</ul>
 						</div>
 					</section>

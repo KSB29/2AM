@@ -45,7 +45,7 @@
 								<table class="table-wrapper">
 									<tr>
 										<td rowspan="4" id="imgBox">
-											<img alt="공간대표사진" src="${contextPath }/resources/spaceImg/${space.spaceAttChange}">
+											<img class="image" alt="공간대표사진" src="${contextPath }/resources/spaceImg/${space.spaceAttChange}">
 										</td>
 										<td colspan="2"><h2>${space.spaceName}</h2></td>
 									</tr>

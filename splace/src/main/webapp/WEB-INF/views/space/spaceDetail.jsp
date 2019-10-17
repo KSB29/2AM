@@ -237,8 +237,7 @@
 							<h4>
 								<i class="fas fa-phone-alt phoneIcon"></i>${space.spacePhone }</h4>
 							<h4>${space.spaceAddress}</h4>
-							<div id="map"
-								style="width: 100%; height: 400px; border: 1px solid #585858"></div>
+							<div id="map" style="width: 100%; height: 400px; border: 1px solid #585858"></div>
 							<!-- 지도 연동 -->
 							<script type="text/javascript"
 								src="//dapi.kakao.com/v2/maps/sdk.js?appkey=703f39fd6324ec678abee0446f28eee5&libraries=services"></script>
@@ -1232,7 +1231,7 @@
            reviewBtn += '<button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter2" data-backdrop="static"></button>';
            $writeBtn.append(reviewBtn);
 	          
-	          $.ajax({
+	          /* $.ajax({
 	             url:"ReviewBtn.sp",
 	             data : {spaceId:spaceId},
 	             success:function(check4){
@@ -1248,7 +1247,7 @@
 	             error : function(e){
 	                console("야");
 	             }
-	          });
+	          }); */
 	             
 	       
 	       // 리뷰 조회

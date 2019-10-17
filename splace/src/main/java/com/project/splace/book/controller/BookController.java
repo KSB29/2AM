@@ -231,7 +231,7 @@ public class BookController {
 				+"</td>"
 				+"</tr>"
 				+"</table>"
-				+"<br><br><a class='go' href='http://localhost:8080/splace/'"
+				+"<br><br><a class='go' href='http://192.168.10.54:8080/splace/'"
 				+">SPLACE로 이동</a>"
 				+"</div>"
 				+"</body>"
