@@ -297,18 +297,11 @@ public class AdminController {
 	// 20. 매출 관리 
 	@RequestMapping("salesManagement.sp")
 	public ModelAndView salesManagement(ModelAndView mv, String paymentStatus) {
-		// 상태
-		/*
-		int status = 0;
-		if(paymentStatus == null) {
-			status = 0;
-		} else{
-			status = Integer.parseInt(paymentStatus);
-		}
-		*/		
-		ArrayList<Sales> sales = adminService.selectSalesManageMent();
-		mv.addObject("sales",sales).setViewName("admin/salesManagement");
-		return mv; 
+	      ArrayList<Sales> sales = adminService.selectSalesManageMent();
+	      System.out.println("ㄴㅁ나머나머:"+sales);
+	      mv.addObject("sales",sales).setViewName("admin/salesManager");
+	      
+	      return mv; 
 	}
     
 	// 20. 총매출
@@ -333,5 +326,6 @@ public class AdminController {
 		
 		return mv;
 	}
+	
 	
 }

@@ -45,7 +45,7 @@
 								<table class="table-wrapper">
 									<tr>
 										<td rowspan="4" id="imgBox">
-											<img alt="공간대표사진" src="${contextPath }/resources/img/${space.spaceAttChange}">
+											<img alt="공간대표사진" src="${contextPath }/resources/spaceImg/${space.spaceAttChange}">
 										</td>
 										<td colspan="2"><h2>${space.spaceName}</h2></td>
 									</tr>
@@ -53,11 +53,11 @@
 										<td colspan="3">${space.spaceComment }</td>
 									</tr>
 									<tr>
-										<td><li>공간유형</li></td>
+										<td><li>공간유형 | </li></td>
 										<td colspan="2">${space.typeName }</td>
 									</tr>
 									<tr>
-										<td><li>예약인원</li></td>
+										<td><li>예약인원 | </li></td>
 										<td colspan="2">최소 ${space.spaceMinPer}명 ~ 최대 ${space.spaceMaxPer }명</td>
 									</tr>
 									<tr>

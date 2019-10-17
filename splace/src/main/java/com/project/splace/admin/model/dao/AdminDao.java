@@ -182,15 +182,14 @@ public class AdminDao {
 		
 	}
 	
-	/**19.매출관리 DAO
-	 * @return
-	 */
+  /**19.매출관리 DAO
+    * @return
+    */
 
-	public ArrayList<Sales> selectSales() {
-		return (ArrayList)sqlSession.selectList("adminMapper.selecSaleslist");
-	}
-	
-
+   public ArrayList<Sales> selectSales() {
+      return (ArrayList)sqlSession.selectList("adminMapper.selecSaleslist");
+   }
+   
 
 	public ArrayList<TodayBook> selectSalesList() {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectSalesList");
