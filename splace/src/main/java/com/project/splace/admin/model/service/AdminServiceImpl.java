@@ -154,13 +154,22 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Payment> selectPaymentList(int status) {
 		return adminDao.selectPaymentList(status);
 	}
-	
 	@Override
 	public ArrayList<Sales> selectSalesManageMent() {
 		// TODO Auto-generated method stub
 		return adminDao.selectSales();
 	}
 	
+
+	@Override
+	public ArrayList<TodayBook> selectSalesList() {
+		return adminDao.selectSalesList();
+	}
+
+	@Override
+	public ArrayList<TodayBook> selectSales2List() {
+		return adminDao.selectSales2List();
+	}
 	
 	
 }

@@ -309,6 +309,28 @@ public class AdminController {
 		ArrayList<Sales> sales = adminService.selectSalesManageMent();
 		mv.addObject("sales",sales).setViewName("admin/salesManagement");
 		return mv; 
+    
+	// 20. 총매출
+	@RequestMapping("sales3Management.sp")
+	public ModelAndView sales3Management(ModelAndView mv) {
+
+		ArrayList<TodayBook> bList = adminService.selectSalesList();
+		System.out.println(bList);
+		
+		mv.addObject("bList", bList).setViewName("admin/sales3Management");
+		
+		return mv;
+	}
+	
+	// 21. 호스트별 매출 관리
+	@RequestMapping("sales2Management.sp")
+	public ModelAndView sales2Management(ModelAndView mv) {
+		ArrayList<TodayBook> hList = adminService.selectSales2List();
+		System.out.println(hList);
+		
+		mv.addObject("hList", hList).setViewName("admin/sales2Management");
+		
+		return mv;
 	}
 	
 }

@@ -74,4 +74,9 @@ public interface AdminService {
 	// 매출 관리 
 	public abstract ArrayList<Sales> selectSalesManageMent();
 
+	public abstract ArrayList<TodayBook> selectSalesList();
+
+	public abstract ArrayList<TodayBook> selectSales2List();
+
+
 }

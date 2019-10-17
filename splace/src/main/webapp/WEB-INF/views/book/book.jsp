@@ -38,7 +38,7 @@
 							<div class="col-12 titleBox">
 								<h2>예약 공간</h2>
 								<div>
-									<span>&#8361;${bookPrice}</span><span>/시간(인)</span>
+									<span>&#8361;<fmt:formatNumber value="${bookPrice/bookPer/(endTime-startTime+1)}" /></span><span>/시간(인)</span>
 								</div>
 							</div>
 							<article>
@@ -276,7 +276,7 @@
 										</tr>
 										<tr>
 											<td>예약시간</td>
-											<td>${startTime }시 ~ ${endTime }시, ${endTime-startTime }시간</td>
+											<td>${startTime }시 ~ ${endTime }시, ${endTime-startTime+1 }시간</td>
 										</tr>
 										<tr class="borderBottom2">
 											<td>예약인원</td>

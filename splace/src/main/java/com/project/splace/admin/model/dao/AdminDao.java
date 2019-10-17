@@ -192,4 +192,12 @@ public class AdminDao {
 	
 
 
+	public ArrayList<TodayBook> selectSalesList() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectSalesList");
+	}
+
+	public ArrayList<TodayBook> selectSales2List() {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectSales2List");
+	}
+
 }

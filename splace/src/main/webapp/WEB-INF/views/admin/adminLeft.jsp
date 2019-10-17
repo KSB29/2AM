@@ -96,8 +96,8 @@
       <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="salesManagement.sp">최근 3개월 매출</a>
-          <a class="collapse-item" href="noticeManagement.sp">호스트별 매출</a>
-          <a class="collapse-item" href="noticeManagement.sp">총 매출</a>
+          <a class="collapse-item" href="sales2Management.sp">호스트별 매출</a>
+          <a class="collapse-item" href="sales3Management.sp">총 매출</a>
         </div>
       </div>
     </li>

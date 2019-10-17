@@ -358,7 +358,7 @@
 		FROM  (SELECT #{dayOffStart} + LEVEL - 1 DAYS
 			   FROM   DUAL
 			   CONNECT BY LEVEL BETWEEN 1 AND #{dayOffEnd} - #{dayOffStart} + 1) I
-		WHERE  NOT EXISTS (SELECT NULL FROM DAYOFF D WHERE D.DAYOFF_START = I.DAYS)
+		WHERE  NOT EXISTS (SELECT NULL FROM DAYOFF D WHERE D.DAYOFF_START = I.DAYS AND D.SPACE_ID = #{spaceId})
 		AND    NOT EXISTS (SELECT NULL
 						   FROM   BOOK B
 						   WHERE  B.SPACE_ID = #{spaceId}
@@ -424,11 +424,10 @@
 	WHERE STATUS_ID=2  
 	AND(SPACE_ATT_TYPE=0
 	AND SPACE_OPER_STATUS='Y'
-	AND HOST_ID=#{hostId})
+	AND HOST_ID=#{hostId}
+	AND P.SPACE_ID != #{spaceId})
 	</select>
 	 
-	
-	
 	<!-- 찜 조회  -->
 	<select id="wishSelect" parameterType="WishList" resultType="_int">
 	SELECT COUNT(*) 

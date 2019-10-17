@@ -177,10 +177,10 @@ public interface SpaceService {
 
    /**
     * 호스트 다른 공간
-    * @param hostId
+    * @param space
     * @return
     */
-   public abstract ArrayList<Space> hostSpace(int hostId);
+   public abstract ArrayList<Space> hostSpace(Space space);
 
 	/**
 	 * 일치 요일의 가격 조회

@@ -115,12 +115,17 @@
 							<div id="carouselExampleInterval" class="carousel slide"
 								data-ride="carousel">
 								<div class="carousel-inner w-100 height26">
-									<c:forEach items="${spaceAttImg }" var="images">
-										<div class="carousel-item w-100 h-100 active"
-											data-interval="10000">
-											<img src="${contextPath }/resources/spaceImg/${images}"
-												class="d-block w-100 height26" alt="...">
+									<c:forEach items="${spaceAttImg }" var="images" varStatus="slideImg">
+										<c:if test="${ slideImg.index eq 0}">
+										<div class="carousel-item w-100 h-100 active"data-interval="10000">
+											<img src="${contextPath }/resources/spaceImg/${images}" class="d-block w-100 height26" alt="...">
 										</div>
+										</c:if>
+										<c:if test="${slideImg.index!=0}">
+										<div class="carousel-item w-100 h-100"data-interval="10000">
+											<img src="${contextPath }/resources/spaceImg/${images}" class="d-block w-100 height26" alt="...">
+										</div>
+										</c:if>
 									</c:forEach>
 								</div>
 								<a class="carousel-control-prev" href="#carouselExampleInterval"
@@ -315,7 +320,7 @@
 										</div>
 										<%-- <form action="insertQnA.sp?spaceId=${space.spaceId}" method="post"> --%>
 										<div class="modal-body">
-											<textarea class="qContent content" maxlength="300" name="qContent"></textarea>
+											<textarea class="qContent" maxlength="300" name="qContent"></textarea>
 											<!-- 글자수 세기 -->
 											<div class="textCount">
 												<p class="counter"></p>
@@ -398,19 +403,16 @@
 															<label for="subFile1" class="button small">이미지1
 																등록</label> <input type="file" name="files" id="subFile1"
 																value="등록" onchange="loadImg(this,1);">
-																<img class="image fit" id="subImg1" src="" alt="" />
 														</div>
 														<div class="col-4">
 															<label for="subFile2" class="button small">이미지2
 																등록</label> <input type="file" name="files" id="subFile2"
 																value="등록" onchange="loadImg(this,2);">
-																<img class="image fit" id="subImg2" src="" alt="" />
 														</div>
 														<div class="col-4">
 															<label for="subFile3" class="button small">이미지3
 																등록</label> <input type="file" name="files" id="subFile3"
 																value="등록" onchange="loadImg(this,3);">
-																<img class="image fit" id="subImg3" src="" alt="" />
 														</div>
 													</div>
 												</div>
@@ -572,7 +574,7 @@
 									</a>
 								</div>
 								<div class="personCkeck">
-									<input name="bookPer" type="tel" value="${space.spaceMinPer}" id="partyInput">
+									<input type="tel" name="bookPer" value="${space.spaceMinPer}" id="partyInput">
 								</div>
 								<div class="maxBtn personBtn">
 									<a class="btn_plus partyBtn"> 
@@ -624,9 +626,10 @@
 								<div class="swiper-slide hostSpace">
 									<article>
 										<span class="image"> 
+											<a href="${sDetail}">
 											<img src="${contextPath }/resources/spaceImg/${host.spaceAttChange}" alt="" />
+											</a> 
 											</span> 
-											<a href="${sDetail}"></a> 
 											<span>
 											<div class="locationName">
 												<h3>${host.spaceName }</h3>
@@ -678,404 +681,409 @@
     <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>  
  	<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>
-	
-	<!--  ajax  -->
-  <script>
-	  function rDataCheck(){
-           var regExpCheck= true;
-                   if($("#datepicker").val()==""){
-                        alert("예약일을 선택해주세요!");
-                        $("#datepicker").focus();
-                        
-                        regExpCheck=false;
-                   }
-           
-                    if($("input:checkbox[name=timeClick]:checked").length<${space.spaceTime}){
-                        alert("최소 예약시간을 확인해주세요!")
-                        $(".timeHeader").focus();
-                        regExpCheck=false;
-                     }
-    	   	  		if(regExpCheck){
-    	   	  			$("input[name=bookStartTime]").val($(".start").text().substring(0,$(".start").text().lastIndexOf("시")));
-    	   	  			$("input[name=bookEndTime]").val($(".end").text().substring(0,$(".end").text().lastIndexOf("시")));
-    	   	  			$("input[name=bookPrice]").val($(".totalPrice3").text());
-    	   	  		}
-                return regExpCheck;
-          };
-         
-         
-      $(function() {
-         // 휴무일 
-            var dayArr = "${dayArr}";
-            var disabledDays=[];
-            <c:forTokens var="day" items="${dayArr}"
-               delims=", " varStatus="status">
-               disabledDays.push("${day}");
-            </c:forTokens>
-            var headerHtml = $("#material-header-holder .ui-datepicker-material-header");
-         
-            var changeMaterialHeader = function(header, date) {
-            var year   = date.format('YYYY');
-            var month  = date.format('MM');
-            var dayNum = date.format('DD');
-            var isoDay = date.isoWeekday();
-                        
-            var weekday = new Array(7);
-            weekday[1] = "Monday";
-            weekday[2] = "Tuesday";
-            weekday[3] = "Wednesday";
-            weekday[4] = "Thursday";
-            weekday[5] = "Friday";
-            weekday[6] = "Saturday";
-            weekday[7]=  "Sunday";
-      
-            $('.ui-datepicker-material-day', header).text(weekday[isoDay]);
-            $('.ui-datepicker-material-year', header).text(year);
-            $('.ui-datepicker-material-month', header).text(month);
-            $('.ui-datepicker-material-day-num', header).text(dayNum);
-         };
-         
-         $("#datepicker").datepicker({
-         dateFormat: 'yy-mm-dd D',
-           showOn: "both",
-           showButtonPanel: true,
-           buttonImage: "${contextPath}/resources/img/calendar.png",
-           buttonImageOnly: true,
-           monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-           monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-           dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-           dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-           dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-         minDate: 1,
-         maxDate: "+1M",
-         closeText: 'OK',
-         beforeShowDay: disableAllTheseDays
-      });
-         
-      // 특정일 선택막기 
-      function disableAllTheseDays(date) { 
-         var m = date.getMonth(), d = date.getDate(), y = date.getFullYear(); 
-         for (i = 0; i < disabledDays.length; i++) { 
-             if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) { 
-                 return [false]; 
-             } 
-         } 
-         return [true]; 
-      }
-         });
-      
-   
-       
-    // 달력 선택 시 시간 div 표출
-      $(function(){
-         $("#datepicker").change(function(){
-            var bookDate = $("#datepicker").val();
-            $(".timeHeader").css("display","block"); 
-            
-            var spaceId = ${space.spaceId};
-            $(".start").text("");
-            $(".start4").text("");
-            $(".bar").text("");
-            $(".end").text("");
-            $(".bar4").text("");
-            $(".end4").text("");
-            $.ajax({
-               url:"timeList.sp",
-               data:{bookDate:bookDate, spaceId:spaceId},
-               type:"POST",
-               async:false, 
-               dataType:"json",
-               success:function(timeList){
-                  var $body = $(".time_slot");
-                  var $bookB = $(".BookingDate");
-                  $body.html("");
-                  $bookB.text("");
-                  if(timeList.length>0){
-                     $.each(timeList, function(index, item) {
-                        $.each(item, function(key, value){
-                           
-                            var result="";
-                            result+='<li data-num="'
-                                  +index
-                                  +'" id="timeSlotLi">'
-                                  +'<input type="checkbox" class="temp" id="'
-                                  +(index+1)
-                                  +'" value="'
-                                  +value
-                                  +'" name="timeClick">'
-                                  +'<label for="'
-                                  +(index+1)
-                                  +'" class="'
-                                  +key
-                                  +'">'
-                                  +key
-                                  +'시 <br>'
-                                  +value
-                                  +'</label></li>';
-                                       
-                                  $body.append(result);
-                                  
-                        });
-                     });
-                     $bookB.append(bookDate);
-                     
-                     
-                  }
-               bookTime();
-               
-               }
-            });
-            
-         });
-      
-         var min = 100;
-         var max = -1;
-          var startTime ="";;
-          var startPrice =0;
-          var endTime="";
-          var priceArr=[];
-         
-         var tot = 0;
-         var total =0;
-         // 시간 선택 묶음 
-         function check(){
-            var length = ($(".time_slot li:last-child input")).attr("id");
-            tot = 0;
-            for (var i = 1; i <= length; i++) {
-               $("#"+i).prop("checked",false);
-            }
-            for(var i = min; i <= max; i++){
-               if($("#"+i).is(":disabled")){
-                  alert("유효한 시간을 선택해주세요");
-                  min = 100;
-                  max = -1;
-                  $(".bar").text("");
-                  $(".end").text("");
-                  $(".bar4").text("");
-                  $(".end4").text("");
-                  return false;
-               }
-            }
-            for(var i = min; i <= max; i++){
-         var per=parseInt($('input[id="partyInput"]').val());
-               $("#"+i).prop("checked",true);
-               tot += parseInt($("#"+i).val());
-               $(".totalPrice").html('&#8361;'); 
-               $(".totalPrice2").text(tot);
-               $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-               $(".totalPrice3").text((tot*per));
-               
-               if($(".totalPrice3").text()==""){
-                  $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-                  $(".totalPrice3").text(tot*per);
-               }else{
-                  $(".finalTotal2").html('최종 금액  &nbsp;&#8361;');
-                  $(".totalPrice3").text((tot*per));
-               }
-               
-            }
-            
-         };
-         
-         
-
-          
-         $(document).on("click",".temp",function(){
-            priceArr = [];
-            
-            if($(this).is(":checked")){
-               var endTime2= $('li:nth-of-type('+max+')').children("label").text().split(" ")[0];
-               var idval = parseInt(($(this).attr("id")));
-               var label = $(this).parent().children("label").text().split(" ")[0];
-               var price=$(this).parent().children("label").text().split(" ")[1];
-               if(min > idval) {
-                  min = idval;
-                  startTime = label;
-                  startPrice = price;
-                   $(".start").text(startTime);
-                  $(".start4").text(startTime);
-                  $(".bar").text("");
-                  $(".end").text("");
-                  $(".bar4").text("");
-                  $(".end4").text("");
-                  if(min<max){
-                     $(".start").text(startTime);
-                     $(".start4").text(startTime);
-                     $(".bar").text("-");
-                     $(".end").text(endTime2);
-                     $(".bar4").text("-");
-                     $(".end4").text(endTime2);
-                     
-                  }
-                if(max==-1) 
-                   if(max=min){
-                  $(".start").text(startTime);
-                  $(".start4").text(startTime);
-                   }
-               }
-               else{
-                  max = idval;
-                  endTime=label;
-                  $(".start").text(startTime);
-                  $(".start4").text(startTime);
-                  $(".bar").text("-");
-                  $(".end").text(endTime);
-                  $(".bar4").text("-");
-                  $(".end4").text(endTime);
-
-                  if(min==100) 
-                  min=max;
-                  $(".start").text(startTime);
-                  $(".start4").text(startTime);
-                  $(".bar").text("-");
-                  $(".end").text(endTime);
-                  $(".bar4").text("-");
-                  $(".end4").text(endTime);
-               }
-               
-               
-               
-            }else{
-               var idval2 = parseInt(($(this).attr("id")));
-               var label2 = $(this).parent().children("label").text().split(" ")[0];
-               var centerval = (min+max)/2;
-               if(min==max){
-                  $(this).prop("checked",false);
-                  min = 100;
-                  max = -1;
-                  $(".start").text("");
-                  $(".start4").text("");
-                  $(".bar").text("");
-                  $(".end").text("");
-                  $(".bar4").text("");
-                  $(".end4").text("");
-               }
-               else if(idval2==max){
-                  max = min;
-                  $(".start").text(startTime);
-                  $(".start4").text(startTime);
-                  $(".bar").text("");
-                  $(".end").text("");
-                  $(".bar4").text("");
-                  $(".end4").text("");
-                  
-               }
-               else if(idval2 < centerval && idval2!=min){
-                  min = idval2;
-                  startTime=label2;
-                  $(".start").text(startTime);
-                  $(".start4").text(startTime);
-                  $(".bar").text("-");
-                  $(".end").text(endTime);
-                  $(".bar4").text("-");
-                  $(".end4").text(endTime);  
-               }
-               else if(idval2 >= centerval && idval2!=max){
-                  max = idval2;
-                  endTime=label2;
-                  $(".start").text(startTime);
-                  $(".start4").text(startTime);
-                  $(".bar").text("-");
-                  $(".end").text(endTime);
-                  $(".bar4").text("-");
-                  $(".end4").text(endTime);  
-                  
-                  
-               }
-               else{
-                  min = max;
-                  $(".start").text("");
-                  $(".start4").text("");
-                  $(".bar").text("");
-                  $(".end").text(endTime);
-                  $(".bar4").text("");
-                  $(".end4").text(endTime);  
-               }
-            }
-            check();
-            
-         });
-      });
-       
-       
-       // 해당 일자의 예약 시간 disabled로 막기 
-       function bookTime(){
-         var bookDate = $("#datepicker").val();
-         var spaceId = ${space.spaceId};
-         $.ajax({
-            url: "timeListBook.sp",
-            data:{bookDate:bookDate, spaceId:spaceId},
-            type:"POST",
-            async:false,
-            success: function(bookTimeArrr){
-               $.each(bookTimeArrr, function(i) {
-                  var Start = bookTimeArrr[i].bookStartTime;
-                  var End = bookTimeArrr[i].bookEndTime;
-                  $("."+Start).prev().attr('disabled', true);
-                  $("."+End).prev().attr('disabled', true);
-                  
-                  $("."+Start).parent().nextUntil($("."+End).parent()).children("input").attr('disabled', true);
-               });
-            },
-            error: function(){
-               console.log("에러에러");
-            }
-         });
-         
-      } 
-       
-       
-       // 인원 수 클릭 (마이너스 )
-       $("#min").click(function(){
-          var min=${space.spaceMinPer};
-          var n = $("#min").index(this);
-          var num =$("#partyInput:eq("+n+")").val();
-          var per=parseInt($('input[id="partyInput"]').val()-1);
-          var tot=parseInt($(".totalPrice2").text());
-             
-          if(num>min){
-             num= $("#partyInput:eq("+n+")").val(num*1-1);
-                $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-                $(".totalPrice3").text(tot*per);
-             }else{
-                alert("최소 인원을 확인해주세요!");
-             }
-             
-          });
-       
-       // 인원 수 클릭 (플러스)
-       $("#plu").click(function(){
-          var max = ${space.spaceMaxPer}
-          var min=${space.spaceMinPer};
-          var n = $("#plu").index(this);
-          var num = $("#partyInput:eq("+n+")").val();
-          var per=parseInt($('input[id="partyInput"]').val());
-          var tot=parseInt($(".totalPrice2").text());
-          if(num<max){
-             if($(".totalPrice2").text()!=""){
-             num= $("#partyInput:eq("+n+")").val(num*1+1);
-                // 공간 사용료 값 바꾸기 
-                $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-                $(".totalPrice3").text(tot*(per+1));
-             }else{
-                num=${space.spaceMinPer};
-                alert("예약일을 선택해주세요!");
-                     $("#datepicker").focus();
-                     $(".finalTotal2").html('');
-                $(".totalPrice3").text("");
-                
-                     
-             }
-          
-          
-          }else{
-             alert("최대 인원을 초과했습니다.");
-          }
-          
-       });
-
+	           
+	<!--  ajax  -->  
+	   <script>
+	      function rDataCheck(){
+	    	 var regExpCheck= true;
+	   	    		if($("#datepicker").val()==""){
+	   	      			alert("예약일을 선택해주세요!");
+	   	      			$("#datepicker").focus();
+	   	      			
+	   	      			regExpCheck=false;
+	   	    		}
+	   	  
+	   	  			if($("input:checkbox[name=timeClick]:checked").length<${space.spaceTime}){
+	   	      			alert("최소 예약시간을 확인해주세요!")
+	   	      			$(".timeHeader").focus();
+	   	      			regExpCheck=false;
+	   	      		}
+	            if(regExpCheck){
+	                $("input[name=bookStartTime]").val($(".start").text().substring(0,$(".start").text().lastIndexOf("시")));
+	                $("input[name=bookEndTime]").val($(".end").text().substring(0,$(".end").text().lastIndexOf("시")));
+	                $("input[name=bookPrice]").val($(".totalPrice3").text());
+	             }
+	   	    	return regExpCheck;
+	    	};
 	      
+	    	
+			
+		$(function() {
+			// 휴무일 
+				var dayArr = "${dayArr}";
+				var disabledDays=[];
+				<c:forTokens var="day" items="${dayArr}"
+					delims=", " varStatus="status">
+					disabledDays.push("${day}");
+				</c:forTokens>
+				var headerHtml = $("#material-header-holder .ui-datepicker-material-header");
+			
+				var changeMaterialHeader = function(header, date) {
+				var year   = date.format('YYYY');
+				var month  = date.format('MM');
+				var dayNum = date.format('DD');
+				var isoDay = date.isoWeekday();
+								
+				var weekday = new Array(7);
+				weekday[1] = "Monday";
+				weekday[2] = "Tuesday";
+				weekday[3] = "Wednesday";
+				weekday[4] = "Thursday";
+				weekday[5] = "Friday";
+				weekday[6] = "Saturday";
+				weekday[7]=  "Sunday";
+		
+				$('.ui-datepicker-material-day', header).text(weekday[isoDay]);
+				$('.ui-datepicker-material-year', header).text(year);
+				$('.ui-datepicker-material-month', header).text(month);
+				$('.ui-datepicker-material-day-num', header).text(dayNum);
+			};
+			
+			$("#datepicker").datepicker({
+			dateFormat: 'yy-mm-dd D',
+	        showOn: "both",
+	        showButtonPanel: true,
+	        buttonImage: "${contextPath}/resources/img/calendar.png",
+	        buttonImageOnly: true,
+	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+			minDate: 1,
+			maxDate: "+1M",
+			closeText: 'OK',
+			beforeShowDay: disableAllTheseDays
+		});
+			
+		// 특정일 선택막기 
+		function disableAllTheseDays(date) { 
+		   var m = date.getMonth(), d = date.getDate(), y = date.getFullYear(); 
+		   for (i = 0; i < disabledDays.length; i++) { 
+		       if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) { 
+		           return [false]; 
+		       } 
+		   } 
+		   return [true]; 
+		}
+			});
+	   
+		 // 달력 선택 시 시간 div 표출
+	      $(function(){
+	         $("#datepicker").change(function(){
+	            var bookDate = $("#datepicker").val();
+	            $(".timeHeader").css("display","block"); 
+	            
+	            var spaceId = ${space.spaceId};
+	            $(".start").text("");
+	            $(".start4").text("");
+	            $(".bar").text("");
+	            $(".end").text("");
+	            $(".bar4").text("");
+	            $(".end4").text("");
+	            $.ajax({
+	               url:"timeList.sp",
+	               data:{bookDate:bookDate, spaceId:spaceId},
+	               type:"POST",
+	               async:false, 
+	               dataType:"json",
+	               success:function(timeList){
+	                  var $body = $(".time_slot");
+	                  var $bookB = $(".BookingDate");
+	                  $body.html("");
+	                  $bookB.text("");
+	                  if(timeList.length>0){
+	                     $.each(timeList, function(index, item) {
+	                        $.each(item, function(key, value){
+	                           
+	                            var result="";
+	                            result+='<li data-num="'
+	                                  +index
+	                                  +'" id="timeSlotLi">'
+	                                  +'<input type="checkbox" class="temp" id="'
+	                                  +(index+1)
+	                                  +'" value="'
+	                                  +value
+	                                  +'" name="timeClick">'
+	                                  +'<label for="'
+	                                  +(index+1)
+	                                  +'" class="'
+	                                  +key
+	                                  +'">'
+	                                  +key
+	                                  +'시 <br>'
+	                                  +value
+	                                  +'</label></li>';
+	                                       
+	                                  $body.append(result);
+	                                  
+	                        });
+	                     });
+	                     $bookB.append(bookDate);
+	                     
+	                     
+	                  }else{
+	                     var result2="";
+	                     result2+='<p class="timeP">공간 운영일이 아닙니다. 다시 날짜를 선택해주세요!</p>';
+	                     
+	                     $body.append(result2);
+	                  }
+	               bookTime();
+	               
+	               }
+	            });
+	            
+	         });
+	      
+	         var min = 100;
+	         var max = -1;
+	          var startTime ="";;
+	          var startPrice =0;
+	          var endTime="";
+	          var priceArr=[];
+	         
+	         var tot = 0;
+	         var total =0;
+	         // 시간 선택 묶음 
+	         function check(){
+	            var length = ($(".time_slot li:last-child input")).attr("id");
+	            tot = 0;
+	            for (var i = 1; i <= length; i++) {
+	               $("#"+i).prop("checked",false);
+	            }
+	            for(var i = min; i <= max; i++){
+	               if($("#"+i).is(":disabled")){
+	                  alert("유효한 시간을 선택해주세요");
+	                  min = 100;
+	                  max = -1;
+	                  $(".bar").text("");
+	                  $(".end").text("");
+	                  $(".bar4").text("");
+	                  $(".end4").text("");
+	                  return false;
+	               }
+	            }
+	            for(var i = min; i <= max; i++){
+	         var per=parseInt($('input[id="partyInput"]').val());
+	               $("#"+i).prop("checked",true);
+	               tot += parseInt($("#"+i).val());
+	               $(".totalPrice").html('&#8361;'); 
+	               $(".totalPrice2").text(tot);
+	               $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+	               $(".totalPrice3").text((tot*per));
+	               
+	               if($(".totalPrice3").text()==""){
+	                  $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+	                  $(".totalPrice3").text(tot*per);
+	               }else{
+	                  $(".finalTotal2").html('최종 금액  &nbsp;&#8361;');
+	                  $(".totalPrice3").text((tot*per));
+	               }
+	               
+	            }
+	            
+	         };
+	         
+	         
+
+	          
+	         $(document).on("click",".temp",function(){
+	            priceArr = [];
+	            
+	            if($(this).is(":checked")){
+	               var endTime2= $('li:nth-of-type('+max+')').children("label").text().split(" ")[0];
+	               var idval = parseInt(($(this).attr("id")));
+	               var label = $(this).parent().children("label").text().split(" ")[0];
+	               var price=$(this).parent().children("label").text().split(" ")[1];
+	               if(min > idval) {
+	                  min = idval;
+	                  startTime = label;
+	                  startPrice = price;
+	                   $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("");
+	                  $(".end").text("");
+	                  $(".bar4").text("");
+	                  $(".end4").text("");
+	                  if(min<max){
+	                     $(".start").text(startTime);
+	                     $(".start4").text(startTime);
+	                     $(".bar").text("-");
+	                     $(".end").text(endTime2);
+	                     $(".bar4").text("-");
+	                     $(".end4").text(endTime2);
+	                     
+	                  }
+	                if(max==-1) 
+	                   if(max=min){
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                   }
+	               }
+	               else{
+	                  max = idval;
+	                  endTime=label;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("-");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("-");
+	                  $(".end4").text(endTime);
+
+	                  if(min==100) 
+	                  min=max;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("-");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("-");
+	                  $(".end4").text(endTime);
+	               }
+	               
+	               
+	               
+	            }else{
+	               var idval2 = parseInt(($(this).attr("id")));
+	               var label2 = $(this).parent().children("label").text().split(" ")[0];
+	               var centerval = (min+max)/2;
+	               if(min==max){
+	                  $(this).prop("checked",false);
+	                  min = 100;
+	                  max = -1;
+	                  $(".start").text("");
+	                  $(".start4").text("");
+	                  $(".bar").text("");
+	                  $(".end").text("");
+	                  $(".bar4").text("");
+	                  $(".end4").text("");
+	               }
+	               else if(idval2==max){
+	                  max = min;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("");
+	                  $(".end").text("");
+	                  $(".bar4").text("");
+	                  $(".end4").text("");
+	                  
+	               }
+	               else if(idval2 < centerval && idval2!=min){
+	                  min = idval2;
+	                  startTime=label2;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("-");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("-");
+	                  $(".end4").text(endTime);  
+	               }
+	               else if(idval2 >= centerval && idval2!=max){
+	                  max = idval2;
+	                  endTime=label2;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("-");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("-");
+	                  $(".end4").text(endTime);  
+	                  
+	                  
+	               }
+	               else{
+	                  min = max;
+	                  $(".start").text("");
+	                  $(".start4").text("");
+	                  $(".bar").text("");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("");
+	                  $(".end4").text(endTime);  
+	               }
+	            }
+	            check();
+	            
+	         });
+	      });
+	       
 	    
+	    
+	    // 해당 일자의 예약 시간 disabled로 막기 
+		 function bookTime(){
+			var bookDate = $("#datepicker").val();
+			var spaceId = ${space.spaceId};
+			$.ajax({
+				url: "timeListBook.sp",
+				data:{bookDate:bookDate, spaceId:spaceId},
+				type:"POST",
+				async:false,
+				success: function(bookTimeArrr){
+					$.each(bookTimeArrr, function(i) {
+						var Start = bookTimeArrr[i].bookStartTime;
+						var End = bookTimeArrr[i].bookEndTime;
+						$("."+Start).prev().attr('disabled', true);
+						$("."+End).prev().attr('disabled', true);
+						
+						$("."+Start).parent().nextUntil($("."+End).parent()).children("input").attr('disabled', true);
+					});
+				},
+				error: function(){
+					console.log("에러에러");
+				}
+			});
+			
+		} 
+		 
+	    
+	    // 인원 수 클릭 (마이너스 )
+	    $("#min").click(function(){
+	    	var min=${space.spaceMinPer};
+	    	var n = $("#min").index(this);
+	    	var num =$("#partyInput:eq("+n+")").val();
+	    	var per=parseInt($('input[id="partyInput"]').val()-1);
+	    	var tot=parseInt($(".totalPrice2").text());
+	    		
+	    	if(num>min){
+	    		num= $("#partyInput:eq("+n+")").val(num*1-1);
+		    		$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+		    		$(".totalPrice3").text(tot*per);
+		    	}else{
+		    		alert("최소 인원을 확인해주세요!");
+		    	}
+		    	
+		    });
+	    
+	    // 인원 수 클릭 (플러스)
+	    $("#plu").click(function(){
+	    	var max = ${space.spaceMaxPer}
+	    	var min=${space.spaceMinPer};
+	    	var n = $("#plu").index(this);
+	    	var num = $("#partyInput:eq("+n+")").val();
+	    	var per=parseInt($('input[id="partyInput"]').val());
+	    	var tot=parseInt($(".totalPrice2").text());
+	    	if(num<max){
+			    if($(".totalPrice2").text()!=""){
+		    	num= $("#partyInput:eq("+n+")").val(num*1+1);
+			    	// 공간 사용료 값 바꾸기 
+			    	$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+		    		$(".totalPrice3").text(tot*(per+1));
+		    	}else{
+	    			num=${space.spaceMinPer};
+		    		alert("예약일을 선택해주세요!");
+   	      			$("#datepicker").focus();
+   	      			$(".finalTotal2").html('');
+	    			$(".totalPrice3").text("");
+	    			
+   	      			
+		    	}
+	    	
+	    	
+	    	}else{
+	    		alert("최대 인원을 초과했습니다.");
+	    	}
+	    	
+	    });
+	    
+	    
+		/* ------------------------------------------------------------------------- */
 	    
 		function loadImg(value) {
           console.log("이미지변경!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -1091,17 +1099,17 @@
            reader.onload = function(e) {
 
         	   
-             /* $("#"+imgId2).attr("src", "");
+              $("#"+imgId2).attr("src", "");
               $("#"+imgId2).attr("src", e.target.result);
               $("#"+imgId2).after('<button type="button" class="deleteImg">삭제</button>');
-              */
-              $im = "#"+imgId;
+              
+              //$im = "#"+imgId;
               
               //$("#"+imgId).next($("#"+imgId2));
               
               //$("#"+imgId2).attr("src", "");
-              $im.attr("src", e.target.result);
-              $im.after('<button type="button" class="deleteImg">삭제</button>');
+              //$im.attr("src", e.target.result);
+              //$im.after('<button type="button" class="deleteImg">삭제</button>');
               
               
               console.log($("#"+imgId2));
@@ -1720,7 +1728,6 @@
 		  $('#exampleModalCenter3').on('hidden.bs.modal', function (e) {
 			  ReviewList();
 			});
-
 </script>
 </body>
 </html>
