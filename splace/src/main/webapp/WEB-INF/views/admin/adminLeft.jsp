@@ -79,23 +79,23 @@
     </li>
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
-        <i class="fas fa-fw fa-cog	"></i>
+        <i class="fas fa-fw fa-cog"></i>
         <span>결제관리</span>
       </a>
       <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="paymentManagement.sp">결제 관리</a>
+          <a class="collapse-item" href="paymentManagement.sp">결제 정보 관리</a>
         </div>
       </div>
     </li>
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
-        <i class="fas fa-fw fa-cog	"></i>
+        <i class="fas fa-fw fa-cog"></i>
         <span>매출관리</span>
       </a>
       <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="noticeManagement.sp">최근 3개월 매출</a>
+          <a class="collapse-item" href="salesManagement.sp">최근 3개월 매출</a>
           <a class="collapse-item" href="sales2Management.sp">호스트별 매출</a>
           <a class="collapse-item" href="sales3Management.sp">총 매출</a>
         </div>
@@ -103,7 +103,7 @@
     </li>
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse6" aria-expanded="true" aria-controls="collapse6">
-        <i class="fas fa-fw fa-cog	"></i>
+        <i class="fas fa-fw fa-cog"></i>
         <span>정산관리</span>
       </a>
       <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionSidebar">

@@ -277,7 +277,7 @@ public class MemberController {
 			  
 			  logger.info("회원가입 페이지로 이동");
 			  logger.info("카카오 아이디: " + memberId);
-			  model.addAttribute("id", memberId);
+			  model.addAttribute("memberId", memberId);
 			  return "member/kjoinForm";
 			  
 		  }else{
@@ -598,6 +598,7 @@ public class MemberController {
 	@ResponseBody
 	public boolean updatePhone(RedirectAttributes rd, Model model , Member mem) {
 		boolean result = mService.updatePhone(mem) == 0? false : true ;
+		logger.info("전화번호 변경 결과: "+mem);
 		if(result) {
 			model.addAttribute("memberPhone" ,mem.getMemberPhone());
 			rd.addFlashAttribute("성공적으로 변경되었습니다 :)");
@@ -615,8 +616,8 @@ public class MemberController {
 		int result = mService.deleteMember(memberId);
 		if(result>0) {
 			logger.info("회원 탈퇴 성공");
-			rdAttr.addFlashAttribute("정상적으로 탈퇴되었습니다. 다음에 다시만나요 :)");
 			status.setComplete(); // 세션 완료
+			rdAttr.addFlashAttribute("msg","정상적으로 탈퇴되었습니다. :)");
 			return "redirect:loginForm.sp";
 		}else {
 			logger.info("회원 탈퇴 실패");
@@ -735,5 +736,18 @@ public class MemberController {
 		}
 		return "redirect:memberQna.sp";
 	}
+	
+	// 광고 수신 동의 변경
+	@RequestMapping(value="memberAgree.sp", method=RequestMethod.GET)
+	@ResponseBody
+	public boolean updateMemberAgree(Member mem) {
+
+		logger.info("나와야지"+mem);
+		
+		
+		boolean result = mService.updateMemberAgree(mem) == 0? false:true;
+		return result;
+	}	
+
 	
 }

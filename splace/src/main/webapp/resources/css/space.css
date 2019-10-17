@@ -109,11 +109,11 @@ input[type="file"] {
   transition: .4s;
 }
  
-#spaceArea input:checked + .slider {
+.profile_box input:checked + .slider {
   background-color: #4C74B9;
 }
 
-#spaceArea input:checked + .slider:before {
+.profile_box input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);

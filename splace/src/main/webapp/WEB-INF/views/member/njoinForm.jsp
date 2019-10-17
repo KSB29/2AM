@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<title>네이버 로그인</title>
+	<title>SPLACE - 네이버 로그인</title>
 	
 	<!-- template -->
 	<noscript><link rel="stylesheet" href="${contextPath}/resources/css/noscript.css"></noscript>

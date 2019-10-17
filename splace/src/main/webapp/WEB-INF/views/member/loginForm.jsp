@@ -4,7 +4,7 @@
     
 <!DOCTYPE html>
 <html>
-	<title>로그인</title>
+	<title>SPLACE - 로그인</title>
 	<head>
 	<!-- template -->
 	<noscript><link rel="stylesheet" href="${contextPath }/resources/css/noscript.css"></noscript>
@@ -32,11 +32,6 @@
 	</head>
 	
 	<body class="is-preload">
-	
-	
-	<c:if test="${!empty msg}">
-		<script>alert("${msg}")</script>
-	</c:if>
 	
 	
 		<!-- Header -->

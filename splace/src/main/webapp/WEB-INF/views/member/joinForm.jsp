@@ -6,7 +6,7 @@
 
 <html> 
 	<head>
-		<title>회원 가입</title>
+		<title>SPLACE - 회원 가입</title>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!-- css -->
