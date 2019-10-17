@@ -37,7 +37,7 @@ public interface MemberService {
 
 	public abstract int deleteWishList(WishListVO wish) throws Exception;
 
-	public abstract ArrayList<MemberQnaVO> selectQnaList(String memberId, int currentPage);
+	public abstract ArrayList<MemberQnaVO> selectQnaList(MemberQnaVO search, int currentPage);
 
 	public abstract int insertQna(MemberQnaVO qna);
 }

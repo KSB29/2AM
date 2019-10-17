@@ -18,6 +18,9 @@ article table tr td .col-3{display: inline-block; padding: 0;}
     color: #4c74b9;
 }
 
+.buttonToggle {
+	float: right;
+}
 .qnaContent{font-size: 0.8em;}
 
 .collapse .card.card-body{margin-bottom: 0 !important; border-color: #4c74b9; }
