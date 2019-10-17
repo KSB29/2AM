@@ -156,9 +156,9 @@ public class BoardController {
 		// 현재페이지
 		int currentPage = (page == null ? 1 : page);
 		
-		ArrayList<Board> bList = boardService.selectNoticeList(currentPage);
+		ArrayList<Board> nList = boardService.selectNoticeList(currentPage);
 		
-		mv.addObject("bList", bList).addObject("pi", Pagination.getPageInfo()).setViewName("board/noticeList");
+		mv.addObject("nList", nList).addObject("pi", Pagination.getPageInfo()).setViewName("board/noticeList");
 		return mv;
 	}
 	

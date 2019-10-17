@@ -29,13 +29,12 @@
 					</div>
 					
 					<div class="row">
-						<c:url var="bookList" value="bookList.sp" />
 						<table class="table-wrapper">
-							<c:if test="${empty bList}">
+							<c:if test="${empty nList}">
 								<tr><td colspan="3">공지사항이 없습니다.</td></tr>
 							</c:if>
 							<tr class="accordion" id="accordionExample">
-								<c:forEach items="${bList }" var="notice">
+								<c:forEach items="${nList }" var="notice">
 									<td class="card">
 										<div class="card-header" id="header${notice.boardId }">
 											<span class="col-6">${notice.boardTitle }</span>
@@ -73,7 +72,7 @@
 								</c:if>					
 								<span class="pagination-inner">
 									<!-- 페이지 -->
-									<c:if test="${empty bList}">
+									<c:if test="${empty nList}">
 										<a class="pagination-active" href="#">1</a>
 									</c:if>
 									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">

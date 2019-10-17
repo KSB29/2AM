@@ -15,7 +15,7 @@
 <body id="page-top">
 
   <!-- Page Wrapper -->
-  <div id="wrapper">7
+  <div id="wrapper">
   
     <!-- Sidebar -->
     <jsp:include page="adminLeft.jsp" />
