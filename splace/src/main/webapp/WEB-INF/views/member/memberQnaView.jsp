@@ -26,7 +26,7 @@
                 <section>
                 	
                         <h1 class="center">1:1문의 </h1>
-                        <form action="memberQna.sp" style="overflow-x:inherit !important;">
+                        <%-- <form action="memberQna.sp" style="overflow-x:inherit !important;">
                         <article class="row"> 
                             <div class="col-12">
                          	   <div class="filterContainer">
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                         </article>
-                        </form>
+                        </form> --%>
                      <div class="row">
 				<table class="table-wrapper">
 					<c:if test="${empty qnaList}">
@@ -75,7 +75,6 @@
 							<!-- [이전] -->
 							<c:url var="startPage" value="memberQna.sp">
 								<c:param name="page" value="${ pi.startPage }"/>
-								<c:param name="qStatus" value="${ search.qStatus }"/>
 							</c:url>
 							<a class="pagination-newest" href="${startPage }"><<</a>
 							<c:if test="${ pi.currentPage <= 1 }">
@@ -84,16 +83,15 @@
 							<c:if test="${ pi.currentPage > 1 }">
 								<c:url var="before" value="memberQna.sp">
 									<c:param name="page" value="${ pi.currentPage - 1 }"/>
-								<c:param name="qStatus" value="${ search.qStatus }"/>	
 								</c:url>
 								<a class="pagination-newer" href="${ before }"><</a>
 							</c:if>					
 							<span class="pagination-inner">
 								<!-- 페이지 -->
-								<c:if test="${ empty rList}">
+								<c:if test="${ empty qnaList}">
 									<a class="pagination-active" href="#">1</a>
 								</c:if>
-								<c:if test="${ !empty rList}">
+								<c:if test="${ !empty qnaList}">
 								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 									<c:if test="${ p eq pi.currentPage }">
 										<a class="pagination-active" href="#">${ p }</a>
@@ -102,7 +100,6 @@
 									<c:if test="${ p ne pi.currentPage }">
 										<c:url var="pagination" value="memberQna.sp">
 											<c:param name="page" value="${ p }"/>
-											<c:param name="qStatus" value="${ search.qStatus }"/>
 										</c:url>
 										<a href="${ pagination }">${ p }</a>
 									</c:if>
@@ -116,13 +113,11 @@
 							<c:if test="${ pi.currentPage < pi.maxPage }">
 								<c:url var="after" value="memberQna.sp">
 									<c:param name="page" value="${ pi.currentPage + 1 }"/>
-									<c:param name="qStatus" value="${ search.qStatus }"/>
 								</c:url> 
 								<a class="pagination-older" href="${ after }">></a>
 							</c:if>
 							<c:url var="endPage" value="memberQna.sp">
 								<c:param name="page" value="${ pi.endPage }"/>
-								<c:param name="qStatus" value="${ search.qStatus }"/>
 							</c:url>
 							<a class="pagination-oldest" href="${endPage }">>></a>
 						</div>

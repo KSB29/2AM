@@ -272,8 +272,7 @@
 								
 								<!-- 공간 이미지 -->
 									<span class="image"> 
-										<img src="${contextPath }/resources/img/conference.jpg" alt=""/>
-										<%-- <img src="${contextPath }/resources/spaceImg/${s.spaceAttChange}" alt="" /> --%>
+										<img src="${contextPath }/resources/spaceImg/${s.spaceAttChange}" alt="" /> 
 									</span> 
 										<a href="${sDetail }"></a> 
 											

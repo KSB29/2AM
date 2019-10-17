@@ -697,7 +697,7 @@ public class MemberController {
 		logger.info("회원ID : "+memberId);
 		// MemberQnaVO search 검색용 vo 대신 활용
 		//search.setqMemberId(memberId);
-		if (search.getqStatus().equals("")) search.setqStatus("A");
+//		if (search.getqStatus() == null) search.setqStatus("A");
 		search.setqMemberId(memberId);
 		ArrayList<MemberQnaVO> qnaList = mService.selectQnaList(search,currentPage);
 	

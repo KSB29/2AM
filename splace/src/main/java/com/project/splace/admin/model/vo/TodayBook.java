@@ -3,6 +3,7 @@ package com.project.splace.admin.model.vo;
 public class TodayBook {
 	private int time;
 	private int count;
+	private String id;
 	
 	public TodayBook() {}
 
@@ -10,6 +11,12 @@ public class TodayBook {
 		super();
 		this.time = time;
 		this.count = count;
+	}
+	public TodayBook(int time, int count, String id) {
+		super();
+		this.time = time;
+		this.count = count;
+		this.id = id;
 	}
 
 	public int getTime() {
@@ -27,10 +34,18 @@ public class TodayBook {
 	public void setCount(int count) {
 		this.count = count;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	@Override
 	public String toString() {
-		return "TodayBook [time=" + time + ", count=" + count + "]";
+		return "TodayBook [time=" + time + ", count=" + count + ", id=" + id + "]";
 	}
+
+	
 	
 }

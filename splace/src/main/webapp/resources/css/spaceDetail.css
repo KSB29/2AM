@@ -218,7 +218,7 @@ ol{
 	width: 100%;
 	height: 20%;
 	float: left;
-}
+}	
 
 .review{
    float: left;
@@ -229,12 +229,17 @@ ol{
 
 /* 호스트의 다른 공간 */
 .image{
-	width: 100%;
-	height: 30%;
+   width: 100%;
+   height: 30%;
 }
-.image>img{
-	width: 100%;
-	height: 100%;
+.image>a{
+   width: 100%;
+   height: 100%;
+}
+.image>a>img{
+      display: block;
+      width: 100%;
+      height:238px;
 }
 .hostSpace{
 	width: 30% !important;
