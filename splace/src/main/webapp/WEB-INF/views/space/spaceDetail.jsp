@@ -300,7 +300,7 @@
 							</div>
 							<!-- 글쓰기 버튼 -->
 							<c:if test="${!empty loginUser}">
-								<div class="writeBtn">
+								<div class="writeBtn" id="qnaBtnssssssss">
 									<button type="button" class="fa fa-edit" data-toggle="modal"
 										data-target="#exampleModalCenter" data-backdrop="static"></button>
 								</div>
@@ -357,7 +357,7 @@
 								<p></p>
 							</div>
 							<!-- 글쓰기 버튼 -->
-							<div class="writeBtn">
+							<div class="writeBtn" id="reBtnssssssss">
 								<%-- <c:if test="${loginUser.memberId eq reList.memberId}">
                            <button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter2" data-backdrop="static"></button>
                         </c:if> --%>
@@ -402,17 +402,17 @@
 														<div class="col-4">
 															<label for="subFile1" class="button small">이미지1
 																등록</label> <input type="file" name="files" id="subFile1"
-																value="등록" onchange="loadImg(this,1);">
+																value="등록" onchange="loadImg22222222222222(this,1);">
 														</div>
 														<div class="col-4">
 															<label for="subFile2" class="button small">이미지2
 																등록</label> <input type="file" name="files" id="subFile2"
-																value="등록" onchange="loadImg(this,2);">
+																value="등록" onchange="loadImg22222222222222(this,2);">
 														</div>
 														<div class="col-4">
 															<label for="subFile3" class="button small">이미지3
 																등록</label> <input type="file" name="files" id="subFile3"
-																value="등록" onchange="loadImg(this,3);">
+																value="등록" onchange="loadImg22222222222222(this,3);">
 														</div>
 													</div>
 												</div>
@@ -1084,7 +1084,27 @@
 	    
 	    
 		/* ------------------------------------------------------------------------- */
-	    
+	    function loadImg22222222222222(value) {
+          console.log("이미지변경!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+           var reader = new FileReader(); // FileReader -> javascript
+           
+           console.log("reader:"+reader);    
+           var imgId = "#" + $(value).attr("id");
+           var imgId2 = $(value).attr("id").replace("File","Img");
+           console.log("1: "+imgId+"/ 2: "+imgId2);
+           
+           // reader.onload : reader 객체가 생성된 경우 이벤트 발생
+               
+           reader.onload = function(e) {
+              
+              console.log($("#"+imgId2));
+              $(imgId).after('<img class="image fit" id="'+imgId2+'" src="' + e.target.result + '"/> <button type="button" class="deleteImg">삭제</button>'); // e.target this와 비슷, e.target.result 해당 파일 이름(경로포함) */
+           }
+       
+           // 보안처리(Data URI) : RFC 2397 정의되어 있는 개발 규약
+           // 미사용 시 파일 경로가 모두 표시됨, 파일 경로를 알 수 없게 만들어줌 (파일의 직접적인 경로 노출 방지)
+           reader.readAsDataURL(value.files[0]);
+       }
 		function loadImg(value) {
           console.log("이미지변경!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
            var reader = new FileReader(); // FileReader -> javascript
@@ -1203,16 +1223,21 @@
 	       ReviewList();
 	       
 	       // 글쓰기 버튼
-	       $(function(){
 	          
 	       var spaceId = ${space.spaceId};
+	       var $writeBtn=$("#reBtnssssssss");
+           $writeBtn.html("");
+           
+           var reviewBtn="";
+           reviewBtn += '<button type="button" class="fa fa-edit" data-toggle="modal" data-target="#exampleModalCenter2" data-backdrop="static"></button>';
+           $writeBtn.append(reviewBtn);
 	          
 	          $.ajax({
 	             url:"ReviewBtn.sp",
 	             data : {spaceId:spaceId},
 	             success:function(check4){
 	                if(check4=="write"){
-	                   var $writeBtn=$(".writeBtn");
+	                   var $writeBtn=$("#reBtnssssssss");
 	                   $writeBtn.html("");
 	                   
 	                   var reviewBtn="";
@@ -1221,12 +1246,10 @@
 	                }
 	             },
 	             error : function(e){
-	                console(e)
+	                console("야");
 	             }
-	             
 	          });
 	             
-	       }); 
 	       
 	       // 리뷰 조회
 	       

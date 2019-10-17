@@ -163,11 +163,9 @@
   	  <result property="statusId" column="STATUS_ID"/>
   </resultMap>
   
-   <resultMap type="Sales" id="SalesResultSet">
-   	  <id property="" column="PAYMENT_ID"/>
-   	  <result property="memberId" column="MEMBER_ID"/>
-   	  <result property="bookPrice" column="BOOK_PRICE"/>
-   	  <result property="booker" column="BOOKER"/>
+     <resultMap type="Sales" id="SalesResultSet">
+      <id property="month" column="MONTH"/>
+      <result property="totalPrice" column="TOTAL_PRICE"/>
    </resultMap>
   
   
@@ -337,5 +335,13 @@
 		AND TO_CHAR(PAYMENT_DATE, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
 		GROUP BY H.HOST_ID, M.MEMBER_ID
 	</select>
+	
+	   <select id="selecSaleslist" resultMap="SalesResultSet" >
+      SELECT TO_CHAR(PAYMENT_DATE,'mm') MONTH, SUM(BOOK_PRICE) TOTAL_PRICE
+      FROM PAYMENT 
+      JOIN BOOK USING(BOOK_ID)
+      WHERE TO_CHAR(PAYMENT_DATE,'mm') BETWEEN TO_CHAR(ADD_MONTHS(SYSDATE,-2),'mm') AND TO_CHAR(SYSDATE, 'mm')
+      GROUP BY TO_CHAR(PAYMENT_DATE, 'mm')
+    </select>  
   
 </mapper>

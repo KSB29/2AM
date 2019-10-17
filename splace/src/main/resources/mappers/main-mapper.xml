@@ -37,7 +37,7 @@
 	
 	   <!-- 새로 등록된 공간 정보 조회 쿼리 -->
    <select id="newSpace" resultMap="spaceResultSet"  parameterType="Space">
-      SELECT ROWNUM, SPACE_NAME, SPACE_ADDRESS, SPACE_TAG, SPACE_ID, SPACE_ATT_CHANGE
+      SELECT ROWNUM, SPACE_NAME, SPACE_ADDRESS, SPACE_TAG, SPACE_ID, SPACE_ADD, SPACE_ATT_CHANGE
       FROM SPACE
       JOIN SPACE_ATT USING(SPACE_ID)
       WHERE SPACE_ATT_TYPE=0

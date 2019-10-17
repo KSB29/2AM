@@ -17,7 +17,7 @@ public class Pagination { // 싱글톤 패턴 적용
 		// 페이징 처리에 필요한 나머지 변수만 선언함
 		
 		int limit = 5; 				// 한 페이지에 보여질 게시글 갯수
-		int pagingBarSize = 10;		// 한 페이지에서 보여질 페이징 수 
+		int pagingBarSize = 5;		// 한 페이지에서 보여질 페이징 수 
 		
 		int maxPage;				// 전체 페이징 수 중 가장 마지막 페이지
 		int startPage;				// 현재 페이지에서 보여질 페이징 버튼의 시작 페이지

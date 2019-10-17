@@ -37,14 +37,14 @@ public class MemberServiceImpl implements MemberService{
 		logger.info("입력 비밀번호 :"+mem.getMemberPwd());
 		
 		// ID가 등록되어있지 않은 경우
-		/*
+		
 		if(loginUser==null) {
 			return loginUser;
 			
 		}else if(!bCryptPasswordEncoder.matches(mem.getMemberPwd(), loginUser.getMemberPwd())) {
 			logger.info("암호화된 비밀번호 :"+loginUser.getMemberPwd());
 			loginUser=null;
-		}*/
+		}
 		
 		return loginUser;
 		

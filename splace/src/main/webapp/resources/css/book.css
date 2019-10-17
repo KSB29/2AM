@@ -39,9 +39,9 @@ article table tr td .col-3{display: inline-block; padding: 0;}
 .buttonToggle{float: right;}
 #article6 table tr td{padding-bottom: 0;}
 .checkTerm{resize: none; font-size: 0.8em;}
-#imgBox{vertical-align: middle}
+#imgBox{vertical-align: middle; width: 15%;}
 #imgBox img{
-    height: 15%;
+    height: 25%;
 }
 
 /* 오른쪽-------------------- */

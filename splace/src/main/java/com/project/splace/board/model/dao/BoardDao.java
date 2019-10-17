@@ -116,7 +116,7 @@ public class BoardDao {
 		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectNoticeList", rowBounds);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectNoticeList", null, rowBounds);
 	}
 
 	/**

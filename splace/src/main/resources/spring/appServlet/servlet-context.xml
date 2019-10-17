@@ -40,6 +40,17 @@
 	        <mapping path="/space*.sp"/>
 	        <mapping path="/admin*.sp"/>
 	        <mapping path="/hjoin*.sp"/>
+	        <mapping path="/profileView.sp"/>
+	        <mapping path="/changePwForm.sp"/>
+	        <mapping path="/usageView.sp"/>
+	        <mapping path="/deleteForm.sp"/>
+	        <mapping path="/userReviewList.sp"/>
+	        <mapping path="/checkPwForm.sp"/>
+	        <mapping path="/wishListView.sp"/>
+	        <mapping path="/memberQna.sp"/>
+	        <mapping path="/memberQnaForm.sp"/>
+	        <mapping path="/memberInsertQna.sp"/>
+	        <mapping path="/memberInsertQna.sp"/>
 	        <mapping path="/*Management.sp"/>
 	        <beans:bean id="loginInterceptor" class="com.project.splace.common.interceptor.LoginInterceptor"/>
 	    </interceptor>

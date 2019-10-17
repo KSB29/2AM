@@ -115,10 +115,12 @@
    <!-- 리뷰 작성한 이용자가 있는지 카운트  -->
    <select id="selectWriteBtn" parameterType="Book" resultType="_int">
       SELECT COUNT(*) 
-      FROM BOOK B
-      JOIN REVIEW R ON(B.BOOK_ID=R.BOOK_ID)
-      WHERE B.MEMBER_ID = #{memberId} AND R.MEMBER_ID = #{memberId}
-      AND B.SPACE_ID = #{spaceId} AND R.SPACE_ID = #{spaceId}
+		FROM BOOK B
+		LEFT JOIN PAYMENT P ON (B.BOOK_ID=P.BOOK_ID)
+		LEFT JOIN REVIEW R ON(B.BOOK_ID=R.BOOK_ID)
+		WHERE B.MEMBER_ID = #{memberId} AND R.MEMBER_ID = #{memberId}
+		AND B.SPACE_ID = #{spaceId} AND R.SPACE_ID = #{spaceId}
+		AND P.STATUS_ID = 104;
    </select>
    
    <!-- 리뷰 수정 조회  -->
