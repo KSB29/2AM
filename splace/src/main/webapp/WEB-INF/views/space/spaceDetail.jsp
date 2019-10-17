@@ -768,243 +768,242 @@
 		}
 			});
 	   
-	
-	    
-	 // 달력 선택 시 시간 div 표출
-		$(function(){
-			$("#datepicker").change(function(){
-				var bookDate = $("#datepicker").val();
-				$(".timeHeader").css("display","block"); 
-				
-				var spaceId = ${space.spaceId};
-				$(".start").text("");
-				$(".start4").text("");
-				$(".bar").text("");
-				$(".end").text("");
-				$(".bar4").text("");
-				$(".end4").text("");
-				$.ajax({
-					url:"timeList.sp",
-					data:{bookDate:bookDate, spaceId:spaceId},
-					type:"POST",
-					async:false, 
-					dataType:"json",
-					success:function(timeList){
-						var $body = $(".time_slot");
-						var $bookB = $(".BookingDate");
-						$body.html("");
-						$bookB.text("");
-						if(timeList.length>0){
-							$.each(timeList, function(index, item) {
-								$.each(item, function(key, value){
-								   
-								    var result="";
-								    result+='<li data-num="'
-								    	   +index
-								    	   +'" id="timeSlotLi">'
-								    	   +'<input type="checkbox" class="temp" id="'
-								    	   +(index+1)
-								    	   +'" value="'
-								    	   +value
-								    	   +'" name="timeClick">'
-								    	   +'<label for="'
-								    	   +(index+1)
-								    	   +'" class="'
-								    	   +key
-								    	   +'">'
-								    	   +key
-								    	   +'시 <br>'
-								    	   +value
-								    	   +'</label></li>';
-			                              
-								    	   $body.append(result);
-								    	   
-								});
-							});
-							$bookB.append(bookDate);
-							
-							
-						}else{
-							var result2="";
-							result2+='<p class="timeP">공간 운영일이 아닙니다. 다시 날짜를 선택해주세요!</p>';
-							
-							$body.append(result2);
-						}
-					bookTime();
-					
-					}
-				});
-				
-			});
-		
-			var min = 100;
-			var max = -1;
-		    var startTime ="";;
-		    var startPrice =0;
-		    var endTime="";
-		    var priceArr=[];
-			
-			var tot = 0;
-			var total =0;
-			// 시간 선택 묶음 
-			function check(){
-				var length = ($(".time_slot li:last-child input")).attr("id");
-				tot = 0;
-				for (var i = 1; i <= length; i++) {
-					$("#"+i).prop("checked",false);
-				}
-				for(var i = min; i <= max; i++){
-					if($("#"+i).is(":disabled")){
-						alert("유효한 시간을 선택해주세요");
-						min = 100;
-						max = -1;
-						$(".bar").text("");
-						$(".end").text("");
-						$(".bar4").text("");
-						$(".end4").text("");
-						return false;
-					}
-				}
-				for(var i = min; i <= max; i++){
-			var per=parseInt($('input[id="partyInput"]').val());
-					$("#"+i).prop("checked",true);
-					tot += parseInt($("#"+i).val());
-					$(".totalPrice").html('&#8361;'); 
-					$(".totalPrice2").text(tot);
-					$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-					$(".totalPrice3").text((tot*per));
-					
-					if($(".totalPrice3").text()==""){
-						$(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
-						$(".totalPrice3").text(tot*per);
-					}else{
-						$(".finalTotal2").html('최종 금액  &nbsp;&#8361;');
-						$(".totalPrice3").text((tot*per));
-					}
-					
-				}
-				
-			};
-			
-			
+		 // 달력 선택 시 시간 div 표출
+	      $(function(){
+	         $("#datepicker").change(function(){
+	            var bookDate = $("#datepicker").val();
+	            $(".timeHeader").css("display","block"); 
+	            
+	            var spaceId = ${space.spaceId};
+	            $(".start").text("");
+	            $(".start4").text("");
+	            $(".bar").text("");
+	            $(".end").text("");
+	            $(".bar4").text("");
+	            $(".end4").text("");
+	            $.ajax({
+	               url:"timeList.sp",
+	               data:{bookDate:bookDate, spaceId:spaceId},
+	               type:"POST",
+	               async:false, 
+	               dataType:"json",
+	               success:function(timeList){
+	                  var $body = $(".time_slot");
+	                  var $bookB = $(".BookingDate");
+	                  $body.html("");
+	                  $bookB.text("");
+	                  if(timeList.length>0){
+	                     $.each(timeList, function(index, item) {
+	                        $.each(item, function(key, value){
+	                           
+	                            var result="";
+	                            result+='<li data-num="'
+	                                  +index
+	                                  +'" id="timeSlotLi">'
+	                                  +'<input type="checkbox" class="temp" id="'
+	                                  +(index+1)
+	                                  +'" value="'
+	                                  +value
+	                                  +'" name="timeClick">'
+	                                  +'<label for="'
+	                                  +(index+1)
+	                                  +'" class="'
+	                                  +key
+	                                  +'">'
+	                                  +key
+	                                  +'시 <br>'
+	                                  +value
+	                                  +'</label></li>';
+	                                       
+	                                  $body.append(result);
+	                                  
+	                        });
+	                     });
+	                     $bookB.append(bookDate);
+	                     
+	                     
+	                  }else{
+	                     var result2="";
+	                     result2+='<p class="timeP">공간 운영일이 아닙니다. 다시 날짜를 선택해주세요!</p>';
+	                     
+	                     $body.append(result2);
+	                  }
+	               bookTime();
+	               
+	               }
+	            });
+	            
+	         });
+	      
+	         var min = 100;
+	         var max = -1;
+	          var startTime ="";;
+	          var startPrice =0;
+	          var endTime="";
+	          var priceArr=[];
+	         
+	         var tot = 0;
+	         var total =0;
+	         // 시간 선택 묶음 
+	         function check(){
+	            var length = ($(".time_slot li:last-child input")).attr("id");
+	            tot = 0;
+	            for (var i = 1; i <= length; i++) {
+	               $("#"+i).prop("checked",false);
+	            }
+	            for(var i = min; i <= max; i++){
+	               if($("#"+i).is(":disabled")){
+	                  alert("유효한 시간을 선택해주세요");
+	                  min = 100;
+	                  max = -1;
+	                  $(".bar").text("");
+	                  $(".end").text("");
+	                  $(".bar4").text("");
+	                  $(".end4").text("");
+	                  return false;
+	               }
+	            }
+	            for(var i = min; i <= max; i++){
+	         var per=parseInt($('input[id="partyInput"]').val());
+	               $("#"+i).prop("checked",true);
+	               tot += parseInt($("#"+i).val());
+	               $(".totalPrice").html('&#8361;'); 
+	               $(".totalPrice2").text(tot);
+	               $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+	               $(".totalPrice3").text((tot*per));
+	               
+	               if($(".totalPrice3").text()==""){
+	                  $(".finalTotal2").html('최종 금액 &nbsp;&#8361;');
+	                  $(".totalPrice3").text(tot*per);
+	               }else{
+	                  $(".finalTotal2").html('최종 금액  &nbsp;&#8361;');
+	                  $(".totalPrice3").text((tot*per));
+	               }
+	               
+	            }
+	            
+	         };
+	         
+	         
 
-		    
-			$(document).on("click",".temp",function(){
-				priceArr = [];
-				
-				if($(this).is(":checked")){
-					var endTime2= $('li:nth-of-type('+max+')').children("label").text().split(" ")[0];
-					var idval = parseInt(($(this).attr("id")));
-					var label = $(this).parent().children("label").text().split(" ")[0];
-					var price=$(this).parent().children("label").text().split(" ")[1];
-					if(min > idval) {
-						min = idval;
-						startTime = label;
-						startPrice = price;
- 						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("");
-						$(".end").text("");
-						$(".bar4").text("");
-						$(".end4").text("");
-						if(min<max){
-							$(".start").text(startTime);
-							$(".start4").text(startTime);
-							$(".bar").text("-");
-							$(".end").text(endTime2);
-							$(".bar4").text("-");
-							$(".end4").text(endTime2);
-							
-						}
- 					if(max==-1) 
- 						if(max=min){
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
- 						}
-					}
-					else{
-						max = idval;
-						endTime=label;
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime);
+	          
+	         $(document).on("click",".temp",function(){
+	            priceArr = [];
+	            
+	            if($(this).is(":checked")){
+	               var endTime2= $('li:nth-of-type('+max+')').children("label").text().split(" ")[0];
+	               var idval = parseInt(($(this).attr("id")));
+	               var label = $(this).parent().children("label").text().split(" ")[0];
+	               var price=$(this).parent().children("label").text().split(" ")[1];
+	               if(min > idval) {
+	                  min = idval;
+	                  startTime = label;
+	                  startPrice = price;
+	                   $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("");
+	                  $(".end").text("");
+	                  $(".bar4").text("");
+	                  $(".end4").text("");
+	                  if(min<max){
+	                     $(".start").text(startTime);
+	                     $(".start4").text(startTime);
+	                     $(".bar").text("-");
+	                     $(".end").text(endTime2);
+	                     $(".bar4").text("-");
+	                     $(".end4").text(endTime2);
+	                     
+	                  }
+	                if(max==-1) 
+	                   if(max=min){
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                   }
+	               }
+	               else{
+	                  max = idval;
+	                  endTime=label;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("-");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("-");
+	                  $(".end4").text(endTime);
 
-						if(min==100) 
-						min=max;
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime);
-					}
-					
-					
-					
-				}else{
-					var idval2 = parseInt(($(this).attr("id")));
-					var label2 = $(this).parent().children("label").text().split(" ")[0];
-					var centerval = (min+max)/2;
-					if(min==max){
-						$(this).prop("checked",false);
-						min = 100;
-						max = -1;
-						$(".start").text("");
-						$(".start4").text("");
-						$(".bar").text("");
-						$(".end").text("");
-						$(".bar4").text("");
-						$(".end4").text("");
-					}
-					else if(idval2==max){
-						max = min;
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("");
-						$(".end").text("");
-						$(".bar4").text("");
-						$(".end4").text("");
-						
-					}
-					else if(idval2 < centerval && idval2!=min){
-						min = idval2;
-						startTime=label2;
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime);  
-					}
-					else if(idval2 >= centerval && idval2!=max){
-						max = idval2;
-						endTime=label2;
-						$(".start").text(startTime);
-						$(".start4").text(startTime);
-						$(".bar").text("-");
-						$(".end").text(endTime);
-						$(".bar4").text("-");
-						$(".end4").text(endTime);  
-						
-						
-					}
-					else{
-						min = max;
-						$(".start").text("");
-						$(".start4").text("");
-						$(".bar").text("");
-						$(".end").text(endTime);
-						$(".bar4").text("");
-						$(".end4").text(endTime);  
-					}
-				}
-				check();
-				
-			});
-		});
+	                  if(min==100) 
+	                  min=max;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("-");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("-");
+	                  $(".end4").text(endTime);
+	               }
+	               
+	               
+	               
+	            }else{
+	               var idval2 = parseInt(($(this).attr("id")));
+	               var label2 = $(this).parent().children("label").text().split(" ")[0];
+	               var centerval = (min+max)/2;
+	               if(min==max){
+	                  $(this).prop("checked",false);
+	                  min = 100;
+	                  max = -1;
+	                  $(".start").text("");
+	                  $(".start4").text("");
+	                  $(".bar").text("");
+	                  $(".end").text("");
+	                  $(".bar4").text("");
+	                  $(".end4").text("");
+	               }
+	               else if(idval2==max){
+	                  max = min;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("");
+	                  $(".end").text("");
+	                  $(".bar4").text("");
+	                  $(".end4").text("");
+	                  
+	               }
+	               else if(idval2 < centerval && idval2!=min){
+	                  min = idval2;
+	                  startTime=label2;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("-");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("-");
+	                  $(".end4").text(endTime);  
+	               }
+	               else if(idval2 >= centerval && idval2!=max){
+	                  max = idval2;
+	                  endTime=label2;
+	                  $(".start").text(startTime);
+	                  $(".start4").text(startTime);
+	                  $(".bar").text("-");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("-");
+	                  $(".end4").text(endTime);  
+	                  
+	                  
+	               }
+	               else{
+	                  min = max;
+	                  $(".start").text("");
+	                  $(".start4").text("");
+	                  $(".bar").text("");
+	                  $(".end").text(endTime);
+	                  $(".bar4").text("");
+	                  $(".end4").text(endTime);  
+	               }
+	            }
+	            check();
+	            
+	         });
+	      });
+	       
 	    
 	    
 	    // 해당 일자의 예약 시간 disabled로 막기 

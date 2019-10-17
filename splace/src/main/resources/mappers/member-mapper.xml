@@ -179,12 +179,13 @@
 	  	 WHERE SPACE_ID = #{spaceId} AND MEMBER_ID= #{memberId}
 	  </delete>
 	  
+	  
 	  <select id="memberQListCount" parameterType="MemberQnaVO" resultType="_int"> 
-	  <bind name="qMemberId" value="_parameter.getqMemberId()" />
+	  	<bind name="qMemberId" value="_parameter.getqMemberId()" />
 		<bind name="qStatus" value="_parameter.getqStatus()" /> 
 	    SELECT COUNT(*)
- 		FROM QNA
-	    WHERE Q_MEMBER_ID = #{memberId}
+ 		FROM QNA Q
+	    WHERE Q_MEMBER_ID = #{qMemberId}
 		AND Q_STATUS='Y' AND Q_TYPE=1
 		<if test="qStatus != 'A'">
 		AND    ((NVL(#{qStatus}, 'Y') = 'Y' AND Q.A_CONTENT IS NOT NULL) OR
@@ -196,12 +197,14 @@
 	  <bind name="qMemberId" value="_parameter.getqMemberId()" />
 		<bind name="qStatus" value="_parameter.getqStatus()" /> 
         SELECT *
-		FROM   QNA
+		FROM   QNA Q
 		WHERE  Q_TYPE = '1'
 		AND    Q_STATUS = 'Y'
+		AND    Q_MEMBER_ID = #{qMemberId}
 		<if test="qStatus != 'A'">
-		AND    Q_MEMBER_ID = #{memberId}
-		</if>
+		AND    ((NVL(#{qStatus}, 'Y') = 'Y' AND Q.A_CONTENT IS NOT NULL) OR
+			    (NVL(#{qStatus}, 'N') = 'N' AND Q.A_CONTENT IS NULL))
+		</if> 
 		ORDER BY QNA_ID DESC
 	  </select>
 	  

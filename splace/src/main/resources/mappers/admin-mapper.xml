@@ -123,6 +123,7 @@
 	</resultMap>
 	<resultMap type="TodayBook" id="todayBookResultSet">
 		<result property="time" column="time"/>
+		<result property="id" column="id"/>
 		<result property="count" column="count"/>
 	</resultMap>
 	<!-- 예약 정보 -->
@@ -303,6 +304,28 @@
 		<if test="_parameter !=0">
 		WHERE P.STATUS_ID = #{status}
 		</if>
+	</select>
+	
+	<!-- 19. 총매출 -->
+	<select id="selectSalesList" resultMap="todayBookResultSet">
+		SELECT TO_CHAR(PAYMENT_DATE, 'MM') time, SUM(B.BOOK_PRICE) count  FROM PAYMENT P
+		JOIN BOOK B ON (B.BOOK_ID=P.BOOK_ID)
+		WHERE P.STATUS_ID = 104
+		AND TO_CHAR(PAYMENT_DATE, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
+		GROUP BY TO_CHAR(PAYMENT_DATE, 'MM')
+	</select>
+	
+	<!-- 20. 호스트별매출 -->
+	<select id="selectSales2List" resultMap="todayBookResultSet">
+		SELECT H.HOST_ID time, M.MEMBER_ID id, SUM(B.BOOK_PRICE) count
+		FROM PAYMENT P
+		LEFT JOIN BOOK B ON (B.BOOK_ID=P.BOOK_ID)
+		LEFT JOIN SPACE S ON (B.SPACE_ID=S.SPACE_ID)
+		LEFT JOIN HOST H ON(H.HOST_ID=S.HOST_ID)
+		LEFT JOIN MEMBER M ON(H.MEMBER_ID=M.MEMBER_ID)
+		WHERE P.STATUS_ID = 104 
+		AND TO_CHAR(PAYMENT_DATE, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
+		GROUP BY H.HOST_ID, M.MEMBER_ID
 	</select>
   
 </mapper>

@@ -70,4 +70,8 @@ public interface AdminService {
     // 결제 완료 관리 
 	public abstract ArrayList<Payment> selectPaymentList(int status);
 
+	public abstract ArrayList<TodayBook> selectSalesList();
+
+	public abstract ArrayList<TodayBook> selectSales2List();
+
 }
